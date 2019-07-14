@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  web:
+    build: ./RoomScout
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./RoomScout/:/usr/src/RoomScout/
+    ports:
+      - 8000:8000

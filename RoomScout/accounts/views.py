@@ -15,3 +15,9 @@ class SignUp(generic.CreateView):
         user = authenticate(username=username, password=password)
         login(self.request, user)
         return view
+
+def additionalinfo(request):
+    return render(request, 'accounts/additionalinfo.html')
+
+def settings(request):
+    return render(request, 'accounts/settings.html')

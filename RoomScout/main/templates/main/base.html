@@ -31,7 +31,7 @@
         <a class="btn btn-outline-primary mx-2" href="{% url 'login' %}">Log In</a>
         <a class="btn btn-outline-primary" href="{% url 'signup' %}">Sign up</a>
         {% else %}
-        <a class="p-2 text-dark nav-item nav-link" href="#">Settings</a>
+        <a class="p-2 text-dark nav-item nav-link" href="{% url 'settings' %}">Settings</a>
         <a class="p-2 text-dark nav-item nav-link" href="{% url 'logout' %}">Logout</a>
         {% endif %}
         <form class="form-inline pl-2 my-2 my-md-0">

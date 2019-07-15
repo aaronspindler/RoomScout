@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login
 from django_countries import countries
 
 from .models import User
-from .utils import get_provinces
+from .utils import get_provinces, send_confirmation_email
 
 def signup(request):
     provinces = get_provinces()
@@ -56,6 +56,7 @@ def signup(request):
                         user.postal_code = postal_code
                         user.score = 0.0
                         user.save()
+                        send_confirmation_email()
                         login(request,user)
                         return redirect('home')
                     else:
@@ -71,6 +72,9 @@ def settings(request):
     if request.method == 'POST':
         user = User.objects.get(id=request.user.id)
         if request.POST['email']:
+            if request.POST['email'] != user.email:
+                user.email_confirmed = False
+                send_confirmation_email()
             user.email = request.POST['email']
         if request.POST['address']:
             user.address = str(request.POST['address'])

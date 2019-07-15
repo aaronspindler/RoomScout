@@ -19,3 +19,7 @@ def get_provinces():
     provinces.append(Province('NL','Newfoundland & Labrador'))
     provinces.append(Province('NA','Not Applicable'))
     return provinces
+
+# TODO: Implement sending a confirming emails
+def send_confirmation_email():
+    pass

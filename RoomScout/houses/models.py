@@ -1,6 +1,7 @@
 from django.db import models
 from accounts.models import User
 from django_countries.fields import CountryField
+from utils.datetime import now
 
 class Tenant(models.Model):
     pass
@@ -11,8 +12,8 @@ class House(models.Model):
     country = CountryField()
     prov_state = models.CharField(max_length = 2)
     postal_code = models.CharField(max_length = 6)
-    date_posted = models.DateTimeField(default=None)
-    kijiji_link = models.URLField(default=None)
+    date_posted = models.DateTimeField(default=now())
+    kijiji_link = models.URLField(default="")
 
 class Room(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE)

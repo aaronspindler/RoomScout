@@ -6,4 +6,9 @@ Home
 {% endblock %}
 
 {% block content %}
+{% if message %}
+<div class="text-center bg-success">
+  <p>{{message}}</p>
+</div>
+{% endif %}
 {% endblock %}

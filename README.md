@@ -36,6 +36,9 @@
 - [x] Register
 - [x] Login
 - [ ] Email
+- [x] Move utils to the utils app
+- [x] Add time functions to utils
+- [ ] Change register to use functions instead of doing all of the work in the view
 
 
 #### Extra Features

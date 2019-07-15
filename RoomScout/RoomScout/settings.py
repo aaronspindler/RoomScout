@@ -10,6 +10,10 @@ SECRET_KEY = '-(k@3@gsic-t0$l2s*y5*w=j+uo*7-#@@q)^)$7nh@yk1_m6be'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
 ALLOWED_HOSTS = []
 
 
@@ -22,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
     'main',
     'accounts',
     'tests',
@@ -110,7 +115,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'RoomScout/static')]
+STATICFILES_DIRS = []
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'

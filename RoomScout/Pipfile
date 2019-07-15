@@ -9,6 +9,7 @@ verify_ssl = true
 django = "*"
 psycopg2 = "*"
 gunicorn = "*"
+django-widget-tweaks = "*"
 
 [requires]
 python_version = "3.7"

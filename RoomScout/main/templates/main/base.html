@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+{% load staticfiles %}
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>RoomScout - {% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-md navbar-light bg-white border-bottom shadow-sm">
+      <a class="navbar-brand" href="{% url 'home' %}">RoomScout</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <ul class="navbar-nav mr-auto">
+
+          <li class="nav-item dropdown">
+            <a class="p-2 text-dark nav-link dropdown-toggle" href="#" id="scoutingdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Scouting</a>
+            <div class="dropdown-menu" aria-labelledby="scoutingdropdown">
+              <a class="p-2 text-dark dropdown-item" href="#">Match Scouting</a>
+            </div>
+          </li>
+        </ul>
+        {% if user.is_authenticated == False %}
+        <a class="btn btn-outline-primary mx-2" href="{% url 'login' %}">Log In</a>
+        <a class="btn btn-outline-primary" href="{% url 'signup' %}">Sign up</a>
+        {% else %}
+        <a class="p-2 text-dark nav-item nav-link" href="#">Settings</a>
+        <a class="p-2 text-dark nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+        {% endif %}
+        <form class="form-inline pl-2 my-2 my-md-0">
+          <input class="form-control" type="text" placeholder="Search">
+        </form>
+      </div>
+    </nav>
+  </header>
+
+  <main role="main">
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <footer>
+    {% include "main/footer.html" %}
+  </footer>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</html>

@@ -10,6 +10,8 @@ django = "*"
 psycopg2 = "*"
 gunicorn = "*"
 django-widget-tweaks = "*"
+django-countries = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.7"

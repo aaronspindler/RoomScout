@@ -11,7 +11,7 @@ Sign Up
     <h2>Sign Up</h2>
   </div>
   {% if error %}
-  <div class="bg-danger">
+  <div class="bg-danger text-center">
     <p>{{error}}</p>
   </div>
   {% endif%}
@@ -20,11 +20,11 @@ Sign Up
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="firstname">First Name</label>
-        <input type="text" class="form-control" name="firstname" id="firstname" placeholder="John">
+        <input type="text" class="form-control" name="first_name" id="firstname" placeholder="John">
       </div>
       <div class="form-group col-md-6">
         <label for="lastname">Last Name</label>
-        <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Smith">
+        <input type="text" class="form-control" name="last_name" id="lastname" placeholder="Smith">
       </div>
     </div>
     <div class="form-group">

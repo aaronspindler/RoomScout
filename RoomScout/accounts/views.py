@@ -5,12 +5,21 @@ from django.contrib.auth import authenticate, login
 from django_countries import countries
 
 from .models import User
-from utils import provinces, email
+from utils import provinces, emailclient
 
 def signup(request):
+
+    # Check if its a post request
+    # Check if passwords match
+    # Check if username, password, or email are blank
+    # Check if user with same username exists
+    # Check if user with same email exists
+    # Check for first or last name
+    # Check if first or last name are blank
     provs = provinces.get_provinces()
     if request.method == 'POST':
-        print(request.POST)
+        if request.POST['username'] == '' or request.POST['password1'] == '' or request.POST['password2'] == '' or request.POST['email'] == '':
+            return render(request, 'accounts/signup.html', {'error':'Username/Password/Email cannot be blank!', 'provinces':provs})
         if request.POST['password1'] == request.POST['password2']:
             try:
                 user = User.objects.get(username = request.POST['username'])
@@ -20,12 +29,15 @@ def signup(request):
                     user = User.objects.get(email = request.POST['email'])
                     return render(request, 'accounts/signup.html', {'error':'Email is already in use!', 'provinces':provs})
                 except User.DoesNotExist:
-                    if request.POST['firstname'] and request.POST['lastname']:
+                    if request.POST['first_name'] and request.POST['last_name']:
+                        if request.POST['first_name'] == '' or request.POST['last_name'] == '':
+                            return render(request, 'accounts/signup.html', {'error':'First/Last name cannot be blank!', 'provinces':provs})
+
                         email = request.POST['email']
                         username = request.POST['username']
                         password = request.POST['password1']
-                        firstname = request.POST['firstname']
-                        lastname = str(request.POST['lastname'])
+                        firstname = request.POST['first_name']
+                        lastname = str(request.POST['last_name'])
                         if request.POST['address']:
                             address = str(request.POST['address'])
                         else:
@@ -56,7 +68,7 @@ def signup(request):
                         user.postal_code = postal_code
                         user.score = 0.0
                         user.save()
-                        email.send_confirmation_email()
+                        emailclient.send_confirmation_email()
                         login(request,user)
                         return redirect('home')
                     else:

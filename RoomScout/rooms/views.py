@@ -4,26 +4,26 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.forms.utils import ErrorList
-from .models import House
+from .models import Room
 
-class house_create(LoginRequiredMixin, generic.CreateView):
-    model = House
+class room_create(LoginRequiredMixin, generic.CreateView):
+    model = Room
     fields = []
-    template_name = 'houses/house_create.html'
+    template_name = 'rooms/room_create.html'
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        super(house_create, self).form_valid(form)
+        super(room_create, self).form_valid(form)
         return redirect('home')
 
-class house_detail(generic.DetailView):
-    model = House
-    template_name = 'houses/house_detail.html'
+class room_detail(generic.DetailView):
+    model = Room
+    template_name = 'rooms/room_detail.html'
 
-class house_edit(LoginRequiredMixin, generic.UpdateView):
-    model = House
-    template_name = 'houses/house_edit.html'
+class room_edit(LoginRequiredMixin, generic.UpdateView):
+    model = Room
+    template_name = 'rooms/room_edit.html'
     fields = ['title']
     success_url = reverse_lazy('home')
 
@@ -33,9 +33,9 @@ class house_edit(LoginRequiredMixin, generic.UpdateView):
             raise Http404
         return hall
 
-class house_delete(LoginRequiredMixin, generic.DeleteView):
-    model = House
-    template_name = 'houses/house_delete.html'
+class room_delete(LoginRequiredMixin, generic.DeleteView):
+    model = Room
+    template_name = 'rooms/room_delete.html'
     success_url = reverse_lazy('home')
 
     def get_object(self):

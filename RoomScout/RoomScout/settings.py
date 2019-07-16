@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'main',
     'accounts',
     'houses',
+    'rooms',
     'bills',
     'utils',
 ]

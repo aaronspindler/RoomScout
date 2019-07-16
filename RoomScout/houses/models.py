@@ -2,9 +2,7 @@ from django.db import models
 from accounts.models import User
 from django_countries.fields import CountryField
 from utils.datetime import now
-
-class Tenant(models.Model):
-    pass
+from accounts.models import User
 
 class House(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -14,10 +12,14 @@ class House(models.Model):
     postal_code = models.CharField(max_length = 6)
     date_posted = models.DateTimeField(default=now())
     kijiji_link = models.URLField(default="")
+    is_approved = models.BooleanField(default=False)
+    is_available = models.BooleanField(default=True)
 
 class Room(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE)
+    is_available = models.BooleanField(default=True)
     price = models.FloatField(default=0.0)
+    tenant = models.ForeignKey(User, on_delete=models.CASCADE,default='')
 
     image = models.ImageField(upload_to='images/', blank=True)
     image2 = models.ImageField(upload_to='images/', blank=True)

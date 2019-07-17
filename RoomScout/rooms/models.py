@@ -3,6 +3,7 @@ from accounts.models import User
 from houses.models import House
 
 class Room(models.Model):
+    name = models.CharField(max_length=200, default='')
     is_available = models.BooleanField(default=True)
     tenant = models.ForeignKey(User, on_delete=models.CASCADE,default='')
 

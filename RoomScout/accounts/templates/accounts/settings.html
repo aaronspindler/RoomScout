@@ -8,6 +8,11 @@ Settings
 <br>
 <div class="container">
   <h2>Settings</h2>
+  {% if message %}
+  <div class="text-center bg-success">
+    <p>{{message}}</p>
+  </div>
+  {% endif %}
   <form action="{%url 'settings'%}" method="POST">
     {% csrf_token %}
     <div class="form-row">

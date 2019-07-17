@@ -9,7 +9,7 @@ class House(models.Model):
     is_available = models.BooleanField(default=False)
 
     address = models.CharField(max_length=400)
-    country = CountryField()
+    country = CountryField(default='CA')
     prov_state = models.CharField(max_length = 2)
     postal_code = models.CharField(max_length = 7)
     date_posted = models.DateTimeField()

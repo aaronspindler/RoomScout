@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     email_confirmed = models.BooleanField(default=False)
+    previous_email = models.EmailField(default = '')
     address = models.TextField(default = '')
     city = models.CharField(default='', max_length=200)
     prov_state = models.CharField(default = '', max_length = 2)

@@ -24,6 +24,7 @@ class LoginTest(TestCase):
         self.assertEqual(response.status_code, 302)
 
 
+
 class SignupTest(TestCase):
 
     def test_signup_view(self):

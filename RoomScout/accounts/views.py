@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth import authenticate, login
 from django_countries import countries
+from django.contrib import messages
 
 from .models import User
 from utils import provinces, emailclient
@@ -59,6 +60,7 @@ def signup(request):
 
                         user = User.objects.create_user(username, password=password)
                         user.email = email
+                        user.previous_email = email
                         user.first_name = firstname
                         user.last_name = lastname
                         user.address = address
@@ -83,10 +85,15 @@ def settings(request):
     if request.method == 'POST':
         user = User.objects.get(id=request.user.id)
         if request.POST['email']:
-            if request.POST['email'] != user.email:
-                user.email_confirmed = False
-                email.send_confirmation_email()
-            user.email = request.POST['email']
+            if request.POST['email'] == '':
+                pass
+            else:
+                if request.POST['email'] != user.email:
+                    if user.email_confirmed:
+                        user.previous_email = user.email
+                    user.email_confirmed = False
+                    emailclient.send_confirmation_email()
+                    user.email = request.POST['email']
         if request.POST['address']:
             user.address = str(request.POST['address'])
         if request.POST['city']:
@@ -96,6 +103,7 @@ def settings(request):
         if request.POST['postal_code']:
             user.postal_code = str(request.POST['postal_code'])
         user.save()
-        return render(request, 'main/home.html', {'message':'Settings saved successfully!'})
+        messages.success(request, 'Your settings have been saved!.')
+        return redirect('home')
     else:
         return render(request, 'accounts/settings.html', {'provinces':provs})

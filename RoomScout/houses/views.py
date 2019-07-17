@@ -6,19 +6,29 @@ from django.views import generic
 from django.views.generic.edit import CreateView
 from django.forms.utils import ErrorList
 from .models import House
+from .forms import HouseForm
 from utils.datetime import now
 
-class house_create(LoginRequiredMixin, CreateView):
-    model = House
-    fields = ['address', 'country', 'prov_state', 'postal_code']
-    template_name = 'houses/house_create.html'
-    success_url = reverse_lazy('home')
+@login_required
+def house_create(request):
+    form = HouseForm()
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        form.instance.date_posted = now()
-        super(house_create, self).form_valid(form)
-        return redirect('home')
+    if request.method == 'POST':
+        form = HouseForm(request.POST)
+        if form.is_valid():
+            house = House()
+            house.user = request.user
+            house.date_posted = now()
+            house.address = form.cleaned_data['address']
+            house.country = form.cleaned_data['country']
+            house.prov_state = form.cleaned_data['prov_state']
+            house.postal_code = form.cleaned_data['postal_code']
+            house.save()
+            return redirect('home')
+    else:
+        return render(request, 'houses/house_create.html', {'form': form})
+
+
 
 class house_detail(generic.DetailView):
     model = House

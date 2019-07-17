@@ -3,17 +3,20 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
+from django.views.generic.edit import CreateView
 from django.forms.utils import ErrorList
 from .models import House
+from utils.datetime import now
 
-class house_create(LoginRequiredMixin, generic.CreateView):
+class house_create(LoginRequiredMixin, CreateView):
     model = House
-    fields = []
+    fields = ['address', 'country', 'prov_state', 'postal_code']
     template_name = 'houses/house_create.html'
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        form.instance.date_posted = now()
         super(house_create, self).form_valid(form)
         return redirect('home')
 

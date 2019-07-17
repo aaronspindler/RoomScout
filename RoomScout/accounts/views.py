@@ -8,7 +8,6 @@ from .models import User
 from utils import provinces, emailclient
 
 def signup(request):
-
     # Check if its a post request
     # Check if passwords match
     # Check if username, password, or email are blank

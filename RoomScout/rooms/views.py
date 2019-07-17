@@ -6,16 +6,8 @@ from django.views import generic
 from django.forms.utils import ErrorList
 from .models import Room
 
-class room_create(LoginRequiredMixin, generic.CreateView):
-    model = Room
-    fields = []
-    template_name = 'rooms/room_create.html'
-    success_url = reverse_lazy('home')
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        super(room_create, self).form_valid(form)
-        return redirect('home')
+def room_create(request):
+    return render(request, 'rooms/room_create.html')
 
 class room_detail(generic.DetailView):
     model = Room

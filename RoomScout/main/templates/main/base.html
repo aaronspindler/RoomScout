@@ -6,6 +6,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>RoomScout - {% block title %}{% endblock %}</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="Aaron Spindler">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link href="{% static 'open-iconic/font/css/open-iconic-bootstrap.css'%}" rel="stylesheet">
 
@@ -13,42 +16,7 @@
 
 <body>
   <header>
-    <nav class="navbar navbar-expand-md navbar-light bg-white border-bottom shadow-sm">
-      <a class="navbar-brand" href="{% url 'home' %}">RoomScout</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link p-2 text-dark" href="{% url 'room_create'%}">Post Room</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link p-2 text-dark" href="#">Find Room</a>
-          </li>
-
-          {% if user.is_authenticated%}
-          <li class="nav-item dropdown">
-            <a class="p-2 text-dark nav-link dropdown-toggle" href="#" id="scoutingdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dashboard</a>
-            <div class="dropdown-menu" aria-labelledby="scoutingdropdown">
-              <a class="p-2 text-dark dropdown-item" href="#">Match Scouting</a>
-            </div>
-          </li>
-          {% endif %}
-        </ul>
-        {% if user.is_authenticated == False %}
-        <a class="btn btn-outline-primary mx-2" href="{% url 'login' %}">Log In</a>
-        <a class="btn btn-outline-primary mx-2" href="{% url 'signup' %}">Sign up</a>
-        {% else %}
-        <a class="p-2 text-dark nav-item nav-link" href="{% url 'settings' %}">Settings</a>
-        <a class="p-2 text-dark nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-        {% endif %}
-        <form class="form-inline pl-2 my-2 my-md-0">
-          <input class="form-control" type="text" placeholder="Search">
-        </form>
-      </div>
-    </nav>
+    {% include "main/header.html" %}
   </header>
 
   <main role="main">

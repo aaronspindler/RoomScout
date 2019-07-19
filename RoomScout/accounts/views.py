@@ -89,8 +89,12 @@ def settings(request):
                 pass
             else:
                 if request.POST['email'] != user.email:
-                    if user.email_confirmed:
-                        user.previous_email = user.email
+                    try:
+                        user = User.objects.get(email = request.POST['email'])
+                        return render(request, 'accounts/settings.html', {'error':'Email is already in use!', 'provinces':provs})
+                    except User.DoesNotExist:
+                        if user.email_confirmed:
+                            user.previous_email = user.email
                     user.email_confirmed = False
                     emailclient.send_confirmation_email()
                     user.email = request.POST['email']

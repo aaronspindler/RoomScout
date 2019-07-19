@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django_countries',
     'widget_tweaks',
     'main',
+    'management',
     'accounts',
     'houses',
     'rooms',

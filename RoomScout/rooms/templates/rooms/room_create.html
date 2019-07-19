@@ -16,9 +16,13 @@ Create a Room
   <br>
   <h2>Create a Room</h2>
   {% if houses %}
-    {{houses}}
     <form method="post">
       {%csrf_token%}
+      <select name="house_select" id="house_select" class="form-control">
+        {% for house in houses %}
+        <option value={{house.id}}>{{house.full_address}}</option>
+        {% endfor %}
+      </select>
       {% load widget_tweaks %}
       {% for field in form %}
         <div class="form-group {% if field.errors %}alert alert-danger{% endif %}">

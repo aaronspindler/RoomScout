@@ -10,9 +10,8 @@ from houses.models import House
 def room_create(request):
     try:
         houses = House.objects.filter(user=request.user.id)
-        num_houses = len(houses)
-        print(num_houses)
-        return render(request, 'rooms/room_create.html', {'houses': num_houses})
+        print(houses)
+        return render(request, 'rooms/room_create.html', {'houses': houses})
     except Exception:
         pass
 

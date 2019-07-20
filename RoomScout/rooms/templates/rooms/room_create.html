@@ -7,36 +7,15 @@ Create a Room
 {% endblock %}
 
 {% block content %}
-{% if message %}
-<div class="text-center bg-success">
-  <p>{{message}}</p>
-</div>
-{% endif %}
 <div class="container">
-  <br>
-  <h2>Create a Room</h2>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+  <h1 class="h2">Post a Room</h1>
+</div>
   {% if houses %}
-    <form method="post">
-      {%csrf_token%}
-      <select name="house_select" id="house_select" class="form-control">
-        {% for house in houses %}
-        <option value={{house.id}}>{{house.full_address}}</option>
-        {% endfor %}
-      </select>
-      {% load widget_tweaks %}
-      {% for field in form %}
-        <div class="form-group {% if field.errors %}alert alert-danger{% endif %}">
-          {{ field.errors }}
-          {{ field.label_tag }}
-          {% render_field field class="form-control" %}
-        </div>
-      {% endfor %}
-      <button class="btn btn-primary" type='submit'>Create</button>
-    </form>
+
   {% else %}
-  <p>Looks like you haven't told us about any houses you have</p>
-  <a href="{% url 'house_create'%}" class="btn btn-primary">Create House Now</a>
+    <p>Looks like you haven't told us about any houses you have</p>
+    <a href="{% url 'house_create'%}" class="btn btn-primary">Create House Now</a>
   {% endif %}
 </div>
-
 {% endblock %}

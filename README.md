@@ -1,5 +1,13 @@
 # RoomScout
 
+## Color Palette
+```
+  #65A5DA
+  #7472DF
+  #5EDDAA
+```
+
+
 ## Features
 #### Main Features
 - [ ] Post Room

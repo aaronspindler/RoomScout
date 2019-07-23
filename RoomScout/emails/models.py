@@ -1,3 +1,7 @@
 from django.db import models
 
-# Create your models here.
+class Email(models.Model):
+    sent_to = models.EmailField()
+    subject = models.TextField()
+    contents = models.TextField()
+    sent_at = models.DateTimeField(auto_now_add=True)

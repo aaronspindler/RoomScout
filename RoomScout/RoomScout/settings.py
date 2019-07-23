@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'django_countries',
     'phonenumber_field',
     'main',
+    'blog',
     'management',
     'accounts',
     'houses',

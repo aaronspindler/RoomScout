@@ -24,6 +24,7 @@ def house_create(request):
             house.country = form.cleaned_data['country']
             house.prov_state = form.cleaned_data['prov_state']
             house.postal_code = form.cleaned_data['postal_code']
+            house.hide_address = form.cleaned_data['hide_address']
             house.save()
             return redirect('house_detail', pk=house.id)
     else:

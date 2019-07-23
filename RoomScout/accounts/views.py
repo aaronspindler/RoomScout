@@ -2,12 +2,27 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib import auth
 from django_countries import countries
 from django.contrib import messages
 
 from .models import User
+from .forms import LoginForm
 from utils import provinces, emailclient
+
+def login(request):
+    if request.POST:
+        username = request.POST['username']
+        password = request.POST['password']
+        if username == '' or password == '':
+            return render(request, 'registration/login.html', {'error':'Username or Password cannot be blank!'})
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            return redirect('home')
+        else:
+            return render(request, 'registration/login.html', {'error':'Username or Password is incorrect!'})
+    return render(request, 'registration/login.html')
 
 def signup(request):
     # Check if its a post request
@@ -71,7 +86,7 @@ def signup(request):
                         user.score = 0.0
                         user.save()
                         emailclient.send_confirmation_email()
-                        login(request,user)
+                        auth.login(request,user)
                         return redirect('home')
                     else:
                         return render(request, 'accounts/signup.html', {'error':'Please enter your first and last name!', 'provinces':provs})

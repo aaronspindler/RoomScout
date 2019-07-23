@@ -1,4 +1,5 @@
 {% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}
 Log In
@@ -10,24 +11,10 @@ Log In
   <h2>Login</h2>
   <form method="post">
     {% csrf_token %}
-    {% if form.non_field_errors %}
-      <div class="alert alert-danger">
-        {{form.non_field_errors}}
-      </div>
-    {% endif%}
-    {% for field in form %}
-      <div class="form-group {% if field.errors %}alert alert-danger{% endif %}">
-        {{ field.errors }}
-        {{ field.label_tag }}
-        {{field}}
-        {% if field.help_text %}
-          <small class="text-muted">
-            {{field.help_text|safe}}
-          </small>
-        {% endif%}
-      </div>
-    {% endfor %}
+    {{form | crispy}}
+    <div class="text-center">
     <button type="submit" class="btn btn-primary">Login</button>
+  </div>
   </form>
 </div>
 {% endblock %}

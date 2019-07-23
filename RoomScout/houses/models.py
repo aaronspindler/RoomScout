@@ -15,7 +15,6 @@ class House(models.Model):
     city = models.CharField(max_length=400, default='')
     prov_state = models.CharField(max_length = 2, default='')
     postal_code = models.CharField(max_length = 7, default='')
-    kijiji_link = models.URLField(default="")
 
     def full_address(self):
         return '{}, {}, {}, {}, {}'.format(self.address, self.city, self.prov_state, self.country.name, self.postal_code)

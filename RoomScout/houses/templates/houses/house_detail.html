@@ -1,0 +1,21 @@
+{% extends "main/base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+House Details
+{% endblock %}
+
+{% block content %}
+{% if message %}
+<div class="text-center bg-success">
+  <p>{{message}}</p>
+</div>
+{% endif %}
+<div class="container text-center">
+  <br>
+  <h2>House Details</h2>
+  {{house.address}}
+</div>
+
+{% endblock %}

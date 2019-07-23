@@ -6,6 +6,7 @@ class User(AbstractUser):
     email_confirmed = models.BooleanField(default=False)
     previous_email = models.EmailField(default = '')
     phone_number = PhoneNumberField(blank = True)
+    phone_number_confirmed = models.BooleanField(default=False)
     address = models.TextField(default = '')
     city = models.CharField(default='', max_length=200)
     prov_state = models.CharField(default = '', max_length = 2)

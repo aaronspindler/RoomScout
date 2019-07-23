@@ -11,7 +11,6 @@ from houses.models import House
 def room_create(request):
     try:
         houses = House.objects.filter(user=request.user.id)
-        print(houses)
         return render(request, 'rooms/room_create.html', {'houses': houses})
     except Exception:
         pass

@@ -20,11 +20,12 @@ def house_create(request):
             house.user = request.user
             house.date_posted = now()
             house.address = form.cleaned_data['address']
+            house.city = form.cleaned_data['city']
             house.country = form.cleaned_data['country']
             house.prov_state = form.cleaned_data['prov_state']
             house.postal_code = form.cleaned_data['postal_code']
             house.save()
-            return redirect('home')
+            return redirect('house_detail', pk=house.id)
     else:
         return render(request, 'houses/house_create.html', {'form': form})
 

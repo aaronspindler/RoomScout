@@ -12,8 +12,16 @@ Create a Room
   <h1 class="h2">Post a Room</h1>
 </div>
   {% if houses %}
+  <form method="post">
+  <select class="form-control">
+    {% for house in houses %}
+    <option key={{house.id}}>{{house.full_address}}</option>
+    {% endfor %}
+  </select>
+  <button class="btn btn-sm btn-primary" type='submit'>Create</button>
+</form>
   {% else %}
-    <p>Looks like you haven't told us about any houses you have</p>
+    <p>Looks like you haven't told us about any houses you have!</p>
     <a href="{% url 'house_create'%}" class="btn btn-primary">Create House Now</a>
   {% endif %}
 </div>

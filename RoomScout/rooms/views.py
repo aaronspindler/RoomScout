@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.forms.utils import ErrorList
 from .models import Room
 from houses.models import House
 
+@login_required(login_url="/login")
 def room_create(request):
     try:
         houses = House.objects.filter(user=request.user.id)

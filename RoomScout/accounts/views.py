@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django_countries import countries
 from django.contrib import messages
@@ -80,6 +81,7 @@ def signup(request):
     else:
         return render(request, 'accounts/signup.html', {'provinces':provs})
 
+@login_required(login_url="/login")
 def settings(request):
     provs = provinces.get_provinces()
     if request.method == 'POST':

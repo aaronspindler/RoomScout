@@ -9,7 +9,7 @@ from .models import House
 from .forms import HouseForm
 from utils.datetime import now
 
-@login_required
+@login_required(login_url="/login")
 def house_create(request):
     form = HouseForm()
 
@@ -27,7 +27,6 @@ def house_create(request):
             return redirect('home')
     else:
         return render(request, 'houses/house_create.html', {'form': form})
-
 
 
 class house_detail(generic.DetailView):

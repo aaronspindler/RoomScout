@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'django_countries',
+    'phonenumber_field',
     'main',
     'management',
     'accounts',
@@ -76,10 +77,10 @@ WSGI_APPLICATION = 'RoomScout.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'RoomScout_dev',
-        'USER': 'roomscoutuser',
-        'PASSWORD' : 'J=78a5w$bWu.nN$HR,EM',
-        'HOST' : '3.213.0.212',
+        'NAME': 'roomscout_dev',
+        'USER': '',
+        'PASSWORD' : '',
+        'HOST' : 'amazonaws.com',
         'PORT' : '5432',
     }
 }

@@ -41,6 +41,7 @@
 
     <main role="main">
       {% if messages %}
+      <br>
       <div class="text-center">
       <ul style="list-style: none" class="bg-success messages">
           {% for message in messages %}
@@ -52,6 +53,8 @@
           {% endfor %}
       </ul>
       </div>
+      {% else %}
+      <br>
       {% endif %}
 
       {%  block content %}

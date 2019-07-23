@@ -7,12 +7,13 @@ verify_ssl = true
 
 [packages]
 django = "*"
-psycopg2 = "*"
 gunicorn = "*"
-django-widget-tweaks = "*"
 django-countries = "*"
 pillow = "*"
 django-crispy-forms = "*"
+django-phonenumber-field = "*"
+phonenumbers = "*"
+psycopg2-binary = "*"
 
 [requires]
 python_version = "3.7"

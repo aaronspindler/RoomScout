@@ -4,7 +4,13 @@ from . import views
 from accounts.views import signup, login, settings
 
 urlpatterns = [
+    #Content Pages
     path('', views.home, name='home'),
+    path('about', views.about, name='about'),
+    path('contactus', views.contactus, name='contactus'),
+    path('licenses', views.licenses, name='licenses'),
+    path('privacypolicy', views.privacypolicy, name='privacypolicy'),
+    path('termsandconditons', views.termsandconditons, name='termsandconditons'),
 
     # Accounts
     path('signup', signup ,name='signup'),

@@ -12,6 +12,7 @@ gunicorn = "*"
 django-widget-tweaks = "*"
 django-countries = "*"
 pillow = "*"
+django-crispy-forms = "*"
 
 [requires]
 python_version = "3.7"

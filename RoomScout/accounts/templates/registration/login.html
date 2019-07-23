@@ -15,12 +15,11 @@ Log In
         {{form.non_field_errors}}
       </div>
     {% endif%}
-    {% load widget_tweaks %}
     {% for field in form %}
       <div class="form-group {% if field.errors %}alert alert-danger{% endif %}">
         {{ field.errors }}
         {{ field.label_tag }}
-        {% render_field field class="form-control" %}
+        {{field}}
         {% if field.help_text %}
           <small class="text-muted">
             {{field.help_text|safe}}

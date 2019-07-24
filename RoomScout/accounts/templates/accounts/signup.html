@@ -5,15 +5,15 @@ Sign Up
 {% endblock %}
 
 {% block content %}
+{% if error %}
+<div class="bg-danger text-center">
+  <p>{{error}}</p>
+</div>
+{% endif%}
 <div class="container">
   <div>
     <h2>Sign Up</h2>
   </div>
-  {% if error %}
-  <div class="bg-danger text-center">
-    <p>{{error}}</p>
-  </div>
-  {% endif%}
   <form action="{%url 'signup'%}" method="POST">
     {% csrf_token %}
     <div class="form-row">

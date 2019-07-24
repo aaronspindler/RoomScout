@@ -3,6 +3,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
     email_confirmed = models.BooleanField(default=False)
     previous_email = models.EmailField(default = '')
     phone_number = PhoneNumberField(blank = True)

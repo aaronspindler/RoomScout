@@ -12,6 +12,7 @@ from utils import provinces, emailclient
 
 def login(request):
     if request.POST:
+        print(request.META.get('REMOTE_ADDR'))
         username = request.POST['username']
         password = request.POST['password']
         if username == '' or password == '':
@@ -48,7 +49,6 @@ def signup(request):
                     if request.POST['first_name'] and request.POST['last_name']:
                         if request.POST['first_name'] == '' or request.POST['last_name'] == '':
                             return render(request, 'accounts/signup.html', {'error':'First/Last name cannot be blank!', 'provinces':provs})
-
                         email = request.POST['email']
                         username = request.POST['username']
                         password = request.POST['password1']
@@ -75,6 +75,7 @@ def signup(request):
                             postal_code = None
 
                         user = User.objects.create_user(username, password=password)
+                        user.ip_address = request.META.get('REMOTE_ADDR')
                         user.email = email
                         user.previous_email = email
                         user.first_name = firstname

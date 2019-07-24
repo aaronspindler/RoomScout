@@ -1,20 +1,25 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+
 
 def home(request):
-    return render(request, 'main/home.html')
+	return render(request, 'main/home.html')
+
 
 def about(request):
-    return render(request, 'main/about.html')
+	return render(request, 'main/about.html')
+
 
 def contactus(request):
-    return render(request, 'main/contactus.html')
+	return render(request, 'main/contactus.html')
+
 
 def licenses(request):
-    return render(request, 'main/licenses.html')
+	return render(request, 'main/licenses.html')
+
 
 def privacypolicy(request):
-    return render(request, 'main/privacypolicy.html')
+	return render(request, 'main/privacypolicy.html')
+
 
 def termsandconditons(request):
-    return render(request, 'main/termsandconditons.html')
+	return render(request, 'main/termsandconditons.html')

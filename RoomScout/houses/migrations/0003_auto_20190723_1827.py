@@ -4,15 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+	dependencies = [
+		('houses', '0002_remove_house_kijiji_link'),
+	]
 
-    dependencies = [
-        ('houses', '0002_remove_house_kijiji_link'),
-    ]
-
-    operations = [
-        migrations.AlterField(
-            model_name='house',
-            name='prov_state',
-            field=models.CharField(choices=[('ON', 'Ontario'), ('QC', 'Quebec'), ('NS', 'Nova Scotia'), ('NB', 'New Brunswick'), ('MB', 'Manitoba'), ('BC', 'British Columbia'), ('PE', 'Prince Edward Island'), ('SK', 'Saskatchewan'), ('AB', 'Alberta'), ('NL', 'Newfoundland & Labrador'), ('NA', 'Not Applicable')], max_length=2),
-        ),
-    ]
+	operations = [
+		migrations.AlterField(
+			model_name='house',
+			name='prov_state',
+			field=models.CharField(
+				choices=[('ON', 'Ontario'), ('QC', 'Quebec'), ('NS', 'Nova Scotia'), ('NB', 'New Brunswick'),
+				         ('MB', 'Manitoba'), ('BC', 'British Columbia'), ('PE', 'Prince Edward Island'),
+				         ('SK', 'Saskatchewan'), ('AB', 'Alberta'), ('NL', 'Newfoundland & Labrador'),
+				         ('NA', 'Not Applicable')], max_length=2),
+		),
+	]

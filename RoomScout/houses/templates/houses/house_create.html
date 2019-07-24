@@ -3,24 +3,24 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-Create House
+    Create House
 {% endblock %}
 
 {% block content %}
-{% if message %}
-<div class="text-center bg-success">
-  <p>{{message}}</p>
-</div>
-{% endif %}
-<div class="container">
-  <h2>Create a House</h2>
-  <form method="post">
-    {%csrf_token%}
-    {{form|crispy}}
-    <div class="text-center">
-    <button class="btn btn-primary" type='submit'>Create</button>
-  </div>
-  </form>
-</div>
+    {% if message %}
+        <div class="text-center bg-success">
+            <p>{{ message }}</p>
+        </div>
+    {% endif %}
+    <div class="container">
+        <h2>Create a House</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="text-center">
+                <button class="btn btn-primary" type='submit'>Create</button>
+            </div>
+        </form>
+    </div>
 
 {% endblock %}

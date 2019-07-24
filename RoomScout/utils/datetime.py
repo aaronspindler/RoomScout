@@ -1,4 +1,5 @@
 import datetime
 
+
 def now():
-    return datetime.datetime.now()
+	return datetime.datetime.now()

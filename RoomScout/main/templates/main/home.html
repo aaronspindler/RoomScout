@@ -2,97 +2,116 @@
 {% load staticfiles %}
 
 {% block title %}
-Home
+    Home
 {% endblock %}
 
 {% block content %}
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-    <li data-target="#myCarousel" data-slide-to="1"></li>
-    <li data-target="#myCarousel" data-slide-to="2"></li>
-  </ol>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <svg class="bd-placeholder-img" width="100%" height="300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#7472DF"/></svg>
-      <div class="container">
-        <div class="carousel-caption text-left">
-          <h1>Looking for someone to rent a room?</h1>
-          <p>Do you already have a house but are looking for a housemate to move in to help cover expenses?</p>
-          <p><a class="btn btn-lg btn-primary" href="{% url 'signup' %}" role="button">Sign up today!</a></p>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <svg class="bd-placeholder-img" width="100%" height="300" xmlns="http://www.w3.org/2000/svg"
+                     preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
+                    <rect width="100%" height="100%" fill="#7472DF"/>
+                </svg>
+                <div class="container">
+                    <div class="carousel-caption text-left">
+                        <h1>Looking for someone to rent a room?</h1>
+                        <p>Do you already have a house but are looking for a housemate to move in to help cover
+                            expenses?</p>
+                        <p><a class="btn btn-lg btn-primary" href="{% url 'signup' %}" role="button">Sign up today!</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <svg class="bd-placeholder-img" width="100%" height="300" xmlns="http://www.w3.org/2000/svg"
+                     preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
+                    <rect width="100%" height="100%" fill="#5EDDAA"/>
+                </svg>
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h1>Looking to rent a room?</h1>
+                        <p>Are you looking for a new place to live? Search for the perfect place with a wonderful
+                            landlord.</p>
+                        <p><a class="btn btn-lg btn-primary" href="#" role="button">Search Now!</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <svg class="bd-placeholder-img" width="100%" height="300" xmlns="http://www.w3.org/2000/svg"
+                     preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
+                    <rect width="100%" height="100%" fill="#65A5DA"/>
+                </svg>
+                <div class="container">
+                    <div class="carousel-caption text-right">
+                        <h1>Looking for a way to easily manage and split house expenses?</h1>
+                        <p>RoomScout easily manages expenses and splitting of bills</p>
+                        <p><a class="btn btn-lg btn-primary" href="{% url 'signup' %}" role="button">Sign Up!</a></p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
-    <div class="carousel-item">
-      <svg class="bd-placeholder-img" width="100%" height="300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#5EDDAA"/></svg>
-      <div class="container">
-        <div class="carousel-caption">
-          <h1>Looking to rent a room?</h1>
-          <p>Are you looking for a new place to live? Search for the perfect place with a wonderful landlord.</p>
-          <p><a class="btn btn-lg btn-primary" href="#" role="button">Search Now!</a></p>
+    <br>
+
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+        <!-- START THE FEATURETTES -->
+        <div class="row featurette">
+            <div class="col-md-7">
+                <h2 class="featurette-heading">Looking for someone to move in?<span class="text-muted"> Post your room now</span>
+                </h2>
+                <p class="lead">If you are looking for a roommate to live in your house or someone to split an apartment
+                    with. Look no further, post your available room on RoomScout</p>
+            </div>
+            <div class="col-md-5">
+                <img class="img-fluid" src="{% static 'stock_photos/tenant_2.jpg' %}" width=400/>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <svg class="bd-placeholder-img" width="100%" height="300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#65A5DA"/></svg>
-      <div class="container">
-        <div class="carousel-caption text-right">
-          <h1>Looking for a way to easily manage and split house expenses?</h1>
-          <p>RoomScout easily manages expenses and splitting of bills</p>
-          <p><a class="btn btn-lg btn-primary" href="{% url 'signup' %}" role="button">Sign Up!</a></p>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+            <div class="col-md-7 order-md-2">
+                <h2 class="featurette-heading">Looking for a place to live?<span class="text-muted"> Find the perfect room!</span>
+                </h2>
+                <p class="lead">Are you looking for the perfect place to live but are not ready to live alone? Find the
+                    perfect place by search rooms on RoomScout</p>
+            </div>
+            <div class="col-md-5 order-md-1">
+                <img class="img-fluid" src="{% static 'stock_photos/bedroom_2.jpg' %}" width=400/></div>
         </div>
-      </div>
-    </div>
-  </div>
-  <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
-<br>
 
+        <hr class="featurette-divider">
 
-<!-- Marketing messaging and featurettes
-================================================== -->
-<!-- Wrap the rest of the page in another container to center all the content. -->
-<div class="container marketing">
-  <!-- START THE FEATURETTES -->
-  <div class="row featurette">
-    <div class="col-md-7">
-      <h2 class="featurette-heading">Looking for someone to move in?<span class="text-muted"> Post your room now</span></h2>
-      <p class="lead">If you are looking for a roommate to live in your house or someone to split an apartment with. Look no further, post your available room on RoomScout</p>
-    </div>
-    <div class="col-md-5">
-      <img class="img-fluid" src="{% static 'stock_photos/tenant_2.jpg'%}" width=400/>
-    </div>
-  </div>
+        <div class="row featurette">
+            <div class="col-md-7">
+                <h2 class="featurette-heading">And lastly, <span class="text-muted"> take the headache out of managing shared expenses</span>
+                </h2>
+                <p class="lead">Do you split utilities with the other people living in your house / apartment? If so it
+                    can be a huge burden to manage expenses and make sure you get paid. RoomScout relieves that headache
+                    by splitting and managing it all for you.</p>
+            </div>
+            <div class="col-md-5">
+                <img class="img-fluid" src="{% static 'stock_photos/finances_1.jpg' %}" width=400/></div>
+        </div>
+        <!-- /END THE FEATURETTES -->
 
-  <hr class="featurette-divider">
-
-  <div class="row featurette">
-    <div class="col-md-7 order-md-2">
-      <h2 class="featurette-heading">Looking for a place to live?<span class="text-muted"> Find the perfect room!</span></h2>
-      <p class="lead">Are you looking for the perfect place to live but are not ready to live alone? Find the perfect place by search rooms on RoomScout</p>
-    </div>
-    <div class="col-md-5 order-md-1">
-      <img class="img-fluid" src="{% static 'stock_photos/bedroom_2.jpg'%}" width=400/>    </div>
-  </div>
-
-  <hr class="featurette-divider">
-
-  <div class="row featurette">
-    <div class="col-md-7">
-      <h2 class="featurette-heading">And lastly, <span class="text-muted"> take the headache out of managing shared expenses</span></h2>
-      <p class="lead">Do you split utilities with the other people living in your house / apartment? If so it can be a huge burden to manage expenses and make sure you get paid. RoomScout relieves that headache by splitting and managing it all for you.</p>
-    </div>
-    <div class="col-md-5">
-      <img class="img-fluid" src="{% static 'stock_photos/finances_1.jpg'%}" width=400/>    </div>
-  </div>
-  <!-- /END THE FEATURETTES -->
-
-</div><!-- /.container -->
+    </div><!-- /.container -->
 {% endblock %}

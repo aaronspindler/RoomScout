@@ -1,79 +1,80 @@
 {% extends 'main/_base.html' %}
 
 {% block title %}
-Sign Up
+    Sign Up
 {% endblock %}
 
 {% block content %}
-{% if error %}
-<div class="bg-danger text-center">
-  <p>{{error}}</p>
-</div>
-{% endif%}
-<div class="container">
-  <div>
-    <h2>Sign Up</h2>
-  </div>
-  <form action="{%url 'signup'%}" method="POST">
-    {% csrf_token %}
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="firstname">First Name</label>
-        <input type="text" class="form-control" name="first_name" id="firstname" placeholder="John">
-      </div>
-      <div class="form-group col-md-6">
-        <label for="lastname">Last Name</label>
-        <input type="text" class="form-control" name="last_name" id="lastname" placeholder="Smith">
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input type="text" class="form-control" name="username" id="username" placeholder="Enter Username">
-    </div>
-    <div class="form-group">
-      <label for="email">Email address</label>
-      <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email">
-    </div>
-    <div class="form-group">
-      <label for="phonenumber">Phone Number</label>
-      <input type="tel" class="form-control" name="phonenumber" id="phonenumber" placeholder="(613) 555 7722">
-    </div>
-    <div class="form-group">
-      <label for="password1">Password</label>
-      <input type="password" class="form-control" name="password1" id="password1" placeholder="Password">
-    </div>
-    <div class="form-group">
-      <label for="password2">Confirm Password</label>
-      <input type="password" class="form-control" name="password2" id="password" placeholder="Password">
-    </div>
+    {% if error %}
+        <div class="bg-danger text-center">
+            <p>{{ error }}</p>
+        </div>
+    {% endif %}
+    <div class="container">
+        <div>
+            <h2>Sign Up</h2>
+        </div>
+        <form action="{% url 'signup' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="firstname">First Name</label>
+                    <input type="text" class="form-control" name="first_name" id="firstname" placeholder="John">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="lastname">Last Name</label>
+                    <input type="text" class="form-control" name="last_name" id="lastname" placeholder="Smith">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" name="username" id="username" placeholder="Enter Username">
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email">
+            </div>
+            <div class="form-group">
+                <label for="phonenumber">Phone Number</label>
+                <input type="tel" class="form-control" name="phonenumber" id="phonenumber" placeholder="(613) 555 7722">
+            </div>
+            <div class="form-group">
+                <label for="password1">Password</label>
+                <input type="password" class="form-control" name="password1" id="password1" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label for="password2">Confirm Password</label>
+                <input type="password" class="form-control" name="password2" id="password" placeholder="Password">
+            </div>
 
-    <div class="form-group">
-      <label for="inputAddress">Address</label>
-      <input type="text" class="form-control" name="address" id="inputAddress" placeholder="1234 Main St">
+            <div class="form-group">
+                <label for="inputAddress">Address</label>
+                <input type="text" class="form-control" name="address" id="inputAddress" placeholder="1234 Main St">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="city">City</label>
+                    <input type="text" class="form-control" name="city" id="city" placeholder="Vancouver">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="province">Province</label>
+                    <select name="province" id="province" class="form-control">
+                        <option disabled selected>Choose...</option>
+                        {% for province in provinces %}
+                            <option value={{ province.key }}>{{ province.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="postal_code">Postal Code</label>
+                    <input type="text" class="form-control" name="postal_code" id="postal_code">
+                </div>
+            </div>
+            <p>By clicking Sign up, you agree to our <a href="{% url 'termsandconditons' %}">Terms</a> and that you have
+                read our <a href="{% url 'privacypolicy' %}">Privacy Policy</a>.</P>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Sign Up!</button>
+            </div>
+        </form>
     </div>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="city">City</label>
-        <input type="text" class="form-control" name="city" id="city" placeholder="Vancouver">
-      </div>
-      <div class="form-group col-md-4">
-        <label for="province">Province</label>
-        <select name="province" id="province" class="form-control">
-          <option disabled selected>Choose...</option>
-            {% for province in provinces %}
-              <option value={{province.key}}>{{province.name}}</option>
-            {% endfor %}
-        </select>
-      </div>
-      <div class="form-group col-md-2">
-        <label for="postal_code">Postal Code</label>
-        <input type="text" class="form-control" name="postal_code" id="postal_code">
-      </div>
-    </div>
-    <p>By clicking Sign up, you agree to our <a href="{%url 'termsandconditons'%}">Terms</a> and that you have read our <a href="{%url 'privacypolicy'%}">Privacy Policy</a>.</P>
-    <div class="text-center">
-      <button type="submit" class="btn btn-primary">Sign Up!</button>
-    </div>
-  </form>
-</div>
 {% endblock %}

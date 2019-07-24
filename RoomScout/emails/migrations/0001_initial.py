@@ -4,21 +4,20 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+	initial = True
 
-    initial = True
+	dependencies = [
+	]
 
-    dependencies = [
-    ]
-
-    operations = [
-        migrations.CreateModel(
-            name='Email',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('sent_to', models.EmailField(max_length=254)),
-                ('subject', models.TextField()),
-                ('contents', models.TextField()),
-                ('sent_at', models.DateTimeField(auto_now_add=True)),
-            ],
-        ),
-    ]
+	operations = [
+		migrations.CreateModel(
+			name='Email',
+			fields=[
+				('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+				('sent_to', models.EmailField(max_length=254)),
+				('subject', models.TextField()),
+				('contents', models.TextField()),
+				('sent_at', models.DateTimeField(auto_now_add=True)),
+			],
+		),
+	]

@@ -1,6 +1,7 @@
-from django.urls import path, include
+from django.urls import path
+
 from . import views
 
 urlpatterns = [
-    path('', views.management_home, name='management_home'),
+	path('', views.management_home, name='management_home'),
 ]

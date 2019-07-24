@@ -2,25 +2,25 @@
 {% load staticfiles %}
 
 {% block title %}
-Home
+    Home
 {% endblock %}
 
 {% block pageheader %}
-Management Home
+    Management Home
 {% endblock %}
 
 {% block content %}
-{% if messages %}
-<div class="text-center">
-<ul style="list-style: none" class="bg-success messages">
-    {% for message in messages %}
-    <li>
-    {% if message.tags == 'success'%}
-      {{ message }}
+    {% if messages %}
+        <div class="text-center">
+            <ul style="list-style: none" class="bg-success messages">
+                {% for message in messages %}
+                    <li>
+                        {% if message.tags == 'success' %}
+                            {{ message }}
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     {% endif %}
-    </li>
-    {% endfor %}
-</ul>
-</div>
-{% endif %}
 {% endblock %}

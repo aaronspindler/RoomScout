@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+	dependencies = [
+		('houses', '0003_auto_20190723_1827'),
+	]
 
-    dependencies = [
-        ('houses', '0003_auto_20190723_1827'),
-    ]
-
-    operations = [
-        migrations.AddField(
-            model_name='house',
-            name='hide_address',
-            field=models.BooleanField(default=False),
-        ),
-    ]
+	operations = [
+		migrations.AddField(
+			model_name='house',
+			name='hide_address',
+			field=models.BooleanField(default=False),
+		),
+	]

@@ -5,6 +5,7 @@ __pycache__/
 
 # Custom
 RoomScout/static
+.idea/
 
 # C extensions
 *.so

@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from utils import provinces, emailclient
+from utils import provinces, emailclient, ipaddress
 from .models import User
 
 
@@ -16,6 +16,7 @@ def login(request):
 			return render(request, 'registration/login.html', {'error': 'Username or Password cannot be blank!'})
 		user = auth.authenticate(username=username, password=password)
 		if user is not None:
+			ipaddress.collectIP(request, user)
 			auth.login(request, user)
 			return redirect('home')
 		else:
@@ -77,7 +78,6 @@ def signup(request):
 							postal_code = None
 
 						user = User.objects.create_user(username, password=password)
-						user.ip_address = request.META.get('REMOTE_ADDR')
 						user.email = email
 						user.previous_email = email
 						user.first_name = firstname
@@ -88,6 +88,7 @@ def signup(request):
 						user.postal_code = postal_code
 						user.score = 0.0
 						user.save()
+						ipaddress.collectIP(request, user)
 						emailclient.send_confirmation_email()
 						auth.login(request, user)
 						return redirect('home')

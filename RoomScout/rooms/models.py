@@ -9,8 +9,3 @@ class Room(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 
 	price = models.FloatField(default=0.0)
-	image = models.ImageField(upload_to='images/', blank=True)
-	image2 = models.ImageField(upload_to='images/', blank=True)
-	image3 = models.ImageField(upload_to='images/', blank=True)
-	image4 = models.ImageField(upload_to='images/', blank=True)
-	image5 = models.ImageField(upload_to='images/', blank=True)

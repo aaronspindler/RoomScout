@@ -4,7 +4,6 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class User(AbstractUser):
-	ip_address = models.GenericIPAddressField(null=True, blank=True)
 	email_confirmed = models.BooleanField(default=False)
 	previous_email = models.EmailField(default='')
 	phone_number = PhoneNumberField(blank=True)

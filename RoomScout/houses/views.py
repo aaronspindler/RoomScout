@@ -15,7 +15,7 @@ def house_create(request):
 		if len(request.POST) < 7 or len(request.POST) > 7:
 			return render(request, 'houses/house_create.html',{'error': 'There is an issue with the address inputted!', 'GOOGLE_API_KEY': GOOGLE_API_KEY})
 		house = House()
-		house.user = request.user;
+		house.user = request.user
 		if request.POST['street_number'] and request.POST['street_number'] and request.POST['street_name'] and request.POST['city'] and request.POST['prov_state'] and request.POST['postal_code'] and request.POST['country']:
 			house.street_number = request.POST['street_number']
 			house.street_name = request.POST['street_name']

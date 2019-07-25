@@ -14,6 +14,7 @@ class IP(models.Model):
 	ip_address = models.GenericIPAddressField()
 
 class Image(models.Model):
+	is_approved = models.BooleanField(default=False)
 	user = models.ForeignKey(User, on_delete=models.PROTECT)
 	image = models.ImageField(upload_to='images/', blank=True)
 

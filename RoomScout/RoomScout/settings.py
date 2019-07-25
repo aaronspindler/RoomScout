@@ -6,6 +6,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '-(k@3@gsic-t0$l2s*y5*w=j+uo*7-#@@q)^)$7nh@yk1_m6be'
+AWS_S3_USER = ''
+AWS_S3_ACCESS_KEY = ''
+AWS_S3_SECRET_ACCESS_KEY = ''
 GOOGLE_API_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -32,6 +35,7 @@ INSTALLED_APPS = [
 	'crispy_forms',
 	'django_countries',
 	'phonenumber_field',
+	'storages',
 	'main',
 	'blog',
 	'management',

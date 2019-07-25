@@ -40,7 +40,6 @@ INSTALLED_APPS = [
 	'rooms',
 	'bills',
 	'utils',
-	'emails',
 ]
 
 MIDDLEWARE = [

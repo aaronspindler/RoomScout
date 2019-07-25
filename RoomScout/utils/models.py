@@ -15,5 +15,7 @@ class IP(models.Model):
 
 class Image(models.Model):
 	user = models.ForeignKey(User, on_delete=models.PROTECT)
-	room = models.ForeignKey(Room, on_delete=models.PROTECT)
 	image = models.ImageField(upload_to='images/', blank=True)
+
+class RoomImage(Image):
+	room = models.ForeignKey(Room, on_delete=models.PROTECT)

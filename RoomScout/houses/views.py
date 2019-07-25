@@ -4,8 +4,6 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from django.conf import settings
-
-from .forms import SearchForm
 from .models import House
 
 
@@ -13,12 +11,20 @@ from .models import House
 def house_create(request):
 	GOOGLE_API_KEY = settings.GOOGLE_API_KEY
 	if request.method == 'POST':
-		form = SearchForm(request.POST)
-		if form.is_valid():
-			#house = House()
-			#house.save()
-			#return redirect('house_detail', pk=house.id)
-			pass
+		if len(request.POST) < 7 or len(request.POST) > 7:
+			return render(request, 'houses/house_create.html',{'error': 'There is an issue with the address inputted!', 'GOOGLE_API_KEY': GOOGLE_API_KEY})
+		house = House()
+		house.user = request.user;
+		if request.POST['street_number'] and request.POST['street_number'] and request.POST['street_name'] and request.POST['city'] and request.POST['prov_state'] and request.POST['postal_code'] and request.POST['country']:
+			house.street_number = request.POST['street_number']
+			house.street_name = request.POST['street_name']
+			house.city = request.POST['city']
+			house.prov_state = request.POST['prov_state']
+			house.postal_code = request.POST['postal_code']
+			house.country = request.POST['country']
+			house.save()
+			return redirect('house_detail', pk=house.id)
+		return render(request, 'houses/house_create.html', {'error':'There is an issue with the address inputted!','GOOGLE_API_KEY': GOOGLE_API_KEY})
 	else:
 		return render(request, 'houses/house_create.html', {'GOOGLE_API_KEY': GOOGLE_API_KEY})
 

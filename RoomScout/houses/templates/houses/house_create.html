@@ -13,43 +13,67 @@
         </div>
     {% endif %}
 
+    {% if error %}
+        <div class="text-center bg-danger">
+            <p>{{ error }}</p>
+        </div>
+    {% endif %}
+
     <div class="container">
         <h2>Create a House</h2>
         <div id="locationField">
             <label>Search: </label>
             <input class="form-control" id="autocomplete"
-                   placeholder="Enter your address"
+                   placeholder="Enter an Address"
                    onFocus="geolocate()"
                    type="text"/>
         </div>
         <br>
 
-        <form>
-        <table id="address">
-            <tr>
-                <td class="label">Street address:</td>
-                <td class="slimField"><input hidden="true" class="form-control" id="street_number" disabled="true"/></td>
-                <td class="wideField" colspan="2"><input hidden="true" class="form-control" id="route" disabled="true"/></td>
-            </tr>
-            <tr>
-                <td class="label">City</td>
-                <td class="wideField" colspan="3"><input hidden="true" class="form-control" id="locality" disabled="true"/></td>
-            </tr>
-            <tr>
-                <td class="label">State</td>
-                <td class="slimField"><input hidden="true" class="form-control" id="administrative_area_level_1" disabled="true"/></td>
-                <td class="label">Zip code</td>
-                <td class="wideField"><input hidden="true" class="form-control" id="postal_code" disabled="true"/></td>
-            </tr>
-            <tr>
-                <td class="label">Country</td>
-                <td class="wideField" colspan="3"><input hidden="true" class="form-control" id="country" disabled="true"/></td>
-            </tr>
-        </table>
+        <form method="post">
+            {% csrf_token %}
+            <table id="address">
+                <tr>
+                    <td class="slimField"><input hidden="true" class="form-control" name="street_number"
+                                                 id="street_number" value="" disabled="true"/></td>
+                    <td class="wideField" colspan="2"><input hidden="true" class="form-control" name="street_name"
+                                                             id="route" value="" disabled="true"/></td>
+                </tr>
+                <tr>
+                    <td class="wideField" colspan="3"><input hidden="true" class="form-control" name="city"
+                                                             id="locality" value="" disabled="true"/></td>
+                </tr>
+                <tr>
+                    <td class="slimField"><input hidden="true" class="form-control" name="prov_state"
+                                                 id="administrative_area_level_1" value="" disabled="true"/></td>
+                    <td class="wideField"><input hidden="true" class="form-control" name="postal_code" id="postal_code"
+                                                 value="" disabled="true"/></td>
+                </tr>
+                <tr>
+                    <td class="wideField" colspan="3"><input hidden="true" class="form-control" name="country"
+                                                             id="country" value="" disabled="true"/></td>
+                </tr>
+            </table>
             <div class="text-center">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="submitbutton" type="submit" class="btn btn-primary">Submit</button>
             </div>
+
+            <script>
+                $(document).ready(function () {
+                    $('#submitbutton').attr('disabled', true);
+                    $('#autocomplete').on('keyup', function () {
+                        var textarea_value = $("#autocomplete").val();
+                        if (textarea_value != '') {
+                            $('#submitbutton').attr('disabled', false);
+                        } else {
+                            $('#submitbutton').attr('disabled', true);
+                        }
+                    });
+                });
+            </script>
+
         </form>
+
 
         <script>
             // This sample uses the Autocomplete widget to help the user select a
@@ -122,6 +146,7 @@
                 }
             }
         </script>
-        <script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&libraries=places&callback=initAutocomplete" async defer></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&libraries=places&callback=initAutocomplete"
+                async defer></script>
     </div>
 {% endblock %}

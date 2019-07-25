@@ -33,8 +33,7 @@ def signup(request):
 	# Check if first or last name are blank
 	provs = provinces.get_provinces()
 	if request.method == 'POST':
-		if request.POST['username'] == '' or request.POST['password1'] == '' or request.POST['password2'] == '' or \
-				request.POST['email'] == '':
+		if request.POST['username'] == '' or request.POST['password1'] == '' or request.POST['password2'] == '' or request.POST['email'] == '':
 			return render(request, 'accounts/signup.html',
 			              {'error': 'Username/Password/Email cannot be blank!', 'provinces': provs})
 		if request.POST['password1'] == request.POST['password2']:

@@ -1,8 +1,6 @@
 from django.db import models
-
 from accounts.models import User
 from houses.models import House
-
 
 class Room(models.Model):
 	name = models.CharField(max_length=200, default='')

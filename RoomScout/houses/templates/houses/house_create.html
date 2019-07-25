@@ -27,7 +27,6 @@
                    onFocus="geolocate()"
                    type="text"/>
         </div>
-        <br>
 
         <form method="post">
             {% csrf_token %}
@@ -53,10 +52,7 @@
                                                              id="country" value="" disabled="true"/></td>
                 </tr>
             </table>
-            <div class="text-center">
                 <button id="submitbutton" type="submit" class="btn btn-primary">Submit</button>
-            </div>
-
             <script>
                 $(document).ready(function () {
                     $('#submitbutton').attr('disabled', true);

@@ -20,6 +20,12 @@ class PublicImage(models.Model):
 	user = models.ForeignKey(User, on_delete=models.PROTECT)
 	image = models.ImageField()
 
+class PrivateImage(models.Model):
+	uploaded_at = models.DateTimeField(auto_now_add=True)
+	is_approved = models.BooleanField(default=False)
+	user = models.ForeignKey(User, on_delete=models.PROTECT)
+	image = models.ImageField(storage=PrivateMediaStorage())
+
 class RoomImage(PublicImage):
 	room = models.ForeignKey(Room, on_delete=models.PROTECT)
 

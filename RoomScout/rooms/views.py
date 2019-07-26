@@ -6,10 +6,12 @@ from django.views import generic
 
 from houses.models import House
 from .models import Room
+from .forms import RoomForm
 
 
 @login_required(login_url="/login")
 def room_create(request):
+	form = RoomForm()
 	try:
 		houses = House.objects.filter(user=request.user.id)
 		return render(request, 'rooms/room_create.html', {'houses': houses})

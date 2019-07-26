@@ -26,6 +26,7 @@
                    placeholder="Enter an Address"
                    onFocus="geolocate()"
                    type="text"/>
+            <small class="text-muted">Currently only available for Canada and United States</small>
         </div>
 
         <form method="post">
@@ -52,22 +53,23 @@
                                                              id="country" value="" disabled="true"/></td>
                 </tr>
             </table>
-                <button id="submitbutton" type="submit" class="btn btn-primary">Submit</button>
-            <script>
-                $(document).ready(function () {
-                    $('#submitbutton').attr('disabled', true);
-                    $('#autocomplete').on('keyup', function () {
-                        var textarea_value = $("#autocomplete").val();
-                        if (textarea_value != '') {
-                            $('#submitbutton').attr('disabled', false);
-                        } else {
-                            $('#submitbutton').attr('disabled', true);
-                        }
-                    });
-                });
-            </script>
+            <button id="submitbutton" type="submit" class="btn btn-primary">Create</button>
 
         </form>
+
+        <script>
+            $(document).ready(function () {
+                $('#submitbutton').attr('disabled', true);
+                $('#autocomplete').on('keyup', function () {
+                    var textarea_value = $("#autocomplete").val();
+                    if (textarea_value != '') {
+                        $('#submitbutton').attr('disabled', false);
+                    } else {
+                        $('#submitbutton').attr('disabled', true);
+                    }
+                });
+            });
+        </script>
 
 
         <script>

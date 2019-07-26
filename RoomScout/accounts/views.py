@@ -9,7 +9,6 @@ from .models import User
 
 def login(request):
 	if request.POST:
-		print(request.META.get('REMOTE_ADDR'))
 		username = request.POST['username']
 		password = request.POST['password']
 		if username == '' or password == '':

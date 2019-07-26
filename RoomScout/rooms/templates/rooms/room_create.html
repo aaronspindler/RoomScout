@@ -10,12 +10,20 @@
         <h2>Post a Room</h2>
         {% if houses %}
             <form method="post">
-                <select class="form-control">
-                    {% for house in houses %}
-                        <option key={{ house.id }}>{{ house.full_address }}</option>
-                    {% endfor %}
-                </select>
-                <button class="btn btn-sm btn-primary" type='submit'>Create</button>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>Select a House:</label>
+                    </div>
+                    <div class="col-md-10">
+                        <select class="form-control">
+                            {% for house in houses %}
+                                <option key={{ house.id }}>{{ house.full_address }}</option>
+                            {% endfor %}
+                        </select>
+                    <small><a href="{% url 'house_create' %}">Create a new house!</a></small>
+                    </div>
+                </div>
+                <button class="btn btn-sm btn-primary" type='submit'>Post</button>
             </form>
         {% else %}
             <p>Looks like you haven't told us about any houses you have!</p>

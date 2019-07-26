@@ -6,10 +6,29 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '-(k@3@gsic-t0$l2s*y5*w=j+uo*7-#@@q)^)$7nh@yk1_m6be'
-AWS_S3_USER = ''
-AWS_S3_ACCESS_KEY = ''
-AWS_S3_SECRET_ACCESS_KEY = ''
+
+# Google
 GOOGLE_API_KEY = ''
+
+
+# AWS
+AWS_USER = ''
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
+AWS_DEFAULT_ACL = None
+
+AWS_STORAGE_BUCKET_NAME = 'roomscout-media'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+AWS_PUBLIC_MEDIA_LOCATION = 'media/public'
+DEFAULT_FILE_STORAGE = 'RoomScout.storage_backends.PublicMediaStorage'
+
+AWS_PRIVATE_MEDIA_LOCATION = 'media/private'
+PRIVATE_FILE_STORAGE = 'RoomScout.storage_backends.PrivateMediaStorage'
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

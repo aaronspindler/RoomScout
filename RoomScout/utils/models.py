@@ -1,6 +1,7 @@
 from django.db import models
 from accounts.models import User
 from rooms.models import Room
+from RoomScout.storage_backends import PrivateMediaStorage
 
 class Email(models.Model):
 	sent_at = models.DateTimeField(auto_now_add=True)
@@ -13,10 +14,17 @@ class IP(models.Model):
 	created = models.DateTimeField(auto_now=True)
 	ip_address = models.GenericIPAddressField()
 
-class Image(models.Model):
+class PublicImage(models.Model):
+	uploaded_at = models.DateTimeField(auto_now_add=True)
 	is_approved = models.BooleanField(default=False)
 	user = models.ForeignKey(User, on_delete=models.PROTECT)
-	image = models.ImageField(upload_to='images/', blank=True)
+	image = models.ImageField()
 
-class RoomImage(Image):
+class RoomImage(PublicImage):
 	room = models.ForeignKey(Room, on_delete=models.PROTECT)
+
+class PrivateFile(models.Model):
+	uploaded_at = models.DateTimeField(auto_now_add=True)
+	is_approved = models.BooleanField(default=False)
+	upload = models.FileField(storage=PrivateMediaStorage())
+	user = models.ForeignKey(User, on_delete=models.PROTECT)

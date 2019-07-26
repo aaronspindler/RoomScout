@@ -23,9 +23,11 @@
                         <h1>Looking for a housemate?</h1>
                         <p>We all need some help, find someone to split expenses with!</p>
                         {% if user.is_authenticated %}
-                            <p><a class="btn btn-lg btn-primary" href="{% url 'room_create' %}" role="button">Post your room now!</a></p>
+                            <p><a class="btn btn-lg btn-primary" href="{% url 'room_create' %}" role="button">Post your
+                                room now!</a></p>
                         {% else %}
-                            <p><a class="btn btn-lg btn-primary" href="{% url 'signup' %}" role="button">Sign up today!</a>
+                            <p><a class="btn btn-lg btn-primary" href="{% url 'signup' %}" role="button">Sign up
+                                today!</a>
                             </p>
                         {% endif %}
                     </div>
@@ -54,9 +56,11 @@
                         <h1>Looking to manage expenses?</h1>
                         <p>RoomScout easily manages expenses and splitting of bills</p>
                         {% if user.is_authenticated %}
-                            <p><a class="btn btn-lg btn-primary" href="{% url 'room_create' %}" role="button">Start Managing!</a></p>
+                            <p><a class="btn btn-lg btn-primary" href="{% url 'room_create' %}" role="button">Start
+                                Managing!</a></p>
                         {% else %}
-                            <p><a class="btn btn-lg btn-primary" href="{% url 'signup' %}" role="button">Sign Up!</a></p>
+                            <p><a class="btn btn-lg btn-primary" href="{% url 'signup' %}" role="button">Sign Up!</a>
+                            </p>
                         {% endif %}
                     </div>
                 </div>

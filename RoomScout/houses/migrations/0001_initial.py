@@ -6,30 +6,29 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+	initial = True
 
-    initial = True
+	dependencies = [
+		migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+	]
 
-    dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-    ]
-
-    operations = [
-        migrations.CreateModel(
-            name='House',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('is_approved', models.BooleanField(default=False)),
-                ('is_available', models.BooleanField(default=False)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('street_number', models.IntegerField(default=0)),
-                ('street_name', models.CharField(default='', max_length=400)),
-                ('city', models.CharField(default='', max_length=400)),
-                ('prov_state', models.CharField(max_length=2)),
-                ('postal_code', models.CharField(default='', max_length=7)),
-                ('country', models.CharField(default='', max_length=100)),
-                ('hide_address', models.BooleanField(default=False)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
-    ]
+	operations = [
+		migrations.CreateModel(
+			name='House',
+			fields=[
+				('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+				('is_approved', models.BooleanField(default=False)),
+				('is_available', models.BooleanField(default=False)),
+				('created_at', models.DateTimeField(auto_now_add=True)),
+				('updated_at', models.DateTimeField(auto_now=True)),
+				('street_number', models.IntegerField(default=0)),
+				('street_name', models.CharField(default='', max_length=400)),
+				('city', models.CharField(default='', max_length=400)),
+				('prov_state', models.CharField(max_length=2)),
+				('postal_code', models.CharField(default='', max_length=7)),
+				('country', models.CharField(default='', max_length=100)),
+				('hide_address', models.BooleanField(default=False)),
+				('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+			],
+		),
+	]

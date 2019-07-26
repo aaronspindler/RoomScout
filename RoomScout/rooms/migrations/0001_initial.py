@@ -4,22 +4,21 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+	initial = True
 
-    initial = True
+	dependencies = [
+	]
 
-    dependencies = [
-    ]
-
-    operations = [
-        migrations.CreateModel(
-            name='Room',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(default='', max_length=200)),
-                ('is_available', models.BooleanField(default=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('price', models.FloatField(default=0.0)),
-            ],
-        ),
-    ]
+	operations = [
+		migrations.CreateModel(
+			name='Room',
+			fields=[
+				('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+				('name', models.CharField(default='', max_length=200)),
+				('is_available', models.BooleanField(default=True)),
+				('created_at', models.DateTimeField(auto_now_add=True)),
+				('updated_at', models.DateTimeField(auto_now=True)),
+				('price', models.FloatField(default=0.0)),
+			],
+		),
+	]

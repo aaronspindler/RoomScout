@@ -13,7 +13,7 @@ urlpatterns = [
 	path('privacypolicy', views.privacypolicy, name='privacypolicy'),
 	path('termsandconditons', views.termsandconditons, name='termsandconditons'),
 
-	#Blog
+	# Blog
 	path('blog/', include('blog.urls')),
 
 	# Accounts

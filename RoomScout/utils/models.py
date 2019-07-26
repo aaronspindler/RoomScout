@@ -11,10 +11,12 @@ class Email(models.Model):
 	subject = models.TextField()
 	contents = models.TextField()
 
+
 class IP(models.Model):
 	user = models.ForeignKey(User, on_delete=models.PROTECT)
 	created = models.DateTimeField(auto_now=True)
 	ip_address = models.GenericIPAddressField()
+
 
 class PublicImage(models.Model):
 	uploaded_at = models.DateTimeField(auto_now_add=True)
@@ -22,14 +24,17 @@ class PublicImage(models.Model):
 	user = models.ForeignKey(User, on_delete=models.PROTECT)
 	image = models.ImageField()
 
+
 class PrivateImage(models.Model):
 	uploaded_at = models.DateTimeField(auto_now_add=True)
 	is_approved = models.BooleanField(default=False)
 	user = models.ForeignKey(User, on_delete=models.PROTECT)
 	image = models.ImageField(storage=PrivateMediaStorage())
 
+
 class RoomImage(PublicImage):
 	room = models.ForeignKey(Room, on_delete=models.PROTECT)
+
 
 class PrivateFile(models.Model):
 	uploaded_at = models.DateTimeField(auto_now_add=True)

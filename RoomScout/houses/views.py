@@ -14,10 +14,13 @@ def house_create(request):
 	GOOGLE_API_KEY = settings.GOOGLE_API_KEY
 	if request.method == 'POST':
 		if len(request.POST) < 7 or len(request.POST) > 7:
-			return render(request, 'houses/house_create.html',{'error': 'There is an issue with the address inputted!', 'GOOGLE_API_KEY': GOOGLE_API_KEY})
+			return render(request, 'houses/house_create.html',
+			              {'error': 'There is an issue with the address inputted!', 'GOOGLE_API_KEY': GOOGLE_API_KEY})
 		house = House()
 		house.user = request.user
-		if request.POST['street_number'] and request.POST['street_number'] and request.POST['street_name'] and request.POST['city'] and request.POST['prov_state'] and request.POST['postal_code'] and request.POST['country']:
+		if request.POST['street_number'] and request.POST['street_number'] and request.POST['street_name'] and \
+				request.POST['city'] and request.POST['prov_state'] and request.POST['postal_code'] and request.POST[
+			'country']:
 			house.street_number = request.POST['street_number']
 			house.street_name = request.POST['street_name']
 			house.city = request.POST['city']
@@ -26,7 +29,8 @@ def house_create(request):
 			house.country = request.POST['country']
 			house.save()
 			return redirect('house_detail', pk=house.id)
-		return render(request, 'houses/house_create.html', {'error':'There is an issue with the address inputted!','GOOGLE_API_KEY': GOOGLE_API_KEY})
+		return render(request, 'houses/house_create.html',
+		              {'error': 'There is an issue with the address inputted!', 'GOOGLE_API_KEY': GOOGLE_API_KEY})
 	else:
 		return render(request, 'houses/house_create.html', {'GOOGLE_API_KEY': GOOGLE_API_KEY})
 

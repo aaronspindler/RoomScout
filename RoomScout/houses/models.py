@@ -20,5 +20,6 @@ class House(models.Model):
 	hide_address = models.BooleanField(default=False)
 
 	def full_address(self):
-		return '{} {}, {}, {}, {}, {}'.format(self.street_number, self.street_name, self.city, self.prov_state, self.country,
-		                                   self.postal_code)
+		return '{} {}, {}, {}, {}, {}'.format(self.street_number, self.street_name, self.city, self.prov_state,
+		                                      self.country,
+		                                      self.postal_code)

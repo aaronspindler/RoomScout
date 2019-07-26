@@ -8,32 +8,31 @@ import RoomScout.storage_backends
 
 
 class Migration(migrations.Migration):
+	dependencies = [
+		migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+		('utils', '0001_initial'),
+	]
 
-    dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('utils', '0001_initial'),
-    ]
-
-    operations = [
-        migrations.AddField(
-            model_name='privatefile',
-            name='is_approved',
-            field=models.BooleanField(default=False),
-        ),
-        migrations.AddField(
-            model_name='privatefile',
-            name='uploaded_at',
-            field=models.DateTimeField(auto_now_add=True, default=django.utils.timezone.now),
-            preserve_default=False,
-        ),
-        migrations.CreateModel(
-            name='PrivateImage',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('uploaded_at', models.DateTimeField(auto_now_add=True)),
-                ('is_approved', models.BooleanField(default=False)),
-                ('image', models.ImageField(storage=RoomScout.storage_backends.PrivateMediaStorage(), upload_to='')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
-    ]
+	operations = [
+		migrations.AddField(
+			model_name='privatefile',
+			name='is_approved',
+			field=models.BooleanField(default=False),
+		),
+		migrations.AddField(
+			model_name='privatefile',
+			name='uploaded_at',
+			field=models.DateTimeField(auto_now_add=True, default=django.utils.timezone.now),
+			preserve_default=False,
+		),
+		migrations.CreateModel(
+			name='PrivateImage',
+			fields=[
+				('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+				('uploaded_at', models.DateTimeField(auto_now_add=True)),
+				('is_approved', models.BooleanField(default=False)),
+				('image', models.ImageField(storage=RoomScout.storage_backends.PrivateMediaStorage(), upload_to='')),
+				('user', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
+			],
+		),
+	]

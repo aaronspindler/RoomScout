@@ -10,7 +10,6 @@ SECRET_KEY = '-(k@3@gsic-t0$l2s*y5*w=j+uo*7-#@@q)^)$7nh@yk1_m6be'
 # Google
 GOOGLE_API_KEY = ''
 
-
 # AWS
 AWS_USER = ''
 AWS_ACCESS_KEY_ID = ''
@@ -27,7 +26,7 @@ AWS_PRIVATE_MEDIA_LOCATION = 'media/private'
 PRIVATE_FILE_STORAGE = 'RoomScout.storage_backends.PrivateMediaStorage'
 
 AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
+	'CacheControl': 'max-age=86400',
 }
 
 # SECURITY WARNING: don't run with debug turned on in production!

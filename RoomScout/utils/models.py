@@ -1,7 +1,9 @@
 from django.db import models
+
+from RoomScout.storage_backends import PrivateMediaStorage
 from accounts.models import User
 from rooms.models import Room
-from RoomScout.storage_backends import PrivateMediaStorage
+
 
 class Email(models.Model):
 	sent_at = models.DateTimeField(auto_now_add=True)

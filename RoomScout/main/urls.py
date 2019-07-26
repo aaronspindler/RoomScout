@@ -13,6 +13,9 @@ urlpatterns = [
 	path('privacypolicy', views.privacypolicy, name='privacypolicy'),
 	path('termsandconditons', views.termsandconditons, name='termsandconditons'),
 
+	#Blog
+	path('blog/', include('blog.urls')),
+
 	# Accounts
 	path('signup', signup, name='signup'),
 	path('settings', settings, name='settings'),

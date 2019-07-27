@@ -34,7 +34,6 @@ DEBUG = True
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
-#LOGOUT_REDIRECT_URL = 'home'
 ACCOUNT_LOGOUT_REDIRECT = 'home'
 
 ALLOWED_HOSTS = []
@@ -83,7 +82,11 @@ MIDDLEWARE = [
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
-SITE_ID = 1
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+
 AUTHENTICATION_BACKENDS = {
 	'django.contrib.auth.backends.ModelBackend',
 	'allauth.account.auth_backends.AuthenticationBackend'
@@ -141,6 +144,8 @@ AUTH_PASSWORD_VALIDATORS = [
 		'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
 	},
 ]
+
+SITE_ID = 1
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/

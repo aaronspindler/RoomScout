@@ -17,16 +17,7 @@
         </div>
         <form method="post">
             {% csrf_token %}
-            <div class="row">
-                <label for="username">Username: </label>
-                <input type="text" class="form-control" name="username" id="username" value="">
-            </div>
-
-            <div class="row">
-                <label for="password">Password: </label>
-                <input type="password" class="form-control" name="password" id="password" value="">
-            </div>
-            <br>
+            {{ form | crispy }}
             <div class="row">
                 <button type="submit" class="btn btn-primary">Login</button>
             </div>

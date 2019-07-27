@@ -27,11 +27,11 @@
             {% endif %}
         </ul>
         {% if user.is_authenticated == False %}
-            <a class="btn btn-outline-primary mx-2" href="{% url 'login' %}">Log In</a>
-            <a class="btn btn-outline-primary mx-2" href="{% url 'signup' %}">Sign up</a>
+            <a class="btn btn-outline-primary mx-2" href="{% url 'account_login' %}">Log In</a>
+            <a class="btn btn-outline-primary mx-2" href="{% url 'account_signup' %}">Sign up</a>
         {% else %}
             <a class="p-2 text-dark nav-item nav-link" href="{% url 'settings' %}">Settings</a>
-            <a class="p-2 text-dark nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+            <a class="p-2 text-dark nav-item nav-link" href="{% url 'account_logout' %}">Logout</a>
         {% endif %}
         <form class="form-inline pl-2 my-2 my-md-0">
             <input class="form-control" type="text" placeholder="Search">

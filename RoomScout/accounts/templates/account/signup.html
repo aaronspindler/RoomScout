@@ -1,0 +1,28 @@
+{% extends 'main/_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Sign Up
+{% endblock %}
+
+{% block content %}
+    {% if error %}
+        <div class="bg-danger text-center">
+            <p>{{ error }}</p>
+        </div>
+    {% endif %}
+    <div class="container">
+        <div>
+            <h2>Sign Up</h2>
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form | crispy }}
+            <p>By clicking Sign up, you agree to our <a href="{% url 'termsandconditons' %}">Terms</a> and that you have
+                read our <a href="{% url 'privacypolicy' %}">Privacy Policy</a>.</P>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Sign Up!</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

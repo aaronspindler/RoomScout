@@ -34,7 +34,8 @@ DEBUG = True
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+#LOGOUT_REDIRECT_URL = 'home'
+ACCOUNT_LOGOUT_REDIRECT = 'home'
 
 ALLOWED_HOSTS = []
 
@@ -43,6 +44,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Application definition
 
 INSTALLED_APPS = [
+	# Django
 	'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
@@ -50,10 +52,16 @@ INSTALLED_APPS = [
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
 	'django.contrib.sitemaps',
+	'django.contrib.sites',
+	# 3rd Party
 	'crispy_forms',
 	'django_countries',
 	'phonenumber_field',
 	'storages',
+	'allauth',
+	'allauth.account',
+	'allauth.socialaccount',
+	# Local Apps
 	'main',
 	'blog',
 	'management',
@@ -75,12 +83,19 @@ MIDDLEWARE = [
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
+SITE_ID = 1
+AUTHENTICATION_BACKENDS = {
+	'django.contrib.auth.backends.ModelBackend',
+	'allauth.account.auth_backends.AuthenticationBackend'
+}
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 ROOT_URLCONF = 'RoomScout.urls'
 
 TEMPLATES = [
 	{
 		'BACKEND': 'django.template.backends.django.DjangoTemplates',
-		'DIRS': [],
+		'DIRS': [os.path.join(BASE_DIR, 'accounts', 'templates')],
 		'APP_DIRS': True,
 		'OPTIONS': {
 			'context_processors': [

@@ -14,7 +14,7 @@
         <div>
             <h2>Sign Up</h2>
         </div>
-        <form action="{% url 'signup' %}" method="POST">
+        <form action="{% url 'account_signup' %}" method="POST">
             {% csrf_token %}
             <div class="form-row">
                 <div class="form-group col-md-6">

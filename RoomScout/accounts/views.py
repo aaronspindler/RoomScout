@@ -1,9 +1,7 @@
-from django.contrib import auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-
-from utils import provinces, emailclient, ipaddress
+from utils import provinces, emailclient
 from .models import User
 
 @login_required(login_url="/login")
@@ -18,7 +16,7 @@ def settings(request):
 				if request.POST['email'] != user.email:
 					try:
 						user = User.objects.get(email=request.POST['email'])
-						return render(request, 'accounts/settings.html',
+						return render(request, 'account/settings.html',
 						              {'error': 'Email is already in use!', 'provinces': provs})
 					except User.DoesNotExist:
 						if user.email_confirmed:
@@ -38,4 +36,4 @@ def settings(request):
 		messages.success(request, 'Your settings have been saved!.')
 		return redirect('home')
 	else:
-		return render(request, 'accounts/settings.html', {'provinces': provs})
+		return render(request, 'account/settings.html', {'provinces': provs})

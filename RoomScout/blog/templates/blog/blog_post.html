@@ -9,5 +9,11 @@
     <div class="container">
         <h2>{{ blog.title }}</h2>
     </div>
+    <div class="container text-center">
+    <img src="{{blog.image.url}}" width="300"/>
+    </div>
+    <div class="container text-left">
+        <p>{{ blog.body }}</p>
+    </div>
 
 {% endblock %}

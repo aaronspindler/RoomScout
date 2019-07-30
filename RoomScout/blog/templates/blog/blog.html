@@ -9,9 +9,18 @@
     <div class="container">
         <h2>Blog</h2>
         {% if blog_list %}
+            <div class="card-deck">
             {% for blog in blog_list %}
-
+                <div class="card">
+                    <img class="card-img-top" src="{{ blog.image.url }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{blog.title}}</h5>
+                        <p class="card-text">{{ blog.summary }}</p>
+                        <a href="{% url 'blog_post' blog.id %}" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
             {% endfor %}
+            </div>
         {% else %}
             <p>It looks like there are no posts right now, come back soon!</p>
         {% endif %}

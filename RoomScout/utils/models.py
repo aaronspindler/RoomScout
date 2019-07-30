@@ -1,5 +1,4 @@
 import boto3
-import time
 from django.db import models
 from django.conf import settings
 
@@ -28,7 +27,6 @@ class PublicImage(models.Model):
 	image = models.ImageField()
 
 	def check_image(self):
-		print(self.image.name)
 		client = boto3.client('rekognition', aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
 		                      aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY, region_name='us-east-1')
 		response = client.detect_moderation_labels(Image={'S3Object': {'Bucket': 'roomscout-public', 'Name': self.image.name}})

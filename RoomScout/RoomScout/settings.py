@@ -16,10 +16,10 @@ AWS_ACCESS_KEY_ID = ''
 AWS_SECRET_ACCESS_KEY = ''
 AWS_DEFAULT_ACL = None
 
-AWS_PUBLIC_MEDIA_LOCATION = 'media/public'
+AWS_PUBLIC_MEDIA_LOCATION = ''
 DEFAULT_FILE_STORAGE = 'RoomScout.storage_backends.PublicMediaStorage'
 
-AWS_PRIVATE_MEDIA_LOCATION = 'media/private'
+AWS_PRIVATE_MEDIA_LOCATION = ''
 PRIVATE_FILE_STORAGE = 'RoomScout.storage_backends.PrivateMediaStorage'
 
 AWS_S3_OBJECT_PARAMETERS = {

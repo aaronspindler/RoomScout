@@ -9,5 +9,6 @@ class Room(models.Model):
 	is_available = models.BooleanField(default=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
+	occupant = models.ForeignKey(User, on_delete=models.PROTECT , blank=True, default=None)
 
 	price = models.FloatField(default=0.0)

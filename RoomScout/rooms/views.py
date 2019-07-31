@@ -5,20 +5,20 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from houses.models import House
-from .forms import RoomForm
 from .models import Room
 
 
 @login_required(login_url="/login")
 def room_create(request):
-	form = RoomForm()
-	try:
-		houses = House.objects.filter(user=request.user.id)
-		return render(request, 'rooms/room_create.html', {'houses': houses})
-	except Exception:
+	if request.method == 'POST':
 		pass
-
-	return render(request, 'rooms/room_create.html')
+	else:
+		try:
+			houses = House.objects.filter(user=request.user.id)
+			return render(request, 'rooms/room_create.html', {'houses': houses})
+		except Exception:
+			pass
+		return render(request, 'rooms/room_create.html')
 
 
 class room_detail(generic.DetailView):

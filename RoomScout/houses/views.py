@@ -35,7 +35,6 @@ def house_create(request):
 	else:
 		return render(request, 'houses/house_create.html', {'GOOGLE_API_KEY': GOOGLE_API_KEY})
 
-
 def house_detail(request, pk):
 	house = get_object_or_404(House, pk=pk)
 	try:

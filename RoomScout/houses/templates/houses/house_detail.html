@@ -17,7 +17,20 @@
         {{ house.full_address }}
 
     {% if rooms %}
-        <p>ROOMs</p>
+        <div class="row">
+        {% for room in rooms %}
+            <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                    <img class="card-img-top" src="{{ room.image.url }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{room.name}}</h5>
+                        <p class="card-text">{{ room.price }}</p>
+                        <a href="{% url 'room_detail' room.id %}" class="btn btn-primary">Details</a>
+                    </div>
+                </div>
+                </div>
+        {% endfor %}
+        </div>
     {% endif %}
     </div>
 

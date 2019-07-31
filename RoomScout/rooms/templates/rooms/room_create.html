@@ -6,10 +6,17 @@
 {% endblock %}
 
 {% block content %}
+    {% if error %}
+            <div class="text-center bg-danger">
+                <p>{{ error }}</p>
+            </div>
+    {% endif %}
+
     <div class="container">
         <h2>Post a Room</h2>
         {% if houses %}
             <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
                 <div class="row">
                     <div class="col-md-2">
                         <label>Select a House:</label>

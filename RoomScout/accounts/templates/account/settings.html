@@ -6,18 +6,22 @@
 
 {% block content %}
     <div class="container">
-        <h2>Settings</h2>
         {% if message %}
             <div class="text-center bg-success">
                 <p>{{ message }}</p>
             </div>
         {% endif %}
-
         {% if error %}
             <div class="text-center bg-danger">
                 <p>{{ error }}</p>
             </div>
         {% endif %}
+        <div class="row">
+            <h2>Settings</h2>
+        </div>
+
+        <a href="{% url 'account_change_password' %}"><little>Change Password</little></a>
+    <br>
         <form action="{% url 'settings' %}" method="POST">
             {% csrf_token %}
             <div class="form-row">

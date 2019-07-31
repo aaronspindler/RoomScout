@@ -9,21 +9,6 @@ def settings(request):
 	provs = provinces.get_provinces()
 	if request.method == 'POST':
 		user = User.objects.get(id=request.user.id)
-		if request.POST['email']:
-			if request.POST['email'] == '':
-				pass
-			else:
-				if request.POST['email'] != user.email:
-					try:
-						user = User.objects.get(email=request.POST['email'])
-						return render(request, 'account/settings.html',
-						              {'error': 'Email is already in use!', 'provinces': provs})
-					except User.DoesNotExist:
-						if user.email_confirmed:
-							user.previous_email = user.email
-					user.email_confirmed = False
-					emailclient.send_confirmation_email()
-					user.email = request.POST['email']
 		if request.POST['address']:
 			user.address = str(request.POST['address'])
 		if request.POST['city']:

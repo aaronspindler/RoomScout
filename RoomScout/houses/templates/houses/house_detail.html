@@ -15,6 +15,10 @@
     <div class="container">
         <h2>House Details</h2>
         {{ house.full_address }}
+
+    {% if rooms %}
+        <p>ROOMs</p>
+    {% endif %}
     </div>
 
 {% endblock %}

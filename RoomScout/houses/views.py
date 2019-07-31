@@ -2,11 +2,12 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 
 from .models import House
+from rooms.models import Room
 
 
 @login_required(login_url="/login")
@@ -35,9 +36,15 @@ def house_create(request):
 		return render(request, 'houses/house_create.html', {'GOOGLE_API_KEY': GOOGLE_API_KEY})
 
 
-class house_detail(generic.DetailView):
-	model = House
-	template_name = 'houses/house_detail.html'
+def house_detail(request, pk):
+	house = get_object_or_404(House, pk=pk)
+	try:
+		rooms = Room.objects.filter(house=house)
+		return render(request, 'houses/house_detail.html', {'rooms':rooms, 'house':house})
+	except Exception:
+		pass
+
+	return render(request,'houses/house_detail.html', {'house':house})
 
 
 class house_edit(LoginRequiredMixin, generic.UpdateView):

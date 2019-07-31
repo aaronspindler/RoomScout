@@ -9,7 +9,7 @@
     <div class="container">
         <h2>Post a Room</h2>
         {% if houses %}
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-2">
                         <label>Select a House:</label>
@@ -21,6 +21,33 @@
                             {% endfor %}
                         </select>
                         <small><a href="{% url 'house_create' %}">Create a new house!</a></small>
+                    </div>
+                </div>
+                <br>
+            <div class="row">
+                    <div class="col-md-2">
+                        <label>Name:</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input class="form-control" type="text" name="name">
+                    </div>
+                </div>
+            <br>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>Image:</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input class="form-control-file" type="file" name="image" accept="image/png, image/jpeg">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>Price:</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input class="form-control" type="number" name="price">
                     </div>
                 </div>
                 <button class="btn btn-sm btn-primary" type='submit'>Post</button>

@@ -9,15 +9,17 @@
     <div class="container">
         <h2>Blog</h2>
         {% if blog_list %}
-            <div class="card-deck">
+            <div class="row">
             {% for blog in blog_list %}
-                <div class="card">
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
                     <img class="card-img-top" src="{{ blog.image.url }}">
                     <div class="card-body">
                         <h5 class="card-title">{{blog.title}}</h5>
                         <p class="card-text">{{ blog.summary }}</p>
                         <a href="{% url 'blog_post' blog.id %}" class="btn btn-primary">Read More</a>
                     </div>
+                </div>
                 </div>
             {% endfor %}
             </div>

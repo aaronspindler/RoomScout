@@ -22,9 +22,9 @@
                         <label>Select a House:</label>
                     </div>
                     <div class="col-md-10">
-                        <select class="form-control">
+                        <select name="house" class="form-control">
                             {% for house in houses %}
-                                <option key={{ house.id }}>{{ house.full_address }}</option>
+                                <option value="{{ house.pk }}">{{ house.full_address }}</option>
                             {% endfor %}
                         </select>
                         <small><a href="{% url 'house_create' %}">Create a new house!</a></small>

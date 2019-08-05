@@ -11,7 +11,7 @@ from .models import Room
 @login_required(login_url="/login")
 def room_create(request):
 	if request.method == 'POST':
-		pass
+		print(request.POST)
 	else:
 		try:
 			houses = House.objects.filter(user=request.user.id)

@@ -10,7 +10,6 @@ class Room(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
-	occupant = models.ForeignKey(User, on_delete=models.PROTECT , blank=True, default=None)
 	house = models.ForeignKey(House, on_delete=models.CASCADE, related_name='house')
 
 	price = models.FloatField(default=0.0)

@@ -1,0 +1,29 @@
+{% extends 'main/_base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    Find a Room
+{% endblock %}
+
+{% block content %}
+    {% if error %}
+        <div class="text-center bg-danger">
+            <p>{{ error }}</p>
+        </div>
+    {% endif %}
+
+    <div class="container">
+        <h2>Find a Room</h2>
+        {% if rooms %}
+            {% for room in rooms %}
+                {{ room.name }} - {{ room.price }}
+                <br>
+            {% endfor %}
+        {% else %}
+            <p>Looks like there are no available rooms at the moment</p>
+            <p>Do you have a room you want to post?
+                <a href="{% url 'room_create' %}">Tell us about it</a></p>
+        {% endif %}
+
+    </div>
+{% endblock %}

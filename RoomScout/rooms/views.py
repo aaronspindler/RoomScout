@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
@@ -8,23 +9,31 @@ from houses.models import House
 from .models import Room
 from utils.models import RoomImage
 
+def room_list(request):
+	rooms = Room.objects.all()
+	return render(request, 'rooms/room_list.html', {'rooms':rooms})
+
 
 @login_required(login_url="/login")
 def room_create(request):
 	if request.method == 'POST':
 		print(request.POST)
-		if request.POST['house'] and request.POST['name'] and request.FILES['image'] and request.POST['price']:
+		if request.POST['house'] and request.POST['name'] and request.POST['price']:
 			room = Room()
+			room.user = request.user
 			house = House.objects.filter(pk=request.POST['house'])[:1].get()
 			room.name = request.POST['name']
 			room.house = house
 			room.price = request.POST['price']
 			room.save()
-			roomImage = RoomImage()
-			roomImage.room = room
-			roomImage.user = request.user
-			roomImage.image = request.FILES['image']
-			roomImage.save()
+			try:
+				roomImage = RoomImage()
+				roomImage.room = room
+				roomImage.user = request.user
+				roomImage.image = request.FILES['image']
+				roomImage.save()
+			except Exception:
+				pass
 
 		return redirect('room_detail', pk=room.id)
 	else:
@@ -48,10 +57,10 @@ class room_edit(LoginRequiredMixin, generic.UpdateView):
 	success_url = reverse_lazy('home')
 
 	def get_object(self):
-		hall = super(UpdateHall, self).get_object()
-		if not hall.user == self.request.user:
+		room = super(room_edit, self).get_object()
+		if not room.user == self.request.user:
 			raise Http404
-		return hall
+		return room
 
 
 class room_delete(LoginRequiredMixin, generic.DeleteView):

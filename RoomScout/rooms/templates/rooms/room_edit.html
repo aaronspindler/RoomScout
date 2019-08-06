@@ -1,0 +1,19 @@
+{% extends 'main/_base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    Find a Room
+{% endblock %}
+
+{% block content %}
+    {% if error %}
+        <div class="text-center bg-danger">
+            <p>{{ error }}</p>
+        </div>
+    {% endif %}
+
+    <div class="container">
+        <h2>Edit Room | {{ room.name }}</h2>
+
+    </div>
+{% endblock %}

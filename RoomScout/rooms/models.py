@@ -5,6 +5,7 @@ from houses.models import House
 
 
 class Room(models.Model):
+	user = models.ForeignKey(User, on_delete=models.PROTECT)
 	name = models.CharField(max_length=200, default='')
 	is_available = models.BooleanField(default=True)
 	created_at = models.DateTimeField(auto_now_add=True)

@@ -1,19 +1,19 @@
 import os
 import sys
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '-(k@3@gsic-t0$l2s*y5*w=j+uo*7-#@@q)^)$7nh@yk1_m6be'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # Google
-GOOGLE_API_KEY = ''
+GOOGLE_API_KEY = os.environ['GOOGLE_API_KEY']
 
 # AWS
-AWS_USER = ''
-AWS_ACCESS_KEY_ID = ''
-AWS_SECRET_ACCESS_KEY = ''
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 AWS_DEFAULT_ACL = None
 
 AWS_PUBLIC_MEDIA_LOCATION = ''
@@ -27,9 +27,9 @@ AWS_S3_OBJECT_PARAMETERS = {
 }
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['Roomscout.ca', 'www.Roomscout.ca', 'roomscout.herokuapp.com']
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -51,12 +51,13 @@ LOGIN_REDIRECT_URL = 'home'
 ACCOUNT_LOGOUT_REDIRECT = 'home'
 
 # Email
+DEFAULT_FROM_EMAIL = 'services@roomscout.ca'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = ''
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-EMAIL_PORT = ''
-EMAIL_USE_TLS = ''
+EMAIL_HOST = os.environ['EMAIL_HOST']
+EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # Application definition
 
@@ -97,6 +98,7 @@ MIDDLEWARE = [
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'RoomScout.urls'
@@ -123,14 +125,7 @@ WSGI_APPLICATION = 'RoomScout.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-	'default': {
-		'ENGINE': 'django.db.backends.postgresql',
-		'NAME': 'roomscout_dev',
-		'USER': '',
-		'PASSWORD': '',
-		'HOST': 'amazonaws.com',
-		'PORT': '5432',
-	}
+	'default': dj_database_url.config()
 }
 
 # Password validation
@@ -173,6 +168,7 @@ STATICFILES_DIRS = []
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'

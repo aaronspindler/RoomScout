@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn RoomScout.wsgi
+web: gunicorn Roomscout.wsgi

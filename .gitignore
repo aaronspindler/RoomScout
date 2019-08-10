@@ -4,8 +4,11 @@ __pycache__/
 *$py.class
 
 # Custom
-RoomScout/static
+Roomscout/static
 .idea/
+Roomscout/local_settings.py
+Roomscout/settings_prod.py
+Roomscout/settings_dev.py
 
 # C extensions
 *.so

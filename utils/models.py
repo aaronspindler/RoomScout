@@ -2,7 +2,7 @@ import boto3
 from django.db import models
 from django.conf import settings
 
-from RoomScout.storage_backends import PrivateMediaStorage
+from Roomscout.storage_backends import PrivateMediaStorage
 from accounts.models import User
 from rooms.models import Room
 

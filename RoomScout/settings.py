@@ -101,7 +101,7 @@ MIDDLEWARE = [
 	'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-ROOT_URLCONF = 'RoomScout.urls'
+ROOT_URLCONF = 'Roomscout.urls'
 
 TEMPLATES = [
 	{
@@ -119,46 +119,13 @@ TEMPLATES = [
 	},
 ]
 
-WSGI_APPLICATION = 'RoomScout.wsgi.application'
+WSGI_APPLICATION = 'Roomscout.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
 	'default': dj_database_url.config()
-}
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt' : "%d/%b/%Y %H:%M:%S"
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        },
-    },
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': 'mysite.log',
-            'formatter': 'verbose'
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers':['file'],
-            'propagate': True,
-            'level':'DEBUG',
-        },
-        'MYAPP': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-        },
-    }
 }
 
 # Password validation
@@ -206,13 +173,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-if 'test' in sys.argv:
-	DATABASES['default'] = {
-		'ENGINE': 'django.db.backends.sqlite3',
-		'NAME': 'testingdb'
-	}
-else:
-	try:
-		from .local_settings import *
-	except ImportError:
-		pass
+try:
+	from .local_settings import *
+except ImportError:
+	pass

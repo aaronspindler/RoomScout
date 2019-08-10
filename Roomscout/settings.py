@@ -27,7 +27,7 @@ AWS_S3_OBJECT_PARAMETERS = {
 }
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['Roomscout.ca', 'www.Roomscout.ca', 'roomscout.herokuapp.com']
 

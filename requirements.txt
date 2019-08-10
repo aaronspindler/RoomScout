@@ -17,6 +17,7 @@ jmespath==0.9.4
 oauthlib==3.1.0
 phonenumbers==8.10.16
 Pillow==6.1.0
+psycopg2==2.8.3
 psycopg2-binary==2.8.3
 python-dateutil==2.8.0
 python3-openid==3.1.0

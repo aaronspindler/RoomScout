@@ -17,10 +17,10 @@ AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 AWS_DEFAULT_ACL = None
 
 AWS_PUBLIC_MEDIA_LOCATION = ''
-DEFAULT_FILE_STORAGE = 'RoomScout.storage_backends.PublicMediaStorage'
+DEFAULT_FILE_STORAGE = 'Roomscout.storage_backends.PublicMediaStorage'
 
 AWS_PRIVATE_MEDIA_LOCATION = ''
-PRIVATE_FILE_STORAGE = 'RoomScout.storage_backends.PrivateMediaStorage'
+PRIVATE_FILE_STORAGE = 'Roomscout.storage_backends.PrivateMediaStorage'
 
 AWS_S3_OBJECT_PARAMETERS = {
 	'CacheControl': 'max-age=86400',
@@ -172,8 +172,3 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-
-try:
-	from .local_settings import *
-except ImportError:
-	pass

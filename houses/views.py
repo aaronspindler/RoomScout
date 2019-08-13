@@ -29,8 +29,7 @@ def house_create(request):
 			house.place_id = request.POST['place_id']
 			house.save()
 			return redirect('house_detail', pk=house.id)
-		return render(request, 'houses/house_create.html',
-		              {'error': 'There is an issue with the address inputted!', 'GOOGLE_API_KEY': GOOGLE_API_KEY})
+		return render(request, 'houses/house_create.html', {'error': 'There is an issue with the address inputted!', 'GOOGLE_API_KEY': GOOGLE_API_KEY})
 	else:
 		return render(request, 'houses/house_create.html', {'GOOGLE_API_KEY': GOOGLE_API_KEY})
 

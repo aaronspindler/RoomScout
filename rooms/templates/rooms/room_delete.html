@@ -1,0 +1,39 @@
+{% extends 'main/_base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    House Delete
+{% endblock %}
+
+{% block content %}
+    {% if message %}
+        <div class="text-center bg-success">
+            <p>{{ message }}</p>
+        </div>
+    {% endif %}
+    <div class="container">
+        <h2>Are you sure you want to delete this room?</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+        <div class="card">
+            <div class="card-header">
+                DANGER ZONE
+            </div>
+            <div class="card-body">
+                <h5 class="card-title text-danger">{{ room.name }}</h5>
+                <little>from {{ room.house.full_address }}</little>
+                <br>
+                <br>
+                <p class="card-text">This will delete everything related including tenant, room contract, and history</p>
+                <button class="btn btn-danger" type='submit'>Delete</button>
+            </div>
+        </div>
+
+
+        </form>
+    </div>
+
+{% endblock %}

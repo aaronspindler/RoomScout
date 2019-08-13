@@ -1,5 +1,7 @@
 {% extends 'main/_base.html' %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
+
 
 {% block title %}
     Find a Room
@@ -14,6 +16,8 @@
 
     <div class="container">
         <h2>Edit Room | {{ room.name }}</h2>
-
+    <form>
+        {{ form | crispy }}
+    </form>
     </div>
 {% endblock %}

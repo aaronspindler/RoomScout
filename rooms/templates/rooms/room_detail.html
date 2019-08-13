@@ -1,0 +1,16 @@
+{% extends 'main/_base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    Room | {{ room.name }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Room | {{ room.name }}</h2>
+        {% if user.id == room.user.id %}
+        <a class="btn btn-primary" href="{% url 'room_edit' room.pk %}">Edit</a>
+        <a class="btn btn-danger" href="{% url 'room_delete' room.pk %}">Delete</a>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -53,7 +53,7 @@ class room_detail(generic.DetailView):
 class room_edit(LoginRequiredMixin, generic.UpdateView):
 	model = Room
 	template_name = 'rooms/room_edit.html'
-	fields = ['title']
+	fields = ['name', 'price', 'is_available']
 	success_url = reverse_lazy('home')
 
 	def get_object(self):
@@ -69,7 +69,7 @@ class room_delete(LoginRequiredMixin, generic.DeleteView):
 	success_url = reverse_lazy('home')
 
 	def get_object(self):
-		hall = super(DeleteHall, self).get_object()
-		if not hall.user == self.request.user:
+		room = super(room_delete, self).get_object()
+		if not room.user == self.request.user:
 			raise Http404
-		return hall
+		return room

@@ -16,7 +16,7 @@
         <h2>Find a Room</h2>
         {% if rooms %}
             {% for room in rooms %}
-                {{ room.name }} - {{ room.price }}
+                <a href="{% url 'room_detail' room.pk %}">{{ room.name }} - {{ room.price }}</a>
                 <br>
             {% endfor %}
         {% else %}

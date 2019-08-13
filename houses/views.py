@@ -10,7 +10,7 @@ from .models import House
 from rooms.models import Room
 
 
-@login_required(login_url="/login")
+@login_required(login_url="account_login")
 def house_create(request):
 	GOOGLE_API_KEY = settings.GOOGLE_API_KEY
 	if request.method == 'POST':
@@ -33,6 +33,7 @@ def house_create(request):
 	else:
 		return render(request, 'houses/house_create.html', {'GOOGLE_API_KEY': GOOGLE_API_KEY})
 
+@login_required(login_url="account_login")
 def house_list(request):
 	GOOGLE_API_KEY = settings.GOOGLE_API_KEY
 	try:

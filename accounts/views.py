@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from utils import provinces, emailclient
 from .models import User
 
-@login_required(login_url="/login")
+@login_required(login_url="account_login")
 def settings(request):
 	provs = provinces.get_provinces()
 	if request.method == 'POST':

@@ -14,7 +14,7 @@ def room_list(request):
 	return render(request, 'rooms/room_list.html', {'rooms':rooms})
 
 
-@login_required(login_url="/accounts/login")
+@login_required(login_url="account_login")
 def room_create(request):
 	if request.method == 'POST':
 		print(request.POST)

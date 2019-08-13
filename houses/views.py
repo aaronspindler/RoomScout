@@ -33,6 +33,15 @@ def house_create(request):
 	else:
 		return render(request, 'houses/house_create.html', {'GOOGLE_API_KEY': GOOGLE_API_KEY})
 
+def house_list(request):
+	GOOGLE_API_KEY = settings.GOOGLE_API_KEY
+	try:
+		houses = House.objects.filter(user=request.user)
+		return render(request, 'houses/house_list.html', {'houses':houses,'GOOGLE_API_KEY': GOOGLE_API_KEY})
+	except Exception:
+		pass
+	return render(request, 'houses/house_list.html', {'GOOGLE_API_KEY': GOOGLE_API_KEY})
+
 def house_detail(request, pk):
 	house = get_object_or_404(House, pk=pk)
 	GOOGLE_API_KEY = settings.GOOGLE_API_KEY

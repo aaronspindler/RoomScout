@@ -19,6 +19,6 @@ def settings(request):
 			user.postal_code = str(request.POST['postal_code'])
 		user.save()
 		messages.success(request, 'Your settings have been saved!.')
-		return redirect('home')
+		return redirect('settings')
 	else:
 		return render(request, 'account/settings.html', {'provinces': provs})

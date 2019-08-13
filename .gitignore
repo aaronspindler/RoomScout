@@ -9,6 +9,7 @@ Roomscout/static
 Roomscout/local_settings.py
 Roomscout/settings_prod.py
 Roomscout/settings_dev.py
+.DS_Store
 
 # C extensions
 *.so

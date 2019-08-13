@@ -1,0 +1,24 @@
+{% extends 'main/_base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    House Details
+{% endblock %}
+
+{% block content %}
+    {% if message %}
+        <div class="text-center bg-success">
+            <p>{{ message }}</p>
+        </div>
+    {% endif %}
+    <div class="container">
+     <h2>Edit House - {{ house.full_address }}</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form | crispy}}
+            <button class="btn btn-primary" type='submit'>Save</button>
+        </form>
+    </div>
+
+{% endblock %}

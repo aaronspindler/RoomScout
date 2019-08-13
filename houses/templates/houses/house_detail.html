@@ -13,10 +13,20 @@
         </div>
     {% endif %}
     <div class="container">
-        <h2>House Details</h2>
-        {{ house.full_address }}
+        <h2>House Details - {{ house.full_address }}</h2>
+    {% if user.id == house.user.id %}
+    <a class="btn btn-primary" href="{% url 'room_create' %}">Add Room</a>
+    <a class="btn btn-primary" href="{% url 'house_edit' house.pk %}">Edit</a>
+    <a class="btn btn-danger" href="{% url 'house_delete' house.pk %}">Delete</a>
+    <br>
+    <br>
+    {% endif %}
+
+        <div style="width: 100%"><iframe width="100%" height="300" src="https://www.google.com/maps/embed/v1/place?key={{GOOGLE_API_KEY}}&q=place_id:{{event.gmaps_place_id}}" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></div>
+
 
     {% if rooms %}
+        <h4>Rooms</h4>
         <div class="row">
         {% for room in rooms %}
             <div class="col-md-4">

@@ -10,6 +10,7 @@ class House(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
+	place_id = models.TextField(default='')
 	street_number = models.IntegerField(default=0)
 	street_name = models.CharField(max_length=400, default='')
 	city = models.CharField(max_length=400, default='')
@@ -20,4 +21,8 @@ class House(models.Model):
 	hide_address = models.BooleanField(default=False)
 
 	def full_address(self):
-		return '{} {}, {}, {}, {}, {}'.format(self.street_number, self.street_name, self.city, self.prov_state, self.country,self.postal_code)
+		if self.postal_code:
+			return '{} {}, {}, {}, {}, {}'.format(self.street_number, self.street_name, self.city, self.prov_state, self.country,self.postal_code)
+		else:
+			return '{} {}, {}, {}, {}'.format(self.street_number, self.street_name, self.city, self.prov_state,
+												  self.country)

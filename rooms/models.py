@@ -13,4 +13,4 @@ class Room(models.Model):
 
 	house = models.ForeignKey(House, on_delete=models.CASCADE, related_name='house')
 
-	price = models.FloatField(default=0.0)
+	price = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)

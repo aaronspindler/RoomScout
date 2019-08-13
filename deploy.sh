@@ -1,5 +1,5 @@
 echo "Deploying Roomscout.ca"
-cd Roomscout
+cd Roomscout/
 
 echo "Renaming Files"
 mv settings.py settings_dev.py
@@ -13,7 +13,7 @@ git commit -m "$commitmsg"
 
 git push
 
-cd Roomscout
+cd "Roomscout/"
 echo "Changing filenames back"
 mv settings.py settings_prod.py
 mv settings_dev.py settings.py

@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 
+from utils.models import RoomImage
 from .models import House
 from rooms.models import Room
 
@@ -42,6 +43,31 @@ def house_list(request):
 	except Exception:
 		pass
 	return render(request, 'houses/house_list.html', {'GOOGLE_API_KEY': GOOGLE_API_KEY})
+
+@login_required(login_url="account_login")
+def house_add_room(request, pk):
+	house = House.objects.filter(pk=pk).get()
+	if(house.user != request.user):
+		return Http404
+	if(request.method == 'POST'):
+		room = Room()
+		room.user = request.user
+		room.name = request.POST['name']
+		room.house = house
+		room.price = request.POST['price']
+		room.save()
+		try:
+			roomImage = RoomImage()
+			roomImage.room = room
+			roomImage.user = request.user
+			roomImage.image = request.FILES['image']
+			roomImage.save()
+		except Exception:
+			pass
+
+		return redirect('room_detail', pk=room.id)
+
+	return render(request, 'houses/room_add.html', {'house': house})
 
 def house_detail(request, pk):
 	house = get_object_or_404(House, pk=pk)

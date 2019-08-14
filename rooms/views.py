@@ -17,7 +17,6 @@ def room_list(request):
 @login_required(login_url="account_login")
 def room_create(request):
 	if request.method == 'POST':
-		print(request.POST)
 		if request.POST['house'] and request.POST['name'] and request.POST['price']:
 			room = Room()
 			room.user = request.user

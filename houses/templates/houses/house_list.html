@@ -21,7 +21,7 @@
                         <p class="card-text">
                             <div style="width: 100%"><iframe width="100%" height="300" src="https://www.google.com/maps/embed/v1/place?key={{GOOGLE_API_KEY}}&q=place_id:{{house.place_id}}" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></div>
                         </p>
-                        <a class="btn btn-primary" href="{% url 'room_create' %}"><span class="oi oi-plus"></span></a>
+                        <a class="btn btn-primary" href="{% url 'house_add_room' house.pk %}"><span class="oi oi-plus"></span></a>
                         <a class="btn btn-primary" href="{% url 'house_edit' house.pk %}"><span class="oi oi-wrench"></span></a>
                         <a class="btn btn-danger" href="{% url 'house_delete' house.pk %}"><span class="oi oi-trash"></span></a>
                     </div>

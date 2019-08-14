@@ -35,6 +35,10 @@
                     <div class="card-body">
                         <a href="{% url 'room_detail' room.id %}"><h5 class="card-title">{{room.name}}</h5></a>
                         <p class="card-text">{{ room.price }}</p>
+                        {% if user.id == room.user.id %}
+                            <a class="btn btn-primary" href="{% url 'room_edit' room.pk %}">Edit</a>
+                            <a class="btn btn-danger" href="{% url 'room_delete' room.pk %}">Delete</a>
+                        {% endif %}
                     </div>
                 </div>
                 </div>

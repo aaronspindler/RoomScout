@@ -10,6 +10,9 @@ SECRET_KEY = ''
 # Google
 GOOGLE_API_KEY = ''
 
+# Walk Score
+WALK_SCORE_API = ''
+
 # AWS
 AWS_ACCESS_KEY_ID = ''
 AWS_SECRET_ACCESS_KEY = ''

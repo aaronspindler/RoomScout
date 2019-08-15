@@ -53,6 +53,8 @@
                                                              id="country" value="" disabled="true"/></td>
                 </tr>
                 <input hidden="true" class="form-control" name="place_id" id="place_id" value=""/>
+                <input hidden="true" class="form-control" name="lat" id="lat" value=""/>
+                <input hidden="true" class="form-control" name="lon" id="lon" value=""/>
             </table>
 
             <button id="submitbutton" type="submit" class="btn btn-primary">Create</button>
@@ -101,7 +103,7 @@
 
                 // Avoid paying for data that you don't need by restricting the set of
                 // place fields that are returned to just the address components.
-                autocomplete.setFields(['address_component', 'place_id']);
+                autocomplete.setFields(['address_component', 'geometry', 'place_id']);
 
                 // When the user selects an address from the drop-down, populate the
                 // address fields in the form.
@@ -127,8 +129,13 @@
                         document.getElementById(addressType).value = val;
                     }
                 }
+
                 document.getElementById('place_id').value = '';
                 document.getElementById('place_id').value = place.place_id;
+                document.getElementById('lat').value = '';
+                document.getElementById('lat').value = place.geometry.location.lat();
+                document.getElementById('lon').value = '';
+                document.getElementById('lon').value = place.geometry.location.lng();
             }
 
             // Bias the autocomplete object to the user's geographical location,

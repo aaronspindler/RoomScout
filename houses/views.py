@@ -28,6 +28,8 @@ def house_create(request):
 			house.postal_code = request.POST['postal_code']
 			house.country = request.POST['country']
 			house.place_id = request.POST['place_id']
+			house.lat = request.POST['lat']
+			house.lon = request.POST['lon']
 			house.save()
 			return redirect('house_detail', pk=house.id)
 		return render(request, 'houses/house_create.html', {'error': 'There is an issue with the address inputted!', 'GOOGLE_API_KEY': GOOGLE_API_KEY})

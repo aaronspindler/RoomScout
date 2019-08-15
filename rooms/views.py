@@ -72,3 +72,6 @@ class room_delete(LoginRequiredMixin, generic.DeleteView):
 		if not room.user == self.request.user:
 			raise Http404
 		return room
+
+def room_add_photo(request, pk):
+	return render(request, 'rooms/room_add_photo.html')

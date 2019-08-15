@@ -10,7 +10,7 @@
     <div class="row"><h4>{{ room.name }} At <a
             href="{% url 'house_detail' room.house.pk %}">{{ room.house.full_address }}</a></h4></div>
     {% if user.id == room.user.id %}
-        <a class="btn btn-primary" href="#">Add Photo</a>
+        <a class="btn btn-primary" href="{% url 'room_add_photo' room.pk %}">Add Photo</a>
         <a class="btn btn-primary" href="{% url 'room_edit' room.pk %}">Edit</a>
         <a class="btn btn-danger" href="{% url 'room_delete' room.pk %}">Delete</a>
         <br>

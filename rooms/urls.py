@@ -5,7 +5,8 @@ from . import views
 urlpatterns = [
 	path('find/', views.room_list, name='room_list'),
 	path('create/', views.room_create, name='room_create'),
-	path('detail/<str:pk>/', views.room_detail.as_view(), name='room_detail'),
-	path('edit/<str:pk>/', views.room_edit.as_view(), name='room_edit'),
-	path('delete/<str:pk>/', views.room_delete.as_view(), name='room_delete'),
+	path('<str:pk>/detail/', views.room_detail.as_view(), name='room_detail'),
+	path('<str:pk>/edit/', views.room_edit.as_view(), name='room_edit'),
+	path('<str:pk>/delete/', views.room_delete.as_view(), name='room_delete'),
+	path('<str:pk>/addphoto/', views.room_add_photo, name='room_add_photo'),
 ]

@@ -1,0 +1,14 @@
+{% extends 'main/_base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    Room | Add Photos
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+    <form>
+        <input type="file" name="files" multiple />
+    </form>
+    </div>
+{% endblock %}

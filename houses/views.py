@@ -15,7 +15,6 @@ from rooms.models import Room
 def house_create(request):
 	GOOGLE_API_KEY = settings.GOOGLE_API_KEY
 	if request.method == 'POST':
-		print(request.POST)
 		house = House()
 		house.user = request.user
 		if request.POST['street_number'] and request.POST['street_number'] and request.POST['street_name'] and \

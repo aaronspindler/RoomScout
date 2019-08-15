@@ -74,4 +74,8 @@ class room_delete(LoginRequiredMixin, generic.DeleteView):
 		return room
 
 def room_add_photo(request, pk):
-	return render(request, 'rooms/room_add_photo.html')
+	room = get_object_or_404(Room, pk=pk)
+	if request.method == 'POST':
+		for file in request.FILES.getlist('files'):
+			print(file)
+	return render(request, 'rooms/room_add_photo.html', {'room':room})

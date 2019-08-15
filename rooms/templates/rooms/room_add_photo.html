@@ -7,8 +7,13 @@
 
 {% block content %}
     <div class="container">
-    <form>
-        <input type="file" name="files" multiple />
+    <h3>Add Photos to {{ room.name }}</h3>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Photos</label>
+        <input class="form-control-file" type="file" name="files" accept="image/png, image/jpeg" multiple/>
+        <br>
+        <button class="btn btn-sm btn-primary" type='submit'>Add</button>
     </form>
     </div>
 {% endblock %}

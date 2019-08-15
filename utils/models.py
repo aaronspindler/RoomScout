@@ -23,7 +23,7 @@ class IP(models.Model):
 class PublicImage(models.Model):
 	uploaded_at = models.DateTimeField(auto_now_add=True)
 	is_approved = models.BooleanField(default=False)
-	user = models.ForeignKey(User, on_delete=models.PROTECT)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	image = models.ImageField()
 
 	def check_image(self):
@@ -45,16 +45,16 @@ class PublicImage(models.Model):
 class PrivateImage(models.Model):
 	uploaded_at = models.DateTimeField(auto_now_add=True)
 	is_approved = models.BooleanField(default=False)
-	user = models.ForeignKey(User, on_delete=models.PROTECT)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	image = models.ImageField(storage=PrivateMediaStorage())
 
 
 class RoomImage(PublicImage):
-	room = models.ForeignKey(Room, on_delete=models.PROTECT)
+	room = models.ForeignKey(Room, on_delete=models.CASCADE)
 
 
 class PrivateFile(models.Model):
 	uploaded_at = models.DateTimeField(auto_now_add=True)
 	is_approved = models.BooleanField(default=False)
 	upload = models.FileField(storage=PrivateMediaStorage())
-	user = models.ForeignKey(User, on_delete=models.PROTECT)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)

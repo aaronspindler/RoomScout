@@ -15,7 +15,7 @@
     <div class="container">
         <h2>House Details - {{ house.full_address }}</h2>
     {% if user.id == house.user.id %}
-    <a class="btn btn-primary" href="{% url 'room_create' %}">Add Room</a>
+    <a class="btn btn-primary" href="{% url 'house_add_room' house.pk %}">Add Room</a>
     <a class="btn btn-primary" href="{% url 'house_edit' house.pk %}">Edit</a>
     <a class="btn btn-danger" href="{% url 'house_delete' house.pk %}">Delete</a>
     <br>
@@ -31,13 +31,15 @@
         {% for room in rooms %}
             <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
-                    <img class="card-img-top" src="{{ room.image.url }}">
+                    {% if room.roomimage_set.first.is_approved %}
+                    <img class="card-img-top" src="{{ room.roomimage_set.first.image.url }}">
+                    {% endif %}
                     <div class="card-body">
                         <a href="{% url 'room_detail' room.id %}"><h5 class="card-title">{{room.name}}</h5></a>
-                        <p class="card-text">{{ room.price }}</p>
+                        <p class="card-text">${{ room.price }}</p>
                         {% if user.id == room.user.id %}
-                            <a class="btn btn-primary" href="{% url 'room_edit' room.pk %}">Edit</a>
-                            <a class="btn btn-danger" href="{% url 'room_delete' room.pk %}">Delete</a>
+                            <a class="btn btn-primary" href="{% url 'room_edit' room.pk %}"><span class="oi oi-wrench"></span></a>
+                            <a class="btn btn-danger" href="{% url 'room_delete' room.pk %}"><span class="oi oi-trash"></span></a>
                         {% endif %}
                     </div>
                 </div>

@@ -7,10 +7,51 @@
 
 {% block content %}
     <div class="container">
-        <h2>Room | {{ room.name }}</h2>
-        {% if user.id == room.user.id %}
+    <div class="row"><h4>{{ room.name }} At <a
+            href="{% url 'house_detail' room.house.pk %}">{{ room.house.full_address }}</a></h4></div>
+    {% if user.id == room.user.id %}
+        <a class="btn btn-primary" href="#">Add Photo</a>
         <a class="btn btn-primary" href="{% url 'room_edit' room.pk %}">Edit</a>
         <a class="btn btn-danger" href="{% url 'room_delete' room.pk %}">Delete</a>
-        {% endif %}
+        <br>
+    {% endif %}
+    <br>
+
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            {% for img in room.roomimage_set.all %}
+                {% if forloop.first %}
+                    <li data-target="#myCarousel" class="active" data-slide-to="{{ forloop.counter0 }}"></li>
+                {% else %}
+                    <li data-target="#myCarousel" data-slide-to="{{ forloop.counter0 }}"></li>
+                {% endif %}
+            {% endfor %}
+        </ol>
+        <div class="carousel-inner">
+            {% for img in room.roomimage_set.all %}
+                {% if forloop.first %}
+                    <div class="carousel-item active">
+                {% else %}
+                    <div class="carousel-item">
+                {% endif %}
+            <img class="rounded mx-auto d-block img-fluid" height="500" src="{{ img.image.url }}">
+            </div>
+            {% endfor %}
+
+            </div>
+            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <br>
+
+
+        <p>Price : ${{ room.price }}</p>
+        <p>{{ room.is_available }}</p>
     </div>
 {% endblock %}

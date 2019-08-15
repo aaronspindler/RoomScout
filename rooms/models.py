@@ -15,6 +15,5 @@ class Room(models.Model):
 
 	price = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
 
-
 	def __str__(self):
 		return self.name

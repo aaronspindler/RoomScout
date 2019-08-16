@@ -26,7 +26,6 @@ class House(models.Model):
 	bike_score = models.IntegerField(default=0)
 	transit_score = models.IntegerField(default=0)
 
-
 	hide_address = models.BooleanField(default=False)
 
 	def encode_address(self):
@@ -37,7 +36,7 @@ class House(models.Model):
 		response = requests.get(url)
 		# Receive Request
 		if response['status'] == 1:
-			
+
 			# Parse Request
 			pass
 

@@ -73,9 +73,18 @@ class room_delete(LoginRequiredMixin, generic.DeleteView):
 			raise Http404
 		return room
 
+@login_required(login_url="account_login")
 def room_add_photo(request, pk):
 	room = get_object_or_404(Room, pk=pk)
-	if request.method == 'POST':
-		for file in request.FILES.getlist('files'):
-			print(file)
-	return render(request, 'rooms/room_add_photo.html', {'room':room})
+	if room.user == request.user:
+		if request.method == 'POST':
+			for file in request.FILES.getlist('files'):
+				image = RoomImage()
+				image.room = room
+				image.user = request.user
+				image.image = file
+				image.save()
+
+			return redirect('room_detail', pk=room.id)
+		return render(request, 'rooms/room_add_photo.html', {'room':room})
+	return Http404

@@ -30,6 +30,7 @@ def house_create(request):
 			house.lat = request.POST['lat']
 			house.lon = request.POST['lon']
 			house.save()
+			house.load_walk_score()
 			return redirect('house_detail', pk=house.id)
 		return render(request, 'houses/house_create.html', {'error': 'There is an issue with the address inputted!', 'GOOGLE_API_KEY': GOOGLE_API_KEY})
 	else:

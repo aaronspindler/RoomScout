@@ -19,6 +19,8 @@
     {% endif %}
     <br>
 
+    <div class="row">
+    <div class="col-md-8">
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             {% for img in room.roomimage_set.all %}
@@ -29,15 +31,16 @@
                 {% endif %}
             {% endfor %}
         </ol>
-    </div>
+
         <div class="carousel-inner">
             {% for img in room.roomimage_set.all %}
+                <div
                 {% if forloop.first %}
-                    <div class="carousel-item active">
+                     class="carousel-item active">
                 {% else %}
-                    <div class="carousel-item">
+                     class="carousel-item">
                 {% endif %}
-            <img class="rounded mx-auto d-block img-fluid" height="500" src="{{ img.image.url }}">
+            <img class="rounded mx-auto d-block img-fluid" height="500" src="{{ img.image.url }}"/>
             </div>
             {% endfor %}
 
@@ -51,13 +54,21 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
+    </div>
+        <div class="col-md-4">
         <br>
-
-
-        <p>Price : ${{ room.price }}</p>
+        <h4>Details</h4>
+            <p>Price : ${{ room.price }}</p>
         {% if room.is_available %}
             <p>Room is available</p>
-            <a class="btn btn-primary" href="#">Contact</a>
+            <a class="btn btn-primary" href="mailto:{{ room.house.user.email }}">Contact</a>
+        {% else %}
+            <p>Room is not available</p>
         {% endif %}
+        </div>
+    </div>
+
+
+
     </div>
 {% endblock %}

@@ -7,8 +7,10 @@
 
 {% block content %}
     <div class="container">
-    <div class="row"><h4>{{ room.name }} At <a
-            href="{% url 'house_detail' room.house.pk %}">{{ room.house.full_address }}</a></h4></div>
+    <div class="row">
+        <h4>{{ room.name }} At <a
+            href="{% url 'house_detail' room.house.pk %}">{{ room.house.full_address }}</a></h4>
+    </div>
     {% if user.id == room.user.id %}
         <a class="btn btn-primary" href="{% url 'room_add_photo' room.pk %}">Add Photo</a>
         <a class="btn btn-primary" href="{% url 'room_edit' room.pk %}">Edit</a>
@@ -27,6 +29,7 @@
                 {% endif %}
             {% endfor %}
         </ol>
+    </div>
         <div class="carousel-inner">
             {% for img in room.roomimage_set.all %}
                 {% if forloop.first %}
@@ -52,6 +55,9 @@
 
 
         <p>Price : ${{ room.price }}</p>
-        <p>{{ room.is_available }}</p>
+        {% if room.is_available %}
+            <p>Room is available</p>
+            <a class="btn btn-primary" href="#">Contact</a>
+        {% endif %}
     </div>
 {% endblock %}

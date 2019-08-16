@@ -47,15 +47,18 @@ class House(models.Model):
 			self.walk_score_description = json['description']
 			self.walk_scores_updated = json['updated']
 
-			if json['transit']:
+			try:
 				self.transit_score = json['transit']['score']
 				self.transit_score_description = json['transit']['description']
-				if json['transit']['summary']:
-					self.transit_score_summary = json['transit']['summary']
+				self.transit_score_summary = json['transit']['summary']
+			except Exception:
+				pass
 
-			if json['bike']:
+			try:
 				self.bike_score = json['bike']['score']
 				self.bike_score_description = json['bike']['description']
+			except Exception:
+				pass
 			self.save()
 
 	def __str__(self):

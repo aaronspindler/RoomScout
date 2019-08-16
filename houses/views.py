@@ -101,7 +101,7 @@ class house_edit(LoginRequiredMixin, generic.UpdateView):
 class house_delete(LoginRequiredMixin, generic.DeleteView):
 	model = House
 	template_name = 'houses/house_delete.html'
-	success_url = reverse_lazy('home')
+	success_url = reverse_lazy('house_list')
 
 	def get_object(self):
 		house = super(house_delete, self).get_object()

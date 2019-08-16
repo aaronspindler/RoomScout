@@ -105,6 +105,8 @@
                 // place fields that are returned to just the address components.
                 autocomplete.setFields(['address_component', 'geometry', 'place_id']);
 
+                autocomplete.setComponentRestrictions({'country': ['us', 'ca']});
+
                 // When the user selects an address from the drop-down, populate the
                 // address fields in the form.
                 autocomplete.addListener('place_changed', fillInAddress);

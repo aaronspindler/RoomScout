@@ -22,23 +22,41 @@ class House(models.Model):
 	postal_code = models.CharField(max_length=7, default='')
 	country = models.CharField(max_length=100, default='')
 
-	walk_score = models.IntegerField(default=0)
-	bike_score = models.IntegerField(default=0)
-	transit_score = models.IntegerField(default=0)
+	walk_scores_updated = models.DateTimeField(auto_now=True)
+	walk_score = models.IntegerField(default=-1)
+	walk_score_description = models.TextField(default='')
+	bike_score = models.IntegerField(default=-1)
+	bike_score_description = models.TextField(default='')
+	transit_score = models.IntegerField(default=-1)
+	transit_score_description = models.TextField(default='')
+	transit_score_summary = models.TextField(default='')
 
 	hide_address = models.BooleanField(default=False)
 
-	def encode_address(self):
-		pass
-
+	# Loads walk score information from walkscore.com
+	# This should only be ran when the house in created on our backend and very infrequently after
+	# Walk score information does not update very often
+	# and we only have 5000 daily API calls
+	# Todo: Implement a monitor for counting number of calls per day
 	def load_walk_score(self):
-		url = 'http://api.walkscore.com/score?format=json&address={address}&lat={lat}&lon={lon}&transit=1&bike=1&wsapikey={api_key}'.format(address=self.encode_address(), lat=self.lat, lon=self.lon, api_key=settings.WALK_SCORE_API)
+		url = 'http://api.walkscore.com/score?format=json&address={address}&lat={lat}&lon={lon}&transit=1&bike=1&wsapikey={api_key}'.format(address=self.full_address(), lat=self.lat, lon=self.lon, api_key=settings.WALK_SCORE_API)
 		response = requests.get(url)
-		# Receive Request
-		if response['status'] == 1:
+		json = response.json()
+		if json['status'] == 1:
+			self.walk_score = json['walkscore']
+			self.walk_score_description = json['description']
+			self.walk_scores_updated = json['updated']
 
-			# Parse Request
-			pass
+			if json['transit']:
+				self.transit_score = json['transit']['score']
+				self.transit_score_description = json['transit']['description']
+				if json['transit']['summary']:
+					self.transit_score_summary = json['transit']['summary']
+
+			if json['bike']:
+				self.bike_score = json['bike']['score']
+				self.bike_score_description = json['bike']['description']
+			self.save()
 
 	def __str__(self):
 		return self.full_address()

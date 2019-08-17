@@ -11,7 +11,7 @@ echo -n "Enter commit message: "
 read commitmsg
 git commit -m "$commitmsg"
 
-
+git push
 
 cd Roomscout
 echo "Changing filenames back"

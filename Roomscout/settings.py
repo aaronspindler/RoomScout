@@ -9,6 +9,8 @@ SECRET_KEY = ''
 
 # Google
 GOOGLE_API_KEY = ''
+RECAPTCHA_SITE_KEY = ''
+RECAPTCHA_SECRET_KEY = ''
 
 # Walk Score
 WALK_SCORE_API = ''

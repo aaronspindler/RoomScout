@@ -4,7 +4,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class User(AbstractUser):
-	GENDER_CHOICES = [('m', 'Male'), ('f', 'Female')]
+	GENDER_CHOICES = [('m', 'Male'), ('f', 'Female'), ('o', 'Other')]
 
 	#Contact
 	phone_number = PhoneNumberField(blank=True)
@@ -16,6 +16,6 @@ class User(AbstractUser):
 
 	#User Data
 	gender = models.CharField(choices=GENDER_CHOICES, default='', max_length = 2)
-	age = models.IntegerField(default=-1)
+	age = models.IntegerField(default=0)
 
 	score = models.DecimalField(decimal_places=2, max_digits=5, default=0.0)

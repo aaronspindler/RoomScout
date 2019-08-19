@@ -20,20 +20,49 @@
             <h2>Settings</h2>
         </div>
 
-        <a href="{% url 'account_email' %}"><little>Manage Emails</little></a> - <a href="{% url 'account_change_password' %}"><little>Change Password</little></a>
-    <br>
+        <a href="{% url 'account_email' %}">
+            <little>Manage Emails</little>
+        </a> - <a href="{% url 'account_change_password' %}">
+        <little>Change Password</little>
+    </a>
+        <br>
         <form action="{% url 'settings' %}" method="POST">
             {% csrf_token %}
-            <div class="form-group">
-                <label for="inputAddress">Address</label>
-                <input type="text" class="form-control" name="address" id="inputAddress" value="{{ user.address }}">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="gender">Gender</label>
+                    <select name="gender" id="gender" class="form-control">
+                        {% if user.gender == 'm' %}
+                            <option selected value='m'>Male</option>
+                            <option value='f'>Female</option>
+                            <option value='o'>Other</option>
+                        {% elif user.gender == 'f' %}
+                            <option value='m'>Male</option>
+                            <option selected value='f'>Female</option>
+                            <option value='o'>Other</option>
+                        {% elif user.gender == 'o' %}
+                            <option value='m'>Male</option>
+                            <option value='f'>Female</option>
+                            <option selected value='o'>Other</option>
+                        {% else %}
+                            <option value='m'>Male</option>
+                            <option value='f'>Female</option>
+                            <option value='o'>Other</option>
+                        {% endif %}
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="age">Age</label>
+                    <input class="form-control" type="number" step=1 min="0" name="age" value="{{ user.age }}">
+                </div>
+
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="city">City</label>
                     <input type="text" class="form-control" name="city" id="city" value="{{ user.city }}">
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label for="province">Province</label>
                     <select name="province" id="province" class="form-control">
                         {% for province in provinces %}
@@ -44,13 +73,9 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="form-group col-md-2">
-                    <label for="postal_code">Postal Code</label>
-                    <input type="text" class="form-control" name="postal_code" id="postal_code"
-                           value="{{ user.postal_code }}">
-                </div>
+
             </div>
-                <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary">Save</button>
         </form>
     </div>
 {% endblock %}

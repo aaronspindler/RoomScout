@@ -9,8 +9,10 @@ SECRET_KEY = ''
 
 # Google
 GOOGLE_API_KEY = ''
-RECAPTCHA_SITE_KEY = ''
-RECAPTCHA_SECRET_KEY = ''
+RECAPTCHA_PUBLIC_KEY = ''
+RECAPTCHA_PRIVATE_KEY = ''
+RECAPTCHA_USE_SSL = True
+ACCOUNT_SIGNUP_FORM_CLASS = 'accounts.forms.AllauthSignupForm'
 
 # Walk Score
 WALK_SCORE_API = ''
@@ -83,6 +85,7 @@ INSTALLED_APPS = [
 	'allauth',
 	'allauth.account',
 	'allauth.socialaccount',
+	'captcha',
 	# Local Apps
 	'main',
 	'blog',

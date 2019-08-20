@@ -21,5 +21,5 @@ def privacypolicy(request):
 	return render(request, 'main/privacypolicy.html')
 
 
-def termsandconditons(request):
-	return render(request, 'main/termsandconditons.html')
+def termsofuse(request):
+	return render(request, 'main/termsofuse.html')

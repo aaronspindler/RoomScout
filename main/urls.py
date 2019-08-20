@@ -11,7 +11,7 @@ urlpatterns = [
 	path('contactus', views.contactus, name='contactus'),
 	path('licenses', views.licenses, name='licenses'),
 	path('privacypolicy', views.privacypolicy, name='privacypolicy'),
-	path('termsandconditons', views.termsandconditons, name='termsandconditons'),
+	path('termsofuse', views.termsofuse, name='termsofuse'),
 
 	# Blog
 	path('blog/', include('blog.urls')),

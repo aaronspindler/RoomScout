@@ -24,30 +24,41 @@
 
         <div class="row">
             <div class="col-md-7">
-                <div style="width: 100%">
-                    <iframe width="100%" height="400"
-                            src="https://www.google.com/maps/embed/v1/place?key={{ GOOGLE_API_KEY }}&q=place_id:{{ house.place_id }}"
-                            frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
-                </div>
+                {% if house.hide_address %}
+                    <div style="width: 100%">
+                        <iframe width="100%" height="400"
+                                src="https://www.google.com/maps/embed/v1/view?zoom=16&center={{ house.lat }}%2C{{ house.lon }}&key={{ GOOGLE_API_KEY }}"
+                                frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                    </div>
+                {% else %}
+                    <div style="width: 100%">
+                        <iframe width="100%" height="400"
+                                src="https://www.google.com/maps/embed/v1/place?key={{ GOOGLE_API_KEY }}&q=place_id:{{ house.place_id }}"
+                                frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                    </div>
+                {% endif %}
             </div>
             <div class="col-md-5">
                 <h4>Details</h4>
                 {% if house.walk_score != -1 %}
                     <div>
                         <!-- Walk Score -->
-                        <img class="img-fluid" width=75 src="https://pp.walk.sc/badge/walk/score/{{ house.walk_score }}.svg">
+                        <img class="img-fluid" width=75
+                             src="https://pp.walk.sc/badge/walk/score/{{ house.walk_score }}.svg">
                         <small>{{ house.walk_score_description }}</small>
 
                         <!-- Bike Score -->
                         {% if house.bike_score != -1 %}
                             <br>
-                            <img class="img-fluid" width=75 src="https://pp.walk.sc/badge/bike/score/{{ house.bike_score }}.svg">
+                            <img class="img-fluid" width=75
+                                 src="https://pp.walk.sc/badge/bike/score/{{ house.bike_score }}.svg">
                             <small>{{ house.bike_score_description }}</small>
                         {% endif %}
                         <!-- Transit Score -->
                         {% if house.transit_score != -1 %}
                             <br>
-                            <img class="img-fluid" width=75 src="https://pp.walk.sc/badge/transit/score/{{ house.transit_score }}.svg">
+                            <img class="img-fluid" width=75
+                                 src="https://pp.walk.sc/badge/transit/score/{{ house.transit_score }}.svg">
                             {% if house.transit_score_summary %}
                                 <small>{{ house.transit_score_description }} - {{ house.transit_score_summary }}</small>
                             {% else %}

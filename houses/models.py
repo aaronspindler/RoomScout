@@ -4,9 +4,9 @@ import requests
 
 from accounts.models import User
 
-
 class House(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	members = models.ManyToManyField(User, related_name='members')
 	is_approved = models.BooleanField(default=False)
 	is_available = models.BooleanField(default=False)
 	created_at = models.DateTimeField(auto_now_add=True)
@@ -31,6 +31,10 @@ class House(models.Model):
 	transit_score_description = models.TextField(default='')
 	transit_score_summary = models.TextField(default='')
 
+	# Used to hide the address from public consumption
+	# Changes all full_address postings to use a non specific address
+	# Eg 2529 Stallion Dr, Oshawa, Ontario, Canada will become Stallion Dr, Oshawa, Ontario, Canada
+	# TODO: Needs to hide address in google maps also
 	hide_address = models.BooleanField(default=False)
 
 	# Loads walk score information from walkscore.com
@@ -65,6 +69,8 @@ class House(models.Model):
 		return self.full_address()
 
 	def full_address(self):
+		if self.hide_address:
+			return '{}, {}, {}, {}'.format(self.street_name, self.city, self.prov_state, self.country)
 		if self.postal_code:
 			return '{} {}, {}, {}, {}, {}'.format(self.street_number, self.street_name, self.city, self.prov_state, self.country,self.postal_code)
 		else:

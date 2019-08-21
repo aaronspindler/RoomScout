@@ -68,6 +68,15 @@
                         {% endif %}
                     </div>
                 {% endif %}
+            <hr>
+                {% if user.id == house.user.id %}
+                <h4>Members</h4>
+                    <table>
+                    {% for member in house.members.all %}
+
+                    {% endfor %}
+                    </table>
+                {% endif %}
             </div>
         </div>
 

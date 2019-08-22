@@ -15,7 +15,6 @@
     <div class="container">
         <h2>House Details - {{ house.full_address }}</h2>
         {% if user.id == house.user.id %}
-            <a class="btn btn-primary" href="{% url 'house_add_room' house.pk %}">Add Room</a>
             <a class="btn btn-primary" href="{% url 'house_edit' house.pk %}">Edit</a>
             <a class="btn btn-danger" href="{% url 'house_delete' house.pk %}">Delete</a>
             <br>
@@ -68,22 +67,47 @@
                         {% endif %}
                     </div>
                 {% endif %}
-            <hr>
+            <br>
                 {% if user.id == house.user.id %}
-                <h4>Members</h4>
-                    <table>
-                    {% for member in house.members.all %}
-
-                    {% endfor %}
+                    <h4>Members
+                        <small>
+        <span class="btn-group">
+            <button class="btn btn-primary"><span class="oi oi-plus"></span></button>
+        </span>
+                        </small></h4>
+                    <table class="table table-hover table-sm" style="width:100%">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                        {% for member in house.members.all %}
+                            <tr>
+                            <td>{{ member.first_name }} {{ member.last_name }}</td>
+                            <td>{{ member.email }}</td>
+                            <td><a class="btn btn-danger" href="#">Delete</a><a class="btn btn-danger" href="#">Delete</a></td>
+                            </tr>
+                        {% endfor %}
                     </table>
                 {% endif %}
             </div>
+
         </div>
+    <hr>
 
 
-        {% if rooms %}
-            <h4>Rooms</h4>
-            <div class="row">
+        <h4>Rooms
+            {% if user.id == house.user.id %}
+                <small>
+        <span class="btn-group">
+            <a href="{% url 'house_add_room' house.pk %}" class="btn btn-primary"><span class="oi oi-plus"></span></a>
+        </span>
+                </small>
+            {% endif %}
+
+        </h4>
+        <div class="row">
+            {% if rooms %}
                 {% for room in rooms %}
                     <div class="col-md-4">
                         <div class="card mb-4 shadow-sm">
@@ -104,8 +128,8 @@
                         </div>
                     </div>
                 {% endfor %}
-            </div>
-        {% endif %}
+            {% endif %}
+        </div>
     </div>
 
 {% endblock %}

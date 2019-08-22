@@ -6,6 +6,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 
+from accounts.models import User
+
 from utils.models import RoomImage
 from .models import House
 from rooms.models import Room
@@ -35,6 +37,18 @@ def house_create(request):
 		return render(request, 'houses/house_create.html', {'error': 'There is an issue with the address inputted!', 'GOOGLE_API_KEY': GOOGLE_API_KEY})
 	else:
 		return render(request, 'houses/house_create.html', {'GOOGLE_API_KEY': GOOGLE_API_KEY})
+
+@login_required(login_url="account_login")
+def house_invite(request, pk):
+	house = House.objects.filter(pk=pk).get()
+	if (house.user != request.user):
+		return Http404
+
+	if(request.method == 'POST'):
+		if(request.POST['email'] != ''):
+			users = User.objects.filter(email=request.POST['email'])
+			print(users)
+	return render(request, 'houses/house_invite.html', {'house':house})
 
 @login_required(login_url="account_login")
 def house_list(request):

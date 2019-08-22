@@ -67,25 +67,26 @@
                         {% endif %}
                     </div>
                 {% endif %}
-            <br>
+                <br>
                 {% if user.id == house.user.id %}
                     <h4>Members
+
                         <small>
         <span class="btn-group">
-            <button class="btn btn-primary"><span class="oi oi-plus"></span></button>
+            <a href="{% url 'house_invite' house.pk %}" class="btn btn-primary"><span class="oi oi-plus"></span></a>
         </span>
                         </small></h4>
                     <table class="table table-hover table-sm" style="width:100%">
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Actions</th>
-                    </tr>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
                         {% for member in house.members.all %}
                             <tr>
-                            <td>{{ member.first_name }} {{ member.last_name }}</td>
-                            <td>{{ member.email }}</td>
-                            <td><a class="btn btn-danger" href="#">Delete</a></td>
+                                <td>{{ member.first_name }} {{ member.last_name }}</td>
+                                <td>{{ member.email }}</td>
+                                <td><a class="btn btn-danger" href="#">Delete</a></td>
                             </tr>
                         {% endfor %}
                     </table>
@@ -93,7 +94,7 @@
             </div>
 
         </div>
-    <hr>
+        <hr>
 
 
         <h4>Rooms

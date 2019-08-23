@@ -90,7 +90,7 @@
                                 <td>{{ member.first_name }} {{ member.last_name }}</td>
                                 <td>{{ member.email }}</td>
                                 {% if user.id == house.user.id %}
-                                    <td><a href="#">Remove</a></td>
+                                    <td><a href="{% url 'house_member_remove' house.pk member.id %}">Remove</a></td>
                                     <td class="text-success">Member</td>
                                 {% endif %}
                             </tr>

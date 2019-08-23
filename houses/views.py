@@ -72,6 +72,15 @@ def house_invite_remove(request, pk, id):
 	return redirect('house_detail', pk=pk)
 
 @login_required(login_url="account_login")
+def house_member_remove(request, pk, id):
+	house = get_object_or_404(House, pk=pk)
+	if (request.user.id != house.user.id):
+		return Http404
+	member = house.members.filter(id=id).first()
+	house.members.remove(member)
+	return redirect('house_detail', pk=pk)
+
+@login_required(login_url="account_login")
 def house_list(request):
 	GOOGLE_API_KEY = settings.GOOGLE_API_KEY
 	try:

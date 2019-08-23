@@ -43,7 +43,8 @@ class House(models.Model):
 	# and we only have 5000 daily API calls
 	# Todo: Implement a monitor for counting number of calls per day
 	def load_walk_score(self):
-		url = 'http://api.walkscore.com/score?format=json&address={address}&lat={lat}&lon={lon}&transit=1&bike=1&wsapikey={api_key}'.format(address=self.full_address(), lat=self.lat, lon=self.lon, api_key=settings.WALK_SCORE_API)
+		url = 'http://api.walkscore.com/score?format=json&address={address}&lat={lat}&lon={lon}&transit=1&bike=1&wsapikey={api_key}'.format(
+			address=self.full_address(), lat=self.lat, lon=self.lon, api_key=settings.WALK_SCORE_API)
 		response = requests.get(url)
 		json = response.json()
 		if json['status'] == 1:
@@ -72,7 +73,17 @@ class House(models.Model):
 		if self.hide_address:
 			return '{}, {}, {}, {}'.format(self.street_name, self.city, self.prov_state, self.country)
 		if self.postal_code:
-			return '{} {}, {}, {}, {}, {}'.format(self.street_number, self.street_name, self.city, self.prov_state, self.country,self.postal_code)
+			return '{} {}, {}, {}, {}, {}'.format(self.street_number, self.street_name, self.city, self.prov_state,
+			                                      self.country, self.postal_code)
 		else:
 			return '{} {}, {}, {}, {}'.format(self.street_number, self.street_name, self.city, self.prov_state,
-												  self.country)
+			                                  self.country)
+
+
+class Invitation(models.Model):
+	created = models.DateTimeField(auto_now_add=True)
+	target = models.EmailField(default='')
+	sender = models.ForeignKey(User, on_delete=models.CASCADE)
+	house = models.ForeignKey(House, on_delete=models.CASCADE)
+
+

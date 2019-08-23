@@ -1,16 +1,16 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 
 from accounts.models import User
-
+from rooms.models import Room
 from utils.models import RoomImage
 from .models import House
-from rooms.models import Room
 
 
 @login_required(login_url="account_login")
@@ -46,8 +46,15 @@ def house_invite(request, pk):
 
 	if(request.method == 'POST'):
 		if(request.POST['email'] != ''):
-			users = User.objects.filter(email=request.POST['email'])
-			print(users)
+			users = User.objects.filter(Q(email__iexact=request.POST['email']))
+			#If users == 0 then the user is not signed up
+			#Send a email telling them they've been invited to a house and should signup
+			if(users.count() == 0):
+				print('user not found')
+			# Else user already has an account and an invitation should be created and they should be notified
+			else:
+				print(users)
+		return redirect('house_detail', pk=pk)
 	return render(request, 'houses/house_invite.html', {'house':house})
 
 @login_required(login_url="account_login")
@@ -88,13 +95,19 @@ def house_add_room(request, pk):
 def house_detail(request, pk):
 	house = get_object_or_404(House, pk=pk)
 	GOOGLE_API_KEY = settings.GOOGLE_API_KEY
+	is_member = False
+	if request.user in house.members.all():
+		is_member = True
+	if request.user.id == house.user.id:
+		is_member= True
+
 	try:
 		rooms = Room.objects.filter(house=house)
-		return render(request, 'houses/house_detail.html', {'rooms':rooms, 'house':house, 'GOOGLE_API_KEY': GOOGLE_API_KEY})
+		return render(request, 'houses/house_detail.html', {'rooms':rooms, 'house':house, 'is_member':is_member, 'GOOGLE_API_KEY': GOOGLE_API_KEY})
 	except Exception:
 		pass
 
-	return render(request,'houses/house_detail.html', {'house':house, 'GOOGLE_API_KEY': GOOGLE_API_KEY})
+	return render(request,'houses/house_detail.html', {'house':house, 'is_member':is_member, 'GOOGLE_API_KEY': GOOGLE_API_KEY})
 
 
 class house_edit(LoginRequiredMixin, generic.UpdateView):

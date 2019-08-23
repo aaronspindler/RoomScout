@@ -80,13 +80,19 @@
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Actions</th>
+                            {% if user.id == house.user.id %}
+                                <th>Actions</th>
+                                <th>Status</th>
+                            {% endif %}
                         </tr>
                         {% for member in house.members.all %}
                             <tr>
                                 <td>{{ member.first_name }} {{ member.last_name }}</td>
                                 <td>{{ member.email }}</td>
-                                <td><a class="btn btn-danger" href="#">Delete</a></td>
+                                {% if user.id == house.user.id %}
+                                    <td><a class="btn btn-danger" href="#">Remove</a></td>
+                                    <td>Status</td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                     </table>
@@ -95,6 +101,21 @@
 
         </div>
         <hr>
+
+    {% if is_member %}
+        <h4>Bills
+            {% if user.id == house.user.id %}
+                <small>
+        <span class="btn-group">
+            <a href="#" class="btn btn-primary"><span class="oi oi-plus"></span></a>
+        </span>
+                </small>
+            {% endif %}
+
+        </h4>
+    <hr>
+    {% endif %}
+
 
 
         <h4>Rooms

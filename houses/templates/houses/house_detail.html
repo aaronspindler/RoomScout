@@ -95,8 +95,8 @@
                                 {% endif %}
                             </tr>
                         {% endfor %}
-                    {% for invite in house.invitation_set.all %}
-                        <tr>
+                        {% for invite in house.invitation_set.all %}
+                            <tr>
                                 <td>N/A</td>
                                 <td>{{ invite.target }}</td>
                                 {% if user.id == house.user.id %}
@@ -104,7 +104,7 @@
                                     <td class="text-warning">Pending</td>
                                 {% endif %}
                             </tr>
-                    {% endfor %}
+                        {% endfor %}
                     </table>
                 {% endif %}
             </div>
@@ -112,19 +112,19 @@
         </div>
         <hr>
 
-    {% if is_member %}
-        <h4>Bills
-            {% if user.id == house.user.id %}
-                <small>
+        {% if is_member %}
+            <h4>Bills
+                {% if user.id == house.user.id %}
+                    <small>
         <span class="btn-group">
             <a href="#" class="btn btn-primary"><span class="oi oi-plus"></span></a>
         </span>
-                </small>
-            {% endif %}
+                    </small>
+                {% endif %}
 
-        </h4>
-    <hr>
-    {% endif %}
+            </h4>
+            <hr>
+        {% endif %}
 
 
 

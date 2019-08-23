@@ -10,4 +10,6 @@ urlpatterns = [
 	path('<str:pk>/edit/', views.house_edit.as_view(), name='house_edit'),
 	path('<str:pk>/delete/', views.house_delete.as_view(), name='house_delete'),
 	path('<str:pk>/invite/', views.house_invite, name='house_invite'),
+	path('<str:pk>/invite/remove/<str:id>/', views.house_invite_remove, name='house_invite_remove'),
+	path('<str:pk>/member/remove/<str:id>/', views.house_invite_remove, name='house_member_remove'),
 ]

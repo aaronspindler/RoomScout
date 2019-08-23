@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.conf import settings
 import requests
@@ -79,11 +81,9 @@ class House(models.Model):
 			return '{} {}, {}, {}, {}'.format(self.street_number, self.street_name, self.city, self.prov_state,
 			                                  self.country)
 
-
 class Invitation(models.Model):
+	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 	created = models.DateTimeField(auto_now_add=True)
 	target = models.EmailField(default='')
 	sender = models.ForeignKey(User, on_delete=models.CASCADE)
 	house = models.ForeignKey(House, on_delete=models.CASCADE)
-
-

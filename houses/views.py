@@ -10,7 +10,7 @@ from django.views import generic
 from accounts.models import User
 from rooms.models import Room
 from utils.models import RoomImage
-from .models import House
+from .models import House, Invitation
 
 
 @login_required(login_url="account_login")
@@ -40,8 +40,8 @@ def house_create(request):
 
 @login_required(login_url="account_login")
 def house_invite(request, pk):
-	house = House.objects.filter(pk=pk).get()
-	if (house.user != request.user):
+	house = get_object_or_404(House, pk=pk)
+	if (request.user.id != house.user.id):
 		return Http404
 
 	if(request.method == 'POST'):
@@ -51,11 +51,25 @@ def house_invite(request, pk):
 			#Send a email telling them they've been invited to a house and should signup
 			if(users.count() == 0):
 				print('user not found')
-			# Else user already has an account and an invitation should be created and they should be notified
+				invitation = Invitation()
+				invitation.house = house
+				invitation.sender = request.user
+				invitation.target = request.POST['email']
+				invitation.save()
+			# Else user already has an account and an invitation should be created and put on their dashboard
 			else:
 				print(users)
 		return redirect('house_detail', pk=pk)
 	return render(request, 'houses/house_invite.html', {'house':house})
+
+@login_required(login_url="account_login")
+def house_invite_remove(request, pk, id):
+	house = get_object_or_404(House, pk=pk)
+	if (request.user.id != house.user.id):
+		return Http404
+	invite = get_object_or_404(Invitation, id=id)
+	invite.delete()
+	return redirect('house_detail', pk=pk)
 
 @login_required(login_url="account_login")
 def house_list(request):

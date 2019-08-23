@@ -90,11 +90,21 @@
                                 <td>{{ member.first_name }} {{ member.last_name }}</td>
                                 <td>{{ member.email }}</td>
                                 {% if user.id == house.user.id %}
-                                    <td><a class="btn btn-danger" href="#">Remove</a></td>
-                                    <td>Status</td>
+                                    <td><a href="#">Remove</a></td>
+                                    <td class="text-success">Member</td>
                                 {% endif %}
                             </tr>
                         {% endfor %}
+                    {% for invite in house.invitation_set.all %}
+                        <tr>
+                                <td>N/A</td>
+                                <td>{{ invite.target }}</td>
+                                {% if user.id == house.user.id %}
+                                    <td><a href="{% url 'house_invite_remove' house.pk invite.id %}">Remove</a></td>
+                                    <td class="text-warning">Pending</td>
+                                {% endif %}
+                            </tr>
+                    {% endfor %}
                     </table>
                 {% endif %}
             </div>

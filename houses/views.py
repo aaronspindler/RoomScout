@@ -6,11 +6,11 @@ from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
-from django.core.mail import EmailMultiAlternatives
 
 from accounts.models import User
 from rooms.models import Room
 from utils.models import RoomImage
+from utils.emailclient import send_invite_email
 from .models import House, Invitation
 
 
@@ -47,27 +47,13 @@ def house_invite(request, pk):
 
 	if(request.method == 'POST'):
 		if(request.POST['email'] != ''):
-			users = User.objects.filter(Q(email__iexact=request.POST['email']))
-			#If users == 0 then the user is not signed up
-			#Send a email telling them they've been invited to a house and should signup
 			invitation = Invitation()
 			invitation.house = house
 			invitation.sender = request.user
 			invitation.target = request.POST['email']
 			invitation.save()
-			if(users.count() == 0):
-				from_email = 'noreply@roomscout.ca'
-				to_email = request.POST['email']
-				subject = "RoomScout | You've been invited to join a house"
-				text_content = ''
-				html_content = ''
+			send_invite_email(request.POST['email'], invitation)
 
-				msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
-				msg.attach_alternative(html_content, "text/html")
-				msg.send()
-			# Else user already has an account and an invitation should be created and put on their dashboard
-			else:
-				pass
 		return redirect('house_detail', pk=pk)
 	return render(request, 'houses/house_invite.html', {'house':house})
 

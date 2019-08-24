@@ -68,14 +68,16 @@
                     </div>
                 {% endif %}
                 <br>
-                {% if user.id == house.user.id %}
+                {% if is_member %}
                     <h4>Members
-
-                        <small>
-        <span class="btn-group">
-            <a href="{% url 'house_invite' house.pk %}" class="btn btn-primary"><span class="oi oi-plus"></span></a>
-        </span>
-                        </small></h4>
+                        {% if user.id == house.user.id %}
+                            <small>
+                                <span class="btn-group">
+                                    <a href="{% url 'house_invite' house.pk %}" class="btn btn-primary"><span class="oi oi-plus"></span></a>
+                                </span>
+                            </small>
+                        {% endif %}
+                    </h4>
                     <table class="table table-hover table-sm" style="width:100%">
                         <tr>
                             <th>Name</th>
@@ -116,9 +118,9 @@
             <h4>Bills
                 {% if user.id == house.user.id %}
                     <small>
-        <span class="btn-group">
-            <a href="#" class="btn btn-primary"><span class="oi oi-plus"></span></a>
-        </span>
+                        <span class="btn-group">
+                            <a href="#" class="btn btn-primary"><span class="oi oi-plus"></span></a>
+                        </span>
                     </small>
                 {% endif %}
 
@@ -131,9 +133,9 @@
         <h4>Rooms
             {% if user.id == house.user.id %}
                 <small>
-        <span class="btn-group">
-            <a href="{% url 'house_add_room' house.pk %}" class="btn btn-primary"><span class="oi oi-plus"></span></a>
-        </span>
+                    <span class="btn-group">
+                        <a href="{% url 'house_add_room' house.pk %}" class="btn btn-primary"><span class="oi oi-plus"></span></a>
+                    </span>
                 </small>
             {% endif %}
 
@@ -151,10 +153,8 @@
                                 </a>
                                 <p class="card-text">${{ room.price }}</p>
                                 {% if user.id == room.user.id %}
-                                    <a class="btn btn-primary" href="{% url 'room_edit' room.pk %}"><span
-                                            class="oi oi-wrench"></span></a>
-                                    <a class="btn btn-danger" href="{% url 'room_delete' room.pk %}"><span
-                                            class="oi oi-trash"></span></a>
+                                    <a class="btn btn-primary" href="{% url 'room_edit' room.pk %}"><span class="oi oi-wrench"></span></a>
+                                    <a class="btn btn-danger" href="{% url 'room_delete' room.pk %}"><span class="oi oi-trash"></span></a>
                                 {% endif %}
                             </div>
                         </div>

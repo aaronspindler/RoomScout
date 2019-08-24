@@ -90,12 +90,12 @@ INSTALLED_APPS = [
 	# Local Apps
 	'main',
 	'blog',
-	'management',
 	'accounts',
 	'houses',
 	'rooms',
 	'bills',
 	'utils',
+	'dashboard',
 ]
 
 MIDDLEWARE = [

@@ -1,4 +1,3 @@
-from django.contrib.auth.views import LogoutView
 from django.urls import path, include
 
 from accounts.views import settings
@@ -12,6 +11,7 @@ urlpatterns = [
 	path('licenses', views.licenses, name='licenses'),
 	path('privacypolicy', views.privacypolicy, name='privacypolicy'),
 	path('termsofuse', views.termsofuse, name='termsofuse'),
+	path('dashboard', include('dashboard.urls')),
 
 	# Blog
 	path('blog/', include('blog.urls')),
@@ -19,11 +19,9 @@ urlpatterns = [
 	# Accounts
 	path('accounts/', include('allauth.urls')),
 	path('settings', settings, name='settings'),
-	#path('logout', LogoutView.as_view(), name='logout'),
+
 	# Houses
 	path('house/', include('houses.urls')),
 	# Rooms
 	path('room/', include('rooms.urls')),
-	# Management
-	path('manager/', include('management.urls'))
 ]

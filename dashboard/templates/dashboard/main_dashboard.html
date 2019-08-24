@@ -3,12 +3,12 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-    My Houses
+    Dashboard
 {% endblock %}
 
 {% block content %}
     <div class="container">
-        <h2>My Houses</h2>
+        <h2>Houses</h2>
         <a class="btn btn-primary" href="{% url 'house_create'%}">Create House</a>
         <br>
     <br>
@@ -37,7 +37,7 @@
         {% endfor %}
         </div>
         {% else %}
-        <p>Looks like you haven't told us about any houses or you aren't a tenant in any houses</p>
+        <p>Looks like you haven't told us about any houses or you aren't a member of any houses</p>
     {% endif %}
     </div>
 

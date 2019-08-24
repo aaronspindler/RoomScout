@@ -1,13 +1,11 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 
-from accounts.models import User
 from rooms.models import Room
 from utils.models import RoomImage
 from utils.emailclient import send_invite_email
@@ -74,16 +72,6 @@ def house_member_remove(request, pk, id):
 	member = house.members.filter(id=id).first()
 	house.members.remove(member)
 	return redirect('house_detail', pk=pk)
-
-@login_required(login_url="account_login")
-def house_list(request):
-	GOOGLE_API_KEY = settings.GOOGLE_API_KEY
-	try:
-		houses = House.objects.filter(user=request.user)
-		return render(request, 'houses/house_list.html', {'houses':houses,'GOOGLE_API_KEY': GOOGLE_API_KEY})
-	except Exception:
-		pass
-	return render(request, 'houses/house_list.html', {'GOOGLE_API_KEY': GOOGLE_API_KEY})
 
 @login_required(login_url="account_login")
 def house_add_room(request, pk):

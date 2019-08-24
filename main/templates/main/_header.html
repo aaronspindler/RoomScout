@@ -27,7 +27,7 @@
             <a class="btn btn-outline-primary mx-2" href="{% url 'account_login' %}">Log In</a>
             <a class="btn btn-outline-primary mx-2" href="{% url 'account_signup' %}">Sign up</a>
         {% else %}
-            <a class="p-2 text-dark nav-item nav-link" href="{% url 'house_list' %}">Manage Houses</a>
+            <a class="p-2 text-dark nav-item nav-link" href="{% url 'main_dashboard' %}">Dashboard</a>
             <a class="p-2 text-dark nav-item nav-link" href="{% url 'settings' %}">Settings</a>
             <a class="p-2 text-dark nav-item nav-link" href="{% url 'account_logout' %}">Logout</a>
         {% endif %}

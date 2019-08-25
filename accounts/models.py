@@ -9,6 +9,7 @@ class User(AbstractUser):
 	#Contact
 	phone_number = PhoneNumberField(blank=True)
 	phone_number_confirmed = models.BooleanField(default=False)
+	promotional_emails = models.BooleanField(default=False)
 
 	#Address
 	city = models.CharField(default='', max_length=200)

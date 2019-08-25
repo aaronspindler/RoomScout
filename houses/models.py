@@ -2,6 +2,7 @@ import uuid
 
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 import requests
 
 from accounts.models import User
@@ -70,6 +71,9 @@ class House(models.Model):
 
 	def __str__(self):
 		return self.full_address()
+
+	def get_absolute_url(self):
+		return reverse('house_detail', args=[str(self.pk)])
 
 	def full_address(self):
 		if self.hide_address:

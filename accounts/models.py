@@ -19,3 +19,7 @@ class User(AbstractUser):
 	age = models.IntegerField(default=0)
 
 	score = models.DecimalField(decimal_places=2, max_digits=5, default=0.0)
+
+
+	#Premium Features
+	#max_houses = models.IntegerField(default=1)

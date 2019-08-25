@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 
 from houses.models import House
@@ -53,7 +53,9 @@ class room_edit(LoginRequiredMixin, generic.UpdateView):
 	model = Room
 	template_name = 'rooms/room_edit.html'
 	fields = ['name', 'price', 'is_available']
-	success_url = reverse_lazy('home')
+
+	def get_success_url(self):
+		return reverse('room_detail', kwargs={'pk': str(self.object.pk)})
 
 	def get_object(self):
 		room = super(room_edit, self).get_object()
@@ -65,7 +67,7 @@ class room_edit(LoginRequiredMixin, generic.UpdateView):
 class room_delete(LoginRequiredMixin, generic.DeleteView):
 	model = Room
 	template_name = 'rooms/room_delete.html'
-	success_url = reverse_lazy('home')
+	success_url = reverse_lazy('main_dashboard')
 
 	def get_object(self):
 		room = super(room_delete, self).get_object()

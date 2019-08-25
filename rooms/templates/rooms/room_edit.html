@@ -16,8 +16,10 @@
 
     <div class="container">
         <h2>Edit Room | {{ room.name }}</h2>
-    <form>
+    <form method="post">
+        {% csrf_token %}
         {{ form | crispy }}
+        <button class="btn btn-primary" type='submit'>Save</button>
     </form>
     </div>
 {% endblock %}

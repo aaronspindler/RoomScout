@@ -65,6 +65,25 @@ def house_invite_remove(request, pk, id):
 	return redirect('house_detail', pk=pk)
 
 @login_required(login_url="account_login")
+def house_invite_accept(request, pk, id):
+	house = get_object_or_404(House, pk=pk)
+	invite = get_object_or_404(Invitation, id=id)
+	if (request.user.email != invite.target):
+		return Http404
+
+	house.members.add(request.user)
+	invite.delete()
+	return redirect('house_detail', pk=pk)
+
+@login_required(login_url="account_login")
+def house_invite_decline(request, pk, id):
+	invite = get_object_or_404(Invitation, id=id)
+	if(request.user.email != invite.target):
+		return Http404
+	invite.delete()
+	return redirect('main_dashboard')
+
+@login_required(login_url="account_login")
 def house_member_remove(request, pk, id):
 	house = get_object_or_404(House, pk=pk)
 	if (request.user.id != house.user.id):
@@ -134,7 +153,7 @@ class house_edit(LoginRequiredMixin, generic.UpdateView):
 class house_delete(LoginRequiredMixin, generic.DeleteView):
 	model = House
 	template_name = 'houses/house_delete.html'
-	success_url = reverse_lazy('house_list')
+	success_url = reverse_lazy('main_dashboard')
 
 	def get_object(self):
 		house = super(house_delete, self).get_object()

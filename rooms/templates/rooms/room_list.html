@@ -15,6 +15,15 @@
     <div class="container">
         <h2>Find a Room</h2>
         {% if rooms %}
+            <form>
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <input class="form-control" type="text" name="search" id="search" placeholder="Search">
+                </div>
+            </div>
+
+            </form>
             {% for room in rooms %}
                 {% if room.is_available %}
                 <a href="{% url 'room_detail' room.pk %}">{{ room.name }} - ${{ room.price }}</a>

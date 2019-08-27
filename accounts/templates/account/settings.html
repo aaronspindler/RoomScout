@@ -28,6 +28,13 @@
         <br>
         <form action="{% url 'settings' %}" method="POST">
             {% csrf_token %}
+
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label>Phone Number</label>
+                    <input class="form-control" type="tel" name="phone_number" id="phone_number" value="{{ user.phone_number }}">
+                </div>
+            </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="gender">Gender</label>

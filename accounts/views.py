@@ -17,6 +17,8 @@ def settings(request):
 			user.age = request.POST['age']
 		if request.POST['gender']:
 			user.gender = request.POST['gender']
+		if request.POST['phone_number']:
+			user.phone_number = request.POST['phone_number']
 		user.save()
 		messages.success(request, 'Your settings have been saved!.')
 		return redirect('settings')

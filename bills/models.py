@@ -14,3 +14,7 @@ class Bill(models.Model):
 	date = models.DateField(auto_now=True)
 	file = models.FileField(default=None)
 	amount = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
+
+class BillSet(models.Model):
+	date = models.DateField(auto_now=True)
+	pass

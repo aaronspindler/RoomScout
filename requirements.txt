@@ -9,7 +9,6 @@ Django==2.2.4
 django-allauth==0.39.1
 django-countries==5.4
 django-crispy-forms==1.7.2
-django-phonenumber-field==3.0.1
 django-recaptcha==2.0.4
 django-storages==1.7.1
 docutils==0.14
@@ -17,7 +16,6 @@ gunicorn==19.9.0
 idna==2.8
 jmespath==0.9.4
 oauthlib==3.1.0
-phonenumbers==8.10.16
 Pillow==6.1.0
 psycopg2==2.8.3
 psycopg2-binary==2.8.3

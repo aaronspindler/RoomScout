@@ -1,13 +1,12 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
 
 
 class User(AbstractUser):
 	GENDER_CHOICES = [('m', 'Male'), ('f', 'Female'), ('o', 'Other')]
 
 	#Contact
-	phone_number = PhoneNumberField(blank=True)
+	phone_number = models.CharField(max_length=20, default='')
 	phone_number_confirmed = models.BooleanField(default=False)
 
 	#Address

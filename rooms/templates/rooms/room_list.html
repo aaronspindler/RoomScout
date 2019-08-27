@@ -24,6 +24,8 @@
             </div>
 
             </form>
+
+
             {% for room in rooms %}
                 {% if room.is_available %}
                 <a href="{% url 'room_detail' room.pk %}">{{ room.name }} - ${{ room.price }}</a>

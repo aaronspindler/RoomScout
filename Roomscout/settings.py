@@ -95,6 +95,7 @@ INSTALLED_APPS = [
 	'bills',
 	'utils',
 	'dashboard',
+	'marketing',
 ]
 
 MIDDLEWARE = [

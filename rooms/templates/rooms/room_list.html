@@ -19,7 +19,7 @@
                 {% csrf_token %}
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <input class="form-control" type="text" name="search" id="search" placeholder="Search">
+                        <input class="form-control" type="text" name="search" id="search" placeholder="Search" hidden="true">
                     </div>
                 </div>
             </form>
@@ -62,7 +62,7 @@
 
             {% for room in rooms %}
                 {% if room.is_available %}
-                    <a href="{% url 'room_detail' room.pk %}">{{ room.name }} - ${{ room.price }}</a>
+                    <a href="{% url 'room_detail' room.pk %}">{{ room.name }} - ${{ room.price }} | {{ room.house.city }},{{ room.house.prov_state }}</a>
                     <br>
                 {% endif %}
             {% endfor %}

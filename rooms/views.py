@@ -90,3 +90,6 @@ def room_add_photo(request, pk):
 			return redirect('room_detail', pk=room.id)
 		return render(request, 'rooms/room_add_photo.html', {'room':room})
 	return Http404
+
+def room_search(request):
+	pass

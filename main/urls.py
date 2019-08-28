@@ -24,4 +24,6 @@ urlpatterns = [
 	path('house/', include('houses.urls')),
 	# Rooms
 	path('room/', include('rooms.urls')),
+	# Marketing
+	path('m/', include('marketing.urls')),
 ]

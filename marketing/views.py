@@ -1,3 +1,4 @@
 from django.shortcuts import render
 
-# Create your views here.
+def marketing_roommates(request):
+	return render(request, 'marketing/roommates.html')

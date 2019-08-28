@@ -37,7 +37,6 @@ class House(models.Model):
 	# Used to hide the address from public consumption
 	# Changes all full_address postings to use a non specific address
 	# Eg 2529 Stallion Dr, Oshawa, Ontario, Canada will become Stallion Dr, Oshawa, Ontario, Canada
-	# TODO: Needs to hide address in google maps also
 	hide_address = models.BooleanField(default=False)
 
 	# Loads walk score information from walkscore.com

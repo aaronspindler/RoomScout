@@ -33,12 +33,12 @@
 
                                 {{ emailaddress.email }}
                                 {% if emailaddress.verified %}
-                                    Verified
+                                    <span class="badge badge-success">Verified</span>
                                 {% else %}
-                                    Unverified
+                                    <span class="badge badge-danger">Unverified</span>
                                 {% endif %}
                                 {% if emailaddress.primary %}
-                                    Primary
+                                     <span class="badge badge-info">Primary</span>
                                 {% endif %}
                             </label>
                         </div>

@@ -7,7 +7,7 @@ class User(AbstractUser):
 
 	#Contact
 	phone_number = models.CharField(max_length=20, default='')
-	phone_number_confirmed = models.BooleanField(default=False)
+	phone_number_verified = models.BooleanField(default=False)
 
 	#Address
 	city = models.CharField(default='', max_length=200)

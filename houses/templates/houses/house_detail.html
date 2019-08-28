@@ -114,20 +114,18 @@
         </div>
         <hr>
 
-{#        {% if is_member %}#}
-{#            <h4>Bills#}
-{#                {% if user.id == house.user.id %}#}
-{#                    <small>#}
-{#                        <span class="btn-group">#}
-{#                            <a href="#" class="btn btn-primary"><span class="oi oi-plus"></span></a>#}
-{#                        </span>#}
-{#                    </small>#}
-{#                {% endif %}#}
-{##}
-{#            </h4>#}
-{#            <hr>#}
-{#        {% endif %}#}
-
+        {% if is_member %}
+            <h4>Bills
+                {% if user.id == house.user.id %}
+                    <small>
+                        <span class="btn-group">
+                           <a href="#" class="btn btn-primary"><span class="oi oi-plus"></span></a>
+                       </span>
+                    </small>
+                {% endif %}
+            </h4>
+            <hr>
+        {% endif %}
 
 
         <h4>Rooms

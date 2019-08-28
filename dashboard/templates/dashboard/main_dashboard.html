@@ -16,6 +16,7 @@
                         <div class="card mb-4 shadow-sm">
                             <div class="card-body">
                                 <a href="{% url 'house_detail' invite.house.pk %}"><h5 class="card-title">{{ invite.house.full_address }}</h5></a>
+                                <small>Invited by: {{ invite.sender.first_name }} {{ invite.sender.last_name }}</small>
                                 <p class="card-text">
                                     <a href="{% url 'house_invite_accept' invite.house.pk invite.id %}" class="btn btn-success"><span class="oi oi-check"></span></a>
                                     <a href="{% url 'house_invite_decline' invite.house.pk invite.id %}" class="btn btn-danger"><span class="oi oi-ban"></span></a>

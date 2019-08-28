@@ -4,9 +4,8 @@ from accounts.models import User
 from houses.models import House
 
 class BillSet(models.Model):
-	month = models.DateField(auto_now=True)
+	month = models.DateTimeField()
 	house = models.ForeignKey(House, on_delete=models.CASCADE)
-	pass
 
 class Bill(models.Model):
 	TYPE_CHOICES = [('ElEC', 'Electricity'), ('WATER','Water'), ('GAS', 'Gas'), ('INTER','Internet'), ('OTHER', 'Other')]

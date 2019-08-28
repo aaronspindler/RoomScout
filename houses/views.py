@@ -9,7 +9,9 @@ from django.views import generic
 from rooms.models import Room
 from utils.models import RoomImage
 from utils.emailclient import send_invite_email
+from utils.datetime import now
 from .models import House, Invitation
+from bills.models import BillSet
 
 
 @login_required(login_url="account_login")
@@ -31,6 +33,12 @@ def house_create(request):
 			house.lat = request.POST['lat']
 			house.lon = request.POST['lon']
 			house.save()
+
+			init_bill_set = BillSet()
+			init_bill_set.month = now()
+			init_bill_set.house = house
+			init_bill_set.save()
+
 			house.load_walk_score()
 			return redirect('house_detail', pk=house.id)
 		return render(request, 'houses/house_create.html', {'error': 'There is an issue with the address inputted!', 'GOOGLE_API_KEY': GOOGLE_API_KEY})

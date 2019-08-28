@@ -67,63 +67,72 @@
                         {% endif %}
                     </div>
                 {% endif %}
-                <br>
-                {% if is_member %}
-                    <h4>Members
-                        {% if user.id == house.user.id %}
-                            <small>
-                                <span class="btn-group">
-                                    <a href="{% url 'house_invite' house.pk %}" class="btn btn-primary"><span class="oi oi-plus"></span></a>
-                                </span>
-                            </small>
-                        {% endif %}
-                    </h4>
-                    <table class="table table-hover table-sm" style="width:100%">
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            {% if user.id == house.user.id %}
-                                <th>Actions</th>
-                                <th>Status</th>
-                            {% endif %}
-                        </tr>
-                        {% for member in house.members.all %}
-                            <tr>
-                                <td>{{ member.first_name }} {{ member.last_name }}</td>
-                                <td>{{ member.email }}</td>
-                                {% if user.id == house.user.id %}
-                                    <td><a href="{% url 'house_member_remove' house.pk member.id %}">Remove</a></td>
-                                    <td class="text-success">Member</td>
-                                {% endif %}
-                            </tr>
-                        {% endfor %}
-                        {% for invite in house.invitation_set.all %}
-                            <tr>
-                                <td>N/A</td>
-                                <td>{{ invite.target }}</td>
-                                {% if user.id == house.user.id %}
-                                    <td><a href="{% url 'house_invite_remove' house.pk invite.id %}">Remove</a></td>
-                                    <td class="text-warning">Pending</td>
-                                {% endif %}
-                            </tr>
-                        {% endfor %}
-                    </table>
-                {% endif %}
             </div>
 
         </div>
-        <hr>
-
         {% if is_member %}
-            <h4>Bills
+            <br>
+            <h4>Members
                 {% if user.id == house.user.id %}
                     <small>
-                        <span class="btn-group">
-                           <a href="#" class="btn btn-primary"><span class="oi oi-plus"></span></a>
-                       </span>
+                                <span class="btn-group">
+                                    <a href="{% url 'house_invite' house.pk %}" class="btn btn-primary"><span class="oi oi-plus"></span></a>
+                                </span>
                     </small>
                 {% endif %}
             </h4>
+            <table class="table table-hover table-sm" style="width:100%">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    {% if user.id == house.user.id %}
+                        <th>Actions</th>
+                        <th>Status</th>
+                    {% endif %}
+                </tr>
+                {% for member in house.members.all %}
+                    <tr>
+                        <td>{{ member.first_name }} {{ member.last_name }}</td>
+                        <td>{{ member.email }}</td>
+                        {% if user.id == house.user.id %}
+                            <td><a href="{% url 'house_member_remove' house.pk member.id %}">Remove</a></td>
+                            <td><span class="badge badge-success">Member</span></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                {% for invite in house.invitation_set.all %}
+                    <tr>
+                        <td>N/A</td>
+                        <td>{{ invite.target }}</td>
+                        {% if user.id == house.user.id %}
+                            <td><a href="{% url 'house_invite_remove' house.pk invite.id %}">Remove</a></td>
+                            <td><span class="badge badge-warning">Pending</span></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+            <hr>
+        {% endif %}
+
+        {% if is_member %}
+            <br>
+            <h4>Bills</h4>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+            </div>
             <hr>
         {% endif %}
 

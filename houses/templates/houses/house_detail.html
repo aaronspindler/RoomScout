@@ -149,7 +149,7 @@
                             <div class="card-body">
                                 <a href="{% url 'room_detail' room.id %}"><h5 class="card-title">{{ room.name }}</h5>
                                 </a>
-                                <p class="card-text">${{ room.price }}</p>
+                                {% if room.is_available %}<p class="card-text">${{ room.price }}</p>{% endif %}
                                 {% if user.id == room.user.id %}
                                     <a class="btn btn-primary" href="{% url 'room_edit' room.pk %}"><span class="oi oi-wrench"></span></a>
                                     <a class="btn btn-danger" href="{% url 'room_delete' room.pk %}"><span class="oi oi-trash"></span></a>

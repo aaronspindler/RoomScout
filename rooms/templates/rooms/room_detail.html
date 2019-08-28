@@ -58,8 +58,8 @@
         <div class="col-md-4">
         <br>
         <h4>Details</h4>
-            <p>Price : ${{ room.price }}</p>
         {% if room.is_available %}
+            <p>Price : ${{ room.price }}</p>
             <p>Room is available</p>
             <a class="btn btn-primary" href="mailto:{{ room.house.user.email }}">Contact</a>
         {% else %}

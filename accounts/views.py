@@ -9,6 +9,10 @@ def settings(request):
 	provs = provinces.get_provinces()
 	if request.method == 'POST':
 		user = User.objects.get(id=request.user.id)
+		if request.POST['first_name']:
+			user.first_name = str(request.POST['first_name'])
+		if request.POST['last_name']:
+			user.last_name = str(request.POST['last_name'])
 		if request.POST['city']:
 			user.city = str(request.POST['city'])
 		if request.POST['province']:

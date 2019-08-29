@@ -13,169 +13,177 @@
         </div>
     {% endif %}
     <div class="container">
-    <h2>House Details - {{ house.full_address }}</h2>
-    {% if user.id == house.user.id %}
-        <a class="btn btn-primary" href="{% url 'house_edit' house.pk %}">Edit</a>
-        <a class="btn btn-danger" href="{% url 'house_delete' house.pk %}">Delete</a>
-        <br>
-        <br>
-    {% endif %}
+        <h2>House Details - {{ house.full_address }}</h2>
+        {% if user.id == house.user.id %}
+            <a class="btn btn-primary" href="{% url 'house_edit' house.pk %}">Edit</a>
+            <a class="btn btn-danger" href="{% url 'house_delete' house.pk %}">Delete</a>
+            <br>
+            <br>
+        {% endif %}
 
-    <div class="row">
-        <div class="col-md-7">
-            {% if house.hide_address %}
-                <div style="width: 100%">
-                    <iframe width="100%" height="400"
-                            src="https://www.google.com/maps/embed/v1/view?zoom=16&center={{ house.lat }}%2C{{ house.lon }}&key={{ GOOGLE_API_KEY }}"
-                            frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
-                </div>
-            {% else %}
-                <div style="width: 100%">
-                    <iframe width="100%" height="400"
-                            src="https://www.google.com/maps/embed/v1/place?key={{ GOOGLE_API_KEY }}&q=place_id:{{ house.place_id }}"
-                            frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
-                </div>
-            {% endif %}
-        </div>
-        <div class="col-md-5">
-            <h4>Details</h4>
-            {% if house.walk_score != -1 %}
-                <div>
-                    <!-- Walk Score -->
-                    <img class="img-fluid" width=75
-                         src="https://pp.walk.sc/badge/walk/score/{{ house.walk_score }}.svg">
-                    <small>{{ house.walk_score_description }}</small>
+        <div class="row">
+            <div class="col-md-7">
+                {% if house.hide_address %}
+                    <div style="width: 100%">
+                        <iframe width="100%" height="400"
+                                src="https://www.google.com/maps/embed/v1/view?zoom=16&center={{ house.lat }}%2C{{ house.lon }}&key={{ GOOGLE_API_KEY }}"
+                                frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                    </div>
+                {% else %}
+                    <div style="width: 100%">
+                        <iframe width="100%" height="400"
+                                src="https://www.google.com/maps/embed/v1/place?key={{ GOOGLE_API_KEY }}&q=place_id:{{ house.place_id }}"
+                                frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-md-5">
+                <h4>Details</h4>
+                {% if house.walk_score != -1 %}
+                    <div>
+                        <!-- Walk Score -->
+                        <img class="img-fluid" width=75
+                             src="https://pp.walk.sc/badge/walk/score/{{ house.walk_score }}.svg">
+                        <small>{{ house.walk_score_description }}</small>
 
-                    <!-- Bike Score -->
-                    {% if house.bike_score != -1 %}
-                        <br>
-                        <img class="img-fluid" width=75
-                             src="https://pp.walk.sc/badge/bike/score/{{ house.bike_score }}.svg">
-                        <small>{{ house.bike_score_description }}</small>
-                    {% endif %}
-                    <!-- Transit Score -->
-                    {% if house.transit_score != -1 %}
-                        <br>
-                        <img class="img-fluid" width=75
-                             src="https://pp.walk.sc/badge/transit/score/{{ house.transit_score }}.svg">
-                        {% if house.transit_score_summary %}
-                            <small>{{ house.transit_score_description }} - {{ house.transit_score_summary }}</small>
-                        {% else %}
-                            <small>{{ house.transit_score_description }}</small>
+                        <!-- Bike Score -->
+                        {% if house.bike_score != -1 %}
+                            <br>
+                            <img class="img-fluid" width=75
+                                 src="https://pp.walk.sc/badge/bike/score/{{ house.bike_score }}.svg">
+                            <small>{{ house.bike_score_description }}</small>
                         {% endif %}
+                        <!-- Transit Score -->
+                        {% if house.transit_score != -1 %}
+                            <br>
+                            <img class="img-fluid" width=75
+                                 src="https://pp.walk.sc/badge/transit/score/{{ house.transit_score }}.svg">
+                            {% if house.transit_score_summary %}
+                                <small>{{ house.transit_score_description }} - {{ house.transit_score_summary }}</small>
+                            {% else %}
+                                <small>{{ house.transit_score_description }}</small>
+                            {% endif %}
 
-                    {% endif %}
-                </div>
-            {% endif %}
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+
         </div>
-
-    </div>
-    {% if is_member %}
-        <br>
-        <h4>Members
-            {% if user.id == house.user.id %}
-                <small>
+        {% if is_member %}
+            <br>
+            <h4>Members
+                {% if user.id == house.user.id %}
+                    <small>
                                 <span class="btn-group">
                                     <a href="{% url 'house_invite' house.pk %}" class="btn btn-primary"><span class="oi oi-plus"></span></a>
                                 </span>
-                </small>
-            {% endif %}
-        </h4>
-        <table class="table table-hover table-sm" style="width:100%">
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                {% if user.id == house.user.id %}
-                    <th>Actions</th>
-                    <th>Status</th>
+                    </small>
                 {% endif %}
-            </tr>
-            {% for member in house.members.all %}
+            </h4>
+            <table class="table table-hover table-sm" style="width:100%">
                 <tr>
-                    <td>{{ member.first_name }} {{ member.last_name }}</td>
-                    <td>{{ member.email }}</td>
+                    <th>Name</th>
+                    <th>Email</th>
                     {% if user.id == house.user.id %}
-                        <td><a href="{% url 'house_member_remove' house.pk member.id %}">Remove</a></td>
-                        <td><span class="badge badge-success">Member</span></td>
+                        <th>Actions</th>
+                        <th>Status</th>
                     {% endif %}
                 </tr>
-            {% endfor %}
-            {% for invite in house.invitation_set.all %}
-                <tr>
-                    <td></td>
-                    <td>{{ invite.target }}</td>
-                    {% if user.id == house.user.id %}
-                        <td><a href="{% url 'house_invite_remove' house.pk invite.id %}">Remove</a></td>
-                        <td><span class="badge badge-warning">Pending</span></td>
-                    {% endif %}
-                </tr>
-            {% endfor %}
-        </table>
-        <hr>
-    {% endif %}
+                {% for member in house.members.all %}
+                    <tr>
+                        <td>{{ member.first_name }} {{ member.last_name }}</td>
+                        <td>{{ member.email }}</td>
+                        {% if user.id == house.user.id %}
+                            <td><a href="{% url 'house_member_remove' house.pk member.id %}">Remove</a></td>
+                            <td><span class="badge badge-success">Member</span></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                {% for invite in house.invitation_set.all %}
+                    <tr>
+                        <td></td>
+                        <td>{{ invite.target }}</td>
+                        {% if user.id == house.user.id %}
+                            <td><a href="{% url 'house_invite_remove' house.pk invite.id %}">Remove</a></td>
+                            <td><span class="badge badge-warning">Pending</span></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+            <hr>
+        {% endif %}
 
-    {% if is_member %}
-        <br>
-        <h4>Bills</h4>
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            {% for billset in house.billset_set.all %}
-                <li class="nav-item">
-                    {% if forloop.first %}
-                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab">{{ billset.get_month_name }} {{ billset.year }}</a>
+        {% if is_member %}
+            <br>
+            <h4>Bills</h4>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                {% for billset in house.billset_set.all %}
+                    <li class="nav-item">
+                        {% if forloop.first %}
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab">{{ billset.get_month_name }} {{ billset.year }}</a>
+                        {% else %}
+                            <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab">{{ billset.get_month_name }} {{ billset.year }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                {% for billset in house.billset_set.all %}
+                    <div{% if forloop.first %}
+                        class="tab-pane fade show active"
                     {% else %}
-                        <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab">{{ billset.get_month_name }} {{ billset.year }}</a>
+                        class="tab-pane fade"
                     {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
-        <div class="tab-content" id="myTabContent">
-        {% for billset in house.billset_set.all %}
-            {% if forloop.first %}
-                <div class="tab-pane fade show active" id="home" role="tabpanel">
-            {% else %}
-                <div class="tab-pane fade" id="profile" role="tabpanel">
-            {% endif %}
+                        id="profile" role="tabpanel"
+                    >
+                    <table class="table table-hover table-sm" style="width:100%">
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Price</th>
+                        </tr>
+                    </table>
+
+                    </div>
+                {% endfor %}
+            </div>
+            <hr>
+        {% endif %}
 
 
-                </div>
-        {% endfor %}
-        </div>
-        <hr>
-    {% endif %}
-
-
-<h4>Rooms
-    {% if user.id == house.user.id %}
-        <small>
+        <h4>Rooms
+            {% if user.id == house.user.id %}
+                <small>
                     <span class="btn-group">
                         <a href="{% url 'house_add_room' house.pk %}" class="btn btn-primary"><span class="oi oi-plus"></span></a>
                     </span>
-        </small>
-    {% endif %}
+                </small>
+            {% endif %}
 
-</h4>
-<div class="row">
-    {% if rooms %}
-        {% for room in rooms %}
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    {% if room.roomimage_set.first.is_approved %}
-                        <img class="card-img-top" src="{{ room.roomimage_set.first.image.url }}">
-                    {% endif %}
-                    <div class="card-body">
-                        <a href="{% url 'room_detail' room.id %}"><h5 class="card-title">{{ room.name }}</h5>
-                        </a>
-                        {% if room.is_available %}<p class="card-text">${{ room.price }}</p>{% endif %}
-                        {% if user.id == room.user.id %}
-                            <a class="btn btn-primary" href="{% url 'room_edit' room.pk %}"><span class="oi oi-wrench"></span></a>
-                            <a class="btn btn-danger" href="{% url 'room_delete' room.pk %}"><span class="oi oi-trash"></span></a>
-                        {% endif %}
+        </h4>
+        <div class="row">
+            {% if rooms %}
+                {% for room in rooms %}
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            {% if room.roomimage_set.first.is_approved %}
+                                <img class="card-img-top" src="{{ room.roomimage_set.first.image.url }}">
+                            {% endif %}
+                            <div class="card-body">
+                                <a href="{% url 'room_detail' room.id %}"><h5 class="card-title">{{ room.name }}</h5>
+                                </a>
+                                {% if room.is_available %}<p class="card-text">${{ room.price }}</p>{% endif %}
+                                {% if user.id == room.user.id %}
+                                    <a class="btn btn-primary" href="{% url 'room_edit' room.pk %}"><span class="oi oi-wrench"></span></a>
+                                    <a class="btn btn-danger" href="{% url 'room_delete' room.pk %}"><span class="oi oi-trash"></span></a>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        {% endfor %}
-    {% endif %}
-</div>
-</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
 
 {% endblock %}

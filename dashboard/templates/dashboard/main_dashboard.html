@@ -11,8 +11,8 @@
         {% if invitations.count > 0 %}
             <h2>Invitations</h2>
             <div class="row">
-            {% for invite in invitations %}
-                <div class="col-md-12">
+                {% for invite in invitations %}
+                    <div class="col-md-12">
                         <div class="card mb-4 shadow-sm">
                             <div class="card-body">
                                 <a href="{% url 'house_detail' invite.house.pk %}"><h5 class="card-title">{{ invite.house.full_address }}</h5></a>
@@ -24,7 +24,7 @@
                             </div>
                         </div>
                     </div>
-            {% endfor %}
+                {% endfor %}
             </div>
         {% endif %}
 
@@ -37,10 +37,14 @@
             </small>
         </h2>
 
-        {% if houses or member_of_houses%}
+        {% if houses or member_of_houses %}
             <div class="row">
                 {% for house in houses %}
-                    <div class="col-md-4">
+                    {% if houses.count > 2 %}
+                        <div class="col-md-4">
+                    {% else %}
+                        <div class="col-md-12">
+                    {% endif %}
                         <div class="card mb-4 shadow-sm">
                             <div class="card-body">
                                 <a href="{% url 'house_detail' house.pk %}"><h5 class="card-title">{{ house.full_address }}</h5></a>
@@ -64,8 +68,12 @@
                         </div>
                     </div>
                 {% endfor %}
-            {% for house in member_of_houses %}
-                <div class="col-md-4">
+                {% for house in member_of_houses %}
+                    {% if member_of_houses.count > 1 %}
+                        <div class="col-md-4">
+                    {% else %}
+                        <div class="col-md-12">
+                    {% endif %}
                         <div class="card mb-4 shadow-sm">
                             <div class="card-body">
                                 <a href="{% url 'house_detail' house.pk %}"><h5 class="card-title">{{ house.full_address }}</h5></a>
@@ -85,7 +93,7 @@
                             </div>
                         </div>
                     </div>
-            {% endfor %}
+                {% endfor %}
             </div>
         {% else %}
             <p>Looks like you haven't told us about any houses or you aren't a member of any houses</p>

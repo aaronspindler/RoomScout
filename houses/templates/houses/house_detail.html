@@ -81,36 +81,38 @@
                     </small>
                 {% endif %}
             </h4>
-            <table class="table table-hover table-sm" style="width:100%">
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    {% if user.id == house.user.id %}
-                        <th>Actions</th>
-                        <th>Status</th>
-                    {% endif %}
-                </tr>
-                {% for member in house.members.all %}
+            <div class="container">
+                <table class="table table-hover table-sm" style="width:100%">
                     <tr>
-                        <td>{{ member.first_name }} {{ member.last_name }}</td>
-                        <td>{{ member.email }}</td>
+                        <th>Name</th>
+                        <th>Email</th>
                         {% if user.id == house.user.id %}
-                            <td><a href="{% url 'house_member_remove' house.pk member.id %}">Remove</a></td>
-                            <td><span class="badge badge-success">Member</span></td>
+                            <th>Actions</th>
+                            <th>Status</th>
                         {% endif %}
                     </tr>
-                {% endfor %}
-                {% for invite in house.invitation_set.all %}
-                    <tr>
-                        <td></td>
-                        <td>{{ invite.target }}</td>
-                        {% if user.id == house.user.id %}
-                            <td><a href="{% url 'house_invite_remove' house.pk invite.id %}">Remove</a></td>
-                            <td><span class="badge badge-warning">Pending</span></td>
-                        {% endif %}
-                    </tr>
-                {% endfor %}
-            </table>
+                    {% for member in house.members.all %}
+                        <tr>
+                            <td>{{ member.first_name }} {{ member.last_name }}</td>
+                            <td>{{ member.email }}</td>
+                            {% if user.id == house.user.id %}
+                                <td><a href="{% url 'house_member_remove' house.pk member.id %}">Remove</a></td>
+                                <td><span class="badge badge-success">Member</span></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    {% for invite in house.invitation_set.all %}
+                        <tr>
+                            <td></td>
+                            <td>{{ invite.target }}</td>
+                            {% if user.id == house.user.id %}
+                                <td><a href="{% url 'house_invite_remove' house.pk invite.id %}">Remove</a></td>
+                                <td><span class="badge badge-warning">Pending</span></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
             <hr>
         {% endif %}
 
@@ -121,9 +123,11 @@
                 {% for billset in house.billset_set.all %}
                     <li class="nav-item">
                         {% if forloop.first %}
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab">{{ billset.get_month_name }} {{ billset.year }}</a>
+                            <a class="nav-link active" id="{{ billset.month }}-{{ billset.year }}-tab" data-toggle="tab" href="#{{ billset.month }}-{{ billset.year }}"
+                               role="tab">{{ billset.get_month_name }} {{ billset.year }}</a>
                         {% else %}
-                            <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab">{{ billset.get_month_name }} {{ billset.year }}</a>
+                            <a class="nav-link" id="{{ billset.month }}-{{ billset.year }}-tab" data-toggle="tab" href="#{{ billset.month }}-{{ billset.year }}"
+                               role="tab">{{ billset.get_month_name }} {{ billset.year }}</a>
                         {% endif %}
                     </li>
                 {% endfor %}
@@ -135,16 +139,17 @@
                     {% else %}
                         class="tab-pane fade"
                     {% endif %}
-                        id="profile" role="tabpanel"
+                        id="{{ billset.month }}-{{ billset.year }}" role="tabpanel"
                     >
-                    <table class="table table-hover table-sm" style="width:100%">
-                        <tr>
-                            <th>Date</th>
-                            <th>Type</th>
-                            <th>Price</th>
-                        </tr>
-                    </table>
-
+                        <div class="container">
+                            <table class="table table-hover table-sm" style="width:100%">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Price</th>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 {% endfor %}
             </div>

@@ -6,12 +6,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 
-from rooms.models import Room
-from utils.models import RoomImage
-from utils.emailclient import send_invite_email
-from utils.datetime import now
-from .models import House, Invitation
 from bills.models import BillSet
+from rooms.models import Room
+from utils.datetime import now
+from utils.emailclient import send_invite_email
+from utils.models import RoomImage
+from .models import House, Invitation
 
 
 @login_required(login_url="account_login")
@@ -20,9 +20,7 @@ def house_create(request):
 	if request.method == 'POST':
 		house = House()
 		house.user = request.user
-		if request.POST['street_number'] and request.POST['street_number'] and request.POST['street_name'] and \
-				request.POST['city'] and request.POST['prov_state'] and request.POST[
-			'country']:
+		if request.POST['street_number'] and request.POST['street_number'] and request.POST['street_name'] and request.POST['city'] and request.POST['prov_state'] and request.POST['country']:
 			house.street_number = request.POST['street_number']
 			house.street_name = request.POST['street_name']
 			house.city = request.POST['city']
@@ -35,7 +33,10 @@ def house_create(request):
 			house.save()
 
 			init_bill_set = BillSet()
-			init_bill_set.month = now()
+
+			date = now()
+			init_bill_set.month = date.month
+			init_bill_set.year = date.year
 			init_bill_set.house = house
 			init_bill_set.save()
 
@@ -45,14 +46,15 @@ def house_create(request):
 	else:
 		return render(request, 'houses/house_create.html', {'GOOGLE_API_KEY': GOOGLE_API_KEY})
 
+
 @login_required(login_url="account_login")
 def house_invite(request, pk):
 	house = get_object_or_404(House, pk=pk)
 	if (request.user.id != house.user.id):
 		return Http404
 
-	if(request.method == 'POST'):
-		if(request.POST['email'] != ''):
+	if (request.method == 'POST'):
+		if (request.POST['email'] != ''):
 			invitation = Invitation()
 			invitation.house = house
 			invitation.sender = request.user
@@ -61,7 +63,8 @@ def house_invite(request, pk):
 			send_invite_email(request.POST['email'], invitation)
 
 		return redirect('house_detail', pk=pk)
-	return render(request, 'houses/house_invite.html', {'house':house})
+	return render(request, 'houses/house_invite.html', {'house': house})
+
 
 @login_required(login_url="account_login")
 def house_invite_remove(request, pk, id):
@@ -71,6 +74,7 @@ def house_invite_remove(request, pk, id):
 	invite = get_object_or_404(Invitation, id=id)
 	invite.delete()
 	return redirect('house_detail', pk=pk)
+
 
 @login_required(login_url="account_login")
 def house_invite_accept(request, pk, id):
@@ -83,13 +87,15 @@ def house_invite_accept(request, pk, id):
 	invite.delete()
 	return redirect('house_detail', pk=pk)
 
+
 @login_required(login_url="account_login")
 def house_invite_decline(request, pk, id):
 	invite = get_object_or_404(Invitation, id=id)
-	if(request.user.email != invite.target):
+	if (request.user.email != invite.target):
 		return Http404
 	invite.delete()
 	return redirect('main_dashboard')
+
 
 @login_required(login_url="account_login")
 def house_member_remove(request, pk, id):
@@ -100,12 +106,13 @@ def house_member_remove(request, pk, id):
 	house.members.remove(member)
 	return redirect('house_detail', pk=pk)
 
+
 @login_required(login_url="account_login")
 def house_add_room(request, pk):
 	house = House.objects.filter(pk=pk).get()
-	if(house.user != request.user):
+	if (house.user != request.user):
 		return Http404
-	if(request.method == 'POST'):
+	if (request.method == 'POST'):
 		room = Room()
 		room.user = request.user
 		room.name = request.POST['name']
@@ -125,6 +132,7 @@ def house_add_room(request, pk):
 
 	return render(request, 'houses/room_add.html', {'house': house})
 
+
 def house_detail(request, pk):
 	house = get_object_or_404(House, pk=pk)
 	GOOGLE_API_KEY = settings.GOOGLE_API_KEY
@@ -132,15 +140,15 @@ def house_detail(request, pk):
 	if request.user in house.members.all():
 		is_member = True
 	if request.user.id == house.user.id:
-		is_member= True
+		is_member = True
 
 	try:
 		rooms = Room.objects.filter(house=house)
-		return render(request, 'houses/house_detail.html', {'rooms':rooms, 'house':house, 'is_member':is_member, 'GOOGLE_API_KEY': GOOGLE_API_KEY})
+		return render(request, 'houses/house_detail.html', {'rooms': rooms, 'house': house, 'is_member': is_member, 'GOOGLE_API_KEY': GOOGLE_API_KEY})
 	except Exception:
 		pass
 
-	return render(request,'houses/house_detail.html', {'house':house, 'is_member':is_member, 'GOOGLE_API_KEY': GOOGLE_API_KEY})
+	return render(request, 'houses/house_detail.html', {'house': house, 'is_member': is_member, 'GOOGLE_API_KEY': GOOGLE_API_KEY})
 
 
 class house_edit(LoginRequiredMixin, generic.UpdateView):

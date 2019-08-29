@@ -147,7 +147,16 @@
                                     <th>Date</th>
                                     <th>Type</th>
                                     <th>Price</th>
+                                    <th>Receipt</th>
                                 </tr>
+                                {% for bill in billset.bill_set.all %}
+                                    <tr>
+                                        <td>{{ bill.date }}</td>
+                                        <td>{{ bill.get_type_display }}</td>
+                                        <td>${{ bill.amount }}</td>
+                                        <td><a href="{{ bill.file.url }}">File</a></td>
+                                    </tr>
+                                {% endfor %}
                             </table>
                         </div>
                     </div>

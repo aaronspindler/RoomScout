@@ -70,6 +70,99 @@
             </div>
 
         </div>
+
+        {% if is_member %}
+            <br>
+            <h4>Bills</h4>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                {% for billset in house.billset_set.all %}
+                    <li class="nav-item">
+                        {% if forloop.first %}
+                            <a class="nav-link active" id="{{ billset.month }}-{{ billset.year }}-tab" data-toggle="tab" href="#{{ billset.month }}-{{ billset.year }}"
+                               role="tab">{{ billset.get_month_name }} {{ billset.year }}</a>
+                        {% else %}
+                            <a class="nav-link" id="{{ billset.month }}-{{ billset.year }}-tab" data-toggle="tab" href="#{{ billset.month }}-{{ billset.year }}"
+                               role="tab">{{ billset.get_month_name }} {{ billset.year }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                {% for billset in house.billset_set.all %}
+                    <div{% if forloop.first %}
+                        class="tab-pane fade show active"
+                    {% else %}
+                        class="tab-pane fade"
+                    {% endif %}
+                        id="{{ billset.month }}-{{ billset.year }}" role="tabpanel"
+                    >
+                        <div class="container">
+                            <table class="table table-hover table-sm" style="width:100%">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Price</th>
+                                    <th>Receipt</th>
+                                </tr>
+                                {% for bill in billset.bill_set.all %}
+                                    <tr>
+                                        <td>{{ bill.date }}</td>
+                                        <td>{{ bill.get_type_display }}</td>
+                                        <td>${{ bill.amount }}</td>
+                                        <td><a href="{{ bill.file.url }}">File</a></td>
+                                    </tr>
+                                {% endfor %}
+                                <form>
+                                    <tr>
+                                        <td><input class="form-control" type="date"></td>
+                                        <td><input class="form-control" type="text"></td>
+                                        <td><input class="form-control" type="number"></td>
+                                        <td><input class="form-control" type="file"></td>
+                                        <td><button class="btn btn-primary" type='submit'>Add</button></td>
+                                    </tr>
+                                </form>
+                            </table>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <hr>
+        {% endif %}
+
+
+        <h4>Rooms
+            {% if user.id == house.user.id %}
+                <small>
+                    <span class="btn-group">
+                        <a href="{% url 'house_add_room' house.pk %}" class="btn btn-primary"><span class="oi oi-plus"></span></a>
+                    </span>
+                </small>
+            {% endif %}
+
+        </h4>
+        <div class="row">
+            {% if rooms %}
+                {% for room in rooms %}
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            {% if room.roomimage_set.first.is_approved %}
+                                <img class="card-img-top" src="{{ room.roomimage_set.first.image.url }}">
+                            {% endif %}
+                            <div class="card-body">
+                                <a href="{% url 'room_detail' room.id %}"><h5 class="card-title">{{ room.name }}</h5>
+                                </a>
+                                {% if room.is_available %}<p class="card-text">${{ room.price }}</p>{% endif %}
+                                {% if user.id == room.user.id %}
+                                    <a class="btn btn-primary" href="{% url 'room_edit' room.pk %}"><span class="oi oi-wrench"></span></a>
+                                    <a class="btn btn-danger" href="{% url 'room_delete' room.pk %}"><span class="oi oi-trash"></span></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
         {% if is_member %}
             <br>
             <h4>Members
@@ -115,89 +208,6 @@
             </div>
             <hr>
         {% endif %}
-
-        {% if is_member %}
-            <br>
-            <h4>Bills</h4>
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                {% for billset in house.billset_set.all %}
-                    <li class="nav-item">
-                        {% if forloop.first %}
-                            <a class="nav-link active" id="{{ billset.month }}-{{ billset.year }}-tab" data-toggle="tab" href="#{{ billset.month }}-{{ billset.year }}"
-                               role="tab">{{ billset.get_month_name }} {{ billset.year }}</a>
-                        {% else %}
-                            <a class="nav-link" id="{{ billset.month }}-{{ billset.year }}-tab" data-toggle="tab" href="#{{ billset.month }}-{{ billset.year }}"
-                               role="tab">{{ billset.get_month_name }} {{ billset.year }}</a>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
-            <div class="tab-content" id="myTabContent">
-                {% for billset in house.billset_set.all %}
-                    <div{% if forloop.first %}
-                        class="tab-pane fade show active"
-                    {% else %}
-                        class="tab-pane fade"
-                    {% endif %}
-                        id="{{ billset.month }}-{{ billset.year }}" role="tabpanel"
-                    >
-                        <div class="container">
-                            <table class="table table-hover table-sm" style="width:100%">
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Type</th>
-                                    <th>Price</th>
-                                    <th>Receipt</th>
-                                </tr>
-                                {% for bill in billset.bill_set.all %}
-                                    <tr>
-                                        <td>{{ bill.date }}</td>
-                                        <td>{{ bill.get_type_display }}</td>
-                                        <td>${{ bill.amount }}</td>
-                                        <td><a href="{{ bill.file.url }}">File</a></td>
-                                    </tr>
-                                {% endfor %}
-                            </table>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-            <hr>
-        {% endif %}
-
-
-        <h4>Rooms
-            {% if user.id == house.user.id %}
-                <small>
-                    <span class="btn-group">
-                        <a href="{% url 'house_add_room' house.pk %}" class="btn btn-primary"><span class="oi oi-plus"></span></a>
-                    </span>
-                </small>
-            {% endif %}
-
-        </h4>
-        <div class="row">
-            {% if rooms %}
-                {% for room in rooms %}
-                    <div class="col-md-4">
-                        <div class="card mb-4 shadow-sm">
-                            {% if room.roomimage_set.first.is_approved %}
-                                <img class="card-img-top" src="{{ room.roomimage_set.first.image.url }}">
-                            {% endif %}
-                            <div class="card-body">
-                                <a href="{% url 'room_detail' room.id %}"><h5 class="card-title">{{ room.name }}</h5>
-                                </a>
-                                {% if room.is_available %}<p class="card-text">${{ room.price }}</p>{% endif %}
-                                {% if user.id == room.user.id %}
-                                    <a class="btn btn-primary" href="{% url 'room_edit' room.pk %}"><span class="oi oi-wrench"></span></a>
-                                    <a class="btn btn-danger" href="{% url 'room_delete' room.pk %}"><span class="oi oi-trash"></span></a>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
     </div>
 
 {% endblock %}

@@ -6,6 +6,7 @@ class PublicMediaStorage(S3Boto3Storage):
 	bucket_name = 'roomscout-public'
 	location = settings.AWS_PUBLIC_MEDIA_LOCATION
 	file_overwrite = False
+	querystring_auth = False
 
 
 class PrivateMediaStorage(S3Boto3Storage):

@@ -26,14 +26,12 @@
                 {% if house.hide_address %}
                     <div style="width: 100%">
                         <iframe width="100%" height="400"
-                                src="https://www.google.com/maps/embed/v1/view?zoom=16&center={{ house.lat }}%2C{{ house.lon }}&key={{ GOOGLE_API_KEY }}"
-                                frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                                src="https://www.google.com/maps/embed/v1/view?zoom=16&center={{ house.lat }}%2C{{ house.lon }}&key={{ GOOGLE_API_KEY }}" frameborder="0"></iframe>
                     </div>
                 {% else %}
                     <div style="width: 100%">
                         <iframe width="100%" height="400"
-                                src="https://www.google.com/maps/embed/v1/place?key={{ GOOGLE_API_KEY }}&q=place_id:{{ house.place_id }}"
-                                frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                                src="https://www.google.com/maps/embed/v1/place?key={{ GOOGLE_API_KEY }}&q=place_id:{{ house.place_id }}" frameborder="0"></iframe>
                     </div>
                 {% endif %}
             </div>
@@ -43,21 +41,21 @@
                     <div>
                         <!-- Walk Score -->
                         <img class="img-fluid" width=75
-                             src="https://pp.walk.sc/badge/walk/score/{{ house.walk_score }}.svg">
+                             src="https://pp.walk.sc/badge/walk/score/{{ house.walk_score }}.svg" alt="Walk Score">
                         <small>{{ house.walk_score_description }}</small>
 
                         <!-- Bike Score -->
                         {% if house.bike_score != -1 %}
                             <br>
                             <img class="img-fluid" width=75
-                                 src="https://pp.walk.sc/badge/bike/score/{{ house.bike_score }}.svg">
+                                 src="https://pp.walk.sc/badge/bike/score/{{ house.bike_score }}.svg" alt="Bike Score">
                             <small>{{ house.bike_score_description }}</small>
                         {% endif %}
                         <!-- Transit Score -->
                         {% if house.transit_score != -1 %}
                             <br>
                             <img class="img-fluid" width=75
-                                 src="https://pp.walk.sc/badge/transit/score/{{ house.transit_score }}.svg">
+                                 src="https://pp.walk.sc/badge/transit/score/{{ house.transit_score }}.svg" alt="Transit Score">
                             {% if house.transit_score_summary %}
                                 <small>{{ house.transit_score_description }} - {{ house.transit_score_summary }}</small>
                             {% else %}
@@ -112,9 +110,13 @@
                                         <td>{{ bill.date }}</td>
                                         <td>{{ bill.get_type_display }}</td>
                                         <td>${{ bill.amount }}</td>
-                                        <td><a href="{{ bill.file.url }}">File</a></td>
+                                        {% if bill.file %}
+                                            <td><a href="{{ bill.file.url }}">File</a></td>
+                                        {% else %}
+                                            <td>No Reciept</td>
+                                        {% endif %}
                                         {% if user.id == house.user.id %}
-                                            <td><a class="btn btn-danger" href="#"><span class="oi oi-trash"></span></a></td>
+                                            <td><a class="btn btn-danger" href="{% url 'bill_delete' bill.pk %}"><span class="oi oi-trash"></span></a></td>
                                         {% endif %}
                                     </tr>
                                 {% endfor %}
@@ -130,8 +132,8 @@
                                                 <option value='INTER'>Internet</option>
                                                 <option value='OTHER'>Other</option>
                                             </select></td>
-                                            <td><input name="price" class="form-control" type="number"></td>
-                                            <td><input name="receipt" class="form-control" type="file"></td>
+                                            <td><input name="amount" class="form-control" type="number"></td>
+                                            <td><input name="file" class="form-control" type="file"></td>
                                             <td>
                                                 <button class="btn btn-primary" type='submit'><span class="oi oi-plus"></span></button>
                                             </td>
@@ -164,7 +166,7 @@
                         <div class="col-md-4">
                             <div class="card mb-4 shadow-sm">
                                 {% if room.roomimage_set.first.is_approved %}
-                                    <img class="card-img-top" src="{{ room.roomimage_set.first.image.url }}">
+                                    <img class="card-img-top" src="{{ room.roomimage_set.first.image.url }}" alt="Room image">
                                 {% endif %}
                                 <div class="card-body">
                                     <a href="{% url 'room_detail' room.id %}"><h5 class="card-title">{{ room.name }}</h5>

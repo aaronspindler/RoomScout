@@ -20,6 +20,9 @@ urlpatterns = [
 	path('accounts/', include('allauth.urls')),
 	path('settings', settings, name='settings'),
 
+	# Bills
+	path('bill/', include('bills.urls')),
+
 	# Houses
 	path('house/', include('houses.urls')),
 	# Rooms

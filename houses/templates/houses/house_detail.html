@@ -103,6 +103,9 @@
                                     <th>Type</th>
                                     <th>Price</th>
                                     <th>Receipt</th>
+                                    {% if user.id == house.user.id %}
+                                        <th>Actions</th>
+                                    {% endif %}
                                 </tr>
                                 {% for bill in billset.bill_set.all %}
                                     <tr>
@@ -110,17 +113,31 @@
                                         <td>{{ bill.get_type_display }}</td>
                                         <td>${{ bill.amount }}</td>
                                         <td><a href="{{ bill.file.url }}">File</a></td>
+                                        {% if user.id == house.user.id %}
+                                            <td><a class="btn btn-danger" href="#"><span class="oi oi-trash"></span></a></td>
+                                        {% endif %}
                                     </tr>
                                 {% endfor %}
-                                <form>
-                                    <tr>
-                                        <td><input class="form-control" type="date"></td>
-                                        <td><input class="form-control" type="text"></td>
-                                        <td><input class="form-control" type="number"></td>
-                                        <td><input class="form-control" type="file"></td>
-                                        <td><button class="btn btn-primary" type='submit'>Add</button></td>
-                                    </tr>
-                                </form>
+                                {% if user.id == house.user.id %}
+                                    <form action="{% url 'bill_add' billset.pk %}" method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <tr>
+                                            <td><input name="date" class="form-control" type="date"></td>
+                                            <td><select name="type" class="form-control">
+                                                <option value='ELEC'>Electricity</option>
+                                                <option value='WATER'>Water</option>
+                                                <option value='GAS'>Gas</option>
+                                                <option value='INTER'>Internet</option>
+                                                <option value='OTHER'>Other</option>
+                                            </select></td>
+                                            <td><input name="price" class="form-control" type="number"></td>
+                                            <td><input name="receipt" class="form-control" type="file"></td>
+                                            <td>
+                                                <button class="btn btn-primary" type='submit'><span class="oi oi-plus"></span></button>
+                                            </td>
+                                        </tr>
+                                    </form>
+                                {% endif %}
                             </table>
                         </div>
                     </div>
@@ -140,27 +157,29 @@
             {% endif %}
 
         </h4>
-        <div class="row">
-            {% if rooms %}
-                {% for room in rooms %}
-                    <div class="col-md-4">
-                        <div class="card mb-4 shadow-sm">
-                            {% if room.roomimage_set.first.is_approved %}
-                                <img class="card-img-top" src="{{ room.roomimage_set.first.image.url }}">
-                            {% endif %}
-                            <div class="card-body">
-                                <a href="{% url 'room_detail' room.id %}"><h5 class="card-title">{{ room.name }}</h5>
-                                </a>
-                                {% if room.is_available %}<p class="card-text">${{ room.price }}</p>{% endif %}
-                                {% if user.id == room.user.id %}
-                                    <a class="btn btn-primary" href="{% url 'room_edit' room.pk %}"><span class="oi oi-wrench"></span></a>
-                                    <a class="btn btn-danger" href="{% url 'room_delete' room.pk %}"><span class="oi oi-trash"></span></a>
+        <div class="container">
+            <div class="row">
+                {% if rooms %}
+                    {% for room in rooms %}
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                {% if room.roomimage_set.first.is_approved %}
+                                    <img class="card-img-top" src="{{ room.roomimage_set.first.image.url }}">
                                 {% endif %}
+                                <div class="card-body">
+                                    <a href="{% url 'room_detail' room.id %}"><h5 class="card-title">{{ room.name }}</h5>
+                                    </a>
+                                    {% if room.is_available %}<p class="card-text">${{ room.price }}</p>{% endif %}
+                                    {% if user.id == room.user.id %}
+                                        <a class="btn btn-primary" href="{% url 'room_edit' room.pk %}"><span class="oi oi-wrench"></span></a>
+                                        <a class="btn btn-danger" href="{% url 'room_delete' room.pk %}"><span class="oi oi-trash"></span></a>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
-            {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
         </div>
 
         {% if is_member %}

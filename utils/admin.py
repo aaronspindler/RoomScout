@@ -1,9 +1,7 @@
 from django.contrib import admin
 
-from .models import IP, Email, PublicImage, RoomImage, PrivateFile
+from .models import IP, RoomImage, BillFile
 
 admin.site.register(IP)
-admin.site.register(Email)
-admin.site.register(PublicImage)
 admin.site.register(RoomImage)
-admin.site.register(PrivateFile)
+admin.site.register(BillFile)

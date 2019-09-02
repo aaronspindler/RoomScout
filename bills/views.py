@@ -2,6 +2,7 @@
 from django.http import Http404
 from django.shortcuts import redirect, get_object_or_404
 from .models import Bill, BillSet
+from utils.models import BillFile
 
 # PK is the primary key for the billset that this bill needs to belong to
 def bill_add(request, pk):
@@ -14,9 +15,15 @@ def bill_add(request, pk):
 	bill.type = request.POST['type']
 	bill.date = request.POST['date']
 	bill.amount = request.POST['amount']
-	if len(request.FILES) > 0:
-		bill.file = request.FILES['file']
+
 	bill.save()
+
+	if len(request.FILES) > 0:
+		billfile = BillFile()
+		billfile.user = request.user
+		billfile.file = request.FILES['file']
+		billfile.bill = bill
+		billfile.save()
 
 	return redirect('house_detail', billset.house.pk)
 

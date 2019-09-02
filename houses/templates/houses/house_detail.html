@@ -110,10 +110,10 @@
                                         <td>{{ bill.date }}</td>
                                         <td>{{ bill.get_type_display }}</td>
                                         <td>${{ bill.amount }}</td>
-                                        {% if bill.file %}
-                                            <td><a href="{{ bill.file.url }}">File</a></td>
+                                        {% if bill.billfile_set.count > 0 %}
+                                            <td><a href="{{ bill.billfile_set.first.file.url }}">File</a></td>
                                         {% else %}
-                                            <td>No Reciept</td>
+                                            <td>No Receipt</td>
                                         {% endif %}
                                         {% if user.id == house.user.id %}
                                             <td><a class="btn btn-danger" href="{% url 'bill_delete' bill.pk %}"><span class="oi oi-trash"></span></a></td>

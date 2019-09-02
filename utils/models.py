@@ -5,13 +5,7 @@ from django.conf import settings
 from Roomscout.storage_backends import PrivateMediaStorage
 from accounts.models import User
 from rooms.models import Room
-
-
-class Email(models.Model):
-	sent_at = models.DateTimeField(auto_now_add=True)
-	sent_to = models.EmailField()
-	subject = models.TextField()
-	contents = models.TextField()
+from bills.models import Bill
 
 
 class IP(models.Model):
@@ -52,9 +46,11 @@ class PrivateImage(models.Model):
 class RoomImage(PublicImage):
 	room = models.ForeignKey(Room, on_delete=models.CASCADE)
 
-
 class PrivateFile(models.Model):
 	uploaded_at = models.DateTimeField(auto_now_add=True)
 	is_approved = models.BooleanField(default=False)
-	upload = models.FileField(storage=PrivateMediaStorage())
+	file = models.FileField(storage=PrivateMediaStorage())
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class BillFile(PrivateFile):
+	bill = models.ForeignKey(Bill, on_delete=models.CASCADE)

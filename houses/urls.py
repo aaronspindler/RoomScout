@@ -13,4 +13,5 @@ urlpatterns = [
 	path('<str:pk>/invite/accept/<str:id>/', views.house_invite_accept, name='house_invite_accept'),
 	path('<str:pk>/invite/decline/<str:id>/', views.house_invite_decline, name='house_invite_decline'),
 	path('<str:pk>/member/remove/<str:id>/', views.house_member_remove, name='house_member_remove'),
+	path('<str:pk>/bills/add', views.house_bill_add, name='house_bill_add'),
 ]

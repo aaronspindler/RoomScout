@@ -71,7 +71,15 @@
 
         {% if is_member %}
             <br>
-            <h4>Bills</h4>
+            <h4>Bills
+            {% if user.id == house.user.id %}
+                <small>
+                    <span class="btn-group">
+                        <a href="{% url 'house_bill_add' house.pk %}" class="btn btn-primary"><span class="oi oi-plus"></span></a>
+                    </span>
+                </small>
+            {% endif %}
+            </h4>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 {% for billset in house.billset_set.all %}
                     <li class="nav-item">
@@ -120,26 +128,6 @@
                                         {% endif %}
                                     </tr>
                                 {% endfor %}
-                                {% if user.id == house.user.id %}
-                                    <form action="{% url 'bill_add' billset.pk %}" method="POST" enctype="multipart/form-data">
-                                        {% csrf_token %}
-                                        <tr>
-                                            <td><input name="date" class="form-control" type="date"></td>
-                                            <td><select name="type" class="form-control">
-                                                <option value='ELEC'>Electricity</option>
-                                                <option value='WATER'>Water</option>
-                                                <option value='GAS'>Gas</option>
-                                                <option value='INTER'>Internet</option>
-                                                <option value='OTHER'>Other</option>
-                                            </select></td>
-                                            <td><input name="amount" class="form-control" type="number"></td>
-                                            <td><input name="file" class="form-control" type="file"></td>
-                                            <td>
-                                                <button class="btn btn-primary" type='submit'><span class="oi oi-plus"></span></button>
-                                            </td>
-                                        </tr>
-                                    </form>
-                                {% endif %}
                             </table>
                         </div>
                     </div>

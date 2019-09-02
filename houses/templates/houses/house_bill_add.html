@@ -1,0 +1,54 @@
+{% extends 'main/_base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    Bill Add
+{% endblock %}
+
+{% block content %}
+    {% if error %}
+        <div class="text-center bg-danger">
+            <p>{{ error }}</p>
+        </div>
+    {% endif %}
+    <div class="container">
+        <h2>Add bill to {{ house.full_address }}</h2>
+        {% if user.id == house.user.id %}
+            <form action="{% url 'house_bill_add' house.pk %}" method="POST" enctype="multipart/form-data">
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <label>Date</label>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Type</label>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Amount ($)</label>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Receipt</label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    {% csrf_token %}
+
+                    <div class="col-md-3"><input name="date" class="form-control" type="date"></div>
+                    <div class="col-md-3"><select name="type" class="form-control">
+                        <option value='ELEC'>Electricity</option>
+                        <option value='WATER'>Water</option>
+                        <option value='GAS'>Gas</option>
+                        <option value='INTER'>Internet</option>
+                        <option value='OTHER'>Other</option>
+                    </select></div>
+                    <div class="col-md-3"><input name="amount" class="form-control" type="number"></div>
+                    <div class="col-md-3"><input name="file" class="form-control" type="file"></div>
+                </div>
+                <br>
+                <button class="btn btn-primary" type='submit'>Submit</button>
+
+            </form>
+            <br>
+        {% endif %}
+    </div>
+
+{% endblock %}

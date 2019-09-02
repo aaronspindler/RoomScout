@@ -1,3 +1,5 @@
+import datetime
+
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -6,11 +8,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 
-from bills.models import BillSet
+from bills.models import BillSet, Bill
 from rooms.models import Room
 from utils.datetime import now
 from utils.emailclient import send_invite_email
-from utils.models import RoomImage
+from utils.models import RoomImage, BillFile
 from .models import House, Invitation
 
 
@@ -45,6 +47,49 @@ def house_create(request):
 		return render(request, 'houses/house_create.html', {'error': 'There is an issue with the address inputted!', 'GOOGLE_API_KEY': GOOGLE_API_KEY})
 	else:
 		return render(request, 'houses/house_create.html', {'GOOGLE_API_KEY': GOOGLE_API_KEY})
+
+@login_required(login_url="account_login")
+def house_bill_add(request, pk):
+	house = get_object_or_404(House, pk=pk)
+	if (request.user.id != house.user.id):
+		return Http404
+
+	if request.method == 'POST':
+		bill = Bill()
+		bill.user = request.user
+		if request.POST['type'] == '' or request.POST['date'] == '' or request.POST['amount'] == '':
+			return render(request, 'houses/house_bill_add.html', {'house': house, 'error': 'You have entered invalid data!'})
+
+		bill.type = request.POST['type']
+		bill.date = request.POST['date']
+		bill.amount = request.POST['amount']
+
+		date = request.POST['date']
+		parsed_date = datetime.datetime.strptime(date, '%Y-%m-%d')
+		month = parsed_date.month
+		year = parsed_date.year
+
+		existing_billset = BillSet.objects.filter(house=house).filter(year=year).filter(month=month)
+		if(existing_billset.count() == 0):
+			new_billset = BillSet()
+			new_billset.house = house
+			new_billset.month = month
+			new_billset.year = year
+			new_billset.save()
+			bill.set = new_billset
+		else:
+			bill.set = existing_billset.first()
+		bill.save()
+
+		if len(request.FILES) > 0:
+			billfile = BillFile()
+			billfile.user = request.user
+			billfile.file = request.FILES['file']
+			billfile.bill = bill
+			billfile.save()
+		return redirect('house_detail', house.pk)
+
+	return render(request, 'houses/house_bill_add.html', {'house': house})
 
 
 @login_required(login_url="account_login")

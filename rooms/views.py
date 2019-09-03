@@ -93,5 +93,6 @@ def room_add_photo(request, pk):
 
 def room_search(request):
 	search_term = request.GET['search_term']
-	print(search_term)
+	objects = Room.objects.all().filter(is_available=True)
+	print(objects)
 	return JsonResponse({'error': 'Not able to validate form'})

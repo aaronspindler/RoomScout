@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
@@ -92,4 +92,6 @@ def room_add_photo(request, pk):
 	return Http404
 
 def room_search(request):
-	pass
+	search_term = request.GET['search_term']
+	print(search_term)
+	return JsonResponse({'error': 'Not able to validate form'})

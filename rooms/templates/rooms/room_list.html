@@ -19,7 +19,7 @@
                 {% csrf_token %}
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <input class="form-control" type="text" name="search" id="search" placeholder="Search">
+                        <input class="form-control" type="text" name="search" id="search" placeholder="Search" hidden="true">
                     </div>
                 </div>
             </form>
@@ -33,7 +33,7 @@
                         delayTimer = setTimeout(function () {
                             var text = $('#search').val();
                             $.ajax({
-                                url: '/video/search',
+                                url: '/room/search',
                                 data: {
                                     'search_term': text
                                 },

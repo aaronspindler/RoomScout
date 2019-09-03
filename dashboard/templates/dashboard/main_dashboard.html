@@ -37,6 +37,8 @@
             </small>
         </h2>
 
+        <h4>{{ user.house_set.count }}/{{ user.max_houses }}</h4>
+
         {% if houses or member_of_houses %}
             <div class="row">
                 {% for house in houses %}

@@ -94,8 +94,10 @@ def room_add_photo(request, pk):
 		return render(request, 'rooms/room_add_photo.html', {'room':room})
 	return Http404
 
+# TODO : Improve search functionality
 def room_search(request):
 	search_term = request.GET['search_term']
-	objects = Room.objects.all().filter(is_available=True).filter(Q(house__city__icontains=search_term))
-	print(objects)
-	return JsonResponse({'error': 'Not able to validate form'})
+	#use price__lte to filter below a certain price
+	#filter(price__lte=20000)
+	objects = Room.objects.all().filter(is_available=True).filter(Q(house__city__icontains=search_term)).values()
+	return JsonResponse({'items':list(objects)})

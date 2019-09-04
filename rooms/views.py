@@ -99,5 +99,5 @@ def room_search(request):
 	search_term = request.GET['search_term']
 	#use price__lte to filter below a certain price
 	#filter(price__lte=20000)
-	objects = Room.objects.all().filter(is_available=True).filter(Q(house__city__icontains=search_term)).values()
+	objects = Room.objects.all().filter(is_available=True).filter(Q(house__city__icontains=search_term) | Q(house__prov_state__icontains=search_term)).values()
 	return JsonResponse({'items':list(objects)})

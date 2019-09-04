@@ -57,16 +57,23 @@
                         }, 1000);
                     });
                 </script>
+                <div class="row">
+                    {% for room in rooms %}
+                        {% if room.is_available %}
+                            <div class="col-md-4 mt-3">
+                                <div class="card mb-4 shadow-sm">
+                                    <div class="card-body">
+                                        <p class="card-text">{{ room.name }}</p>
+                                        Price: $ {{ room.price }}
+                                        <br>
+                                        <a href="{% url 'room_detail' room.pk %}" class="btn btn-primary">Visit</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
-
-
-
-            {% for room in rooms %}
-                {% if room.is_available %}
-                    <a href="{% url 'room_detail' room.pk %}">{{ room.name }} - ${{ room.price }} | {{ room.house.city }},{{ room.house.prov_state }}</a>
-                    <br>
-                {% endif %}
-            {% endfor %}
         {% else %}
             <p>Looks like there are no available rooms at the moment</p>
             <p>Do you have a room you want to post?

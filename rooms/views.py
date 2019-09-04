@@ -9,11 +9,10 @@ from django.views import generic
 from houses.models import House
 from .models import Room
 from utils.models import RoomImage
-
 import json
 
 def room_list(request):
-	rooms = Room.objects.all()
+	rooms = Room.objects.filter(is_available=True)
 	return render(request, 'rooms/room_list.html', {'rooms':rooms})
 
 
@@ -99,5 +98,23 @@ def room_search(request):
 	search_term = request.GET['search_term']
 	#use price__lte to filter below a certain price
 	#filter(price__lte=20000)
-	objects = Room.objects.all().filter(is_available=True).filter(Q(house__city__icontains=search_term) | Q(house__prov_state__icontains=search_term)).values()
-	return JsonResponse({'items':list(objects)})
+	rooms_query = Room.objects.all().filter(is_available=True).filter(Q(house__city__icontains=search_term) | Q(house__prov_state__icontains=search_term) | Q(house__street_name__icontains=search_term))
+	rooms_list = []
+	for room in rooms_query:
+		custom = ResultRoom()
+		custom.name = room.name
+		custom.price = room.price.__float__()
+		custom.id = room.id
+		custom.address = room.house.full_address()
+		if room.roomimage_set.count() > 0:
+			custom.image = room.roomimage_set.first().image.url
+		rooms_list.append(custom.__dict__)
+	return JsonResponse({'items':rooms_list})
+
+# Custom object to be able to pass only the information required to the frontend for rendering
+class ResultRoom():
+	name = ''
+	price = 0.0
+	id = -1
+	address = ''
+	image = ''

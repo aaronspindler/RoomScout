@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-
 from accounts.models import User
 from houses.models import House
 

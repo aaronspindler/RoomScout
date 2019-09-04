@@ -15,19 +15,14 @@
     <div class="container">
         <h2>Find a Room</h2>
         {% if rooms %}
-            <form method="POST">
+            <form>
                 {% csrf_token %}
                 <div class="form-row">
-                    <div class="col-md-11">
+                    <div class="form-group col-md-12">
                         <input class="form-control" type="text" name="search" id="search" placeholder="Search">
                     </div>
-                    <div class="col-md-1">
-                        <button class="btn btn-primary" type='submit'>Search</button>
-                    </div>
-
                 </div>
             </form>
-            <br>
 
             <div id="search_results">
                 <script>
@@ -61,11 +56,12 @@
                                     $('#search_results').append(results);
                                 }
                             });
-                        }, 100);
+                        }, 1);
                     });
                 </script>
                 <div class="row">
                     {% for room in rooms %}
+                        {% if room.is_available %}
                             <div class="col-md-12">
                                 <div class="card mb-2 shadow-sm">
                                     <div class="card-body">
@@ -78,6 +74,7 @@
                                     </div>
                                 </div>
                             </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>

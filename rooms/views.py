@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.http import Http404, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
@@ -8,6 +9,8 @@ from django.views import generic
 from houses.models import House
 from .models import Room
 from utils.models import RoomImage
+
+import json
 
 def room_list(request):
 	rooms = Room.objects.all()
@@ -93,6 +96,6 @@ def room_add_photo(request, pk):
 
 def room_search(request):
 	search_term = request.GET['search_term']
-	objects = Room.objects.all().filter(is_available=True)
+	objects = Room.objects.all().filter(is_available=True).filter(Q(house__city__icontains=search_term))
 	print(objects)
 	return JsonResponse({'error': 'Not able to validate form'})

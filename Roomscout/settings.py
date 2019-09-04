@@ -54,7 +54,7 @@ AUTHENTICATION_BACKENDS = {
 }
 
 LOGIN_URL = 'account_login'
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'main_dashboard'
 ACCOUNT_LOGOUT_REDIRECT = 'home'
 
 # Email

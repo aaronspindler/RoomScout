@@ -17,6 +17,16 @@
         {% if rooms %}
             <form method="POST">
                 {% csrf_token %}
+
+                <div class="form-row">
+                    <div class="col-md-11">
+                        <input class="form-control" type="text" name="search" id="search" placeholder="Search">
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-primary" type='submit'>Search</button>
+                    </div>
+                </div>
+                <br>
                 <div class="form-row">
                     <div class="col-md-12">
                         <div id="accordion">
@@ -49,18 +59,7 @@
                                 </div>
                             </div>
                         </div>
-                        <br>
                     </div>
-
-                </div>
-                <div class="form-row">
-                    <div class="col-md-11">
-                        <input class="form-control" type="text" name="search" id="search" placeholder="Search">
-                    </div>
-                    <div class="col-md-1">
-                        <button class="btn btn-primary" type='submit'>Search</button>
-                    </div>
-
                 </div>
             </form>
             <br>

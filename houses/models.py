@@ -34,6 +34,18 @@ class House(models.Model):
 	transit_score_description = models.TextField(default='')
 	transit_score_summary = models.TextField(default='')
 
+	# Filterable Options
+	# TODO: Implement these options into house
+	num_rooms = models.IntegerField(default=-1)
+	num_bathrooms = models.IntegerField(default=-1)
+	num_parking_spaces = models.IntegerField(default=-1)
+	pets_allowed = models.BooleanField(default=False)
+	num_male = models.IntegerField(default=-1)
+	num_female = models.IntegerField(default=-1)
+	has_dishwasher = models.BooleanField(default=False)
+	has_laundry = models.BooleanField(default=False)
+	has_air_conditioning = models.BooleanField(default=False)
+
 	# Used to hide the address from public consumption
 	# Changes all full_address postings to use a non specific address
 	# Eg 2529 Stallion Dr, Oshawa, Ontario, Canada will become Stallion Dr, Oshawa, Ontario, Canada

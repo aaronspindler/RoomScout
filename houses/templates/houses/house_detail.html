@@ -128,6 +128,7 @@
                                         {% endif %}
                                     </tr>
                                 {% endfor %}
+                            {% if billset.get_total > 0 %}
                             <tr class="table-primary">
                                 <td><strong>Total</strong></td>
                                 <td></td>
@@ -135,6 +136,7 @@
                                 <td></td>
                                 <td></td>
                             </tr>
+                            {% endif %}
                             </table>
                         </div>
                     </div>

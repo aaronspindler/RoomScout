@@ -27,7 +27,7 @@ class BillSet(models.Model):
 		return months[self.month]
 
 class Bill(models.Model):
-	TYPE_CHOICES = [('ElEC', 'Electricity'), ('WATER','Water'), ('GAS', 'Gas'), ('INTER','Internet'), ('OTHER', 'Other')]
+	TYPE_CHOICES = [('ELEC', 'Electricity'), ('WATER','Water'), ('GAS', 'Gas'), ('INTER','Internet'), ('OTHER', 'Other')]
 
 	set = models.ForeignKey(BillSet, on_delete=models.CASCADE)
 	user = models.ForeignKey(User, on_delete=models.CASCADE)

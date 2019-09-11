@@ -15,6 +15,10 @@ def room_list(request):
 	rooms = Room.objects.filter(is_available=True)
 	return render(request, 'rooms/room_list.html', {'rooms':rooms})
 
+def room_search_results(request, query):
+	rooms = Room.objects.filter(is_available=True)
+	return render(request, 'rooms/room_search_results.html', {'rooms': rooms})
+
 
 @login_required(login_url="account_login")
 def room_create(request):

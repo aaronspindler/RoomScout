@@ -15,7 +15,7 @@
     <div class="container">
         <h2>Find a Room</h2>
         {% if rooms %}
-            <form method="POST">
+            <form action="{% url 'room_search_results' %}" method="POST">
                 {% csrf_token %}
 
                 <div class="form-row">
@@ -63,42 +63,6 @@
                 </div>
             </form>
             <br>
-
-            <div id="search_results">
-                <script>
-                    var delayTimer;
-                    $('#search').keyup(function () {
-                        clearTimeout(delayTimer);
-                        $('#search_results').text('Loading...');
-                        delayTimer = setTimeout(function () {
-                            var text = $('#search').val();
-                            $.ajax({
-                                url: '/room/search',
-                                data: {
-                                    'search_term': text
-                                },
-                                dataType: 'json',
-                                success: function (data) {
-                                    var results = '';
-                                    $('#search_results').text('')
-                                    results += '<div class="row">';
-                                    data['items'].forEach(function (room) {
-                                        results += '<div class="col-md-12"><div class="card mb-2 shadow-sm">';
-                                        results += '<a href="/room/' + room['id'] + '/detail/"><div class="card-body"><h4 class="card-text">' + room['name'] + '</h4></a>';
-                                        results += '<small>' + room['address'] + '</small>';
-                                        results += '<br>';
-                                        results += 'Price: $' + room['price'];
-                                        results += '<br>';
-                                        results += '<img class="img-fluid" width="300" src="' + room['image'] + '" alt="">';
-                                        results += '</div></div></div>';
-                                    });
-                                    results += '</div>';
-                                    $('#search_results').append(results);
-                                }
-                            });
-                        }, 100);
-                    });
-                </script>
                 <div class="row">
                     {% for room in rooms %}
                         <div class="col-md-12">

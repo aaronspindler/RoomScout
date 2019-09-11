@@ -1,11 +1,12 @@
 import uuid
 
-from django.db import models
-from django.conf import settings
-from django.urls import reverse
 import requests
+from django.conf import settings
+from django.db import models
+from django.urls import reverse
 
 from accounts.models import User
+
 
 class House(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -90,11 +91,10 @@ class House(models.Model):
 		if self.hide_address:
 			return '{}, {}, {}, {}'.format(self.street_name, self.city, self.prov_state, self.country)
 		if self.postal_code:
-			return '{} {}, {}, {}, {}, {}'.format(self.street_number, self.street_name, self.city, self.prov_state,
-			                                      self.country, self.postal_code)
+			return '{} {}, {}, {}, {}, {}'.format(self.street_number, self.street_name, self.city, self.prov_state, self.country, self.postal_code)
 		else:
-			return '{} {}, {}, {}, {}'.format(self.street_number, self.street_name, self.city, self.prov_state,
-			                                  self.country)
+			return '{} {}, {}, {}, {}'.format(self.street_number, self.street_name, self.city, self.prov_state, self.country)
+
 
 class Invitation(models.Model):
 	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

@@ -11,21 +11,14 @@
         // The data for our dataset
         data: {
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'February', 'March', 'April', 'May', 'June', 'July', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [{
-                label: 'My First dataset',
-
-                borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, 20, 30, 45, 10, 5, 2, 20, 30, 45, 10, 5, 2, 20, 30, 45]
-            },
+            datasets: [
                 {
                     label: 'My First dataset',
-
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: [0, 10, 5, 2, 20, 30, 45]
+                    borderColor: 'rgb(24,17,255)',
+                    data: {{ data }}
                 }
             ]
         },
-
         // Configuration options go here
         options: {}
     });

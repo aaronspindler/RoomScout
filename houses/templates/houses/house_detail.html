@@ -72,13 +72,13 @@
         {% if is_member %}
             <br>
             <h4>Bills
-            {% if user.id == house.user.id %}
-                <small>
+                {% if user.id == house.user.id %}
+                    <small>
                     <span class="btn-group">
                         <a href="{% url 'house_bill_add' house.pk %}" class="btn btn-primary"><span class="oi oi-plus"></span></a>
                     </span>
-                </small>
-            {% endif %}
+                    </small>
+                {% endif %}
             </h4>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 {% for billset in house.billset_set.all %}
@@ -128,15 +128,15 @@
                                         {% endif %}
                                     </tr>
                                 {% endfor %}
-                            {% if billset.get_total > 0 %}
-                            <tr class="table-primary">
-                                <td><strong>Total</strong></td>
-                                <td></td>
-                                <td><strong>${{ billset.get_total }}</strong></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            {% endif %}
+                                {% if billset.get_total > 0 %}
+                                    <tr class="table-primary">
+                                        <td><strong>Total</strong></td>
+                                        <td></td>
+                                        <td><strong>${{ billset.get_total }}</strong></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                {% endif %}
                             </table>
                         </div>
                     </div>
@@ -227,5 +227,4 @@
             <hr>
         {% endif %}
     </div>
-
 {% endblock %}

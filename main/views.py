@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.admin.views.decorators import staff_member_required
 
 def home(request):
 	return render(request, 'main/home.html')
@@ -27,3 +28,7 @@ def page_not_found(request, exception):
 
 def server_error(request):
 	return render(request, 'main/500.html')
+
+@staff_member_required
+def sandbox(request):
+	return render(request, 'main/sandbox.html')

@@ -1,5 +1,6 @@
 {% extends 'main/_base.html' %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block title %}
     Find a Room
@@ -14,13 +15,11 @@
 
     <div class="container">
         <h2>Find a Room</h2>
-        {% if rooms %}
-            <form method="POST">
+    <form method="POST">
                 {% csrf_token %}
-
                 <div class="form-row">
                     <div class="col-md-11">
-                        <input class="form-control" type="text" name="search" id="search" placeholder="Search">
+                        <input class="form-control" type="text" name="search" id="search" {% if search_term == '' %}placeholder="Search"{% else %}value="{{ search_term }}"{% endif %}>
                     </div>
                     <div class="col-md-1">
                         <button class="btn btn-primary" type='submit'>Search</button>
@@ -41,19 +40,8 @@
 
                                 <div id="filtersCard" class="collapse" data-parent="#accordion">
                                     <div class="card-body">
-                                        <div class="form-group row">
-                                            <legend class="col-form-label col-sm-2 pt-0">Pets</legend>
-                                            <div class="col-sm-3">
-                                                <div class="form-check">
-                                                    <input id="dogcheck" class="form-check-input" type="checkbox">
-                                                    <label class="form-check-label" for="dogcheck">Dogs</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input id="catcheck" class="form-check-input" type="checkbox">
-                                                    <label class="form-check-label" for="catcheck">Cats</label>
-                                                </div>
-                                            </div>
-
+                                        <div class="container">
+                                            {% crispy filter_form %}
                                         </div>
                                     </div>
                                 </div>
@@ -63,61 +51,26 @@
                 </div>
             </form>
             <br>
-
-            <div id="search_results">
-                <script>
-                    var delayTimer;
-                    $('#search').keyup(function () {
-                        clearTimeout(delayTimer);
-                        $('#search_results').text('Loading...');
-                        delayTimer = setTimeout(function () {
-                            var text = $('#search').val();
-                            $.ajax({
-                                url: '/room/search',
-                                data: {
-                                    'search_term': text
-                                },
-                                dataType: 'json',
-                                success: function (data) {
-                                    var results = '';
-                                    $('#search_results').text('')
-                                    results += '<div class="row">';
-                                    data['items'].forEach(function (room) {
-                                        results += '<div class="col-md-12"><div class="card mb-2 shadow-sm">';
-                                        results += '<a href="/room/' + room['id'] + '/detail/"><div class="card-body"><h4 class="card-text">' + room['name'] + '</h4></a>';
-                                        results += '<small>' + room['address'] + '</small>';
-                                        results += '<br>';
-                                        results += 'Price: $' + room['price'];
-                                        results += '<br>';
-                                        results += '<img class="img-fluid" width="300" src="' + room['image'] + '" alt="">';
-                                        results += '</div></div></div>';
-                                    });
-                                    results += '</div>';
-                                    $('#search_results').append(results);
-                                }
-                            });
-                        }, 100);
-                    });
-                </script>
-                <div class="row">
-                    {% for room in rooms %}
-                        <div class="col-md-12">
-                            <div class="card mb-2 shadow-sm">
-                                <div class="card-body">
-                                    <a href="{% url 'room_detail' room.pk %}"><h4 class="card-text">{{ room.name }}</h4></a>
-                                    <small>{{ room.house.full_address }}</small>
-                                    <br>
-                                    Price: $ {{ room.price }}
-                                    <br>
-                                    <img class="img-fluid" width="300" src="{{ room.roomimage_set.first.image.url }}" alt="">
-                                </div>
+        {% if rooms %}
+            <div class="row">
+                {% for room in rooms %}
+                    <div class="col-md-12">
+                        <div class="card mb-2 shadow-sm">
+                            <div class="card-body">
+                                <a href="{% url 'room_detail' room.pk %}"><h4 class="card-text">{{ room.name }}</h4></a>
+                                <small>{{ room.house.full_address }}</small>
+                                <br>
+                                Price: $ {{ room.price }}
+                                <br>
+                                <img class="img-fluid" width="300" src="{{ room.roomimage_set.first.image.url }}" alt="">
                             </div>
                         </div>
-                    {% endfor %}
-                </div>
+                    </div>
+                {% endfor %}
+            </div>
             </div>
         {% else %}
-            <p>Looks like there are no available rooms at the moment</p>
+            <p>Looks like there are no available rooms that match your search!</p>
             <p>Do you have a room you want to post?
                 <a href="{% url 'room_create' %}">Tell us about it</a></p>
         {% endif %}

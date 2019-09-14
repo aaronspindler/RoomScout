@@ -14,13 +14,24 @@ from .forms import FilterForm
 def room_list(request):
 	filter_form = FilterForm()
 	if request.method == 'POST':
-		print(request.POST)
 		filter_form = FilterForm(request.POST)
 		search_term = request.POST['search']
-		max_price = filter_form['max_price']
-		#pets_allowed = filter_form.cleaned_data['pets_allowed']
-		results = room_search(search_term)
-		rooms = results
+		if filter_form.is_valid():
+			results = room_search_extended(
+				search_term=search_term,
+				max_price=filter_form.cleaned_data['max_price'],
+				pets_allowed=filter_form.cleaned_data['pets_allowed'],
+				#num_rooms=filter_form.cleaned_data['num_rooms'],
+				#num_bathrooms=filter_form.cleaned_data['num_bathrooms'],
+				#num_parking_spaces=filter_form.cleaned_data['num_parking_spaces'],
+				#has_dishwasher=filter_form.cleaned_data['has_dishwasher'],
+				#has_laundry=filter_form.cleaned_data['has_laundry'],
+				#has_air_conditioning=filter_form.cleaned_data['has_air_conditioning'],
+			)
+			rooms = results
+		else:
+			results = room_search(search_term)
+			rooms = results
 
 	else:
 		search_term=''
@@ -29,10 +40,22 @@ def room_list(request):
 
 # TODO : Improve search functionality
 def room_search(search_term):
-	#use price__lte to filter below a certain price
-	#filter(price__lte=20000)
 	rooms_query = Room.objects.all().filter(is_available=True).filter(Q(house__city__icontains=search_term) | Q(house__prov_state__icontains=search_term) | Q(house__street_name__icontains=search_term))
 	return rooms_query
+
+def room_search_extended(search_term, max_price, pets_allowed):#, num_rooms, num_bathrooms, num_parking_spaces, has_dishwasher, has_laundry, has_air_conditioning):
+	rooms = Room.objects.all().filter(is_available=True).filter(Q(house__city__icontains=search_term) | Q(house__prov_state__icontains=search_term) | Q(house__street_name__icontains=search_term))
+	if(max_price):
+		rooms = rooms.filter(price__lte=max_price)
+	if(pets_allowed):
+		rooms = rooms.filter(house__pets_allowed=True)
+	#if(num_rooms):
+		#rooms = rooms.filter(house__num_rooms=num_rooms)
+	#if(num_bathrooms):
+		#rooms = rooms.filter(house__num_rooms__gte=num_rooms)
+
+
+	return rooms
 
 
 @login_required(login_url="account_login")

@@ -199,7 +199,7 @@ def house_detail(request, pk):
 class house_edit(LoginRequiredMixin, generic.UpdateView):
 	model = House
 	template_name = 'houses/house_edit.html'
-	fields = ['postal_code', 'hide_address']
+	fields = ['postal_code', 'hide_address', 'pets_allowed']
 
 	def get_success_url(self):
 		return reverse('house_detail', kwargs={'pk': self.object.pk})

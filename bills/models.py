@@ -26,8 +26,19 @@ class BillSet(models.Model):
 			return 'Error'
 		return months[self.month]
 
+	def get_total(self):
+		total = 0
+		bills = Bill.objects.filter(set=self)
+		for bill in bills:
+			total += bill.amount
+		return total
+
+	# TODO: This needs to be reworked to account for the owner if living in house and if members haven't registered yet. Maybe use a number in the house for the bill split multiplier
+	def get_total_per_person(self):
+		return self.get_total() / self.house.members.count()
+
 class Bill(models.Model):
-	TYPE_CHOICES = [('ElEC', 'Electricity'), ('WATER','Water'), ('GAS', 'Gas'), ('INTER','Internet'), ('OTHER', 'Other')]
+	TYPE_CHOICES = [('ELEC', 'Electricity'), ('WATER','Water'), ('GAS', 'Gas'), ('INTER','Internet'), ('OTHER', 'Other')]
 
 	set = models.ForeignKey(BillSet, on_delete=models.CASCADE)
 	user = models.ForeignKey(User, on_delete=models.CASCADE)

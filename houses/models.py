@@ -1,11 +1,12 @@
 import uuid
 
-from django.db import models
-from django.conf import settings
-from django.urls import reverse
 import requests
+from django.conf import settings
+from django.db import models
+from django.urls import reverse
 
 from accounts.models import User
+
 
 class House(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -33,6 +34,18 @@ class House(models.Model):
 	transit_score = models.IntegerField(default=-1)
 	transit_score_description = models.TextField(default='')
 	transit_score_summary = models.TextField(default='')
+
+	# Filterable Options
+	# TODO: Implement these options into house
+	num_rooms = models.IntegerField(default=-1)
+	num_bathrooms = models.IntegerField(default=-1)
+	num_parking_spaces = models.IntegerField(default=-1)
+	pets_allowed = models.BooleanField(default=False)
+	num_male = models.IntegerField(default=-1)
+	num_female = models.IntegerField(default=-1)
+	has_dishwasher = models.BooleanField(default=False)
+	has_laundry = models.BooleanField(default=False)
+	has_air_conditioning = models.BooleanField(default=False)
 
 	# Used to hide the address from public consumption
 	# Changes all full_address postings to use a non specific address
@@ -78,11 +91,10 @@ class House(models.Model):
 		if self.hide_address:
 			return '{}, {}, {}, {}'.format(self.street_name, self.city, self.prov_state, self.country)
 		if self.postal_code:
-			return '{} {}, {}, {}, {}, {}'.format(self.street_number, self.street_name, self.city, self.prov_state,
-			                                      self.country, self.postal_code)
+			return '{} {}, {}, {}, {}, {}'.format(self.street_number, self.street_name, self.city, self.prov_state, self.country, self.postal_code)
 		else:
-			return '{} {}, {}, {}, {}'.format(self.street_number, self.street_name, self.city, self.prov_state,
-			                                  self.country)
+			return '{} {}, {}, {}, {}'.format(self.street_number, self.street_name, self.city, self.prov_state, self.country)
+
 
 class Invitation(models.Model):
 	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

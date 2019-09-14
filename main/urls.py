@@ -1,4 +1,5 @@
 from django.urls import path, include
+from django.conf import settings
 
 from accounts.views import settings
 from . import views
@@ -12,6 +13,7 @@ urlpatterns = [
 	path('privacypolicy', views.privacypolicy, name='privacypolicy'),
 	path('termsofuse', views.termsofuse, name='termsofuse'),
 	path('dashboard', include('dashboard.urls')),
+	path('sandbox', views.sandbox, name='sandbox'),
 
 	# Blog
 	path('blog/', include('blog.urls')),

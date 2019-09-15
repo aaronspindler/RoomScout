@@ -1,4 +1,4 @@
-from django.forms import *
+from django import forms
 from captcha.fields import ReCaptchaField
 
 class AllauthSignupForm(forms.Form):
@@ -8,3 +8,7 @@ class AllauthSignupForm(forms.Form):
     def signup(self, request, user):
         """ Required, or else it throws deprecation warnings """
         pass
+
+class PreferencesForm(forms.Form):
+    bill_contact = forms.BooleanField(label='Yes, I would like RoomScout to contact me about new bills in Houses that I am a member of.', required=False)
+    promo_contact = forms.BooleanField(label='Yes, I would like RoomScout to contact me about events, new features, and other promotional information.', required=False)

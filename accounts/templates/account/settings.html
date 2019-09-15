@@ -1,4 +1,5 @@
 {% extends 'main/_base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}
     Settings
@@ -110,13 +111,32 @@
                 </form>
             </div>
         </div>
-    <br>
+        <br>
+        <div class="card">
+            <div class="card-header">
+                Preferences
+            </div>
+            <div class="card-body">
+                <form>
+                    {{ preferences_form | crispy }}
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+
+            </div>
+        </div>
+        <br>
         <div class="card">
             <div class="card-header">
                 Verification
+                <small><a href="#" data-toggle="tooltip" title="asdfasdasdas">What is this?</a></small>
+                <script>
+                    $(document).ready(function () {
+                        $('[data-toggle="tooltip"]').tooltip();
+                    });
+                </script>
             </div>
             <div class="card-body">
-
+                <p>Work in progress</p>
             </div>
         </div>
     </div>

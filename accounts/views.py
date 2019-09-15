@@ -3,9 +3,11 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from utils import provinces
 from .models import User
+from .forms import PreferencesForm
 
 @login_required(login_url="account_login")
 def settings(request):
+	preferences_form = PreferencesForm()
 	provs = provinces.get_provinces()
 	if request.method == 'POST':
 		user = User.objects.get(id=request.user.id)
@@ -27,4 +29,4 @@ def settings(request):
 		messages.success(request, 'Your settings have been saved!.')
 		return redirect('settings')
 	else:
-		return render(request, 'account/settings.html', {'provinces': provs})
+		return render(request, 'account/settings.html', {'provinces': provs, 'preferences_form':preferences_form})

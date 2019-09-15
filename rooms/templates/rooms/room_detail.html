@@ -6,6 +6,30 @@
 {% endblock %}
 
 {% block content %}
+    <style>
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            height: 35px;
+            width: 35px;
+            outline: black;
+            background-size: 100%, 100%;
+            border-radius: 50%;
+            border: 1px solid black;
+            background-image: none;
+        }
+
+        .carousel-control-next-icon:after {
+            content: '>';
+            font-size: 20px;
+            color: black;
+        }
+
+        .carousel-control-prev-icon:after {
+            content: '<';
+            font-size: 20px;
+            color: black;
+        }
+    </style>
     <div class="container">
         <div class="row">
             <h4>{{ room.name }} At <a

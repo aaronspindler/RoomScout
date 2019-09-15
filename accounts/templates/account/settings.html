@@ -26,82 +26,98 @@
         <little>Change Password</little>
     </a>
         <br>
-        <form action="{% url 'settings' %}" method="POST">
-            {% csrf_token %}
-        <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="first_name">First Name</label>
-                    <input type="text" class="form-control" name="first_name" id="first_name" value="{{ user.first_name }}">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="last_name">Last Name</label>
-                    <input type="text" class="form-control" name="last_name" id="last_name" value="{{ user.last_name }}">
-                </div>
+        <div class="card">
+            <div class="card-header">
+                Personal Information
             </div>
+            <div class="card-body">
+                <form action="{% url 'settings' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="first_name">First Name</label>
+                            <input type="text" class="form-control" name="first_name" id="first_name" value="{{ user.first_name }}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="last_name">Last Name</label>
+                            <input type="text" class="form-control" name="last_name" id="last_name" value="{{ user.last_name }}">
+                        </div>
+                    </div>
 
-            <div class="form-row">
-                <div class="form-group col-md-10">
-                    <label>Phone Number</label>
-                    <input class="form-control" type="tel" name="phone_number" id="phone_number" value="{{ user.phone_number }}">
-                </div>
-                <div class="form-group col-md-2">
-                    <label>Status</label>
-                <br>
-                    {% if user.phone_number_verified %}
-                        <span class="badge badge-success">Verified</span>
-                        {% else %}
-                        <span class="badge badge-danger">Unverified</span>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="gender">Gender</label>
-                    <select name="gender" id="gender" class="form-control">
-                        {% if user.gender == 'm' %}
-                            <option selected value='m'>Male</option>
-                            <option value='f'>Female</option>
-                            <option value='o'>Other</option>
-                        {% elif user.gender == 'f' %}
-                            <option value='m'>Male</option>
-                            <option selected value='f'>Female</option>
-                            <option value='o'>Other</option>
-                        {% elif user.gender == 'o' %}
-                            <option value='m'>Male</option>
-                            <option value='f'>Female</option>
-                            <option selected value='o'>Other</option>
-                        {% else %}
-                            <option value='m'>Male</option>
-                            <option value='f'>Female</option>
-                            <option value='o'>Other</option>
-                        {% endif %}
-                    </select>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="age">Age</label>
-                    <input class="form-control" type="number" step=1 min="0" name="age" value="{{ user.age }}">
-                </div>
-
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="city">City</label>
-                    <input type="text" class="form-control" name="city" id="city" value="{{ user.city }}">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="province">Province</label>
-                    <select name="province" id="province" class="form-control">
-                        {% for province in provinces %}
-                            {% if province.key == user.prov_state %}
-                                <option selected value={{ province.key }}>{{ province.name }}</option>
+                    <div class="form-row">
+                        <div class="form-group col-md-10">
+                            <label>Phone Number</label>
+                            <input class="form-control" type="tel" name="phone_number" id="phone_number" value="{{ user.phone_number }}">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Status</label>
+                            <br>
+                            {% if user.phone_number_verified %}
+                                <span class="badge badge-success">Verified</span>
+                            {% else %}
+                                <span class="badge badge-danger">Unverified</span>
                             {% endif %}
-                            <option value={{ province.key }}>{{ province.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="gender">Gender</label>
+                            <select name="gender" id="gender" class="form-control">
+                                {% if user.gender == 'm' %}
+                                    <option selected value='m'>Male</option>
+                                    <option value='f'>Female</option>
+                                    <option value='o'>Other</option>
+                                {% elif user.gender == 'f' %}
+                                    <option value='m'>Male</option>
+                                    <option selected value='f'>Female</option>
+                                    <option value='o'>Other</option>
+                                {% elif user.gender == 'o' %}
+                                    <option value='m'>Male</option>
+                                    <option value='f'>Female</option>
+                                    <option selected value='o'>Other</option>
+                                {% else %}
+                                    <option value='m'>Male</option>
+                                    <option value='f'>Female</option>
+                                    <option value='o'>Other</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="age">Age</label>
+                            <input class="form-control" type="number" step=1 min="0" name="age" value="{{ user.age }}">
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control" name="city" id="city" value="{{ user.city }}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="province">Province</label>
+                            <select name="province" id="province" class="form-control">
+                                {% for province in provinces %}
+                                    {% if province.key == user.prov_state %}
+                                        <option selected value={{ province.key }}>{{ province.name }}</option>
+                                    {% endif %}
+                                    <option value={{ province.key }}>{{ province.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+    <br>
+        <div class="card">
+            <div class="card-header">
+                Verification
+            </div>
+            <div class="card-body">
 
             </div>
-            <button type="submit" class="btn btn-primary">Save</button>
-        </form>
+        </div>
     </div>
 {% endblock %}

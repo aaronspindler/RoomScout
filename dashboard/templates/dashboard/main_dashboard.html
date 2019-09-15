@@ -35,9 +35,10 @@
                             <a href="{% url 'house_create' %}" class="btn btn-sm btn-primary"><span class="oi oi-plus"></span></a>
                         </span>
             </small>
+            <small>{{ user.house_set.count }}/{{ user.max_houses }}</small>
         </h2>
 
-        <h4>{{ user.house_set.count }}/{{ user.max_houses }}</h4>
+
 
         {% if houses or member_of_houses %}
             <div class="row">

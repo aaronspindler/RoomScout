@@ -15,8 +15,8 @@
     <div class="container">
         <h2>House Details - {{ house.full_address }}</h2>
         {% if user.id == house.user.id %}
-            <a class="btn btn-primary" href="{% url 'house_edit' house.pk %}">Edit</a>
-            <a class="btn btn-danger" href="{% url 'house_delete' house.pk %}">Delete</a>
+            <a class="btn btn-sm btn-primary" href="{% url 'house_edit' house.pk %}">Edit</a>
+            <a class="btn btn-sm btn-danger" href="{% url 'house_delete' house.pk %}">Delete</a>
             <br>
             <br>
         {% endif %}
@@ -75,7 +75,7 @@
                 {% if user.id == house.user.id %}
                     <small>
                     <span class="btn-group">
-                        <a href="{% url 'house_bill_add' house.pk %}" class="btn btn-primary"><span class="oi oi-plus"></span></a>
+                        <a href="{% url 'house_bill_add' house.pk %}" class="btn btn-sm btn-primary"><span class="oi oi-plus"></span></a>
                     </span>
                     </small>
                 {% endif %}
@@ -124,7 +124,7 @@
                                             <td>No Receipt</td>
                                         {% endif %}
                                         {% if user.id == house.user.id %}
-                                            <td><a class="btn btn-danger" href="{% url 'bill_delete' bill.pk %}"><span class="oi oi-trash"></span></a></td>
+                                            <td><a class="btn btn-sm btn-danger" href="{% url 'bill_delete' bill.pk %}"><span class="oi oi-trash"></span></a></td>
                                         {% endif %}
                                     </tr>
                                 {% endfor %}
@@ -150,7 +150,7 @@
             {% if user.id == house.user.id %}
                 <small>
                     <span class="btn-group">
-                        <a href="{% url 'house_add_room' house.pk %}" class="btn btn-primary"><span class="oi oi-plus"></span></a>
+                        <a href="{% url 'house_add_room' house.pk %}" class="btn btn-sm btn-primary"><span class="oi oi-plus"></span></a>
                     </span>
                 </small>
             {% endif %}
@@ -170,8 +170,8 @@
                                     </a>
                                     {% if room.is_available %}<p class="card-text">${{ room.price }}</p>{% endif %}
                                     {% if user.id == room.user.id %}
-                                        <a class="btn btn-primary" href="{% url 'room_edit' room.pk %}"><span class="oi oi-wrench"></span></a>
-                                        <a class="btn btn-danger" href="{% url 'room_delete' room.pk %}"><span class="oi oi-trash"></span></a>
+                                        <a class="btn btn-sm btn-primary" href="{% url 'room_edit' room.pk %}"><span class="oi oi-wrench"></span></a>
+                                        <a class="btn btn-sm btn-danger" href="{% url 'room_delete' room.pk %}"><span class="oi oi-trash"></span></a>
                                     {% endif %}
                                 </div>
                             </div>
@@ -187,7 +187,7 @@
                 {% if user.id == house.user.id %}
                     <small>
                                 <span class="btn-group">
-                                    <a href="{% url 'house_invite' house.pk %}" class="btn btn-primary"><span class="oi oi-plus"></span></a>
+                                    <a href="{% url 'house_invite' house.pk %}" class="btn btn-sm btn-primary"><span class="oi oi-plus"></span></a>
                                 </span>
                     </small>
                 {% endif %}

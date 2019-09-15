@@ -15,11 +15,43 @@
     {% endif %}
 
     <div class="container">
-        <h2>Edit Room | {{ room.name }}</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form | crispy }}
-        <button class="btn btn-primary" type='submit'>Save</button>
-    </form>
+        <h4>Editing <a href="{{ room.get_absolute_url }}">{{ room.name }}</a></h4>
+
+        <div class="card">
+            <div class="card-header">
+                Main
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+                    <button class="btn btn-primary" type='submit'>Save</button>
+                </form>
+            </div>
+        </div>
+        <br>
+
+        <div class="card">
+            <div class="card-header">
+                Images <a href="{% url 'room_add_photo' room.pk %}" class="btn btn-sm btn-primary"><span class="oi oi-plus"></span></a>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% for image in room.roomimage_set.all %}
+                        <div class="col-md-3">
+                            <div class="card mb-4 shadow-sm">
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        <div class="text-center"><img class="img-fluid" width=200 src="{{ image.image.url }}"></div>
+                                    </p>
+                                    <a class="btn btn-sm btn-danger" href="#"><span class="oi oi-trash"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
     </div>
 {% endblock %}

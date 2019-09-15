@@ -32,7 +32,7 @@
         <h2>Houses
             <small>
                         <span class="btn-group">
-                            <a href="{% url 'house_create' %}" class="btn btn-primary"><span class="oi oi-plus"></span></a>
+                            <a href="{% url 'house_create' %}" class="btn btn-sm btn-primary"><span class="oi oi-plus"></span></a>
                         </span>
             </small>
         </h2>
@@ -63,9 +63,9 @@
                                         </div>
                                     {% endif %}
                                 </p>
-                                <a class="btn btn-primary" href="{% url 'house_add_room' house.pk %}"><span class="oi oi-plus"></span></a>
-                                <a class="btn btn-primary" href="{% url 'house_edit' house.pk %}"><span class="oi oi-wrench"></span></a>
-                                <a class="btn btn-danger" href="{% url 'house_delete' house.pk %}"><span class="oi oi-trash"></span></a>
+                                <a class="btn btn-sm btn-primary" href="{% url 'house_add_room' house.pk %}"><span class="oi oi-plus"></span></a>
+                                <a class="btn btn-sm btn-primary" href="{% url 'house_edit' house.pk %}"><span class="oi oi-wrench"></span></a>
+                                <a class="btn btn-sm btn-danger" href="{% url 'house_delete' house.pk %}"><span class="oi oi-trash"></span></a>
                             </div>
                         </div>
                     </div>

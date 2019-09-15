@@ -9,4 +9,5 @@ urlpatterns = [
 	path('<str:pk>/edit/', views.room_edit.as_view(), name='room_edit'),
 	path('<str:pk>/delete/', views.room_delete.as_view(), name='room_delete'),
 	path('<str:pk>/addphoto/', views.room_add_photo, name='room_add_photo'),
+	path('<str:pk>/deletephoto/', views.room_delete_photo, name='room_delete_photo'),
 ]

@@ -44,22 +44,19 @@
                         {% if house.walk_score != -1 %}
                             <div>
                                 <!-- Walk Score -->
-                                <img class="img-fluid" width=75
-                                     src="https://pp.walk.sc/badge/walk/score/{{ house.walk_score }}.svg" alt="Walk Score">
+                                <a href="https://www.redfin.com/how-walk-score-works"><img class="img-fluid" width=75 src="https://pp.walk.sc/badge/walk/score/{{ house.walk_score }}.svg" alt="Walk Score"></a>
                                 <small>{{ house.walk_score_description }}</small>
 
                                 <!-- Bike Score -->
                                 {% if house.bike_score != -1 %}
                                     <br>
-                                    <img class="img-fluid" width=75
-                                         src="https://pp.walk.sc/badge/bike/score/{{ house.bike_score }}.svg" alt="Bike Score">
+                                    <a href="https://www.redfin.com/how-walk-score-works"><img class="img-fluid" width=75 src="https://pp.walk.sc/badge/bike/score/{{ house.bike_score }}.svg" alt="Bike Score"></a>
                                     <small>{{ house.bike_score_description }}</small>
                                 {% endif %}
                                 <!-- Transit Score -->
                                 {% if house.transit_score != -1 %}
                                     <br>
-                                    <img class="img-fluid" width=75
-                                         src="https://pp.walk.sc/badge/transit/score/{{ house.transit_score }}.svg" alt="Transit Score">
+                                    <a href="https://www.redfin.com/how-walk-score-works"><img class="img-fluid" width=75src="https://pp.walk.sc/badge/transit/score/{{ house.transit_score }}.svg" alt="Transit Score"></a>
                                     {% if house.transit_score_summary %}
                                         <small>{{ house.transit_score_description }} - {{ house.transit_score_summary }}</small>
                                     {% else %}

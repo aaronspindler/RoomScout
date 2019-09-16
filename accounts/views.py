@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from utils import provinces
+from utils import provinces, phonenumbers
 from .models import User
 from .forms import PreferencesForm
 
@@ -29,6 +29,8 @@ def settings(request):
 			if new_phone_number != prev_phone_number:
 				user.phone_number_verified = False
 				user.phone_number = new_phone_number
+				phonenumbers.validate_phonenumber(new_phone_number, user)
+
 		user.save()
 		messages.success(request, 'Your settings have been saved!.')
 		return redirect('settings')

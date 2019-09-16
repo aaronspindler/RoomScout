@@ -25,12 +25,3 @@ class User(AbstractUser):
 
 	#Premium Features
 	max_houses = models.IntegerField(default=1)
-
-class PhoneNumberVerification(models.Model):
-	phone_number = models.IntegerField(default=-1)
-	code = models.IntegerField(default=-1)
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-	def generate_code(self):
-		self.code = randint(10000, 99999)
-

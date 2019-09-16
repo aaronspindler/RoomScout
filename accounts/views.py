@@ -11,7 +11,6 @@ def settings(request):
 	preferences_form = PreferencesForm(initial={'bill_contact': request.user.bill_contact, 'promo_contact': request.user.promo_contact})
 	if request.method == 'POST':
 		user = User.objects.get(id=request.user.id)
-		print(request.POST)
 		if request.POST['first_name']:
 			user.first_name = str(request.POST['first_name'])
 		if request.POST['last_name']:
@@ -25,7 +24,11 @@ def settings(request):
 		if request.POST['gender']:
 			user.gender = request.POST['gender']
 		if request.POST['phone_number']:
-			user.phone_number = request.POST['phone_number']
+			prev_phone_number = user.phone_number
+			new_phone_number = request.POST['phone_number']
+			if new_phone_number != prev_phone_number:
+				user.phone_number_verified = False
+				user.phone_number = new_phone_number
 		user.save()
 		messages.success(request, 'Your settings have been saved!.')
 		return redirect('settings')

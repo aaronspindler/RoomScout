@@ -7,10 +7,11 @@ from .forms import PreferencesForm
 
 @login_required(login_url="account_login")
 def settings(request):
-	preferences_form = PreferencesForm()
 	provs = provinces.get_provinces()
+	preferences_form = PreferencesForm(initial={'bill_contact': request.user.bill_contact, 'promo_contact': request.user.promo_contact})
 	if request.method == 'POST':
 		user = User.objects.get(id=request.user.id)
+		print(request.POST)
 		if request.POST['first_name']:
 			user.first_name = str(request.POST['first_name'])
 		if request.POST['last_name']:
@@ -30,3 +31,15 @@ def settings(request):
 		return redirect('settings')
 	else:
 		return render(request, 'account/settings.html', {'provinces': provs, 'preferences_form':preferences_form})
+
+@login_required(login_url="account_login")
+def preferences(request):
+	if request.method == 'POST':
+		user = User.objects.get(id=request.user.id)
+		preferences_form = PreferencesForm(request.POST)
+		if preferences_form.is_valid():
+			user.bill_contact = preferences_form.cleaned_data['bill_contact']
+			user.promo_contact = preferences_form.cleaned_data['promo_contact']
+			user.save()
+			messages.success(request, 'Your preferences have been saved!.')
+	return redirect('settings')

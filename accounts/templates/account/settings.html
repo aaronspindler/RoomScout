@@ -117,7 +117,8 @@
                 Preferences
             </div>
             <div class="card-body">
-                <form>
+                <form action="{% url 'settings_preferences' %}" method="POST">
+                    {% csrf_token %}
                     {{ preferences_form | crispy }}
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>

@@ -36,8 +36,12 @@
                 {% endif %}
             </div>
             <div class="col-md-5">
-                <h4>Details</h4>
-                {% if house.walk_score != -1 %}
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Details</h4>
+                    </div>
+                    <div class="card-body">
+                        {% if house.walk_score != -1 %}
                     <div>
                         <!-- Walk Score -->
                         <img class="img-fluid" width=75
@@ -65,6 +69,8 @@
                         {% endif %}
                     </div>
                 {% endif %}
+                    </div>
+                </div>
             </div>
 
         </div>

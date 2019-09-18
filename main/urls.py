@@ -11,7 +11,6 @@ urlpatterns = [
 	path('licenses', views.licenses, name='licenses'),
 	path('privacypolicy', views.privacypolicy, name='privacypolicy'),
 	path('termsofuse', views.termsofuse, name='termsofuse'),
-	path('changes', views.changelog, name='changelog'),
 	path('dashboard', include('dashboard.urls')),
 	path('sandbox', views.sandbox, name='sandbox'),
 

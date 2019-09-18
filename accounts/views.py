@@ -3,12 +3,14 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from utils import provinces, phonenumbers
 from .models import User
-from .forms import PreferencesForm
+from .forms import PreferencesForm, VerificationForm
 
 @login_required(login_url="account_login")
 def settings(request):
 	provs = provinces.get_provinces()
 	preferences_form = PreferencesForm(initial={'bill_contact': request.user.bill_contact, 'promo_contact': request.user.promo_contact})
+	verification_form = VerificationForm(initial={'phone_number': request.user.phone_number})
+
 	if request.method == 'POST':
 		user = User.objects.get(id=request.user.id)
 		if request.POST['first_name']:
@@ -23,19 +25,12 @@ def settings(request):
 			user.age = request.POST['age']
 		if request.POST['gender']:
 			user.gender = request.POST['gender']
-		if request.POST['phone_number']:
-			prev_phone_number = user.phone_number
-			new_phone_number = request.POST['phone_number']
-			if new_phone_number != prev_phone_number:
-				user.phone_number_verified = False
-				user.phone_number = new_phone_number
-				phonenumbers.validate_phonenumber(new_phone_number, user)
 
 		user.save()
 		messages.success(request, 'Your settings have been saved!.')
 		return redirect('settings')
 	else:
-		return render(request, 'account/settings.html', {'provinces': provs, 'preferences_form':preferences_form})
+		return render(request, 'account/settings.html', {'provinces': provs, 'preferences_form':preferences_form, 'verification_form': verification_form})
 
 @login_required(login_url="account_login")
 def preferences(request):
@@ -48,3 +43,15 @@ def preferences(request):
 			user.save()
 			messages.success(request, 'Your preferences have been saved!.')
 	return redirect('settings')
+
+@login_required(login_url="account_login")
+def verification(request):
+	pass
+
+	if request.POST['phone_number']:
+		prev_phone_number = user.phone_number
+		new_phone_number = request.POST['phone_number']
+		if new_phone_number != prev_phone_number:
+			user.phone_number_verified = False
+			user.phone_number = new_phone_number
+			phonenumbers.validate_phonenumber(new_phone_number, user)

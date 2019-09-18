@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from accounts.views import settings, preferences
+from accounts.views import settings, preferences, verification
 from . import views
 
 urlpatterns = [
@@ -21,6 +21,7 @@ urlpatterns = [
 	path('accounts/', include('allauth.urls')),
 	path('settings', settings, name='settings'),
 	path('settings/preferences', preferences, name='settings_preferences'),
+	path('settings/verification', verification, name='settings_verification'),
 
 	# Bills
 	path('bill/', include('bills.urls')),

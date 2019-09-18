@@ -44,22 +44,6 @@
                             <input type="text" class="form-control" name="last_name" id="last_name" value="{{ user.last_name }}">
                         </div>
                     </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-10">
-                            <label>Phone Number</label>
-                            <input class="form-control" type="tel" name="phone_number" id="phone_number" value="{{ user.phone_number }}">
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label>Status</label>
-                            <br>
-                            {% if user.phone_number_verified %}
-                                <span class="badge badge-success">Verified</span>
-                            {% else %}
-                                <span class="badge badge-danger">Unverified</span>
-                            {% endif %}
-                        </div>
-                    </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="gender">Gender</label>
@@ -137,7 +121,23 @@
                 </script>
             </div>
             <div class="card-body">
-                <p>Coming Soon!</p>
+                <div class="row">
+                        <div class="col-md-3">
+                            <label>Phone Number Status</label>
+                            <br>
+                            {% if user.phone_number_verified %}
+                                <span class="badge badge-success">Verified</span>
+                            {% else %}
+                                <span class="badge badge-danger">Unverified</span>
+                            {% endif %}
+                        </div>
+                    </div>
+            <hr>
+                <form action="{% url 'settings_verification' %}" method="POST">
+                    {% csrf_token %}
+                    {{ verification_form | crispy }}
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
             </div>
         </div>
     </div>

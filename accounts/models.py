@@ -25,3 +25,7 @@ class User(AbstractUser):
 
 	#Premium Features
 	max_houses = models.IntegerField(default=1)
+
+	# Returns true if the majority of profile is filled out
+	def profile_filled(self):
+		return False

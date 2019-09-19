@@ -8,6 +8,14 @@
 
 {% block content %}
     <div class="container">
+        {% if not user.profile_filled %}
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                <strong>Holy guacamole!</strong> It looks like you haven't filled out your profile! Visit <a class="alert-link" href="{% url 'settings' %}">Settings</a> to complete your profile.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endif %}
         <h4>Inquiring About: <a href="{{ room.get_absolute_url }}">{{ room.name }}</a></h4>
         <form method="post">
             {% csrf_token %}

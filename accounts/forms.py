@@ -1,9 +1,9 @@
 from django import forms
 from captcha.fields import ReCaptchaField
-from captcha.widgets import ReCaptchaV2Invisible
+from captcha.widgets import ReCaptchaV3
 
 class AllauthSignupForm(forms.Form):
-    captcha = ReCaptchaField(widget=ReCaptchaV2Invisible, label='')
+    captcha = ReCaptchaField(widget=ReCaptchaV3, label='')
     field_order = ['email','password1','password2','captcha']
 
     def signup(self, request, user):

@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from random import randint
 
 
 class User(AbstractUser):
@@ -26,7 +25,16 @@ class User(AbstractUser):
 	#Premium Features
 	max_houses = models.IntegerField(default=1)
 
-	# TODO: Make sure this works before it makes it to production
 	# Returns true if the majority of profile is filled out
 	def profile_filled(self):
+		num_fields = 2
+		num_filled = 0
+
+		if self.gender != '':
+			num_filled += 1
+		if self.age != 0:
+			num_filled += 1
+
+		if num_filled >= (num_fields/3):
+			return True
 		return False

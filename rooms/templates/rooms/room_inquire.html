@@ -19,12 +19,12 @@
         <h4>Inquiring About: <a href="{{ room.get_absolute_url }}">{{ room.name }}</a></h4>
         <form method="post">
             {% csrf_token %}
+            {{ captcha }}
             Message
             <textarea class="form-control" rows="10" placeholder="Enter your message here!" name="message"></textarea>
             Requested Move In Date:
             <input class="form-control" type="date" name="move_in_date">
             <br>
-            {{ captcha }}
             <button class="btn btn-primary" type='submit'>Send</button>
         </form>
     </div>

@@ -29,3 +29,7 @@ class Inquiry(models.Model):
 	room = models.ForeignKey(Room, on_delete=models.CASCADE)
 	message = models.TextField(default='')
 	move_in_date = models.DateField(default='1997-11-04')
+	
+	def save(self):
+		#TODO: Notify owner of the house by email that there is a new inquiry
+		super(Inquiry, self).save()

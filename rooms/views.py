@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
@@ -7,7 +8,7 @@ from django.urls import reverse_lazy, reverse
 from django.views import generic
 
 from houses.models import House
-from .models import Room
+from .models import Room, Inquiry
 from utils.models import RoomImage
 from .forms import FilterForm
 from utils.captcha import Captcha
@@ -149,8 +150,19 @@ def room_delete_photo(request, pk):
 @login_required(login_url="account_login")
 def room_inquire(request, pk):
 	captcha = Captcha()
-	if request.method == 'POST':
-		print(request.POST)
 	room = get_object_or_404(Room, pk=pk)
+	if request.method == 'POST':
+		inquiry = Inquiry()
+		inquiry.user = request.user
+		inquiry.room = room
+		if request.POST['message'] == '':
+			return render(request, 'rooms/room_inquire.html', {'room': room, 'captcha': captcha})
+		inquiry.message = request.POST['message']
+		if request.POST['move_in_date'] != '':
+			inquiry.move_in_date = request.POST['move_in_date']
+		inquiry.save()
+		messages.success(request, 'Your inquiry has been successfully sent!.')
+		return redirect('main_dashboard')
+
 	return render(request, 'rooms/room_inquire.html', {'room':room, 'captcha':captcha})
 

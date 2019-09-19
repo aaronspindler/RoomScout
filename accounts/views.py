@@ -46,12 +46,15 @@ def preferences(request):
 
 @login_required(login_url="account_login")
 def verification(request):
-	pass
-
-	if request.POST['phone_number']:
-		prev_phone_number = user.phone_number
-		new_phone_number = request.POST['phone_number']
-		if new_phone_number != prev_phone_number:
-			user.phone_number_verified = False
-			user.phone_number = new_phone_number
-			phonenumbers.validate_phonenumber(new_phone_number, user)
+	if request.method == 'POST':
+		verification_form = VerificationForm(request.POST)
+		if verification_form.is_valid():
+			user = User.objects.get(id=request.user.id)
+			prev_phone_number = user.phone_number
+			new_phone_number = verification_form.cleaned_data['phone_number']
+			if new_phone_number != prev_phone_number:
+				user.phone_number_verified = False
+				user.phone_number = new_phone_number
+				phonenumbers.validate_phonenumber(new_phone_number, user)
+				user.save()
+		return redirect('settings')

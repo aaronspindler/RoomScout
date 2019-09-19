@@ -62,7 +62,7 @@
                         {% if room.is_available %}
                             <p>Price : ${{ room.price }}</p>
                             <p>Room is available</p>
-                            <a class="btn btn-primary" href="mailto:{{ room.house.user.email }}">Contact Poster</a>
+                            <a class="btn btn-primary" href="{% url 'room_inquire' room.pk %}">Contact</a>
                         {% else %}
                             <p>Room is not available</p>
                         {% endif %}

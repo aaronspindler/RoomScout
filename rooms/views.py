@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.http import Http404, JsonResponse
+from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
@@ -144,4 +144,11 @@ def room_delete_photo(request, pk):
 	room = photo.room
 	photo.delete()
 	return redirect('room_edit', room.pk)
+
+@login_required(login_url="account_login")
+def room_inquire(request, pk):
+	if request.method == 'POST':
+		pass
+	room = get_object_or_404(Room, pk=pk)
+	return render(request, 'rooms/room_inquire.html', {'room':room})
 

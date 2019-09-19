@@ -1,5 +1,6 @@
 from django import forms
 
+
 class FilterForm(forms.Form):
 	max_price = forms.IntegerField(label='Max Price:', required=False)
 	pets_allowed = forms.BooleanField(label='Pets Allowed', required=False)
@@ -10,3 +11,6 @@ class FilterForm(forms.Form):
 	#has_laundry = forms.BooleanField(label='Has On-site Laundry', required=False)
 	#has_air_conditioning = forms.BooleanField(label='Has Air Conditioning', required=False)
 
+class InquiryForm(forms.Form):
+	message = forms.CharField(widget=forms.Textarea)
+	move_in = forms.DateField(widget=forms.SelectDateWidget)

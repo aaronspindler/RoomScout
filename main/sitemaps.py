@@ -4,7 +4,7 @@ from django.urls import reverse
 
 class StaticSitemap(Sitemap):
 	def items(self):
-		return ['home', 'about', 'contactus', 'licenses', 'privacypolicy', 'termsofuse', 'changelog', 'account_signup', 'account_login']
+		return ['home', 'about', 'contactus', 'blog_home', 'licenses', 'privacypolicy', 'termsofuse', 'changelog', 'account_signup', 'account_login']
 
 	def location(self, item):
 		return reverse(item)

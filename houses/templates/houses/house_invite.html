@@ -16,6 +16,7 @@
      <h2>Invite member to {{ house.full_address }}</h2>
         <form method="post">
             {% csrf_token %}
+            {{ captcha }}
             <label>Email</label>
             <input class="form-control" name="email" type="email" placeholder="John@Appleseed.com">
             <br>

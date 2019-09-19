@@ -10,6 +10,7 @@ from houses.models import House
 from .models import Room
 from utils.models import RoomImage
 from .forms import FilterForm
+from utils.captcha import Captcha
 
 def room_list(request):
 	filter_form = FilterForm()
@@ -147,8 +148,9 @@ def room_delete_photo(request, pk):
 
 @login_required(login_url="account_login")
 def room_inquire(request, pk):
+	captcha = Captcha()
 	if request.method == 'POST':
-		pass
+		print(request.POST)
 	room = get_object_or_404(Room, pk=pk)
-	return render(request, 'rooms/room_inquire.html', {'room':room})
+	return render(request, 'rooms/room_inquire.html', {'room':room, 'captcha':captcha})
 

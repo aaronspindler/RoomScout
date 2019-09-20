@@ -23,13 +23,11 @@ class Room(models.Model):
 
 
 class Inquiry(models.Model):
+	STATUS_CHOICES = [('O', 'Open'), ('D', 'Dismissed')]
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	room = models.ForeignKey(Room, on_delete=models.CASCADE)
 	message = models.TextField(default='')
 	move_in_date = models.DateField(default='1997-11-04')
-	
-	def save(self):
-		#TODO: Notify owner of the house by email that there is a new inquiry
-		super(Inquiry, self).save()
+	status = models.CharField(choices=STATUS_CHOICES, default='O', max_length=3)

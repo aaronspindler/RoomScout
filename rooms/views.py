@@ -12,6 +12,7 @@ from .models import Room, Inquiry
 from utils.models import RoomImage
 from .forms import FilterForm
 from utils.captcha import Captcha
+from utils.emailclient import send_inquiry_email
 
 def room_list(request):
 	filter_form = FilterForm()
@@ -161,8 +162,19 @@ def room_inquire(request, pk):
 		if request.POST['move_in_date'] != '':
 			inquiry.move_in_date = request.POST['move_in_date']
 		inquiry.save()
+		send_inquiry_email(room.user.email, inquiry)
 		messages.success(request, 'Your inquiry has been successfully sent!.')
 		return redirect('main_dashboard')
 
 	return render(request, 'rooms/room_inquire.html', {'room':room, 'captcha':captcha})
+
+# pk is the primary key of the inquiry
+@login_required(login_url="account_login")
+def room_inquire_dismiss(request, pk):
+	inquiry = get_object_or_404(Inquiry, pk=pk)
+	if inquiry.room.user != request.user:
+		return Http404
+	inquiry.status = 'D'
+	inquiry.save()
+	return redirect('main_dashboard')
 

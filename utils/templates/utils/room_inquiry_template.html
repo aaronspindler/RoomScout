@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RoomScout | Someone is interested in your room!</title>
+</head>
+<body>
+{% if inquiry.user.first_name and inquiry.user.last_name %}
+    <p>{{ inquiry.user.first_name }} {{ inquiry.user.last_name }} is interested in {{ inquiry.room.name }} at {{ inquiry.room.house.full_address }}</p>
+    {% else %}
+    <p>Someone is interested in {{ inquiry.room.name }} at {{ inquiry.room.house.full_address }}</p>
+{% endif %}
+    <p><strong>Message:</strong> {{ inquiry.message }}</p>
+    <p><strong>Requested Move In Date: </strong> {{ inquiry.move_in_date }}</p>
+    <p>Get back to them at: {{ inquiry.user.email}}</p>
+</body>
+</html>

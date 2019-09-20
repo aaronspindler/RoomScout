@@ -8,98 +8,122 @@
 
 {% block content %}
     <div class="container">
-        {% if invitations.count > 0 %}
-            <h2>Invitations</h2>
-            <div class="row">
-                {% for invite in invitations %}
-                    <div class="col-md-12">
-                        <div class="card mb-4 shadow-sm">
-                            <div class="card-body">
-                                <a href="{% url 'house_detail' invite.house.pk %}"><h5 class="card-title">{{ invite.house.full_address }}</h5></a>
-                                <small>Invited by: {{ invite.sender.first_name }} {{ invite.sender.last_name }}</small>
-                                <p class="card-text">
-                                    <a href="{% url 'house_invite_accept' invite.house.pk invite.id %}" class="btn btn-success"><span class="oi oi-check"></span></a>
-                                    <a href="{% url 'house_invite_decline' invite.house.pk invite.id %}" class="btn btn-danger"><span class="oi oi-ban"></span></a>
-                                </p>
-                            </div>
+    {% if invitations.count > 0 %}
+        <h2>Invitations</h2>
+        <div class="row">
+            {% for invite in invitations %}
+                <div class="col-md-12">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <a href="{% url 'house_detail' invite.house.pk %}"><h5 class="card-title">{{ invite.house.full_address }}</h5></a>
+                            <small>Invited by: {{ invite.sender.first_name }} {{ invite.sender.last_name }}</small>
+                            <p class="card-text">
+                                <a href="{% url 'house_invite_accept' invite.house.pk invite.id %}" class="btn btn-sm btn-success"><span class="oi oi-check"></span></a>
+                                <a href="{% url 'house_invite_decline' invite.house.pk invite.id %}" class="btn btn-sm btn-danger"><span class="oi oi-ban"></span></a>
+                            </p>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
-        {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 
 
-        <h2>Houses
-            <small>
+    {% if inquiries_received.count > 0 %}
+        <h2>Inquiries</h2>
+        <div class="row">
+            {% for inquiry in inquiries_received %}
+                <div class="col-md-12">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <p class="card-text">
+                                <h5>For Room: <a href="{{ inquiry.room.get_absolute_url }}">{{ inquiry.room }}</a></h5>
+                                <p><strong>From:</strong> {{ inquiry.user.email }}</p>
+                                <p><strong>Message:</strong> {{ inquiry.message }}</p>
+                                {% if inquiry.move_in_date.year >= 2019 %}
+                                    <p><strong>Looking to move in on:</strong> {{ inquiry.move_in_date }}</p>
+                                {% endif %}
+                            </p>
+                        <a href="{% url 'room_inquire_dismiss' inquiry.id %}"><small>Dismiss</small></a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
+    <h2>Houses
+        <small>
                         <span class="btn-group">
                             <a href="{% url 'house_create' %}" class="btn btn-sm btn-primary"><span class="oi oi-plus"></span></a>
                         </span>
-            </small>
-            <small>{{ user.house_set.count }}/{{ user.max_houses }}</small>
-        </h2>
+        </small>
+        <small>{{ user.house_set.count }}/{{ user.max_houses }}</small>
+    </h2>
 
 
 
-        {% if houses or member_of_houses %}
-            <div class="row">
-                {% for house in houses %}
-                    {% if houses.count > 2 %}
-                        <div class="col-md-4">
-                    {% else %}
-                        <div class="col-md-12">
-                    {% endif %}
-                        <div class="card mb-4 shadow-sm">
-                            <div class="card-body">
-                                <a href="{% url 'house_detail' house.pk %}"><h5 class="card-title">{{ house.full_address }}</h5></a>
-                                <p class="card-text">
-                                    {% if house.hide_address %}
-                                        <div style="width: 100%">
-                                            <iframe width="100%" height="300" src="https://www.google.com/maps/embed/v1/view?zoom=16&center={{ house.lat }}%2C{{ house.lon }}&key={{ GOOGLE_API_KEY }}"
-                                                    frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
-                                        </div>
-                                    {% else %}
-                                        <div style="width: 100%">
-                                            <iframe width="100%" height="300" src="https://www.google.com/maps/embed/v1/place?key={{ GOOGLE_API_KEY }}&q=place_id:{{ house.place_id }}" frameborder="0"
-                                                    scrolling="no" marginheight="0" marginwidth="0"></iframe>
-                                        </div>
-                                    {% endif %}
-                                </p>
-                                <a class="btn btn-sm btn-primary" href="{% url 'house_edit' house.pk %}"><span class="oi oi-wrench"></span></a>
-                                <a class="btn btn-sm btn-danger" href="{% url 'house_delete' house.pk %}"><span class="oi oi-trash"></span></a>
-                            </div>
+    {% if houses or member_of_houses %}
+        <div class="row">
+        {% for house in houses %}
+            {% if houses.count > 2 %}
+                <div class="col-md-4">
+            {% else %}
+                <div class="col-md-12">
+            {% endif %}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <a href="{% url 'house_detail' house.pk %}"><h5 class="card-title">{{ house.full_address }}</h5></a>
+                <p class="card-text">
+                    {% if house.hide_address %}
+                        <div style="width: 100%">
+                            <iframe width="100%" height="300" src="https://www.google.com/maps/embed/v1/view?zoom=16&center={{ house.lat }}%2C{{ house.lon }}&key={{ GOOGLE_API_KEY }}"
+                                    frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
                         </div>
-                    </div>
-                {% endfor %}
-                {% for house in member_of_houses %}
-                    {% if member_of_houses.count > 1 %}
-                        <div class="col-md-4">
                     {% else %}
-                        <div class="col-md-12">
-                    {% endif %}
-                        <div class="card mb-4 shadow-sm">
-                            <div class="card-body">
-                                <a href="{% url 'house_detail' house.pk %}"><h5 class="card-title">{{ house.full_address }}</h5></a>
-                                <p class="card-text">
-                                    {% if house.hide_address %}
-                                        <div style="width: 100%">
-                                            <iframe width="100%" height="300" src="https://www.google.com/maps/embed/v1/view?zoom=16&center={{ house.lat }}%2C{{ house.lon }}&key={{ GOOGLE_API_KEY }}"
-                                                    frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
-                                        </div>
-                                    {% else %}
-                                        <div style="width: 100%">
-                                            <iframe width="100%" height="300" src="https://www.google.com/maps/embed/v1/place?key={{ GOOGLE_API_KEY }}&q=place_id:{{ house.place_id }}" frameborder="0"
-                                                    scrolling="no" marginheight="0" marginwidth="0"></iframe>
-                                        </div>
-                                    {% endif %}
-                                </p>
-                            </div>
+                        <div style="width: 100%">
+                            <iframe width="100%" height="300" src="https://www.google.com/maps/embed/v1/place?key={{ GOOGLE_API_KEY }}&q=place_id:{{ house.place_id }}" frameborder="0"
+                                    scrolling="no" marginheight="0" marginwidth="0"></iframe>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endif %}
+                </p>
+                <a class="btn btn-sm btn-primary" href="{% url 'house_edit' house.pk %}"><span class="oi oi-wrench"></span></a>
+                <a class="btn btn-sm btn-danger" href="{% url 'house_delete' house.pk %}"><span class="oi oi-trash"></span></a>
             </div>
-        {% else %}
-            <p>Looks like you haven't told us about any houses or you aren't a member of any houses</p>
-        {% endif %}
+        </div>
+        </div>
+        {% endfor %}
+        {% for house in member_of_houses %}
+            {% if member_of_houses.count > 1 %}
+                <div class="col-md-4">
+            {% else %}
+                <div class="col-md-12">
+            {% endif %}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <a href="{% url 'house_detail' house.pk %}"><h5 class="card-title">{{ house.full_address }}</h5></a>
+                <p class="card-text">
+                    {% if house.hide_address %}
+                        <div style="width: 100%">
+                            <iframe width="100%" height="300" src="https://www.google.com/maps/embed/v1/view?zoom=16&center={{ house.lat }}%2C{{ house.lon }}&key={{ GOOGLE_API_KEY }}"
+                                    frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                        </div>
+                    {% else %}
+                        <div style="width: 100%">
+                            <iframe width="100%" height="300" src="https://www.google.com/maps/embed/v1/place?key={{ GOOGLE_API_KEY }}&q=place_id:{{ house.place_id }}" frameborder="0"
+                                    scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                        </div>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        </div>
+        {% endfor %}
     </div>
+    {% else %}
+        <p>Looks like you haven't told us about any houses or you aren't a member of any houses</p>
+    {% endif %}
+</div>
 
 {% endblock %}

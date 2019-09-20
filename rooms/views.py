@@ -1,15 +1,18 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.http import Http404, JsonResponse
+from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 
 from houses.models import House
-from .models import Room
+from .models import Room, Inquiry
 from utils.models import RoomImage
 from .forms import FilterForm
+from utils.captcha import Captcha
+from utils.emailclient import send_inquiry_email
 
 def room_list(request):
 	filter_form = FilterForm()
@@ -134,3 +137,44 @@ def room_add_photo(request, pk):
 			return redirect('room_detail', pk=room.id)
 		return render(request, 'rooms/room_add_photo.html', {'room':room})
 	return Http404
+
+#PK is for the primary key of the photo that is getting deleted
+@login_required(login_url="account_login")
+def room_delete_photo(request, pk):
+	photo = get_object_or_404(RoomImage, pk=pk)
+	if photo.user != request.user:
+		return Http404
+	room = photo.room
+	photo.delete()
+	return redirect('room_edit', room.pk)
+
+@login_required(login_url="account_login")
+def room_inquire(request, pk):
+	captcha = Captcha()
+	room = get_object_or_404(Room, pk=pk)
+	if request.method == 'POST':
+		inquiry = Inquiry()
+		inquiry.user = request.user
+		inquiry.room = room
+		if request.POST['message'] == '':
+			return render(request, 'rooms/room_inquire.html', {'room': room, 'captcha': captcha})
+		inquiry.message = request.POST['message']
+		if request.POST['move_in_date'] != '':
+			inquiry.move_in_date = request.POST['move_in_date']
+		inquiry.save()
+		send_inquiry_email(room.user.email, inquiry)
+		messages.success(request, 'Your inquiry has been successfully sent!.')
+		return redirect('main_dashboard')
+
+	return render(request, 'rooms/room_inquire.html', {'room':room, 'captcha':captcha})
+
+# pk is the primary key of the inquiry
+@login_required(login_url="account_login")
+def room_inquire_dismiss(request, pk):
+	inquiry = get_object_or_404(Inquiry, pk=pk)
+	if inquiry.room.user != request.user:
+		return Http404
+	inquiry.status = 'D'
+	inquiry.save()
+	return redirect('main_dashboard')
+

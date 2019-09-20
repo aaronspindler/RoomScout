@@ -5,7 +5,7 @@ from houses.models import House
 
 
 class Room(models.Model):
-	user = models.ForeignKey(User, on_delete=models.PROTECT)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	name = models.CharField(max_length=200, default='')
 	is_available = models.BooleanField(default=True)
 	created_at = models.DateTimeField(auto_now_add=True)
@@ -20,3 +20,14 @@ class Room(models.Model):
 
 	def get_absolute_url(self):
 		return reverse('room_detail', args=[str(self.pk)])
+
+
+class Inquiry(models.Model):
+	STATUS_CHOICES = [('O', 'Open'), ('D', 'Dismissed')]
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	room = models.ForeignKey(Room, on_delete=models.CASCADE)
+	message = models.TextField(default='')
+	move_in_date = models.DateField(default='1997-11-04')
+	status = models.CharField(choices=STATUS_CHOICES, default='O', max_length=3)

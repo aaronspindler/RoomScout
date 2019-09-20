@@ -7,7 +7,7 @@
 <body>
 {% if invite.sender.first_name and invite.sender.last_name %}
     <p>{{ invite.sender.first_name }} {{ invite.sender.last_name }} has invited you to join <a href="https://www.roomscout.ca{% url 'house_detail' invite.house.pk %}">{{ invite.house }}</a>!</p>
-    {% else %}
+{% else %}
     <p>You have been invited to join {{ invite.house }}!</p>
 {% endif %}
 <p>If you already have an account you can accept / decline on your <a href="https://www.roomscout.ca/dashboard/">Dashboard</a></p>

@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from random import randint
 
 
 class User(AbstractUser):
@@ -18,16 +17,24 @@ class User(AbstractUser):
 	gender = models.CharField(choices=GENDER_CHOICES, default='', max_length = 2)
 	age = models.IntegerField(default=0)
 
+	bill_contact = models.BooleanField(default=False)
+	promo_contact = models.BooleanField(default=False)
+
 	score = models.DecimalField(decimal_places=2, max_digits=5, default=0.0)
 
 	#Premium Features
 	max_houses = models.IntegerField(default=1)
 
-class PhoneNumberVerification(models.Model):
-	phone_number = models.IntegerField(default=-1)
-	code = models.IntegerField(default=-1)
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	# Returns true if the majority of profile is filled out
+	def profile_filled(self):
+		num_fields = 2
+		num_filled = 0
 
-	def generate_code(self):
-		self.code = randint(10000, 99999)
+		if self.gender != '':
+			num_filled += 1
+		if self.age != 0:
+			num_filled += 1
 
+		if num_filled >= (num_fields/3):
+			return True
+		return False

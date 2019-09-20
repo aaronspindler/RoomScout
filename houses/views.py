@@ -13,11 +13,13 @@ from rooms.models import Room
 from utils.datetime import now
 from utils.emailclient import send_invite_email
 from utils.models import RoomImage, BillFile
+from utils.captcha import Captcha
 from .models import House, Invitation
 
 
 @login_required(login_url="account_login")
 def house_create(request):
+	captcha = Captcha()
 	GOOGLE_API_KEY = settings.GOOGLE_API_KEY
 	if request.method == 'POST':
 		house = House()
@@ -44,9 +46,10 @@ def house_create(request):
 
 			house.load_walk_score()
 			return redirect('house_detail', pk=house.id)
-		return render(request, 'houses/house_create.html', {'error': 'There is an issue with the address inputted!', 'GOOGLE_API_KEY': GOOGLE_API_KEY})
+		return render(request, 'houses/house_create.html', {'error': 'There is an issue with the address inputted!', 'GOOGLE_API_KEY': GOOGLE_API_KEY, 'captcha':captcha})
 	else:
-		return render(request, 'houses/house_create.html', {'GOOGLE_API_KEY': GOOGLE_API_KEY})
+		return render(request, 'houses/house_create.html', {'GOOGLE_API_KEY': GOOGLE_API_KEY,'captcha':captcha})
+
 
 @login_required(login_url="account_login")
 def house_bill_add(request, pk):
@@ -70,7 +73,7 @@ def house_bill_add(request, pk):
 		year = parsed_date.year
 
 		existing_billset = BillSet.objects.filter(house=house).filter(year=year).filter(month=month)
-		if(existing_billset.count() == 0):
+		if (existing_billset.count() == 0):
 			new_billset = BillSet()
 			new_billset.house = house
 			new_billset.month = month
@@ -97,7 +100,7 @@ def house_invite(request, pk):
 	house = get_object_or_404(House, pk=pk)
 	if (request.user.id != house.user.id):
 		return Http404
-
+	captcha = Captcha()
 	if (request.method == 'POST'):
 		if (request.POST['email'] != ''):
 			invitation = Invitation()
@@ -108,7 +111,7 @@ def house_invite(request, pk):
 			send_invite_email(request.POST['email'], invitation)
 
 		return redirect('house_detail', pk=pk)
-	return render(request, 'houses/house_invite.html', {'house': house})
+	return render(request, 'houses/house_invite.html', {'house': house, 'captcha':captcha})
 
 
 @login_required(login_url="account_login")

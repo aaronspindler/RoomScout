@@ -31,6 +31,7 @@
 
         <form method="post">
             {% csrf_token %}
+            {{ captcha }}
             <table id="address">
                 <tr>
                     <td class="slimField"><input hidden="true" class="form-control" name="street_number"

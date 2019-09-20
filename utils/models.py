@@ -1,3 +1,5 @@
+from random import randint
+
 import boto3
 from django.db import models
 from django.conf import settings
@@ -54,3 +56,12 @@ class PrivateFile(models.Model):
 
 class BillFile(PrivateFile):
 	bill = models.ForeignKey(Bill, on_delete=models.CASCADE)
+
+class PhoneNumberVerification(models.Model):
+	phone_number = models.IntegerField(default=-1)
+	code = models.IntegerField(default=-1)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+	def generate_code(self):
+		self.code = randint(10000, 99999)
+

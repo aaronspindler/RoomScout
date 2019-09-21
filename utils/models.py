@@ -7,6 +7,7 @@ from django.conf import settings
 from Roomscout.storage_backends import PrivateMediaStorage
 from accounts.models import User
 from rooms.models import Room
+from houses.models import House
 from bills.models import Bill
 
 
@@ -47,6 +48,9 @@ class PrivateImage(models.Model):
 
 class RoomImage(PublicImage):
 	room = models.ForeignKey(Room, on_delete=models.CASCADE)
+
+class HouseImage(PublicImage):
+	house = models.ForeignKey(House, on_delete=models.CASCADE)
 
 class PrivateFile(models.Model):
 	uploaded_at = models.DateTimeField(auto_now_add=True)

@@ -15,54 +15,63 @@
 
     <div class="container">
         <h2>Find a Room</h2>
-    <form method="POST">
-                {% csrf_token %}
-                <div class="form-row">
-                    <div class="col-md-11">
-                        <input class="form-control" type="text" name="search" id="search" {% if search_term == '' %}placeholder="Search"{% else %}value="{{ search_term }}"{% endif %}>
-                    </div>
-                    <div class="col-md-1">
-                        <button class="btn btn-primary" type='submit'>Search</button>
-                    </div>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="col-md-11">
+                    <input class="form-control" type="text" name="search" id="search" {% if search_term == '' %}placeholder="Search"{% else %}value="{{ search_term }}"{% endif %}>
                 </div>
-                <br>
-                <div class="form-row">
-                    <div class="col-md-12">
-                        <div id="accordion">
-                            <div class="card">
-                                <div class="card-header" id="headingOne">
-                                    <h6 class="mb-0">
-                                        <a data-toggle="collapse" href="#filtersCard">
-                                            Filters
-                                        </a>
-                                    </h6>
-                                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-primary" type='submit'>Search</button>
+                </div>
+            </div>
+            <br>
+            <div class="form-row">
+                <div class="col-md-12">
+                    <div id="accordion">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h6 class="mb-0">
+                                    <a data-toggle="collapse" href="#filtersCard">
+                                        Filters
+                                    </a>
+                                </h6>
+                            </div>
 
-                                <div id="filtersCard" class="collapse" data-parent="#accordion">
-                                    <div class="card-body">
-                                        <div class="container">
-                                            {% crispy filter_form %}
-                                        </div>
+                            <div id="filtersCard" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="container">
+                                        {% crispy filter_form %}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>
-            <br>
+            </div>
+        </form>
+        <br>
         {% if rooms %}
             <div class="row">
                 {% for room in rooms %}
                     <div class="col-md-12">
                         <div class="card mb-2 shadow-sm">
                             <div class="card-body">
-                                <a href="{% url 'room_detail' room.pk %}"><h4 class="card-text">{{ room.name }}</h4></a>
-                                <small>{{ room.house.full_address }}</small>
-                                <br>
-                                Price: $ {{ room.price }}
-                                <br>
-                                <img class="img-fluid" width="300" src="{{ room.roomimage_set.first.image.url }}" alt="">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a href="{% url 'room_detail' room.pk %}"><h4 class="card-text">{{ room.name }}</h4></a>
+                                        <small>{{ room.house.full_address }}</small>
+                                        <br>
+                                        <strong>Price:</strong> ${{ room.price }}
+                                        <br>
+                                        {% if room.description != '' %}
+                                            <strong>Description:</strong> {{ room.description }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-6">
+                                        <img class="img-fluid" width="300" src="{{ room.roomimage_set.first.image.url }}" alt="">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

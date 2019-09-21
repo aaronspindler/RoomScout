@@ -71,13 +71,15 @@ def room_create(request):
 			room.name = request.POST['name']
 			room.house = house
 			room.price = request.POST['price']
+			room.description = request.POST['description']
 			room.save()
 			try:
-				roomImage = RoomImage()
-				roomImage.room = room
-				roomImage.user = request.user
-				roomImage.image = request.FILES['image']
-				roomImage.save()
+				for file in request.FILES.getlist('images'):
+					image = RoomImage()
+					image.room = room
+					image.user = request.user
+					image.image = file
+					image.save()
 			except Exception:
 				pass
 
@@ -99,7 +101,7 @@ class room_detail(generic.DetailView):
 class room_edit(LoginRequiredMixin, generic.UpdateView):
 	model = Room
 	template_name = 'rooms/room_edit.html'
-	fields = ['name', 'price', 'is_available']
+	fields = ['name', 'price', 'description', 'is_available']
 
 	def get_success_url(self):
 		return reverse('room_detail', kwargs={'pk': str(self.object.pk)})

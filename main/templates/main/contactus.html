@@ -8,12 +8,12 @@
 {% block content %}
     <div class="container">
         <h2>Contact Us</h2>
-        <form>
+        <form method="POST">
             {% csrf_token %}
             {{ captcha }}
-            <input class="form-control" type="email" placeholder="Your email" required="True">
-            <input class="form-control" type="text" placeholder="Subject" required="True">
-            <textarea class="form-control" rows="10" placeholder="Message: Maybe you want to talk to use about the weather or some bug you have ran into while using Roomscout.ca?" name="message" required="True"></textarea>
+            <input class="form-control" type="email" name="sender_email" placeholder="Your email" required>
+            <input class="form-control" type="text" name="subject" placeholder="Subject" required>
+            <textarea class="form-control" rows="10" placeholder="Message: Maybe you want to talk to use about the weather or some bug you have ran into while using Roomscout.ca?" name="message" required></textarea>
             <br>
             <button class="btn btn-primary" type='submit'>Send</button>
         </form>

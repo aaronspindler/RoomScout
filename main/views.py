@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from utils.captcha import Captcha
+from utils.emailclient import send_contact_us_email
+from utils.ipaddress import get_IP
 
 def home(request):
 	return render(request, 'main/home.html')
@@ -10,10 +12,10 @@ def about(request):
 
 def contactus(request):
 	captcha = Captcha()
-
 	if request.method == 'POST':
-		pass
-
+		ip = get_IP(request)
+		send_contact_us_email(request.POST['sender_email'],request.POST['subject'],request.POST['message'], ip)
+		return redirect('home')
 	return render(request, 'main/contactus.html', {'captcha':captcha})
 
 def licenses(request):

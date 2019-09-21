@@ -24,3 +24,7 @@ def send_inquiry_email(to_email, inquiry):
 	msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
 	msg.attach_alternative(html_content, "text/html")
 	msg.send()
+
+# TODO Put this into a celery background task
+def send_contact_us_email(from_email, subject, message, ip):
+	pass

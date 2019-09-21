@@ -1,7 +1,6 @@
-import random
-
 from django.shortcuts import render
 from django.contrib.admin.views.decorators import staff_member_required
+from utils.captcha import Captcha
 
 def home(request):
 	return render(request, 'main/home.html')
@@ -10,7 +9,12 @@ def about(request):
 	return render(request, 'main/about.html')
 
 def contactus(request):
-	return render(request, 'main/contactus.html')
+	captcha = Captcha()
+
+	if request.method == 'POST':
+		pass
+
+	return render(request, 'main/contactus.html', {'captcha':captcha})
 
 def licenses(request):
 	return render(request, 'main/licenses.html')

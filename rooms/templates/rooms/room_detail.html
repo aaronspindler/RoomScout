@@ -59,6 +59,7 @@
                         <h4>Room Details</h4>
                     </div>
                     <div class="card-body">
+                    <p>Posted: {{ room.get_time_difference_display }}</p>
                         {% if room.is_available %}
                             <p>Price : ${{ room.price }}</p>
                             <p>Room is available</p>

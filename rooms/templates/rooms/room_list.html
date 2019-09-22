@@ -69,6 +69,7 @@
                                         {% endif %}
                                     </div>
                                     <div class="col-6">
+                                        <h6>Posted: {{ room.get_time_difference_display }}</h6>
                                         <img class="img-fluid" width="300" src="{{ room.roomimage_set.first.image.url }}" alt="">
                                     </div>
                                 </div>

@@ -27,3 +27,7 @@ class DateTimeTest(TestCase):
 		self.assertEqual(time_diff_display(updated_1day_ago), "1 day ago")
 		updated_10days_ago = datetime.datetime.now(datetime.timezone.utc) - timedelta(hours=240, minutes=0)
 		self.assertEqual(time_diff_display(updated_10days_ago), "10 days ago")
+		updated_30days_ago = datetime.datetime.now(datetime.timezone.utc) - timedelta(hours=720, minutes=0)
+		self.assertEqual(time_diff_display(updated_30days_ago), "30 days ago")
+		updated_90days_ago = datetime.datetime.now(datetime.timezone.utc) - timedelta(hours=2160, minutes=0)
+		self.assertEqual(time_diff_display(updated_90days_ago), "90 days ago")

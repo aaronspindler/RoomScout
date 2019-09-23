@@ -11,7 +11,7 @@ class AllauthSignupForm(forms.Form):
         pass
 
 class PreferencesForm(forms.Form):
-    bill_contact = forms.BooleanField(label='Yes, I would like RoomScout to contact me about new bills in Houses that I am a member of.', required=False)
+    general_contact = forms.BooleanField(label='Yes, I would like RoomScout to contact me about activity in Houses that I am a member of.', required=False)
     promo_contact = forms.BooleanField(label='Yes, I would like RoomScout to contact me about events, new features, and other promotional information.', required=False)
 
 class VerificationForm(forms.Form):

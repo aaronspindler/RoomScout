@@ -2,12 +2,12 @@
 {% load staticfiles %}
 
 {% block title %}
-    Contact Us
+    Report a Bug
 {% endblock %}
 
 {% block content %}
     <div class="container">
-        <h2>Contact Us</h2>
+        <h2>Report a Bug</h2>
         <form method="POST">
             {% csrf_token %}
             {{ captcha }}
@@ -15,7 +15,7 @@
             <br>
             <input class="form-control" type="text" name="subject" placeholder="Subject" required>
             <br>
-            <textarea class="form-control" rows="10" placeholder="Message: Maybe you want to talk to us about the weather or something you think we should add?" name="message" required></textarea>
+            <textarea class="form-control" rows="10" placeholder="Message: Maybe you want to talk to us about the weather or some bug you have ran into while using Roomscout.ca?" name="message" required></textarea>
             <br>
             <button class="btn btn-primary" type='submit'>Send</button>
         </form>

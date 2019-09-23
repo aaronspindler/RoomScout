@@ -166,13 +166,15 @@ def house_add_room(request, pk):
 		room.name = request.POST['name']
 		room.house = house
 		room.price = request.POST['price']
+		room.description = request.POST['description']
 		room.save()
 		try:
-			roomImage = RoomImage()
-			roomImage.room = room
-			roomImage.user = request.user
-			roomImage.image = request.FILES['image']
-			roomImage.save()
+			for file in request.FILES.getlist('images'):
+				image = RoomImage()
+				image.room = room
+				image.user = request.user
+				image.image = file
+				image.save()
 		except Exception:
 			pass
 

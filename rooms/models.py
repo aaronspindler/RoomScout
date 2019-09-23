@@ -2,11 +2,14 @@ from django.db import models
 from django.urls import reverse
 from accounts.models import User
 from houses.models import House
+from datetime import datetime, timezone
+from utils.datetime import time_diff_display
 
 
 class Room(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	name = models.CharField(max_length=200, default='')
+	description = models.TextField(default='')
 	is_available = models.BooleanField(default=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
@@ -20,6 +23,9 @@ class Room(models.Model):
 
 	def get_absolute_url(self):
 		return reverse('room_detail', args=[str(self.pk)])
+
+	def get_time_difference_display(self):
+		return time_diff_display(self.updated_at)
 
 
 class Inquiry(models.Model):

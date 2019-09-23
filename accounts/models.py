@@ -17,7 +17,7 @@ class User(AbstractUser):
 	gender = models.CharField(choices=GENDER_CHOICES, default='', max_length = 2)
 	age = models.IntegerField(default=0)
 
-	bill_contact = models.BooleanField(default=False)
+	general_contact = models.BooleanField(default=False)
 	promo_contact = models.BooleanField(default=False)
 
 	score = models.DecimalField(decimal_places=2, max_digits=5, default=0.0)

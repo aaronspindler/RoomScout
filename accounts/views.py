@@ -8,7 +8,7 @@ from .forms import PreferencesForm, VerificationForm
 @login_required(login_url="account_login")
 def settings(request):
 	provs = provinces.get_provinces()
-	preferences_form = PreferencesForm(initial={'bill_contact': request.user.bill_contact, 'promo_contact': request.user.promo_contact})
+	preferences_form = PreferencesForm(initial={'general_contact': request.user.general_contact, 'promo_contact': request.user.promo_contact})
 	verification_form = VerificationForm(initial={'phone_number': request.user.phone_number})
 
 	if request.method == 'POST':
@@ -38,7 +38,7 @@ def preferences(request):
 		user = User.objects.get(id=request.user.id)
 		preferences_form = PreferencesForm(request.POST)
 		if preferences_form.is_valid():
-			user.bill_contact = preferences_form.cleaned_data['bill_contact']
+			user.general_contact = preferences_form.cleaned_data['general_contact']
 			user.promo_contact = preferences_form.cleaned_data['promo_contact']
 			user.save()
 			messages.success(request, 'Your preferences have been saved!.')

@@ -65,7 +65,10 @@
                                         <strong>Price:</strong> ${{ room.price }}
                                         <br>
                                         {% if room.description != '' %}
-                                            <strong>Description:</strong> {{ room.description }}
+                                            <strong>Description:</strong>
+                                            <div class="container">
+                                                {{ room.description | linebreaks}}
+                                            </div>
                                         {% endif %}
                                     </div>
                                     <div class="col-6">

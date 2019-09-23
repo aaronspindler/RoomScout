@@ -5,6 +5,9 @@ from utils.captcha import Captcha
 from utils.emailclient import send_contact_us_email
 from utils.ipaddress import get_IP
 from .models import ContactMessage
+from django.conf import settings
+from tempfile import NamedTemporaryFile
+from utils.models import PublicImage
 
 def home(request):
 	return render(request, 'main/home.html')
@@ -52,4 +55,9 @@ def server_error(request):
 
 @staff_member_required
 def sandbox(request):
-	return render(request, 'main/sandbox.html')
+	GOOGLE_API_KEY = settings.GOOGLE_API_KEY
+	url = 'https://maps.googleapis.com/maps/api/streetview?size=400x400&location=40.720032,-73.988354&key={}'.format(GOOGLE_API_KEY)
+	import urllib.request
+	data = urllib.request.urlretrieve(url)
+
+	return render(request, 'main/sandbox.html', {'GOOGLE_API_KEY':GOOGLE_API_KEY})

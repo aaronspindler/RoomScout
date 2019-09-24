@@ -57,7 +57,9 @@ def server_error(request):
 def sandbox(request):
 	GOOGLE_API_KEY = settings.GOOGLE_API_KEY
 	url = 'https://maps.googleapis.com/maps/api/streetview?size=400x400&location=40.720032,-73.988354&key={}'.format(GOOGLE_API_KEY)
-	import urllib.request
-	data = urllib.request.urlretrieve(url)
+	#import urllib.request
+	#data = urllib.request.urlretrieve(url)
+
+
 
 	return render(request, 'main/sandbox.html', {'GOOGLE_API_KEY':GOOGLE_API_KEY})

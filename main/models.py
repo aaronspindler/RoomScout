@@ -13,3 +13,5 @@ class BugReport(models.Model):
 	subject = models.TextField(default='')
 	message = models.TextField(default='')
 	ip = models.GenericIPAddressField()
+
+

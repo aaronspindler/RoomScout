@@ -4,16 +4,15 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+	dependencies = [
+		('rooms', '0003_auto_20190825_1956'),
+	]
 
-    dependencies = [
-        ('rooms', '0003_auto_20190825_1956'),
-    ]
-
-    operations = [
-        migrations.CreateModel(
-            name='Inquiry',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-            ],
-        ),
-    ]
+	operations = [
+		migrations.CreateModel(
+			name='Inquiry',
+			fields=[
+				('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+			],
+		),
+	]

@@ -13,10 +13,10 @@
         </div>
     {% endif %}
     <div class="container">
-     <h2>Edit House - {{ house.full_address }}</h2>
+        <h2>Edit House - {{ house.full_address }}</h2>
         <form method="post">
             {% csrf_token %}
-            {{ form | crispy}}
+            {{ form | crispy }}
             <button class="btn btn-primary" type='submit'>Save</button>
         </form>
     </div>

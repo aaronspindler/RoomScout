@@ -4,20 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+	dependencies = [
+		('rooms', '0007_inquiry'),
+	]
 
-    dependencies = [
-        ('rooms', '0007_inquiry'),
-    ]
-
-    operations = [
-        migrations.AddField(
-            model_name='inquiry',
-            name='message',
-            field=models.TextField(default=''),
-        ),
-        migrations.AddField(
-            model_name='inquiry',
-            name='move_in_date',
-            field=models.DateField(default='1997-11-04'),
-        ),
-    ]
+	operations = [
+		migrations.AddField(
+			model_name='inquiry',
+			name='message',
+			field=models.TextField(default=''),
+		),
+		migrations.AddField(
+			model_name='inquiry',
+			name='move_in_date',
+			field=models.DateField(default='1997-11-04'),
+		),
+	]

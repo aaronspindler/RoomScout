@@ -13,7 +13,7 @@
         </div>
     {% endif %}
     <div class="container">
-     <h2>Invite member to {{ house.full_address }}</h2>
+        <h2>Invite member to {{ house.full_address }}</h2>
         <form method="post">
             {% csrf_token %}
             {{ captcha }}

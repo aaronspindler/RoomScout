@@ -38,7 +38,7 @@
                                     <span class="badge badge-danger">Unverified</span>
                                 {% endif %}
                                 {% if emailaddress.primary %}
-                                     <span class="badge badge-info">Primary</span>
+                                    <span class="badge badge-info">Primary</span>
                                 {% endif %}
                             </label>
                         </div>
@@ -53,8 +53,8 @@
                                 name="action_send">Re-send Verification
                         </button>
                         {% if user.emailaddress_set.all.count > 1 %}
-                        <button class="btn btn-primary primaryAction" type="submit" name="action_remove">Remove</button>
-                            {% endif %}
+                            <button class="btn btn-primary primaryAction" type="submit" name="action_remove">Remove</button>
+                        {% endif %}
                     </div>
                     <br>
 

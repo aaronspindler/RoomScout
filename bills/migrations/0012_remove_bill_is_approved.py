@@ -4,14 +4,13 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
+	dependencies = [
+		('bills', '0011_auto_20190902_1228'),
+	]
 
-    dependencies = [
-        ('bills', '0011_auto_20190902_1228'),
-    ]
-
-    operations = [
-        migrations.RemoveField(
-            model_name='bill',
-            name='is_approved',
-        ),
-    ]
+	operations = [
+		migrations.RemoveField(
+			model_name='bill',
+			name='is_approved',
+		),
+	]

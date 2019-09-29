@@ -1,5 +1,7 @@
 from django.contrib.sitemaps import Sitemap
+
 from .models import BlogPost
+
 
 class BlogSitemap(Sitemap):
 	priority = 0.7
@@ -7,4 +9,3 @@ class BlogSitemap(Sitemap):
 
 	def items(self):
 		return BlogPost.objects.all()
-

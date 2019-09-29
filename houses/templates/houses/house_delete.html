@@ -18,16 +18,16 @@
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-        <div class="card">
-            <div class="card-header">
-                DANGER ZONE
+            <div class="card">
+                <div class="card-header">
+                    DANGER ZONE
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title text-danger">{{ house.full_address }}</h5>
+                    <p class="card-text">This will delete everything related to the house including bills, rooms, contracts, and tenants.</p>
+                    <button class="btn btn-danger" type='submit'>Delete</button>
+                </div>
             </div>
-            <div class="card-body">
-                <h5 class="card-title text-danger">{{ house.full_address }}</h5>
-                <p class="card-text">This will delete everything related to the house including bills, rooms, contracts, and tenants.</p>
-                <button class="btn btn-danger" type='submit'>Delete</button>
-            </div>
-        </div>
 
 
         </form>

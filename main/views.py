@@ -1,20 +1,12 @@
-from urllib.request import urlopen
-
-import requests
+from django.conf import settings
 from django.contrib import messages
-from django.core.files import File
-from django.core.files.temp import NamedTemporaryFile
-from django.shortcuts import render, redirect
 from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import render, redirect
 
-from houses.models import House
 from utils.captcha import Captcha
 from utils.emailclient import send_contact_us_email
 from utils.ipaddress import get_IP
 from .models import ContactMessage
-from django.conf import settings
-
-from utils.models import PrivateImage
 
 
 def home(request):

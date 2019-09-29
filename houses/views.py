@@ -10,10 +10,10 @@ from django.views import generic
 
 from bills.models import BillSet, Bill
 from rooms.models import Room
+from utils.captcha import Captcha
 from utils.datetime import now
 from utils.emailclient import send_invite_email
 from utils.models import RoomImage, BillFile
-from utils.captcha import Captcha
 from .models import House, Invitation
 
 
@@ -46,9 +46,9 @@ def house_create(request):
 
 			house.load_walk_score()
 			return redirect('house_detail', pk=house.id)
-		return render(request, 'houses/house_create.html', {'error': 'There is an issue with the address inputted!', 'GOOGLE_API_KEY': GOOGLE_API_KEY, 'captcha':captcha})
+		return render(request, 'houses/house_create.html', {'error': 'There is an issue with the address inputted!', 'GOOGLE_API_KEY': GOOGLE_API_KEY, 'captcha': captcha})
 	else:
-		return render(request, 'houses/house_create.html', {'GOOGLE_API_KEY': GOOGLE_API_KEY,'captcha':captcha})
+		return render(request, 'houses/house_create.html', {'GOOGLE_API_KEY': GOOGLE_API_KEY, 'captcha': captcha})
 
 
 @login_required(login_url="account_login")
@@ -111,7 +111,7 @@ def house_invite(request, pk):
 			send_invite_email(request.POST['email'], invitation)
 
 		return redirect('house_detail', pk=pk)
-	return render(request, 'houses/house_invite.html', {'house': house, 'captcha':captcha})
+	return render(request, 'houses/house_invite.html', {'house': house, 'captcha': captcha})
 
 
 @login_required(login_url="account_login")

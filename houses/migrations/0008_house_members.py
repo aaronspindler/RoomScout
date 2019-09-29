@@ -5,16 +5,15 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+	dependencies = [
+		migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+		('houses', '0007_house_transit_score_summary'),
+	]
 
-    dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('houses', '0007_house_transit_score_summary'),
-    ]
-
-    operations = [
-        migrations.AddField(
-            model_name='house',
-            name='members',
-            field=models.ManyToManyField(related_name='members', to=settings.AUTH_USER_MODEL),
-        ),
-    ]
+	operations = [
+		migrations.AddField(
+			model_name='house',
+			name='members',
+			field=models.ManyToManyField(related_name='members', to=settings.AUTH_USER_MODEL),
+		),
+	]

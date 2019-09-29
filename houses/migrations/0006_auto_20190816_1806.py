@@ -4,30 +4,29 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+	dependencies = [
+		('houses', '0005_auto_20190816_1755'),
+	]
 
-    dependencies = [
-        ('houses', '0005_auto_20190816_1755'),
-    ]
-
-    operations = [
-        migrations.AddField(
-            model_name='house',
-            name='bike_score_description',
-            field=models.TextField(default=''),
-        ),
-        migrations.AddField(
-            model_name='house',
-            name='transit_score_description',
-            field=models.TextField(default=''),
-        ),
-        migrations.AddField(
-            model_name='house',
-            name='walk_score_description',
-            field=models.TextField(default=''),
-        ),
-        migrations.AddField(
-            model_name='house',
-            name='walk_scores_updated',
-            field=models.DateTimeField(auto_now=True),
-        ),
-    ]
+	operations = [
+		migrations.AddField(
+			model_name='house',
+			name='bike_score_description',
+			field=models.TextField(default=''),
+		),
+		migrations.AddField(
+			model_name='house',
+			name='transit_score_description',
+			field=models.TextField(default=''),
+		),
+		migrations.AddField(
+			model_name='house',
+			name='walk_score_description',
+			field=models.TextField(default=''),
+		),
+		migrations.AddField(
+			model_name='house',
+			name='walk_scores_updated',
+			field=models.DateTimeField(auto_now=True),
+		),
+	]

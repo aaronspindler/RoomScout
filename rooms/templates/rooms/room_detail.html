@@ -59,7 +59,7 @@
                         <h4>Room Details</h4>
                     </div>
                     <div class="card-body">
-                    <p>Posted: {{ room.get_time_difference_display }}</p>
+                        <p>Posted: {{ room.get_time_difference_display }}</p>
                         {% if room.is_available %}
                             <p>Price : ${{ room.price }}</p>
                             <p>Room is available</p>
@@ -110,20 +110,20 @@
                 </div>
             </div>
         </div>
-    {% if room.description != '' %}
-        <br>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Description</h4>
-                    </div>
-                    <div class="card-body">
-                        {{ room.description | linebreaks }}
+        {% if room.description != '' %}
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Description</h4>
+                        </div>
+                        <div class="card-body">
+                            {{ room.description | linebreaks }}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    {% endif %}
+        {% endif %}
     </div>
 {% endblock %}

@@ -1,7 +1,9 @@
 import datetime
 
+
 def now():
 	return datetime.datetime.now()
+
 
 def time_diff_display(updated):
 	now = datetime.datetime.now(datetime.timezone.utc)

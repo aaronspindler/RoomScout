@@ -37,7 +37,8 @@ class House(models.Model):
 
 	# Filterable Options
 	# TODO: Implement these options into house
-	is_accessible = models.BooleanField(default=False)
+	is_accessible = models.BooleanField(default=False, verbose_name="Accessible")
+	open_to_students = models.BooleanField(default=True)
 	num_rooms = models.IntegerField(default=-1)
 	num_bathrooms = models.IntegerField(default=-1)
 	num_parking_spaces = models.IntegerField(default=-1)

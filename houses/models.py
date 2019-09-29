@@ -19,7 +19,7 @@ class House(models.Model):
 	place_id = models.TextField(default='')
 	lat = models.TextField(default='')
 	lon = models.TextField(default='')
-	street_number = models.IntegerField(default=0)
+	street_number = models.CharField(max_length=400, default='')
 	street_name = models.CharField(max_length=400, default='')
 	city = models.CharField(max_length=400, default='')
 	prov_state = models.CharField(max_length=2)

@@ -28,7 +28,7 @@
         {% else %}
             <a class="p-2 text-dark nav-item nav-link" href="{% url 'main_dashboard' %}">Dashboard <span class="oi oi-home"></span></a>
             <a class="p-2 text-dark nav-item nav-link" href="{% url 'settings' %}">Settings <span class="oi oi-cog"></span></a>
-            <small>Logged in as : {{ user }} <a href="{% url 'account_logout' %}"> Logout</a></small>
+            <small>Logged in as : {{ user }} {% if user.is_premium_member %}<span class="badge badge-warning">Premium</span>{% endif %} <a href="{% url 'account_logout' %}"> Logout</a></small>
         {% endif %}
     </div>
 </nav>

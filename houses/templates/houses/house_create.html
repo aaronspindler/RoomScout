@@ -37,7 +37,7 @@
                     <div class="card-header" id="headingOne">
                         <h6 class="mb-0">
                             <a data-toggle="collapse" href="#filtersCard">
-                                Address
+                                Address <span class="oi oi-caret-bottom"></span>
                             </a>
                         </h6>
                     </div>
@@ -45,21 +45,39 @@
                     <div id="filtersCard" class="collapse" data-parent="#accordion">
                         <div class="card-body">
                             <div class="container">
+                                <small>Only use this to fix issues in generated address</small>
                                 <table id="address">
-                                    <tr>
-                                        <td class="slimField"><input class="form-control" name="street_number"id="street_number" value="" placeholder="Street Number" disabled="true" required/></td>
-                                        <td class="wideField" colspan="2"><input class="form-control" name="street_name"id="route" value="" placeholder="Street Name" disabled="true" required/></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="wideField" colspan="3"><input class="form-control" name="city"id="locality" value="" placeholder="City" disabled="true" required/></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="slimField"><input class="form-control" name="prov_state"id="administrative_area_level_1" maxlength="2" placeholder="Province / State" value="" disabled="true" required/></td>
-                                        <td class="wideField"><input class="form-control" name="postal_code" id="postal_code"value="" placeholder="Postal Code" disabled="true" required/></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="wideField" colspan="3"><input class="form-control" name="country"id="country" placeholder="Country" value="" disabled="true" required/></td>
-                                    </tr>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                            <label for="street_number">Street Number</label>
+                                            <input class="form-control" name="street_number" id="street_number" value="" placeholder="Street Number" disabled="true" required/>
+                                        </div>
+                                        <div class="form-group col-md-9">
+                                            <label for="street_name">Street Name</label>
+                                            <input class="form-control" name="street_name" id="route" value="" placeholder="Street Name" disabled="true" required/>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label for="city">City</label>
+                                            <input class="form-control" name="city" id="locality" value="" placeholder="City" disabled="true" required/>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="prov_state">Province/State</label>
+                                            <input class="form-control" name="prov_state" id="administrative_area_level_1" maxlength="2" placeholder="Province / State" value=""
+                                                                     disabled="true" required/>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="postal_code">Postal Code / ZIP</label>
+                                            <input class="form-control" name="postal_code" id="postal_code" value="" placeholder="Postal Code" disabled="true" required/>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="country">Country</label>
+                                            <input class="form-control" name="country" id="country" placeholder="Country" value="" disabled="true" required/>
+                                        </div>
+                                    </div>
+
                                     <input hidden="true" class="form-control" name="place_id" id="place_id" value=""/>
                                     <input hidden="true" class="form-control" name="lat" id="lat" value=""/>
                                     <input hidden="true" class="form-control" name="lon" id="lon" value=""/>

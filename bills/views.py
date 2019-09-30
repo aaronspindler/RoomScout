@@ -1,6 +1,8 @@
 from django.http import Http404
 from django.shortcuts import redirect, get_object_or_404
+
 from .models import Bill, BillSet
+
 
 # PK is the primary key for the bill
 def bill_delete(request, pk):

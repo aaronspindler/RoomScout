@@ -1,11 +1,12 @@
-from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.test import TestCase
+
 
 class AccountsTests(TestCase):
 	def test_create_user(self):
 		print('Testing accounts user creation')
 		User = get_user_model()
-		user = User.objects.create_user(username='Fred_Flintstone',email='normal@user.com', password='foo')
+		user = User.objects.create_user(username='Fred_Flintstone', email='normal@user.com', password='foo')
 		self.assertEqual(user.email, 'normal@user.com')
 		self.assertEqual(user.username, 'Fred_Flintstone')
 		self.assertTrue(user.is_active)
@@ -15,7 +16,7 @@ class AccountsTests(TestCase):
 	def test_create_superuser(self):
 		print('Testing accounts super user creation')
 		User = get_user_model()
-		admin_user = User.objects.create_superuser(username='SuperFred_Flintstone',email='super@user.com', password='foo')
+		admin_user = User.objects.create_superuser(username='SuperFred_Flintstone', email='super@user.com', password='foo')
 		self.assertEqual(admin_user.email, 'super@user.com')
 		self.assertEqual(admin_user.username, 'SuperFred_Flintstone')
 		self.assertTrue(admin_user.is_active)

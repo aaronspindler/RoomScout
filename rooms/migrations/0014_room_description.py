@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+	dependencies = [
+		('rooms', '0013_inquiry_status'),
+	]
 
-    dependencies = [
-        ('rooms', '0013_inquiry_status'),
-    ]
-
-    operations = [
-        migrations.AddField(
-            model_name='room',
-            name='description',
-            field=models.TextField(default=''),
-        ),
-    ]
+	operations = [
+		migrations.AddField(
+			model_name='room',
+			name='description',
+			field=models.TextField(default=''),
+		),
+	]

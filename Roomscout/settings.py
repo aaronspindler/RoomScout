@@ -1,4 +1,5 @@
 import os
+
 import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -176,7 +177,7 @@ STATIC_URL = '/static/'
 
 # Commented out because it makes Heroku deployment error when Debug=False
 # TODO: Figure out why this happens
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'

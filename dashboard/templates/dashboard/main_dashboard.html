@@ -37,14 +37,14 @@
                     <div class="card mb-4 shadow-sm">
                         <div class="card-body">
                             <p class="card-text">
-                                <h5>For Room: <a href="{{ inquiry.room.get_absolute_url }}">{{ inquiry.room }}</a></h5>
-                                <p><strong>From:</strong> {{ inquiry.user.email }}</p>
-                                <p><strong>Message:</strong> {{ inquiry.message }}</p>
-                                {% if inquiry.move_in_date.year >= 2019 %}
-                                    <p><strong>Looking to move in on:</strong> {{ inquiry.move_in_date }}</p>
-                                {% endif %}
+                            <h5>For Room: <a href="{{ inquiry.room.get_absolute_url }}">{{ inquiry.room }}</a></h5>
+                            <p><strong>From:</strong> {{ inquiry.user.email }}</p>
+                            <p><strong>Message:</strong> {{ inquiry.message }}</p>
+                            {% if inquiry.move_in_date.year >= 2019 %}
+                                <p><strong>Looking to move in on:</strong> {{ inquiry.move_in_date }}</p>
+                            {% endif %}
                             </p>
-                        <a href="{% url 'room_inquire_dismiss' inquiry.id %}"><small>Dismiss</small></a>
+                            <a href="{% url 'room_inquire_dismiss' inquiry.id %}"><small>Dismiss</small></a>
                         </div>
                     </div>
                 </div>

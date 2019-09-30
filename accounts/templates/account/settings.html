@@ -122,17 +122,17 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                        <div class="col-md-3">
-                            <label>Phone Number Status</label>
-                            <br>
-                            {% if user.phone_number_verified %}
-                                <span class="badge badge-success">Verified</span>
-                            {% else %}
-                                <span class="badge badge-danger">Unverified</span>
-                            {% endif %}
-                        </div>
+                    <div class="col-md-3">
+                        <label>Phone Number Status</label>
+                        <br>
+                        {% if user.phone_number_verified %}
+                            <span class="badge badge-success">Verified</span>
+                        {% else %}
+                            <span class="badge badge-danger">Unverified</span>
+                        {% endif %}
                     </div>
-            <hr>
+                </div>
+                <hr>
                 <form action="{% url 'settings_verification' %}" method="POST">
                     {% csrf_token %}
                     {{ verification_form | crispy }}

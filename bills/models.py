@@ -3,6 +3,7 @@ from django.db import models
 from accounts.models import User
 from houses.models import House
 
+
 class BillSet(models.Model):
 	month = models.IntegerField(default=-1)
 	year = models.IntegerField(default=-1)
@@ -37,8 +38,9 @@ class BillSet(models.Model):
 	def get_total_per_person(self):
 		return self.get_total() / self.house.members.count()
 
+
 class Bill(models.Model):
-	TYPE_CHOICES = [('ELEC', 'Electricity'), ('WATER','Water'), ('GAS', 'Gas'), ('INTER','Internet'), ('OTHER', 'Other')]
+	TYPE_CHOICES = [('ELEC', 'Electricity'), ('WATER', 'Water'), ('GAS', 'Gas'), ('INTER', 'Internet'), ('OTHER', 'Other')]
 
 	set = models.ForeignKey(BillSet, on_delete=models.CASCADE)
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -47,4 +49,3 @@ class Bill(models.Model):
 	type = models.CharField(choices=TYPE_CHOICES, max_length=5)
 	date = models.DateField()
 	amount = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
-

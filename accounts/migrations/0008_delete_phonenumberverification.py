@@ -4,13 +4,12 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
+	dependencies = [
+		('accounts', '0007_auto_20190915_2331'),
+	]
 
-    dependencies = [
-        ('accounts', '0007_auto_20190915_2331'),
-    ]
-
-    operations = [
-        migrations.DeleteModel(
-            name='PhoneNumberVerification',
-        ),
-    ]
+	operations = [
+		migrations.DeleteModel(
+			name='PhoneNumberVerification',
+		),
+	]

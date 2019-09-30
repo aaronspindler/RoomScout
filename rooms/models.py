@@ -1,8 +1,8 @@
 from django.db import models
 from django.urls import reverse
+
 from accounts.models import User
 from houses.models import House
-from datetime import datetime, timezone
 from utils.datetime import time_diff_display
 
 

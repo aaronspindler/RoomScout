@@ -59,7 +59,7 @@
                         <h4>Room Details</h4>
                     </div>
                     <div class="card-body">
-                    <p>Posted: {{ room.get_time_difference_display }}</p>
+                        <p>Posted: {{ room.get_time_difference_display }}</p>
                         {% if room.is_available %}
                             <p>Price : ${{ room.price }}</p>
                             <p>Room is available</p>
@@ -73,6 +73,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h4>House Summary</h4>
+                        <a href="{{ room.house.get_absolute_url }}"><small>Details</small></a>
                     </div>
                     <div class="card-body">
                         {% if room.house.walk_score != -1 %}
@@ -109,18 +110,20 @@
                 </div>
             </div>
         </div>
-        <br>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Description</h4>
-                    </div>
-                    <div class="card-body">
-                        {{ room.description | linebreaks }}
+        {% if room.description != '' %}
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Description</h4>
+                        </div>
+                        <div class="card-body">
+                            {{ room.description | linebreaks }}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 {% endblock %}

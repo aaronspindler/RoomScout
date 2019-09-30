@@ -4,23 +4,22 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+	dependencies = [
+		('houses', '0013_auto_20190908_2133'),
+	]
 
-    dependencies = [
-        ('houses', '0013_auto_20190908_2133'),
-    ]
-
-    operations = [
-        migrations.RemoveField(
-            model_name='house',
-            name='cats_allowed',
-        ),
-        migrations.RemoveField(
-            model_name='house',
-            name='dogs_allowed',
-        ),
-        migrations.AddField(
-            model_name='house',
-            name='has_air_conditioning',
-            field=models.BooleanField(default=False),
-        ),
-    ]
+	operations = [
+		migrations.RemoveField(
+			model_name='house',
+			name='cats_allowed',
+		),
+		migrations.RemoveField(
+			model_name='house',
+			name='dogs_allowed',
+		),
+		migrations.AddField(
+			model_name='house',
+			name='has_air_conditioning',
+			field=models.BooleanField(default=False),
+		),
+	]

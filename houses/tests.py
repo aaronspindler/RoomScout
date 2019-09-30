@@ -1,13 +1,14 @@
-from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.test import TestCase
 
 from .models import House
+
 
 class HouseTests(TestCase):
 	def setUp(self):
 		print('House Testing Setup')
 		User = get_user_model()
-		user = User.objects.create_user(username='Fred_Flintstone',email='normal@user.com', password='foo')
+		user = User.objects.create_user(username='Fred_Flintstone', email='normal@user.com', password='foo')
 		self.user = user
 		self.assertEqual(self.user.email, 'normal@user.com')
 		self.assertEqual(self.user.username, 'Fred_Flintstone')
@@ -32,7 +33,7 @@ class HouseTests(TestCase):
 	def test_create_default_house(self):
 		print('Testing house create default')
 		house_count_pre = House.objects.count()
-		house = House.objects.create(user = self.user)
+		house = House.objects.create(user=self.user)
 		house.save()
 		house_count_post = House.objects.count()
 		self.assertEqual(house_count_post, house_count_pre + 1)
@@ -67,15 +68,15 @@ class HouseTests(TestCase):
 		house = self.house_attributes
 		self.assertEqual(house.postal_code, 'L1H 0M4')
 
-		# Commented out because of API usage
-		# house.load_walk_score()
-		# self.assertEqual(house.walk_score, 0)
-		# self.assertEqual(house.walk_score_description, 'Car-Dependent')
-		# self.assertEqual(house.bike_score, 23)
-		# self.assertEqual(house.bike_score_description, 'Somewhat Bikeable')
-		# self.assertEqual(house.transit_score, -1)
-		# self.assertEqual(house.transit_score_description, '')
-		# self.assertEqual(house.transit_score_summary, '')
+	# Commented out because of API usage
+	# house.load_walk_score()
+	# self.assertEqual(house.walk_score, 0)
+	# self.assertEqual(house.walk_score_description, 'Car-Dependent')
+	# self.assertEqual(house.bike_score, 23)
+	# self.assertEqual(house.bike_score_description, 'Somewhat Bikeable')
+	# self.assertEqual(house.transit_score, -1)
+	# self.assertEqual(house.transit_score_description, '')
+	# self.assertEqual(house.transit_score_summary, '')
 
 	def test_house_hide_address(self):
 		print('Testing house.hide_address')

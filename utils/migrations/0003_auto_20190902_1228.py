@@ -4,15 +4,14 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
+	dependencies = [
+		('utils', '0002_auto_20190814_2333'),
+	]
 
-    dependencies = [
-        ('utils', '0002_auto_20190814_2333'),
-    ]
-
-    operations = [
-        migrations.RenameField(
-            model_name='privatefile',
-            old_name='upload',
-            new_name='file',
-        ),
-    ]
+	operations = [
+		migrations.RenameField(
+			model_name='privatefile',
+			old_name='upload',
+			new_name='file',
+		),
+	]

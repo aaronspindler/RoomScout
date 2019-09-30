@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+	dependencies = [
+		('rooms', '0012_inquiry_room'),
+	]
 
-    dependencies = [
-        ('rooms', '0012_inquiry_room'),
-    ]
-
-    operations = [
-        migrations.AddField(
-            model_name='inquiry',
-            name='status',
-            field=models.CharField(choices=[('O', 'Open'), ('D', 'Dismissed')], default='O', max_length=3),
-        ),
-    ]
+	operations = [
+		migrations.AddField(
+			model_name='inquiry',
+			name='status',
+			field=models.CharField(choices=[('O', 'Open'), ('D', 'Dismissed')], default='O', max_length=3),
+		),
+	]

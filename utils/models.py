@@ -1,14 +1,14 @@
 from random import randint
 
 import boto3
-from django.db import models
 from django.conf import settings
+from django.db import models
 
 from Roomscout.storage_backends import PrivateMediaStorage
 from accounts.models import User
-from rooms.models import Room
-from houses.models import House
 from bills.models import Bill
+from houses.models import House
+from rooms.models import Room
 
 
 class IP(models.Model):
@@ -32,11 +32,10 @@ class PublicImage(models.Model):
 		else:
 			self.is_approved = True
 		super(PublicImage, self).save()
-			
+
 	def save(self):
 		super(PublicImage, self).save()
 		self.check_image()
-		
 
 
 class PrivateImage(models.Model):
@@ -49,8 +48,10 @@ class PrivateImage(models.Model):
 class RoomImage(PublicImage):
 	room = models.ForeignKey(Room, on_delete=models.CASCADE)
 
+
 class HouseImage(PublicImage):
 	house = models.ForeignKey(House, on_delete=models.CASCADE)
+
 
 class PrivateFile(models.Model):
 	uploaded_at = models.DateTimeField(auto_now_add=True)
@@ -58,8 +59,10 @@ class PrivateFile(models.Model):
 	file = models.FileField(storage=PrivateMediaStorage())
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+
 class BillFile(PrivateFile):
 	bill = models.ForeignKey(Bill, on_delete=models.CASCADE)
+
 
 class PhoneNumberVerification(models.Model):
 	phone_number = models.IntegerField(default=-1)
@@ -68,4 +71,3 @@ class PhoneNumberVerification(models.Model):
 
 	def generate_code(self):
 		self.code = randint(10000, 99999)
-

@@ -1,9 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+
 from utils import provinces, phonenumbers
-from .models import User
 from .forms import PreferencesForm, VerificationForm
+from .models import User
+
 
 @login_required(login_url="account_login")
 def settings(request):
@@ -30,7 +32,8 @@ def settings(request):
 		messages.success(request, 'Your settings have been saved!.')
 		return redirect('settings')
 	else:
-		return render(request, 'account/settings.html', {'provinces': provs, 'preferences_form':preferences_form, 'verification_form': verification_form})
+		return render(request, 'account/settings.html', {'provinces': provs, 'preferences_form': preferences_form, 'verification_form': verification_form})
+
 
 @login_required(login_url="account_login")
 def preferences(request):
@@ -43,6 +46,7 @@ def preferences(request):
 			user.save()
 			messages.success(request, 'Your preferences have been saved!.')
 	return redirect('settings')
+
 
 @login_required(login_url="account_login")
 def verification(request):

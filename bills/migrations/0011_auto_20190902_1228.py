@@ -4,19 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+	dependencies = [
+		('bills', '0010_auto_20190902_1155'),
+	]
 
-    dependencies = [
-        ('bills', '0010_auto_20190902_1155'),
-    ]
-
-    operations = [
-        migrations.RemoveField(
-            model_name='bill',
-            name='file',
-        ),
-        migrations.AlterField(
-            model_name='bill',
-            name='date',
-            field=models.DateField(),
-        ),
-    ]
+	operations = [
+		migrations.RemoveField(
+			model_name='bill',
+			name='file',
+		),
+		migrations.AlterField(
+			model_name='bill',
+			name='date',
+			field=models.DateField(),
+		),
+	]

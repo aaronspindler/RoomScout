@@ -19,7 +19,7 @@ class House(models.Model):
 	place_id = models.TextField(default='')
 	lat = models.TextField(default='')
 	lon = models.TextField(default='')
-	street_number = models.IntegerField(default=0)
+	street_number = models.CharField(max_length=400, default='')
 	street_name = models.CharField(max_length=400, default='')
 	city = models.CharField(max_length=400, default='')
 	prov_state = models.CharField(max_length=2)
@@ -37,6 +37,8 @@ class House(models.Model):
 
 	# Filterable Options
 	# TODO: Implement these options into house
+	is_accessible = models.BooleanField(default=False, verbose_name="Accessible")
+	open_to_students = models.BooleanField(default=True)
 	num_rooms = models.IntegerField(default=-1)
 	num_bathrooms = models.IntegerField(default=-1)
 	num_parking_spaces = models.IntegerField(default=-1)

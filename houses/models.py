@@ -37,11 +37,9 @@ class House(models.Model):
 
 	# Filterable Options
 	# TODO: Implement these options into house
-	num_rooms = models.IntegerField(default=-1)
-	num_bathrooms = models.IntegerField(default=-1)
-	num_parking_spaces = models.IntegerField(default=-1)
-	num_male = models.IntegerField(default=-1)
-	num_female = models.IntegerField(default=-1)
+	num_rooms = models.IntegerField(default=0, verbose_name='Number of Rooms')
+	num_bathrooms = models.IntegerField(default=0, verbose_name='Number of Bathrooms')
+	num_parking_spaces = models.IntegerField(default=0, verbose_name='Number of Parking Spaces')
 	has_dishwasher = models.BooleanField(default=False)
 	has_laundry = models.BooleanField(default=False)
 	has_air_conditioning = models.BooleanField(default=False)

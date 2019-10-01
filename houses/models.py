@@ -37,12 +37,9 @@ class House(models.Model):
 
 	# Filterable Options
 	# TODO: Implement these options into house
-	is_accessible = models.BooleanField(default=False, verbose_name="Accessible")
-	open_to_students = models.BooleanField(default=True)
 	num_rooms = models.IntegerField(default=-1)
 	num_bathrooms = models.IntegerField(default=-1)
 	num_parking_spaces = models.IntegerField(default=-1)
-	pets_allowed = models.BooleanField(default=False)
 	num_male = models.IntegerField(default=-1)
 	num_female = models.IntegerField(default=-1)
 	has_dishwasher = models.BooleanField(default=False)
@@ -52,7 +49,7 @@ class House(models.Model):
 	# Used to hide the address from public consumption
 	# Changes all full_address postings to use a non specific address
 	# Eg 2529 Stallion Dr, Oshawa, Ontario, Canada will become Stallion Dr, Oshawa, Ontario, Canada
-	hide_address = models.BooleanField(default=False)
+	hide_address = models.BooleanField(default=False, help_text="Hides the specific address on all publicly available pages")
 
 	# Loads walk score information from walkscore.com
 	# This should only be ran when the house in created on our backend and very infrequently after

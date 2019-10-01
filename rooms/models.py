@@ -14,6 +14,10 @@ class Room(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
+	is_accessible = models.BooleanField(default=False, verbose_name="Accessible", help_text="House is accessible with ramp or elevator")
+	open_to_students = models.BooleanField(default=True, help_text="Students are free to inquire about rooms at this house")
+	pets_allowed = models.BooleanField(default=False, help_text="Pets are allowed")
+
 	house = models.ForeignKey(House, on_delete=models.CASCADE, related_name='house')
 
 	price = models.DecimalField(max_digits=19, decimal_places=2, default=0.00)

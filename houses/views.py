@@ -55,7 +55,7 @@ def house_create(request):
 def house_bill_add(request, pk):
 	house = get_object_or_404(House, pk=pk)
 	if (request.user.id != house.user.id):
-		return Http404
+		raise Http404
 
 	if request.method == 'POST':
 		bill = Bill()
@@ -99,7 +99,7 @@ def house_bill_add(request, pk):
 def house_invite(request, pk):
 	house = get_object_or_404(House, pk=pk)
 	if (request.user.id != house.user.id):
-		return Http404
+		raise Http404
 	captcha = Captcha()
 	if (request.method == 'POST'):
 		if (request.POST['email'] != ''):
@@ -118,7 +118,7 @@ def house_invite(request, pk):
 def house_invite_remove(request, pk, id):
 	house = get_object_or_404(House, pk=pk)
 	if (request.user.id != house.user.id):
-		return Http404
+		raise Http404
 	invite = get_object_or_404(Invitation, id=id)
 	invite.delete()
 	return redirect('house_detail', pk=pk)
@@ -129,7 +129,7 @@ def house_invite_accept(request, pk, id):
 	house = get_object_or_404(House, pk=pk)
 	invite = get_object_or_404(Invitation, id=id)
 	if (request.user.email != invite.target):
-		return Http404
+		raise Http404
 
 	house.members.add(request.user)
 	invite.delete()
@@ -140,7 +140,7 @@ def house_invite_accept(request, pk, id):
 def house_invite_decline(request, pk, id):
 	invite = get_object_or_404(Invitation, id=id)
 	if (request.user.email != invite.target):
-		return Http404
+		raise Http404
 	invite.delete()
 	return redirect('main_dashboard')
 
@@ -149,7 +149,7 @@ def house_invite_decline(request, pk, id):
 def house_member_remove(request, pk, id):
 	house = get_object_or_404(House, pk=pk)
 	if (request.user.id != house.user.id):
-		return Http404
+		raise Http404
 	member = house.members.filter(id=id).first()
 	house.members.remove(member)
 	return redirect('house_detail', pk=pk)
@@ -159,7 +159,7 @@ def house_member_remove(request, pk, id):
 def house_add_room(request, pk):
 	house = House.objects.filter(pk=pk).get()
 	if (house.user != request.user):
-		return Http404
+		raise Http404
 	if (request.method == 'POST'):
 		room = Room()
 		room.user = request.user

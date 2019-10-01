@@ -142,7 +142,7 @@ def room_add_photo(request, pk):
 
 			return redirect('room_detail', pk=room.id)
 		return render(request, 'rooms/room_add_photo.html', {'room': room})
-	return Http404
+	raise Http404
 
 
 # PK is for the primary key of the photo that is getting deleted
@@ -150,7 +150,7 @@ def room_add_photo(request, pk):
 def room_delete_photo(request, pk):
 	photo = get_object_or_404(RoomImage, pk=pk)
 	if photo.user != request.user:
-		return Http404
+		raise Http404
 	room = photo.room
 	photo.delete()
 	return redirect('room_edit', room.pk)
@@ -182,7 +182,7 @@ def room_inquire(request, pk):
 def room_inquire_dismiss(request, pk):
 	inquiry = get_object_or_404(Inquiry, pk=pk)
 	if inquiry.room.user != request.user:
-		return Http404
+		raise Http404
 	inquiry.status = 'D'
 	inquiry.save()
 	return redirect('main_dashboard')

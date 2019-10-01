@@ -11,7 +11,7 @@ def bill_delete(request, pk):
 	set_key = bill.set.pk
 	house = bill.set.house
 	if request.user != bill.user:
-		return Http404
+		raise Http404
 
 	if Bill.objects.filter(set=bill.set).count() == 1:
 		delete_set = True

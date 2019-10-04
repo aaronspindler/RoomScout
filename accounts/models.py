@@ -41,3 +41,6 @@ class User(AbstractUser):
 		if num_filled >= (num_fields / 3):
 			return True
 		return False
+
+	def get_score(self):
+		return self._score

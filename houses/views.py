@@ -15,6 +15,7 @@ from utils.datetime import now
 from utils.emailclient import send_invite_email
 from utils.models import RoomImage, BillFile
 from utils.date import check_format
+from utils.streetview import load_house_image
 from .models import House, Invitation
 
 
@@ -47,6 +48,10 @@ def house_create(request):
             init_bill_set.save()
 
             house.load_walk_score()
+
+            #Todo : Put this in a celery task to be done in queue
+            load_house_image(house)
+
             return redirect('house_detail', pk=house.id)
         return render(request, 'houses/house_create.html',
                       {'error': 'There is an issue with the address inputted!', 'GOOGLE_API_KEY': GOOGLE_API_KEY,

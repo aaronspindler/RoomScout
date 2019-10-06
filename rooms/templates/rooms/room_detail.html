@@ -52,6 +52,19 @@
                         </a>
                     </div>
                 </div>
+            {% else %}
+                {% if room.get_first_image %}
+                    <div class="col-md-7">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>House Image</h4>
+                            </div>
+                            <div class="card-body">
+                                <img class="rounded mx-auto d-block img-fluid" height="500" src="{{ room.get_first_image }}"/>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
             {% endif %}
             <div class="col-md-4">
                 <div class="card">

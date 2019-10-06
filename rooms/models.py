@@ -35,6 +35,16 @@ class Room(models.Model):
 	def get_time_difference_display(self):
 		return time_diff_display(self.updated_at)
 
+	def get_first_image(self):
+		room_images = self.roomimage_set
+		if room_images.count() > 0:
+			return room_images.first().image.url
+
+		house_images = self.house.houseimage_set
+		if house_images.count() > 0:
+			return house_images.first().image.url
+
+
 
 class Inquiry(models.Model):
 	STATUS_CHOICES = [('O', 'Open'), ('D', 'Dismissed')]

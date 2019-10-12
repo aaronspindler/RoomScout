@@ -38,6 +38,9 @@ class BillSet(models.Model):
 	def get_total_per_person(self):
 		return self.get_total() / self.house.members.count()
 
+	class Meta:
+		ordering = ['year', 'month']
+
 
 class Bill(models.Model):
 	TYPE_CHOICES = [('ELEC', 'Electricity'), ('WATER', 'Water'), ('GAS', 'Gas'), ('INTER', 'Internet'), ('OTHER', 'Other')]

@@ -91,7 +91,7 @@
                 </div>
                 <div class="card-body">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        {% for billset in house.billset_set.all %}
+                        {% for billset in house.billset_set.all  %}
                             <li class="nav-item">
                                 {% if forloop.first %}
                                     <a class="nav-link active" id="{{ billset.month }}-{{ billset.year }}-tab" data-toggle="tab" href="#{{ billset.month }}-{{ billset.year }}"

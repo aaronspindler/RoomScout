@@ -8,6 +8,7 @@ from utils.datetime import time_diff_display
 
 class Room(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
+
 	name = models.CharField(max_length=200, default='')
 	description = models.TextField(default='')
 	is_available = models.BooleanField(verbose_name='Available', default=True , help_text='Room is available')

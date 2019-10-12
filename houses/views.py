@@ -221,7 +221,7 @@ def house_detail(request, pk):
 class house_edit(LoginRequiredMixin, generic.UpdateView):
     model = House
     template_name = 'houses/house_edit.html'
-    fields = ['num_rooms', 'num_bathrooms', 'num_parking_spaces', 'has_dishwasher', 'has_laundry',
+    fields = ['hide_address', 'num_rooms', 'num_bathrooms', 'num_parking_spaces', 'has_dishwasher', 'has_laundry',
               'has_air_conditioning']
 
     def get_success_url(self):

@@ -92,6 +92,9 @@ class House(models.Model):
 		else:
 			return '{} {}, {}, {}, {}'.format(self.street_number, self.street_name, self.city, self.prov_state, self.country)
 
+	def get_utility_history(self):
+		pass
+
 
 class Invitation(models.Model):
 	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

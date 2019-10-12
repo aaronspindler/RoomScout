@@ -9,6 +9,9 @@ class BillSet(models.Model):
 	year = models.IntegerField(default=-1)
 	house = models.ForeignKey(House, on_delete=models.CASCADE)
 
+	def __str__(self):
+		return self.get_month_name() + str(self.year)
+
 	def get_month_name(self):
 		months = ["Unknown",
 		          "January",

@@ -36,7 +36,7 @@ AWS_S3_OBJECT_PARAMETERS = {
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['roomscout.ca', 'www.roomscout.ca', 'roomscout.herokuapp.com']
+ALLOWED_HOSTS = ['roomscout.ca', 'www.roomscout.ca', 'roomscout.herokuapp.com', 'roomscout-dev.herokuapp.com']
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

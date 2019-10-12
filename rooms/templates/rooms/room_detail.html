@@ -24,7 +24,8 @@
                         <ol class="carousel-indicators">
                             {% for img in room.roomimage_set.all %}
                                 {% if forloop.first %}
-                                    <li data-target="#myCarousel" class="active" data-slide-to="{{ forloop.counter0 }}"></li>
+                                    <li data-target="#myCarousel" class="active"
+                                        data-slide-to="{{ forloop.counter0 }}"></li>
                                 {% else %}
                                     <li data-target="#myCarousel" data-slide-to="{{ forloop.counter0 }}"></li>
                                 {% endif %}
@@ -60,7 +61,8 @@
                                 <h4>House Image</h4>
                             </div>
                             <div class="card-body">
-                                <img class="rounded mx-auto d-block img-fluid" height="500" src="{{ room.get_first_image }}"/>
+                                <img class="rounded mx-auto d-block img-fluid" height="500"
+                                     src="{{ room.get_first_image }}"/>
                             </div>
                         </div>
                     </div>
@@ -69,16 +71,32 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Room Details</h4>
+                        <h4>Quick Look</h4>
                     </div>
                     <div class="card-body">
+                        <a class="btn btn-primary" href="{% url 'room_inquire' room.pk %}">Contact</a>
                         <p>Posted: {{ room.get_time_difference_display }}</p>
                         {% if room.is_available %}
                             <p>Price : ${{ room.price }}</p>
                             <p>Room is available</p>
-                            <a class="btn btn-primary" href="{% url 'room_inquire' room.pk %}">Contact</a>
                         {% else %}
                             <p>Room is not available</p>
+                        {% endif %}
+
+                        {% if room.is_accessible %}
+                            <p>Room is Accessible</p>
+                        {% endif %}
+
+                        {% if room.female_only %}
+                            <p>Females Only</p>
+                        {% endif %}
+
+                        {% if room.open_to_students %}
+                            <p>Open to students</p>
+                        {% endif %}
+
+                        {% if room.pet_friendly %}
+                            <p>Pet Friendly</p>
                         {% endif %}
                     </div>
                 </div>
@@ -92,24 +110,29 @@
                         {% if room.house.walk_score != -1 %}
                             <div>
                                 <!-- Walk Score -->
-                                <a href="https://www.redfin.com/how-walk-score-works"><img class="img-fluid" width=75 src="https://pp.walk.sc/badge/walk/score/{{ room.house.walk_score }}.svg"
+                                <a href="https://www.redfin.com/how-walk-score-works"><img class="img-fluid" width=75
+                                                                                           src="https://pp.walk.sc/badge/walk/score/{{ room.house.walk_score }}.svg"
                                                                                            alt="Walk Score"></a>
                                 <small>{{ room.house.walk_score_description }}</small>
 
                                 <!-- Bike Score -->
                                 {% if room.house.bike_score != -1 %}
                                     <br>
-                                    <a href="https://www.redfin.com/how-walk-score-works"><img class="img-fluid" width=75 src="https://pp.walk.sc/badge/bike/score/{{ room.house.bike_score }}.svg"
+                                    <a href="https://www.redfin.com/how-walk-score-works"><img class="img-fluid"
+                                                                                               width=75
+                                                                                               src="https://pp.walk.sc/badge/bike/score/{{ room.house.bike_score }}.svg"
                                                                                                alt="Bike Score"></a>
                                     <small>{{ room.house.bike_score_description }}</small>
                                 {% endif %}
                                 <!-- Transit Score -->
                                 {% if room.house.transit_score != -1 %}
                                     <br>
-                                    <a href="https://www.redfin.com/how-walk-score-works"><img class="img-fluid" width=75src="https://pp.walk.sc/badge/transit/score/{{ room.house.transit_score }}.svg"
+                                    <a href="https://www.redfin.com/how-walk-score-works"><img class="img-fluid"
+                                                                                               width=75src="https://pp.walk.sc/badge/transit/score/{{ room.house.transit_score }}.svg"
                                                                                                alt="Transit Score"></a>
                                     {% if room.house.transit_score_summary %}
-                                        <small>{{ room.house.transit_score_description }} - {{ room.house.transit_score_summary }}</small>
+                                        <small>{{ room.house.transit_score_description }}
+                                            - {{ room.house.transit_score_summary }}</small>
                                     {% else %}
                                         <small>{{ room.house.transit_score_description }}</small>
                                     {% endif %}
@@ -129,10 +152,23 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Description</h4>
+                            <h4>Details</h4>
                         </div>
                         <div class="card-body">
-                            {{ room.description | linebreaks }}
+                            {% if room.utilities_included %}
+                                <p>Utilities are included</p>
+                            {% endif %}
+
+                            {% if room.parking %}
+                                <p>Parking spot included</p>
+                            {% endif %}
+
+                            {% if room.furnished %}
+                                <p>Room is furnished</p>
+                            {% endif %}
+
+                            <h5>Description</h5>
+                            <div class="container">{{ room.description | linebreaks }}</div>
                         </div>
                     </div>
                 </div>

@@ -7,8 +7,6 @@ __pycache__/
 Roomscout/static
 .idea/
 Roomscout/local_settings.py
-Roomscout/settings_prod.py
-Roomscout/settings_dev.py
 .DS_Store
 
 # C extensions

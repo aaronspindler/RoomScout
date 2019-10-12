@@ -44,7 +44,7 @@ class AccountsTests(TestCase):
 		self.assertEqual(user.prov_state, 'ON')
 		self.assertEqual(user.gender, 'm')
 		self.assertEqual(user.age, 21)
-		self.assertEqual(user.score, 0)
+		self.assertEqual(user.get_score(), 0)
 		self.assertEqual(user.max_houses, 1)
 
 	def test_create_user_without_attributes(self):
@@ -61,5 +61,5 @@ class AccountsTests(TestCase):
 		self.assertNotEqual(user.prov_state, 'ON')
 		self.assertNotEqual(user.gender, 'm')
 		self.assertNotEqual(user.age, 21)
-		self.assertEqual(user.score, 0)
+		self.assertEqual(user.get_score(), 0)
 		self.assertEqual(user.max_houses, 1)

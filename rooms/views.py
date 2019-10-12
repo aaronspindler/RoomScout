@@ -24,7 +24,7 @@ def room_list(request):
 			results = room_search_extended(
 				search_term=search_term,
 				max_price=filter_form.cleaned_data['max_price'],
-				pets_allowed=filter_form.cleaned_data['pets_allowed'],
+				pet_friendly=filter_form.cleaned_data['pet_friendly'],
 				# num_rooms=filter_form.cleaned_data['num_rooms'],
 				# num_bathrooms=filter_form.cleaned_data['num_bathrooms'],
 				# num_parking_spaces=filter_form.cleaned_data['num_parking_spaces'],
@@ -50,17 +50,12 @@ def room_search(search_term):
 	return rooms_query
 
 
-def room_search_extended(search_term, max_price, pets_allowed):  # , num_rooms, num_bathrooms, num_parking_spaces, has_dishwasher, has_laundry, has_air_conditioning):
+def room_search_extended(search_term, max_price, pet_friendly):  # , num_rooms, num_bathrooms, num_parking_spaces, has_dishwasher, has_laundry, has_air_conditioning):
 	rooms = Room.objects.all().filter(is_available=True).filter(Q(house__city__icontains=search_term) | Q(house__prov_state__icontains=search_term) | Q(house__street_name__icontains=search_term))
 	if (max_price):
 		rooms = rooms.filter(price__lte=max_price)
-	if (pets_allowed):
-		rooms = rooms.filter(house__pets_allowed=True)
-	# if(num_rooms):
-	# rooms = rooms.filter(house__num_rooms=num_rooms)
-	# if(num_bathrooms):
-	# rooms = rooms.filter(house__num_rooms__gte=num_rooms)
-
+	if (pet_friendly):
+		rooms = rooms.filter(pet_friendly=True)
 	return rooms
 
 
@@ -104,7 +99,7 @@ class room_detail(generic.DetailView):
 class room_edit(LoginRequiredMixin, generic.UpdateView):
 	model = Room
 	template_name = 'rooms/room_edit.html'
-	fields = ['name', 'price', 'description', 'is_available']
+	fields = ['name', 'price', 'description', 'is_available', 'furnished', 'is_accessible', 'open_to_students', 'female_only', 'pet_friendly', 'utilities_included','parking']
 
 	def get_success_url(self):
 		return reverse('room_detail', kwargs={'pk': str(self.object.pk)})
@@ -142,7 +137,7 @@ def room_add_photo(request, pk):
 
 			return redirect('room_detail', pk=room.id)
 		return render(request, 'rooms/room_add_photo.html', {'room': room})
-	return Http404
+	raise Http404
 
 
 # PK is for the primary key of the photo that is getting deleted
@@ -150,7 +145,7 @@ def room_add_photo(request, pk):
 def room_delete_photo(request, pk):
 	photo = get_object_or_404(RoomImage, pk=pk)
 	if photo.user != request.user:
-		return Http404
+		raise Http404
 	room = photo.room
 	photo.delete()
 	return redirect('room_edit', room.pk)
@@ -182,7 +177,7 @@ def room_inquire(request, pk):
 def room_inquire_dismiss(request, pk):
 	inquiry = get_object_or_404(Inquiry, pk=pk)
 	if inquiry.room.user != request.user:
-		return Http404
+		raise Http404
 	inquiry.status = 'D'
 	inquiry.save()
 	return redirect('main_dashboard')

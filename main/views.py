@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect
@@ -6,6 +5,7 @@ from django.shortcuts import render, redirect
 from utils.captcha import Captcha
 from utils.emailclient import send_contact_us_email
 from utils.ipaddress import get_IP
+from utils.tasks import wait
 from .models import ContactMessage
 
 
@@ -65,5 +65,7 @@ def server_error(request):
 
 @staff_member_required
 def sandbox(request):
-	GOOGLE_API_KEY = settings.GOOGLE_API_KEY
-	url = 'https://maps.googleapis.com/maps/api/streetview?size=400x400&location=40.720032,-73.988354&key={}'.format(GOOGLE_API_KEY)
+	print('Before delay')
+	wait.delay(100)
+	print('After delay')
+	return render(request, 'main/sandbox.html')

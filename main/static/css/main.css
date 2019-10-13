@@ -1,0 +1,12 @@
+main {
+    margin-top: 4rem;
+    min-height: 70vh;
+}
+
+.messages {
+    margin: 0;
+    height: 2rem;
+}
+.container {
+    padding-top: 1rem;
+}

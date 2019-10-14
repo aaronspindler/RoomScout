@@ -26,12 +26,14 @@
                 {% if house.hide_address %}
                     <div style="width: 100%">
                         <iframe width="100%" height="400"
-                                src="https://www.google.com/maps/embed/v1/view?zoom=16&center={{ house.lat }}%2C{{ house.lon }}&key={{ GOOGLE_API_KEY }}" frameborder="0"></iframe>
+                                src="https://www.google.com/maps/embed/v1/view?zoom=16&center={{ house.lat }}%2C{{ house.lon }}&key={{ GOOGLE_API_KEY }}"
+                                frameborder="0"></iframe>
                     </div>
                 {% else %}
                     <div style="width: 100%">
                         <iframe width="100%" height="400"
-                                src="https://www.google.com/maps/embed/v1/place?key={{ GOOGLE_API_KEY }}&q=place_id:{{ house.place_id }}" frameborder="0"></iframe>
+                                src="https://www.google.com/maps/embed/v1/place?key={{ GOOGLE_API_KEY }}&q=place_id:{{ house.place_id }}"
+                                frameborder="0"></iframe>
                     </div>
                 {% endif %}
             </div>
@@ -47,23 +49,29 @@
                         {% if house.walk_score != -1 %}
                             <div>
                                 <!-- Walk Score -->
-                                <a href="https://www.redfin.com/how-walk-score-works"><img class="img-fluid" width=75 src="https://pp.walk.sc/badge/walk/score/{{ house.walk_score }}.svg"
+                                <a href="https://www.redfin.com/how-walk-score-works"><img class="img-fluid" width=75
+                                                                                           src="https://pp.walk.sc/badge/walk/score/{{ house.walk_score }}.svg"
                                                                                            alt="Walk Score"></a>
                                 <small>{{ house.walk_score_description }}</small>
 
                                 <!-- Bike Score -->
                                 {% if house.bike_score != -1 %}
 
-                                    <a href="https://www.redfin.com/how-walk-score-works"><img class="img-fluid" width=75 src="https://pp.walk.sc/badge/bike/score/{{ house.bike_score }}.svg"
+                                    <a href="https://www.redfin.com/how-walk-score-works"><img class="img-fluid"
+                                                                                               width=75
+                                                                                               src="https://pp.walk.sc/badge/bike/score/{{ house.bike_score }}.svg"
                                                                                                alt="Bike Score"></a>
                                     <small>{{ house.bike_score_description }}</small>
                                 {% endif %}
                                 <!-- Transit Score -->
                                 {% if house.transit_score != -1 %}
-                                    <a href="https://www.redfin.com/how-walk-score-works"><img class="img-fluid" width=75 src="https://pp.walk.sc/badge/transit/score/{{ house.transit_score }}.svg"
+                                    <a href="https://www.redfin.com/how-walk-score-works"><img class="img-fluid"
+                                                                                               width=75
+                                                                                               src="https://pp.walk.sc/badge/transit/score/{{ house.transit_score }}.svg"
                                                                                                alt="Transit Score"></a>
                                     {% if house.transit_score_summary %}
-                                        <small>{{ house.transit_score_description }} - {{ house.transit_score_summary }}</small>
+                                        <small>{{ house.transit_score_description }}
+                                            - {{ house.transit_score_summary }}</small>
                                     {% else %}
                                         <small>{{ house.transit_score_description }}</small>
                                     {% endif %}
@@ -84,20 +92,85 @@
                         {% if user.id == house.user.id %}
                             <small>
                     <span class="btn-group">
-                        <a href="{% url 'house_bill_add' house.pk %}" class="btn btn-sm btn-primary"><span class="oi oi-plus"></span></a>
+                        <a href="{% url 'house_bill_add' house.pk %}" class="btn btn-sm btn-primary"><span
+                                class="oi oi-plus"></span></a>
                     </span>
                             </small>
                         {% endif %}</h4>
                 </div>
                 <div class="card-body">
+                    <div style="width:100%;">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                <br>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+                    <script>
+                        var ctx = document.getElementById('myChart').getContext('2d');
+                        ctx.height = 200;
+                        var chart = new Chart(ctx, {
+                            // The type of chart we want to create
+                            type: 'line',
+
+                            // The data for our dataset
+                            data: {
+                                labels: {{ house.get_bill_labels | safe}},
+                                datasets: [
+                                    {
+                                        label: 'Electricity',
+                                        borderColor: 'rgb(220, 227, 14)',
+                                        data: {{ house.get_electricity_bills | safe }}
+                                    },
+                                    {
+                                        label: 'Water',
+                                        borderColor: 'rgb(13, 161, 224)',
+                                        data: {{ house.get_water_bills | safe }}
+                                    }
+                                    ,
+                                    {
+                                        label: 'Gas',
+                                        borderColor: 'rgb(109, 204, 57)',
+                                        data: {{ house.get_gas_bills | safe }}
+                                    }
+                                    ,
+                                    {
+                                        label: 'Internet',
+                                        borderColor: 'rgb(204, 57, 57)',
+                                        data: {{ house.get_internet_bills | safe }}
+                                    }
+                                    ,
+                                    {
+                                        label: 'Other',
+                                        borderColor: 'rgb(0, 0, 0)',
+                                        data: {{ house.get_other_bills | safe }}
+                                    }
+
+                                ]
+                            },
+                            // Configuration options go here
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            // Include a dollar sign in the ticks
+                                            callback: function (value, index, values) {
+                                                return '$' + value;
+                                            }
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    </script>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         {% for billset in house.billset_set.all %}
                             <li class="nav-item">
                                 {% if forloop.first %}
-                                    <a class="nav-link active" id="{{ billset.month }}-{{ billset.year }}-tab" data-toggle="tab" href="#{{ billset.month }}-{{ billset.year }}"
+                                    <a class="nav-link active" id="{{ billset.month }}-{{ billset.year }}-tab"
+                                       data-toggle="tab" href="#{{ billset.month }}-{{ billset.year }}"
                                        role="tab">{{ billset.get_month_name }} {{ billset.year }}</a>
                                 {% else %}
-                                    <a class="nav-link" id="{{ billset.month }}-{{ billset.year }}-tab" data-toggle="tab" href="#{{ billset.month }}-{{ billset.year }}"
+                                    <a class="nav-link" id="{{ billset.month }}-{{ billset.year }}-tab"
+                                       data-toggle="tab" href="#{{ billset.month }}-{{ billset.year }}"
                                        role="tab">{{ billset.get_month_name }} {{ billset.year }}</a>
                                 {% endif %}
                             </li>
@@ -134,7 +207,9 @@
                                                     <td>No Receipt</td>
                                                 {% endif %}
                                                 {% if user.id == house.user.id %}
-                                                    <td><a class="btn btn-sm btn-danger" href="{% url 'bill_delete' bill.pk %}"><span class="oi oi-trash"></span></a></td>
+                                                    <td><a class="btn btn-sm btn-danger"
+                                                           href="{% url 'bill_delete' bill.pk %}"><span
+                                                            class="oi oi-trash"></span></a></td>
                                                 {% endif %}
                                             </tr>
                                         {% endfor %}
@@ -165,7 +240,8 @@
                     {% if user.id == house.user.id %}
                         <small>
                     <span class="btn-group">
-                        <a href="{% url 'house_add_room' house.pk %}" class="btn btn-sm btn-primary"><span class="oi oi-plus"></span></a>
+                        <a href="{% url 'house_add_room' house.pk %}" class="btn btn-sm btn-primary"><span
+                                class="oi oi-plus"></span></a>
                     </span>
                         </small>
                     {% endif %}
@@ -178,15 +254,19 @@
                             <div class="col-md-4">
                                 <div class="card mb-4 shadow-sm">
                                     {% if room.roomimage_set.first.is_approved %}
-                                        <img class="card-img-top" src="{{ room.roomimage_set.first.image.url }}" alt="Room image">
+                                        <img class="card-img-top" src="{{ room.roomimage_set.first.image.url }}"
+                                             alt="Room image">
                                     {% endif %}
                                     <div class="card-body">
-                                        <a href="{% url 'room_detail' room.id %}"><h5 class="card-title">{{ room.name }}</h5>
+                                        <a href="{% url 'room_detail' room.id %}"><h5
+                                                class="card-title">{{ room.name }}</h5>
                                         </a>
                                         {% if room.is_available %}<p class="card-text">${{ room.price }}</p>{% endif %}
                                         {% if user.id == room.user.id %}
-                                            <a class="btn btn-sm btn-primary" href="{% url 'room_edit' room.pk %}"><span class="oi oi-wrench"></span></a>
-                                            <a class="btn btn-sm btn-danger" href="{% url 'room_delete' room.pk %}"><span class="oi oi-trash"></span></a>
+                                            <a class="btn btn-sm btn-primary" href="{% url 'room_edit' room.pk %}"><span
+                                                    class="oi oi-wrench"></span></a>
+                                            <a class="btn btn-sm btn-danger"
+                                               href="{% url 'room_delete' room.pk %}"><span class="oi oi-trash"></span></a>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -208,7 +288,8 @@
                         {% if user.id == house.user.id %}
                             <small>
                                 <span class="btn-group">
-                                    <a href="{% url 'house_invite' house.pk %}" class="btn btn-sm btn-primary"><span class="oi oi-plus"></span></a>
+                                    <a href="{% url 'house_invite' house.pk %}" class="btn btn-sm btn-primary"><span
+                                            class="oi oi-plus"></span></a>
                                 </span>
                             </small>
                         {% endif %}

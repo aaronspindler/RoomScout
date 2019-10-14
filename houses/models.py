@@ -92,6 +92,60 @@ class House(models.Model):
 		else:
 			return '{} {}, {}, {}, {}'.format(self.street_number, self.street_name, self.city, self.prov_state, self.country)
 
+	def get_bill_labels(self):
+		labels = []
+		billsets = self.billset_set.all()
+		for billset in billsets:
+			labels.append(billset.get_month_name() + ' ' + str(billset.year))
+		return labels
+
+	def get_electricity_bills(self):
+		bills = []
+		billsets = self.billset_set.all()
+		for billset in billsets:
+			for bill in billset.bill_set.filter(type='ELEC'):
+				print(bill.type)
+				bills.append(bill.amount.__str__())
+		return bills
+
+	def get_water_bills(self):
+		bills = []
+		billsets = self.billset_set.all()
+		for billset in billsets:
+			for bill in billset.bill_set.filter(type='WATER'):
+				print(bill.type)
+				bills.append(bill.amount.__str__())
+		return bills
+
+	def get_gas_bills(self):
+		bills = []
+		billsets = self.billset_set.all()
+		for billset in billsets:
+			for bill in billset.bill_set.filter(type='GAS'):
+				print(bill.type)
+				bills.append(bill.amount.__str__())
+		return bills
+
+	def get_internet_bills(self):
+		bills = []
+		billsets = self.billset_set.all()
+		for billset in billsets:
+			for bill in billset.bill_set.filter(type='INTER'):
+				print(bill.type)
+				bills.append(bill.amount.__str__())
+		return bills
+
+	def get_other_bills(self):
+		bills = []
+		billsets = self.billset_set.all()
+		for billset in billsets:
+			for bill in billset.bill_set.filter(type='OTHER'):
+				print(bill.type)
+				bills.append(bill.amount.__str__())
+		return bills
+
+
+
 
 class Invitation(models.Model):
 	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

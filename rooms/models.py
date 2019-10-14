@@ -4,10 +4,12 @@ from django.urls import reverse
 from accounts.models import User
 from houses.models import House
 from utils.datetime import time_diff_display
+from django.contrib.staticfiles.templatetags.staticfiles import static
 
 
 class Room(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
+
 	name = models.CharField(max_length=200, default='')
 	description = models.TextField(default='')
 	is_available = models.BooleanField(verbose_name='Available', default=True , help_text='Room is available')
@@ -43,6 +45,8 @@ class Room(models.Model):
 		house_images = self.house.houseimage_set
 		if house_images.count() > 0:
 			return house_images.first().image.url
+
+		return static('logos/logo.PNG')
 
 
 

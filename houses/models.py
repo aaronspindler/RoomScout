@@ -92,8 +92,28 @@ class House(models.Model):
 		else:
 			return '{} {}, {}, {}, {}'.format(self.street_number, self.street_name, self.city, self.prov_state, self.country)
 
-	def get_utility_history(self):
+	def get_bill_labels(self):
+		labels = []
+		billsets = self.billset_set.all()
+		for billset in billsets:
+			labels.append(billset.get_month_name() + ' ' + str(billset.year))
+		return labels
+
+	def get_electricity_bills(self):
+		bills = []
+		billsets = self.billset_set.all()
+		return bills
 		pass
+	def get_water_bills(self):
+		pass
+	def get_gas_bills(self):
+		pass
+	def get_internet_bills(self):
+		pass
+	def get_other_bills(self):
+		pass
+
+
 
 
 class Invitation(models.Model):

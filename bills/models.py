@@ -10,7 +10,7 @@ class BillSet(models.Model):
 	house = models.ForeignKey(House, on_delete=models.CASCADE)
 
 	def __str__(self):
-		return self.get_month_name() + str(self.year)
+		return self.get_month_name() + ' ' + str(self.year)
 
 	def get_month_name(self):
 		months = ["Unknown",

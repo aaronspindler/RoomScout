@@ -102,6 +102,7 @@
                     <div style="width:100%;">
                         <canvas id="myChart"></canvas>
                     </div>
+                <br>
                     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
                     <script>
                         var ctx = document.getElementById('myChart').getContext('2d');
@@ -112,22 +113,52 @@
 
                             // The data for our dataset
                             data: {
-                                labels: ['January', 'February', 'March', 'April'],
+                                labels: {{ house.get_bill_labels | safe}},
                                 datasets: [
                                     {
-                                        label: 'My First dataset',
+                                        label: 'Electricity',
                                         borderColor: 'rgb(24,17,255)',
-                                        data: [1,2, 1, 9]
+                                        data: [1, 2, 1, 9]
                                     },
                                     {
-                                        label: 'My First dataset',
+                                        label: 'Water',
                                         borderColor: 'rgb(24,17,255)',
-                                        data: [3,5, 9, 2]
+                                        data: [3, 5, 9]
                                     }
+                                    ,
+                                    {
+                                        label: 'Gas',
+                                        borderColor: 'rgb(24,17,255)',
+                                        data: [3, 5, 9, 2]
+                                    }
+                                    ,
+                                    {
+                                        label: 'Internet',
+                                        borderColor: 'rgb(24,17,255)',
+                                        data: [3, 5, 9, 2]
+                                    }
+                                    ,
+                                    {
+                                        label: 'Other',
+                                        borderColor: 'rgb(24,17,255)',
+                                        data: [3, 5, 9, 2]
+                                    }
+
                                 ]
                             },
                             // Configuration options go here
-                            options: {}
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            // Include a dollar sign in the ticks
+                                            callback: function (value, index, values) {
+                                                return '$' + value;
+                                            }
+                                        }
+                                    }]
+                                }
+                            }
                         });
                     </script>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">

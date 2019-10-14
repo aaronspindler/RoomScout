@@ -209,6 +209,7 @@ def house_detail(request, pk):
 
     try:
         rooms = Room.objects.filter(house=house)
+
         return render(request, 'houses/house_detail.html',
                       {'rooms': rooms, 'house': house, 'is_member': is_member, 'GOOGLE_API_KEY': GOOGLE_API_KEY})
     except Exception:

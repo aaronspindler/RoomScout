@@ -117,31 +117,31 @@
                                 datasets: [
                                     {
                                         label: 'Electricity',
-                                        borderColor: 'rgb(24,17,255)',
-                                        data: [1, 2, 1, 9]
+                                        borderColor: 'rgb(220, 227, 14)',
+                                        data: {{ house.get_electricity_bills | safe }}
                                     },
                                     {
                                         label: 'Water',
-                                        borderColor: 'rgb(24,17,255)',
-                                        data: [3, 5, 9]
+                                        borderColor: 'rgb(13, 161, 224)',
+                                        data: {{ house.get_water_bills | safe }}
                                     }
                                     ,
                                     {
                                         label: 'Gas',
-                                        borderColor: 'rgb(24,17,255)',
-                                        data: [3, 5, 9, 2]
+                                        borderColor: 'rgb(109, 204, 57)',
+                                        data: {{ house.get_gas_bills | safe }}
                                     }
                                     ,
                                     {
                                         label: 'Internet',
-                                        borderColor: 'rgb(24,17,255)',
-                                        data: [3, 5, 9, 2]
+                                        borderColor: 'rgb(204, 57, 57)',
+                                        data: {{ house.get_internet_bills | safe }}
                                     }
                                     ,
                                     {
                                         label: 'Other',
-                                        borderColor: 'rgb(24,17,255)',
-                                        data: [3, 5, 9, 2]
+                                        borderColor: 'rgb(0, 0, 0)',
+                                        data: {{ house.get_other_bills | safe }}
                                     }
 
                                 ]

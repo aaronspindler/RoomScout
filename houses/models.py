@@ -102,16 +102,47 @@ class House(models.Model):
 	def get_electricity_bills(self):
 		bills = []
 		billsets = self.billset_set.all()
+		for billset in billsets:
+			for bill in billset.bill_set.filter(type='ELEC'):
+				print(bill.type)
+				bills.append(bill.amount.__str__())
 		return bills
-		pass
+
 	def get_water_bills(self):
-		pass
+		bills = []
+		billsets = self.billset_set.all()
+		for billset in billsets:
+			for bill in billset.bill_set.filter(type='WATER'):
+				print(bill.type)
+				bills.append(bill.amount.__str__())
+		return bills
+
 	def get_gas_bills(self):
-		pass
+		bills = []
+		billsets = self.billset_set.all()
+		for billset in billsets:
+			for bill in billset.bill_set.filter(type='GAS'):
+				print(bill.type)
+				bills.append(bill.amount.__str__())
+		return bills
+
 	def get_internet_bills(self):
-		pass
+		bills = []
+		billsets = self.billset_set.all()
+		for billset in billsets:
+			for bill in billset.bill_set.filter(type='INTER'):
+				print(bill.type)
+				bills.append(bill.amount.__str__())
+		return bills
+
 	def get_other_bills(self):
-		pass
+		bills = []
+		billsets = self.billset_set.all()
+		for billset in billsets:
+			for bill in billset.bill_set.filter(type='OTHER'):
+				print(bill.type)
+				bills.append(bill.amount.__str__())
+		return bills
 
 
 

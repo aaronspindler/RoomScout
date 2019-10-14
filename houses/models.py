@@ -1,4 +1,6 @@
 import uuid
+from decimal import Decimal
+
 import requests
 
 from django.conf import settings
@@ -99,51 +101,31 @@ class House(models.Model):
 			labels.append(billset.get_month_name() + ' ' + str(billset.year))
 		return labels
 
-	def get_electricity_bills(self):
+	def get_bills(self, type):
 		bills = []
 		billsets = self.billset_set.all()
 		for billset in billsets:
-			for bill in billset.bill_set.filter(type='ELEC'):
-				print(bill.type)
-				bills.append(bill.amount.__str__())
+			bill_type = billset.bill_set.filter(type=type)
+			sum = Decimal(0.0)
+			for bill in bill_type:
+				sum += bill.amount
+			bills.append(sum.__str__())
 		return bills
+
+	def get_electricity_bills(self):
+		return self.get_bills('ELEC')
 
 	def get_water_bills(self):
-		bills = []
-		billsets = self.billset_set.all()
-		for billset in billsets:
-			for bill in billset.bill_set.filter(type='WATER'):
-				print(bill.type)
-				bills.append(bill.amount.__str__())
-		return bills
+		return self.get_bills('WATER')
 
 	def get_gas_bills(self):
-		bills = []
-		billsets = self.billset_set.all()
-		for billset in billsets:
-			for bill in billset.bill_set.filter(type='GAS'):
-				print(bill.type)
-				bills.append(bill.amount.__str__())
-		return bills
+		return self.get_bills('GAS')
 
 	def get_internet_bills(self):
-		bills = []
-		billsets = self.billset_set.all()
-		for billset in billsets:
-			for bill in billset.bill_set.filter(type='INTER'):
-				print(bill.type)
-				bills.append(bill.amount.__str__())
-		return bills
+		return self.get_bills('INTER')
 
 	def get_other_bills(self):
-		bills = []
-		billsets = self.billset_set.all()
-		for billset in billsets:
-			for bill in billset.bill_set.filter(type='OTHER'):
-				print(bill.type)
-				bills.append(bill.amount.__str__())
-		return bills
-
+		return self.get_bills('OTHER')
 
 
 

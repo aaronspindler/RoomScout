@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-from .models import House
+from .models import House, Invitation
 
 
 class HouseTests(TestCase):
@@ -89,3 +89,47 @@ class HouseTests(TestCase):
 		self.house_attributes.postal_code = ''
 		self.house_attributes.save()
 		self.assertEqual(self.house_attributes.__str__(), '2529 Stallion Drive, Oshawa, ON, Canada')
+
+	def test_house_get_bill_labels(self):
+		print('Testing house.get_bill_labels()')
+		self.assertEqual(len(self.house_attributes.get_bill_labels()), 0)
+
+	def test_house_get_electricity_bills(self):
+		print('Testing house.get_electricity_bills()')
+		self.assertEqual(len(self.house_attributes.get_electricity_bills()),0)
+
+	def test_house_get_water_bills(self):
+		print('Testing house.get_water_bills()')
+		self.assertEqual(len(self.house_attributes.get_water_bills()),0)
+
+	def test_house_get_gas_bills(self):
+		print('Testing house.get_gas_bills()')
+		self.assertEqual(len(self.house_attributes.get_gas_bills()),0)
+
+	def test_house_get_internet_bills(self):
+		print('Testing house.get_internet_bills()')
+		self.assertEqual(len(self.house_attributes.get_internet_bills()),0)
+
+	def test_house_get_other_bills(self):
+		print('Testing house.get_other_bills()')
+		self.assertEqual(len(self.house_attributes.get_other_bills()),0)
+
+
+class InvitationTests(TestCase):
+	def setUp(self):
+		print('Invitation setup')
+		User = get_user_model()
+		user = User.objects.create_user(username='Fred_Flintstone', email='normal@user.com', password='foo')
+		self.user = user
+		House.objects.create(user=self.user)
+
+	def test_invitation_creation(self):
+		print('Testing Invitation Creation')
+		count_prior = Invitation.objects.all().count()
+		fixture = Invitation()
+		fixture.target = 'Aaron@xnovax.net'
+		fixture.sender = self.user
+		fixture.house = House.objects.get(user=self.user)
+		fixture.save()
+		count_after = Invitation.objects.all().count()
+		self.assertEqual(count_prior + 1, count_after)

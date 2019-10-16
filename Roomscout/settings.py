@@ -185,6 +185,8 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
+CELERY_IGNORE_RESULT = False
+CELERY_TRACK_STARTED = True
 
 try:
 	from .local_settings import *

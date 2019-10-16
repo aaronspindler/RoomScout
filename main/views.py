@@ -65,7 +65,7 @@ def server_error(request):
 
 @staff_member_required
 def sandbox(request):
-	print('Before delay')
-	wait.delay(100)
-	print('After delay')
+	task = wait.delay()
+	print(task.state)
+
 	return render(request, 'main/sandbox.html')

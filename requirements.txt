@@ -15,12 +15,16 @@ django-countries==5.4
 django-crispy-forms==1.7.2
 django-recaptcha==2.0.4
 django-storages==1.7.1
+dnspython==1.16.0
 docutils==0.14
+eventlet==0.25.1
+greenlet==0.4.15
 gunicorn==19.9.0
 idna==2.8
 importlib-metadata==0.23
 jmespath==0.9.4
 kombu==4.6.5
+monotonic==1.5
 more-itertools==7.2.0
 oauthlib==3.1.0
 Pillow==6.1.0

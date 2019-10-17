@@ -65,7 +65,7 @@ def server_error(request):
 
 @staff_member_required
 def sandbox(request):
-	task = wait.delay(1,2)
+	task = wait.delay('aaron@xnovax.net')
 	print(task.state)
 
 	return render(request, 'main/sandbox.html')

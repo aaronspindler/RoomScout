@@ -5,7 +5,6 @@ from django.shortcuts import render, redirect
 from utils.captcha import Captcha
 from utils.emailclient import send_contact_us_email
 from utils.ipaddress import get_IP
-from utils.tasks import wait
 from .models import ContactMessage
 
 
@@ -65,7 +64,4 @@ def server_error(request):
 
 @staff_member_required
 def sandbox(request):
-	task = wait.delay('aaron@xnovax.net')
-	print(task.state)
-
 	return render(request, 'main/sandbox.html')

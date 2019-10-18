@@ -48,6 +48,14 @@ def room_saved(request):
     return render(request, "rooms/room_saved.html")
 
 
+def room_like(request, pk):
+    pass
+
+
+def room_unlike(request, pk):
+    pass
+
+
 # TODO : Improve search functionality
 def room_search(search_term):
     rooms_query = Room.objects.all().filter(is_available=True).filter(

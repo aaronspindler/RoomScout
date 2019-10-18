@@ -49,7 +49,6 @@ class Room(models.Model):
 		return static('logos/logo.PNG')
 
 
-
 class Inquiry(models.Model):
 	STATUS_CHOICES = [('O', 'Open'), ('D', 'Dismissed')]
 	created_at = models.DateTimeField(auto_now_add=True)
@@ -59,3 +58,9 @@ class Inquiry(models.Model):
 	message = models.TextField(default='')
 	move_in_date = models.DateField(default='1997-11-04')
 	status = models.CharField(choices=STATUS_CHOICES, default='O', max_length=3)
+
+
+class RoomLike(models.Model):
+	created_at = models.DateTimeField(auto_now_add=True)
+	room = models.ForeignKey(Room, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -13,4 +13,7 @@ urlpatterns = [
 	path('<str:pk>/deletephoto/', views.room_delete_photo, name='room_delete_photo'),
 	path('<str:pk>/inquire/', views.room_inquire, name='room_inquire'),
 	path('<str:pk>/inquire/dismiss', views.room_inquire_dismiss, name='room_inquire_dismiss'),
+	path('<str:pk>/like/', views.room_like, name='room_like'),
+	path('<str:pk>/unlike/', views.room_unlike, name='room_unlike'),
+
 ]

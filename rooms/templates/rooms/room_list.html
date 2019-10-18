@@ -59,7 +59,7 @@
                         <div class="card mb-2 shadow-sm">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-5">
                                         <a href="{% url 'room_detail' room.pk %}"><h4 class="card-text">{{ room.name }}</h4></a>
                                         <small>{{ room.house.full_address }}</small>
                                         <br>
@@ -75,6 +75,10 @@
                                     <div class="col-6">
                                         <h6>Posted: {{ room.get_time_difference_display }}</h6>
                                         <img class="img-fluid" width="300" src="{{ room.get_first_image }}" alt="No Images">
+                                    </div>
+                                    <div class="col-1 text-center">
+                                        <a href="#"><img class="img-fluid" width="25" src="{% static 'icons/heart_filled.svg' %}"></a>
+                                        <img class="img-fluid" width="25" src="{% static 'icons/heart_empty.svg' %}">
                                     </div>
                                 </div>
                             </div>

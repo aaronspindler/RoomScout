@@ -44,6 +44,10 @@ def room_list(request):
                   {'rooms': rooms, 'filter_form': filter_form, 'search_term': search_term})
 
 
+def room_saved(request):
+    return render(request, "rooms/room_saved.html")
+
+
 # TODO : Improve search functionality
 def room_search(search_term):
     rooms_query = Room.objects.all().filter(is_available=True).filter(

@@ -32,10 +32,11 @@ def room_list(request):
                 is_accessible=filter_form.cleaned_data['is_accessible'],
                 utilities_included=filter_form.cleaned_data['utilities_included']
             )
-            rooms = results
+            rooms = results.order_by(filter_form['order_by'].value())
         else:
+            # By default, show newest first
             results = room_search(search_term)
-            rooms = results
+            rooms = results.order_by('-updated_at')
 
     else:
         search_term = ''
@@ -49,6 +50,7 @@ def room_search(search_term):
     rooms_query = Room.objects.all().filter(is_available=True).filter(
         Q(house__city__icontains=search_term) | Q(house__prov_state__icontains=search_term) | Q(
             house__street_name__icontains=search_term))
+    print(Room.objects.all())
     return rooms_query
 
 

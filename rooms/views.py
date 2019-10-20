@@ -32,10 +32,11 @@ def room_list(request):
                 is_accessible=filter_form.cleaned_data['is_accessible'],
                 utilities_included=filter_form.cleaned_data['utilities_included']
             )
-            rooms = results
+            rooms = results.order_by(filter_form['order_by'].value())
         else:
+            # By default, show newest first
             results = room_search(search_term)
-            rooms = results
+            rooms = results.order_by('-updated_at')
 
     else:
         search_term = ''

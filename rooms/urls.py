@@ -15,5 +15,4 @@ urlpatterns = [
 	path('<str:pk>/inquire/dismiss', views.room_inquire_dismiss, name='room_inquire_dismiss'),
 	path('<str:pk>/like/', views.room_like, name='room_like'),
 	path('<str:pk>/unlike/', views.room_unlike, name='room_unlike'),
-
 ]

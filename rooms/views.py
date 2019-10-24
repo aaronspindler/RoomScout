@@ -12,7 +12,7 @@ from utils.captcha import Captcha
 from utils.emailclient import send_inquiry_email
 from utils.models import RoomImage
 from .forms import FilterForm
-from .models import Room, Inquiry
+from .models import Room, Inquiry, RoomLike
 
 
 def room_list(request):
@@ -44,16 +44,36 @@ def room_list(request):
                   {'rooms': rooms, 'filter_form': filter_form, 'search_term': search_term})
 
 
+@login_required(login_url="account_login")
 def room_saved(request):
     return render(request, "rooms/room_saved.html")
 
 
+# PK is the primary key for the website
+@login_required(login_url="account_login")
 def room_like(request, pk):
-    pass
+    user = request.user
+    room = get_object_or_404(Room, pk=pk)
+    roomlike = RoomLike.objects.filter(user=user, room=room)
+
+    if roomlike.count() == 0:
+        new_room_like = RoomLike()
+        new_room_like.user = user
+        new_room_like.room = room
+        new_room_like.save()
+
+    return redirect('room_list')
 
 
+@login_required(login_url="account_login")
 def room_unlike(request, pk):
-    pass
+    user = request.user
+    room = get_object_or_404(Room, pk=pk)
+    roomlike = RoomLike.objects.filter(user=user, room=room)
+    roomlike = roomlike.first()
+    roomlike.delete()
+
+    return redirect('room_list')
 
 
 # TODO : Improve search functionality

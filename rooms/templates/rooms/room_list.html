@@ -76,10 +76,12 @@
                                         <h6>Posted: {{ room.get_time_difference_display }}</h6>
                                         <img class="img-fluid" width="300" src="{{ room.get_first_image }}" alt="No Images">
                                     </div>
+                                {% if user.is_authenticated %}
                                     <div class="col-1 text-center">
-                                        <a href="#"><img class="img-fluid" width="25" src="{% static 'icons/heart_filled.svg' %}"></a>
-                                        <img class="img-fluid" width="25" src="{% static 'icons/heart_empty.svg' %}">
+                                        <a href="{% url 'room_like' room.pk %}"><img class="img-fluid" width="25" src="{% static 'icons/heart_filled.svg' %}"></a>
+                                        <a href="{% url 'room_unlike' room.pk %}"><img class="img-fluid" width="25" src="{% static 'icons/heart_empty.svg' %}"></a>
                                     </div>
+                                {% endif %}
                                 </div>
                             </div>
                         </div>

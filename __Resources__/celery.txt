@@ -1,0 +1,1 @@
+celery -A Roomscout worker -l info -P eventlet

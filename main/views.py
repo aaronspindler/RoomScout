@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect
@@ -65,5 +64,4 @@ def server_error(request):
 
 @staff_member_required
 def sandbox(request):
-	GOOGLE_API_KEY = settings.GOOGLE_API_KEY
-	url = 'https://maps.googleapis.com/maps/api/streetview?size=400x400&location=40.720032,-73.988354&key={}'.format(GOOGLE_API_KEY)
+	return render(request, 'main/sandbox.html')

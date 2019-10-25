@@ -60,7 +60,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-5">
-                                        <a href="{% url 'room_detail' room.pk %}"><h4 class="card-text">{{ room.name }}</h4></a>
+                                        <a href="{% url 'room_detail' room.pk %}"><h4 class="card-text">{{ room.pk }}-{{ room.name }}</h4></a>
                                         <small>{{ room.house.full_address }}</small>
                                         <br>
                                         <strong>Price:</strong> ${{ room.price }}
@@ -78,8 +78,7 @@
                                     </div>
                                 {% if user.is_authenticated %}
                                     <div class="col-1 text-center">
-                                        <p>{{ saved_rooms }}</p>
-                                        {% if room.pk in saved_rooms %}
+                                        {% if room in saved_rooms %}
                                             <a href="{% url 'room_unlike' room.pk %}"><img class="img-fluid" width="25" alt="Liked" src="{% static 'icons/heart_filled.svg' %}"></a>
                                         {% else %}
                                             <a href="{% url 'room_like' room.pk %}"><img class="img-fluid" width="25" alt="Unliked" src="{% static 'icons/heart_empty.svg' %}"></a>

@@ -237,7 +237,10 @@ def room_inquire_dismiss(request, pk):
 def get_saved_rooms(request):
     user = request.user
     if user.id is not None:
-        saved_houses = RoomLike.objects.all().filter(user=user)
-        return saved_houses
+        room_likes = RoomLike.objects.all().filter(user=user)
+        saved_rooms = []
 
+        for roomlike in room_likes:
+            saved_rooms.append(roomlike.room)
+        return saved_rooms
     return []

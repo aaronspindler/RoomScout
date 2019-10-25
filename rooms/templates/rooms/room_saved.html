@@ -9,5 +9,8 @@
 {% block content %}
     <div class="container">
         <h2>Saved Rooms</h2>
+        {% for room in saved_rooms %}
+            <p>{{ room.room }}</p>
+        {% endfor %}
     </div>
 {% endblock %}

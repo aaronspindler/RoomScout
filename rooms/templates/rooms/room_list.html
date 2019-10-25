@@ -78,8 +78,12 @@
                                     </div>
                                 {% if user.is_authenticated %}
                                     <div class="col-1 text-center">
-                                        <a href="{% url 'room_like' room.pk %}"><img class="img-fluid" width="25" src="{% static 'icons/heart_filled.svg' %}"></a>
-                                        <a href="{% url 'room_unlike' room.pk %}"><img class="img-fluid" width="25" src="{% static 'icons/heart_empty.svg' %}"></a>
+                                        <p>{{ saved_rooms }}</p>
+                                        {% if room.pk in saved_rooms %}
+                                            <a href="{% url 'room_unlike' room.pk %}"><img class="img-fluid" width="25" alt="Liked" src="{% static 'icons/heart_filled.svg' %}"></a>
+                                        {% else %}
+                                            <a href="{% url 'room_like' room.pk %}"><img class="img-fluid" width="25" alt="Unliked" src="{% static 'icons/heart_empty.svg' %}"></a>
+                                        {% endif %}
                                     </div>
                                 {% endif %}
                                 </div>

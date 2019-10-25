@@ -40,13 +40,14 @@ def room_list(request):
     else:
         search_term = ''
         rooms = Room.objects.filter(is_available=True)
-    return render(request, 'rooms/room_list.html',
-                  {'rooms': rooms, 'filter_form': filter_form, 'search_term': search_term})
+    saved_rooms = get_saved_rooms(request)
+    return render(request, 'rooms/room_list.html', {'rooms': rooms, 'saved_rooms': saved_rooms,'filter_form': filter_form, 'search_term': search_term})
 
 
 @login_required(login_url="account_login")
 def room_saved(request):
-    return render(request, "rooms/room_saved.html")
+    saved_rooms = RoomLike.objects.filter(user=request.user)
+    return render(request, "rooms/room_saved.html", {'saved_rooms':saved_rooms})
 
 
 # PK is the primary key for the website
@@ -231,3 +232,12 @@ def room_inquire_dismiss(request, pk):
     inquiry.status = 'D'
     inquiry.save()
     return redirect('main_dashboard')
+
+
+def get_saved_rooms(request):
+    user = request.user
+    if user.id is not None:
+        saved_houses = RoomLike.objects.all().filter(user=user)
+        return saved_houses
+
+    return []

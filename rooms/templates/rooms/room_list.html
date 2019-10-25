@@ -60,7 +60,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-5">
-                                        <a href="{% url 'room_detail' room.pk %}"><h4 class="card-text">{{ room.pk }}-{{ room.name }}</h4></a>
+                                        <a href="{% url 'room_detail' room.pk %}"><h4 class="card-text">{{ room.name }}</h4></a>
                                         <small>{{ room.house.full_address }}</small>
                                         <br>
                                         <strong>Price:</strong> ${{ room.price }}

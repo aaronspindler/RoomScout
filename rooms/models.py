@@ -59,6 +59,7 @@ class Inquiry(models.Model):
 	move_in_date = models.DateField(default='1997-11-04')
 	status = models.CharField(choices=STATUS_CHOICES, default='O', max_length=3)
 
+
 class RoomLike(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	room = models.ForeignKey(Room, on_delete=models.CASCADE)

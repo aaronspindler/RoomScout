@@ -40,3 +40,23 @@ def send_contact_us_email(submitter_email, submitter_subject, submitter_message,
 	msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
 	msg.attach_alternative(html_content, "text/html")
 	msg.send()
+
+
+# TODO Put this into a celery background task
+def send_bill_email(house, bill):
+	from_email = 'noreply@roomscout.ca'
+	to_emails = []
+	for member in house.members.all():
+		if member.general_contact:
+			to_emails.append(member.email)
+
+	if len(to_emails) > 0:
+		subject = "RoomScout | New Bill"
+		# TODO: Add a way to randomize email with funny text
+		text_content = 'Your landlord has added a new bill to your house!'
+		# TODO: Improve template to include more details
+		html_content = render_to_string('utils/bill_added_template.html', {'bill': bill, 'house': house})
+
+		msg = EmailMultiAlternatives(subject, text_content, from_email, to_emails)
+		msg.attach_alternative(html_content, "text/html")
+		msg.send()

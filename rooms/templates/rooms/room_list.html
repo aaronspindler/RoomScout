@@ -15,7 +15,9 @@
 
     <div class="container">
         <h2>Find a Room</h2>
+    {% if user.is_authenticated %}
         <a href="{% url 'room_saved' %}">Saved Rooms</a>
+    {% endif %}
         <form method="POST">
             {% csrf_token %}
             <div class="form-row">

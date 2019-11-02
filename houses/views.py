@@ -12,7 +12,7 @@ from bills.models import BillSet, Bill
 from rooms.models import Room
 from utils.captcha import Captcha
 from utils.datetime import now
-from utils.emailclient import send_invite_email
+from utils.emailclient import send_invite_email, send_bill_email
 from utils.models import RoomImage, BillFile
 from utils.date import check_format
 from utils.streetview import load_house_image
@@ -63,7 +63,7 @@ def house_create(request):
 @login_required(login_url="account_login")
 def house_bill_add(request, pk):
     house = get_object_or_404(House, pk=pk)
-    if (request.user.id != house.user.id):
+    if request.user.id != house.user.id:
         raise Http404
 
     if request.method == 'POST':
@@ -105,6 +105,8 @@ def house_bill_add(request, pk):
             billfile.file = request.FILES['file']
             billfile.bill = bill
             billfile.save()
+
+        send_bill_email(house, bill)
         return redirect('house_detail', house.pk)
 
     return render(request, 'houses/house_bill_add.html', {'house': house})

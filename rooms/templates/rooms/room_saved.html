@@ -10,6 +10,7 @@
     <div class="container">
         <h2>Saved Rooms</h2>
         <div class="row">
+            {% if saved_rooms.count > 0 %}
             {% for room in saved_rooms %}
                 <div class="col-md-12">
                     <div class="card mb-2 shadow-sm">
@@ -42,6 +43,12 @@
                     </div>
                 </div>
             {% endfor %}
+            {% else %}
+                <div class="container">
+                    Looks like you haven't saved any rooms yet!
+                    <p><a href="{% url 'room_list' %}">Go searching</a></p>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

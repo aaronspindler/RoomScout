@@ -33,9 +33,8 @@ def contactus(request):
 	return render(request, 'main/contactus.html', {'captcha': captcha})
 
 
-# TODO Finish
-def reportbug(request):
-	return render(request, 'main/reportbug.html')
+def features(request):
+	return render(request, 'main/features.html')
 
 
 def licenses(request):

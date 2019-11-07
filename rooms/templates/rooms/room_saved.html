@@ -9,46 +9,44 @@
 {% block content %}
     <div class="container">
         <h2>Saved Rooms</h2>
-        <div class="row">
-            {% if saved_rooms.count > 0 %}
-            {% for room in saved_rooms %}
-                <div class="col-md-12">
-                    <div class="card mb-2 shadow-sm">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-5">
-                                    <a href="{% url 'room_detail' room.room.pk %}"><h4 class="card-text">{{ room.room.name }}</h4></a>
-                                    <small>{{ room.room.house.full_address }}</small>
-                                    <br>
-                                    <strong>Price:</strong> ${{ room.price }}
-                                    <br>
-                                    {% if room.room.description != '' %}
-                                        <strong>Description:</strong>
-                                        <div class="container">
-                                            {{ room.room.description | linebreaks }}
+        {% if saved_rooms.count > 0 %}
+            <div class="row">
+
+                {% for room in saved_rooms %}
+                    <div class="col-md-12">
+                        <div class="card mb-2 shadow-sm">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <a href="{% url 'room_detail' room.room.pk %}"><h4 class="card-text">{{ room.room.name }}</h4></a>
+                                        <small>{{ room.room.house.full_address }}</small>
+                                        <br>
+                                        <strong>Price:</strong> ${{ room.price }}
+                                        <br>
+                                        {% if room.room.description != '' %}
+                                            <strong>Description:</strong>
+                                            <div class="container">
+                                                {{ room.room.description | linebreaks }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-6">
+                                        <h6>Posted: {{ room.room.get_time_difference_display }}</h6>
+                                        <img class="img-fluid" width="300" src="{{ room.room.get_first_image }}" alt="No Images">
+                                    </div>
+                                    {% if user.is_authenticated %}
+                                        <div class="col-1 text-center">
+                                            <a href="{% url 'room_unlike' room.room.pk %}"><img class="img-fluid" width="25" alt="Liked" src="{% static 'icons/heart_filled.svg' %}"></a>
                                         </div>
                                     {% endif %}
                                 </div>
-                                <div class="col-6">
-                                    <h6>Posted: {{ room.room.get_time_difference_display }}</h6>
-                                    <img class="img-fluid" width="300" src="{{ room.room.get_first_image }}" alt="No Images">
-                                </div>
-                                {% if user.is_authenticated %}
-                                    <div class="col-1 text-center">
-                                        <a href="{% url 'room_unlike' room.room.pk %}"><img class="img-fluid" width="25" alt="Liked" src="{% static 'icons/heart_filled.svg' %}"></a>
-                                    </div>
-                                {% endif %}
                             </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-            {% else %}
-                <div class="container">
-                    Looks like you haven't saved any rooms yet!
-                    <p><a href="{% url 'room_list' %}">Go searching</a></p>
-                </div>
-            {% endif %}
-        </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Looks like you haven't saved any rooms yet! <a href="{% url 'room_list' %}">Go searching</a></p>
+        {% endif %}
     </div>
 {% endblock %}

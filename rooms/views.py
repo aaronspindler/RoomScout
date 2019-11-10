@@ -64,6 +64,7 @@ def room_like(request, pk):
         new_room_like.room = room
         new_room_like.save()
 
+    # TODO Make this return a simple success instead of a redirect
     return redirect('room_list')
 
 
@@ -75,6 +76,7 @@ def room_unlike(request, pk):
     roomlike = roomlike.first()
     roomlike.delete()
 
+    # TODO Make this return a simple success instead of a redirect
     return redirect('room_list')
 
 

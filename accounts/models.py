@@ -24,7 +24,6 @@ class User(AbstractUser):
 	promo_contact = models.BooleanField(default=False)
 
 	# Generated Fields
-	_unsubscribe_key = models.UUIDField(default=uuid.uuid4)
 	_score = models.DecimalField(decimal_places=2, max_digits=5, default=0.0)
 	is_premium_member = models.BooleanField(default=True)
 

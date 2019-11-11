@@ -5,8 +5,9 @@ import boto3
 from PIL import Image, ExifTags
 from django.conf import settings
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
-from Roomscout.settings import BASE_DIR
 from Roomscout.storage_backends import PrivateMediaStorage
 from accounts.models import User
 from bills.models import Bill
@@ -38,30 +39,6 @@ class PublicImage(models.Model):
 	def save(self):
 		super(PublicImage, self).save()
 		self.verify_image()
-		self.rotate_image()
-
-	def rotate_image(self):
-		try:
-			# TODO Download image from s3
-			filepath = os.path.join(os.path.dirname(BASE_DIR)) + self.image.url
-			# Load S3 image into Pillow image
-			image = Image.open(filepath)
-			for orientation in ExifTags.TAGS.keys():
-				if ExifTags.TAGS[orientation] == 'Orientation':
-					break
-			exif = dict(image._getexif().items())
-
-			if exif[orientation] == 3:
-				image = image.rotate(180, expand=True)
-			elif exif[orientation] == 6:
-				image = image.rotate(270, expand=True)
-			elif exif[orientation] == 8:
-				image = image.rotate(90, expand=True)
-			image.save(filepath)
-			image.close()
-		except (AttributeError, KeyError, IndexError):
-		# cases: image don't have getexif
-			pass
 
 
 class PrivateImage(models.Model):
@@ -97,3 +74,36 @@ class PhoneNumberVerification(models.Model):
 
 	def generate_code(self):
 		self.code = randint(10000, 99999)
+
+
+def rotate_image(image):
+	try:
+		#file path needs to be a local file not s3 file
+		image = Image.open(image)
+		for orientation in ExifTags.TAGS.keys():
+			if ExifTags.TAGS[orientation] == 'Orientation':
+				break
+		exif = dict(image._getexif().items())
+		print(exif[orientation])
+
+		if exif[orientation] == 3:
+			image = image.rotate(180, expand=True)
+			print('rotated 180')
+		elif exif[orientation] == 6:
+			image = image.rotate(270, expand=True)
+			print('rotated 270')
+		elif exif[orientation] == 8:
+			image = image.rotate(90, expand=True)
+			print('rotated 90')
+		# needs to be saved back to s3
+		image.close()
+	except (AttributeError, KeyError, IndexError):
+		# cases: image don't have getexif
+		print('no exif data')
+
+
+@receiver(post_save, sender=RoomImage)
+def update_image(sender, instance, **kwargs):
+	if instance.image:
+		print('recieved')
+		rotate_image(instance.image)

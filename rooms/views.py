@@ -9,7 +9,7 @@ from django.views import generic
 
 from houses.models import House
 from utils.captcha import Captcha
-from utils.emailclient import send_inquiry_email
+from emails.senders import send_inquiry_email
 from utils.models import RoomImage
 from .forms import FilterForm
 from .models import Room, Inquiry, RoomLike

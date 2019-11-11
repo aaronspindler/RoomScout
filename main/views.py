@@ -64,4 +64,4 @@ def server_error(request):
 
 @staff_member_required
 def sandbox(request):
-	return render(request, 'main/sandbox.html')
+	return render(request, 'emails/_base.html')

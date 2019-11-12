@@ -1,7 +1,7 @@
+import boto3
+
 from io import BytesIO
 from random import randint
-
-import boto3
 from PIL import ExifTags
 from PIL import Image as Img
 from django.conf import settings

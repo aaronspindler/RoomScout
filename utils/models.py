@@ -1,12 +1,12 @@
-import os
+from io import BytesIO
 from random import randint
 
 import boto3
-from PIL import Image, ExifTags
+from PIL import ExifTags
+from PIL import Image as Img
 from django.conf import settings
+from django.core.files import File
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 from Roomscout.storage_backends import PrivateMediaStorage
 from accounts.models import User
@@ -36,8 +36,7 @@ class PublicImage(models.Model):
 			self.is_approved = True
 		super(PublicImage, self).save()
 
-	def save(self):
-
+	def save(self, **kwargs):
 		if self.image:
 			pilImage = Img.open(BytesIO(self.image.read()))
 			for orientation in ExifTags.TAGS.keys():
@@ -53,7 +52,7 @@ class PublicImage(models.Model):
 				pilImage = pilImage.rotate(90, expand=True)
 
 			output = BytesIO()
-			pilImage.save(output, format='JPEG', quality=75)
+			pilImage.save(output, format='JPEG', quality=100)
 			output.seek(0)
 			self.image = File(output, self.image.name)
 

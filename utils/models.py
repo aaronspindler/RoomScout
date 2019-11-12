@@ -37,6 +37,26 @@ class PublicImage(models.Model):
 		super(PublicImage, self).save()
 
 	def save(self):
+
+		if self.image:
+			pilImage = Img.open(BytesIO(self.image.read()))
+			for orientation in ExifTags.TAGS.keys():
+				if ExifTags.TAGS[orientation] == 'Orientation':
+					break
+			exif = dict(pilImage._getexif().items())
+
+			if exif[orientation] == 3:
+				pilImage = pilImage.rotate(180, expand=True)
+			elif exif[orientation] == 6:
+				pilImage = pilImage.rotate(270, expand=True)
+			elif exif[orientation] == 8:
+				pilImage = pilImage.rotate(90, expand=True)
+
+			output = BytesIO()
+			pilImage.save(output, format='JPEG', quality=75)
+			output.seek(0)
+			self.image = File(output, self.image.name)
+
 		super(PublicImage, self).save()
 		self.verify_image()
 
@@ -74,36 +94,3 @@ class PhoneNumberVerification(models.Model):
 
 	def generate_code(self):
 		self.code = randint(10000, 99999)
-
-
-def rotate_image(image):
-	try:
-		#file path needs to be a local file not s3 file
-		image = Image.open(image)
-		for orientation in ExifTags.TAGS.keys():
-			if ExifTags.TAGS[orientation] == 'Orientation':
-				break
-		exif = dict(image._getexif().items())
-		print(exif[orientation])
-
-		if exif[orientation] == 3:
-			image = image.rotate(180, expand=True)
-			print('rotated 180')
-		elif exif[orientation] == 6:
-			image = image.rotate(270, expand=True)
-			print('rotated 270')
-		elif exif[orientation] == 8:
-			image = image.rotate(90, expand=True)
-			print('rotated 90')
-		# needs to be saved back to s3
-		image.close()
-	except (AttributeError, KeyError, IndexError):
-		# cases: image don't have getexif
-		print('no exif data')
-
-
-@receiver(post_save, sender=RoomImage)
-def update_image(sender, instance, **kwargs):
-	if instance.image:
-		print('recieved')
-		rotate_image(instance.image)

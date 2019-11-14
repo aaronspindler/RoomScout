@@ -1,0 +1,14 @@
+{% extends 'emails/_base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    Roomscout.ca | Someone has tried to contact us
+{% endblock %}
+
+{% block content %}
+    <p>Someone has tried to contact us</p>
+    <p>From: {{ email }}</p>
+    <p>Subject: {{ subject }}</p>
+    <p>Message: {{ message }}</p>
+    <p>IP: {{ ip }}</p>
+{% endblock %}

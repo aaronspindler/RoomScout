@@ -12,7 +12,7 @@ from bills.models import BillSet, Bill
 from rooms.models import Room
 from utils.captcha import Captcha
 from utils.datetime import now
-from utils.emailclient import send_invite_email, send_bill_email
+from emails.senders import send_invite_email, send_bill_email
 from utils.models import RoomImage, BillFile
 from utils.date import check_format
 from utils.streetview import load_house_image

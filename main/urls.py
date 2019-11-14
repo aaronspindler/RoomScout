@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from accounts.views import settings, preferences, verification
+from accounts.views import settings, preferences, verification, email_unsubscribe
 from . import views
 
 urlpatterns = [
@@ -23,10 +23,10 @@ urlpatterns = [
 	path('settings', settings, name='settings'),
 	path('settings/preferences', preferences, name='settings_preferences'),
 	path('settings/verification', verification, name='settings_verification'),
+	path('settings/unsubscribe', email_unsubscribe, name='email_unsubscribe'),
 
 	# Bills
 	path('bill/', include('bills.urls')),
-
 	# Houses
 	path('house/', include('houses.urls')),
 	# Rooms

@@ -33,8 +33,12 @@ def contactus(request):
 	return render(request, 'main/contactus.html', {'captcha': captcha})
 
 
-def features(request):
-	return render(request, 'main/features.html')
+def billfeatures(request):
+	return render(request, 'main/billfeatures.html')
+
+
+def verificationfeatures(request):
+	return render(request, 'main/verificationfeatures.html')
 
 
 def licenses(request):

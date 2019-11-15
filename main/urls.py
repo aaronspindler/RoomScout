@@ -7,8 +7,9 @@ urlpatterns = [
 	# Content Pages
 	path('', views.home, name='home'),
 	path('about', views.about, name='about'),
+	path('features/bill', views.billfeatures, name='billfeatures'),
+	path('features/verification', views.verificationfeatures, name='verificationfeatures'),
 	path('contactus', views.contactus, name='contactus'),
-	path('features', views.features, name='features'),
 	path('licenses', views.licenses, name='licenses'),
 	path('privacypolicy', views.privacypolicy, name='privacypolicy'),
 	path('termsofuse', views.termsofuse, name='termsofuse'),

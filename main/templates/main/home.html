@@ -15,16 +15,18 @@
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
             <li data-target="#myCarousel" data-slide-to="1"></li>
             <li data-target="#myCarousel" data-slide-to="2"></li>
+            <li data-target="#myCarousel" data-slide-to="3"></li>
         </ol>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <svg class="bd-placeholder-img" width="100%" height="300" xmlns="http://www.w3.org/2000/svg"preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
+                <svg class="bd-placeholder-img" width="100%" height="300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false"
+                     role="img">
                     <rect width="100%" height="100%" fill="#7472DF"></rect>
                 </svg>
                 <div class="container">
                     <div class="carousel-caption text-left">
-                        <h1>Looking for a housemate?</h1>
-                        <p>We all need some help, find someone to split expenses with!</p>
+                        <h1>Find the perfect roommate!</h1>
+                        <p>Roomscout helps you find the perfect roommate</p>
                         {% if user.is_authenticated %}
                             <p><a class="btn btn-lg btn-primary" href="{% url 'room_create' %}" role="button">Post your
                                 room now!</a></p>
@@ -37,32 +39,41 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <svg class="bd-placeholder-img" width="100%" height="300" xmlns="http://www.w3.org/2000/svg"preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
+                <svg class="bd-placeholder-img" width="100%" height="300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false"
+                     role="img">
                     <rect width="100%" height="100%" fill="#5EDDAA"></rect>
                 </svg>
                 <div class="container">
                     <div class="carousel-caption">
-                        <h1>Looking to rent a room?</h1>
-                        <p>Find the perfect place to live!</p>
+                        <h1>Find The Perfect Room</h1>
+                        <p>Find the perfect place to live and the best roommates to live with!</p>
                         <p><a class="btn btn-lg btn-primary" href="{% url 'room_list' %}" role="button">Search Now!</a></p>
                     </div>
                 </div>
             </div>
             <div class="carousel-item">
-                <svg class="bd-placeholder-img" width="100%" height="300" xmlns="http://www.w3.org/2000/svg"preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
+                <svg class="bd-placeholder-img" width="100%" height="300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false"
+                     role="img">
                     <rect width="100%" height="100%" fill="#65A5DA"></rect>
                 </svg>
                 <div class="container">
                     <div class="carousel-caption text-right">
-                        <h1>Looking to manage expenses?</h1>
-                        <p>RoomScout easily manages expenses and splitting of bills</p>
-                        {% if user.is_authenticated %}
-                            <p><a class="btn btn-lg btn-primary" href="{% url 'room_create' %}" role="button">Start
-                                Managing!</a></p>
-                        {% else %}
-                            <p><a class="btn btn-lg btn-primary" href="{% url 'account_signup' %}" role="button">Sign Up!</a>
-                            </p>
-                        {% endif %}
+                        <h1>Manage Bills</h1>
+                        <p>Manage household utility bills, splitting of bills, and gain insight into your future bills</p>
+                        <p><a class="btn btn-lg btn-primary" href="{% url 'billfeatures' %}" role="button">See it in action!</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <svg class="bd-placeholder-img" width="100%" height="300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false"
+                     role="img">
+                    <rect width="100%" height="100%" fill="#7472DF"></rect>
+                </svg>
+                <div class="container">
+                    <div class="carousel-caption text-left">
+                        <h1>Verify and Vet Prospective Roommates</h1>
+                        <p>Using advanced technology RoomScout allows you to vet prospective roommates based on more than just their credit score</p>
+                        <p><a class="btn btn-lg btn-primary" href="{% url 'verificationfeatures' %}" role="button">Learn More!</a></p>
                     </div>
                 </div>
             </div>

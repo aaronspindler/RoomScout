@@ -7,22 +7,29 @@
             <small class="d-block mb-3 text-muted">&copy; 2019</small>
         </div>
         <div class="col-6 col-md">
-            <h5>Pages</h5>
+            <h5>Features</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="text-muted" href="{% url 'billfeatures' %}">Bill Features</a></li>
+                <li><a class="text-muted" href="{% url 'verificationfeatures' %}">Verification Features</a></li>
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>Company</h5>
             <ul class="list-unstyled text-small">
                 <li><a class="text-muted" href="{% url 'about' %}">About</a></li>
-                <li><a class="text-muted" href="{% url 'contactus' %}">Contact Us</a></li>
                 <li><a class="text-muted" href="{% url 'blog_home' %}">Blog</a></li>
             </ul>
         </div>
         <div class="col-6 col-md">
-            <h5>Legal</h5>
+            <h5>Support</h5>
             <ul class="list-unstyled text-small">
+                <li><a class="text-muted" href="{% url 'contactus' %}">Contact Us</a></li>
                 <li><a class="text-muted" href="{% url 'privacypolicy' %}">Privacy Policy</a></li>
                 <li><a class="text-muted" href="{% url 'termsofuse' %}">Terms of Use</a></li>
             </ul>
         </div>
         <div class="col-6 col-md">
-            <h5>Social</h5>
+            <h5>Community</h5>
             <ul class="list-unstyled text-small">
                 <li><a class="text-muted" href="https://www.linkedin.com/company/roomscout-ca/"><img width="20" src="{% static 'logos/linkedin.png' %}"></a></li>
                 <li><a class="text-muted" href="https://twitter.com/room_scout/"><img width="20" src="{% static 'logos/twitter.png' %}"></a></li>

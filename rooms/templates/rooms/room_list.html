@@ -15,7 +15,9 @@
 
     <div class="container">
         <h2>Find a Room</h2>
+    {% if user.is_authenticated %}
         <a href="{% url 'room_saved' %}">Saved Rooms</a>
+    {% endif %}
         <form method="POST">
             {% csrf_token %}
             <div class="form-row">
@@ -76,15 +78,27 @@
                                         <h6>Posted: {{ room.get_time_difference_display }}</h6>
                                         <img class="img-fluid" width="300" src="{{ room.get_first_image }}" alt="No Images">
                                     </div>
-                                {% if user.is_authenticated %}
-                                    <div class="col-1 text-center">
-                                        {% if room in saved_rooms %}
-                                            <a href="{% url 'room_unlike' room.pk %}"><img class="img-fluid" width="25" alt="Liked" src="{% static 'icons/heart_filled.svg' %}"></a>
-                                        {% else %}
-                                            <a href="{% url 'room_like' room.pk %}"><img class="img-fluid" width="25" alt="Unliked" src="{% static 'icons/heart_empty.svg' %}"></a>
-                                        {% endif %}
-                                    </div>
-                                {% endif %}
+                                    {% if user.is_authenticated %}
+                                        <div class="col-1 text-center">
+                                            {% if room in saved_rooms %}
+                                                <img
+                                                    id="room_{{ room.pk }}"
+                                                    onclick="unlike({{ room.pk }})"
+                                                    class="img-fluid" width="25"
+                                                    alt="Liked"
+                                                    src="{% static 'icons/heart_filled.svg' %}"
+                                                />
+                                            {% else %}
+                                                <img
+                                                    id="room_{{ room.pk }}"
+                                                    onclick="like({{ room.pk }})"
+                                                    class="img-fluid" width="25"
+                                                    alt="Unliked"
+                                                    src="{% static 'icons/heart_empty.svg' %}"
+                                                />
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -99,4 +113,29 @@
         {% endif %}
 
     </div>
+    <script type="text/javascript">
+        function like(pk) {
+            const icon = document.getElementById("room_" + pk );
+            icon.src = "{% static 'icons/loading.svg' %}";
+            $.get( `/room/${pk}/like` , data => {
+                $( ".result" ).html( data );
+                icon.onclick = unlike.bind(null, pk);
+                icon.src = "{% static 'icons/heart_filled.svg' %}";
+            }).fail(() => {
+                icon.src = "{% static 'icons/heart_empty.svg' %}";
+            });
+        }
+
+        function unlike(pk) {
+            const icon = document.getElementById("room_" + pk );
+            icon.src = "{% static 'icons/loading.svg' %}";
+            $.get(`/room/${pk}/unlike`, data => {
+                $( ".result" ).html( data );
+                icon.onclick = like.bind(null, pk);
+                icon.src = "{% static 'icons/heart_empty.svg' %}";
+            }).fail(() => {
+                icon.src = "{% static 'icons/heart_filled.svg' %}";
+            });
+        }
+    </script>
 {% endblock %}

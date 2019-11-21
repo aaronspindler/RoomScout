@@ -1,7 +1,11 @@
-from random import randint
-
 import boto3
+
+from io import BytesIO
+from random import randint
+from PIL import ExifTags
+from PIL import Image as Img
 from django.conf import settings
+from django.core.files import File
 from django.db import models
 
 from Roomscout.storage_backends import PrivateMediaStorage
@@ -23,9 +27,8 @@ class PublicImage(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	image = models.ImageField()
 
-	def check_image(self):
-		client = boto3.client('rekognition', aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-		                      aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY, region_name='us-east-1')
+	def verify_image(self):
+		client = boto3.client('rekognition', aws_access_key_id=settings.AWS_ACCESS_KEY_ID, aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY, region_name='us-east-1')
 		response = client.detect_moderation_labels(Image={'S3Object': {'Bucket': 'roomscout-public', 'Name': self.image.name}})
 		if len(response['ModerationLabels']) > 0:
 			self.is_approved = False
@@ -33,9 +36,28 @@ class PublicImage(models.Model):
 			self.is_approved = True
 		super(PublicImage, self).save()
 
-	def save(self):
+	def save(self, **kwargs):
+		if self.image:
+			pilImage = Img.open(BytesIO(self.image.read()))
+			for orientation in ExifTags.TAGS.keys():
+				if ExifTags.TAGS[orientation] == 'Orientation':
+					break
+			exif = dict(pilImage._getexif().items())
+
+			if exif[orientation] == 3:
+				pilImage = pilImage.rotate(180, expand=True)
+			elif exif[orientation] == 6:
+				pilImage = pilImage.rotate(270, expand=True)
+			elif exif[orientation] == 8:
+				pilImage = pilImage.rotate(90, expand=True)
+
+			output = BytesIO()
+			pilImage.save(output, format='JPEG', quality=100)
+			output.seek(0)
+			self.image = File(output, self.image.name)
+
 		super(PublicImage, self).save()
-		self.check_image()
+		self.verify_image()
 
 
 class PrivateImage(models.Model):

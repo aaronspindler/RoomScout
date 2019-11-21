@@ -96,6 +96,7 @@ INSTALLED_APPS = [
 	'utils',
 	'dashboard',
 	'marketing',
+	'emails',
 ]
 
 MIDDLEWARE = [

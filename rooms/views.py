@@ -9,7 +9,7 @@ from django.views import generic
 
 from houses.models import House
 from utils.captcha import Captcha
-from utils.emailclient import send_inquiry_email
+from emails.senders import send_inquiry_email
 from utils.models import RoomImage
 from .forms import FilterForm
 from .models import Room, Inquiry, RoomLike
@@ -40,7 +40,7 @@ def room_list(request):
 
     else:
         search_term = ''
-        rooms = Room.objects.filter(is_available=True)
+        rooms = Room.objects.filter(is_available=True).order_by('-updated_at')
     saved_rooms = get_saved_rooms(request)
     return render(request, 'rooms/room_list.html', {'rooms': rooms, 'saved_rooms': saved_rooms,'filter_form': filter_form, 'search_term': search_term})
 
@@ -64,6 +64,7 @@ def room_like(request, pk):
         new_room_like.room = room
         new_room_like.save()
 
+    # TODO Make this return a simple success instead of a redirect
     return redirect('room_list')
 
 
@@ -75,6 +76,7 @@ def room_unlike(request, pk):
     roomlike = roomlike.first()
     roomlike.delete()
 
+    # TODO Make this return a simple success instead of a redirect
     return redirect('room_list')
 
 

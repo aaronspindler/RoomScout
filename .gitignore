@@ -5,6 +5,7 @@ __pycache__/
 
 # Custom
 Roomscout/static
+static/
 .idea/
 Roomscout/local_settings.py
 .DS_Store

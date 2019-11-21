@@ -3,7 +3,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect
 
 from utils.captcha import Captcha
-from utils.emailclient import send_contact_us_email
+from emails.senders import send_contact_us_email
 from utils.ipaddress import get_IP
 from .models import ContactMessage
 
@@ -33,9 +33,12 @@ def contactus(request):
 	return render(request, 'main/contactus.html', {'captcha': captcha})
 
 
-# TODO Finish
-def reportbug(request):
-	return render(request, 'main/reportbug.html')
+def billfeatures(request):
+	return render(request, 'main/billfeatures.html')
+
+
+def verificationfeatures(request):
+	return render(request, 'main/verificationfeatures.html')
 
 
 def licenses(request):
@@ -64,4 +67,4 @@ def server_error(request):
 
 @staff_member_required
 def sandbox(request):
-	return render(request, 'main/sandbox.html')
+	return render(request, 'emails/_base.html')

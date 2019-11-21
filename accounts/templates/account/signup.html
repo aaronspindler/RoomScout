@@ -18,7 +18,8 @@
         <form method="POST">
             {% csrf_token %}
             {{ form | crispy }}
-            <p>By clicking Sign up, you agree to our <a href="{% url 'termsofuse' %}">Terms of Use</a> and that you have read our <a href="{% url 'privacypolicy' %}">Privacy Policy</a></P>
+            <p>By clicking Sign up, you agree to our <a href="{% url 'termsofuse' %}">Terms of Use</a> and that you have read our <a href="{% url 'privacypolicy' %}">Privacy
+                Policy</a></P>
             <button type="submit" class="btn btn-primary">Sign Up!</button>
         </form>
     </div>

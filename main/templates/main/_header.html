@@ -23,7 +23,7 @@
             {% endif %}
         </ul>
         {% if user.is_authenticated == False %}
-            <a class="btn btn-outline-primary mx-2" href="{% url 'account_login' %}">Log In <span class="oi oi-account-login"></span></a>
+            <a class="btn btn-outline-primary mx-2" href="{% url 'account_login' %}">Log In</a>
             <a class="btn btn-outline-primary mx-2" href="{% url 'account_signup' %}">Sign up</a>
         {% else %}
             <a class="p-2 text-dark nav-item nav-link" href="{% url 'main_dashboard' %}">Dashboard <span class="oi oi-home"></span></a>

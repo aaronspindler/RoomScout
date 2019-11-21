@@ -21,7 +21,7 @@
                                         <a href="{% url 'room_detail' room.room.pk %}"><h4 class="card-text">{{ room.room.name }}</h4></a>
                                         <small>{{ room.room.house.full_address }}</small>
                                         <br>
-                                        <strong>Price:</strong> ${{ room.price }}
+                                        <strong>Price:</strong> ${{ room.room.price }}
                                         <br>
                                         {% if room.room.description != '' %}
                                             <strong>Description:</strong>

@@ -101,6 +101,7 @@ INSTALLED_APPS = [
 	'dashboard',
 	'marketing',
 	'emails',
+	'payments',
 ]
 
 MIDDLEWARE = [

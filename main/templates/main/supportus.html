@@ -14,7 +14,7 @@
         <p>We have tried to develop Roomscout.ca with a very tight budget and bootstrapping the company, however there are some things that we just can't get around.</p>
         <hr>
         <div>
-            <h4>Monthly Cost Breakdown</h4>
+            <h3>Monthly Cost Breakdown</h3>
             <table style="width:100%">
                 <tr>
                     <th>Expense</th>
@@ -45,6 +45,29 @@
                     <td><b>$66.60 Per Month</b></td>
                 </tr>
             </table>
+        </div>
+        <hr>
+        <div class="text-center">
+            <h3>Donate</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>Buy for $5.00</h2>
+                    <form action="{% url 'payment_charge' %}" method="post">
+                        {% csrf_token %}
+                        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                data-key="{{ key }}"
+                                data-description="A Django Charge"
+                                data-amount="500"
+                                data-locale="auto"></script>
+                    </form>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+                <div class="col-md-4">
+
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

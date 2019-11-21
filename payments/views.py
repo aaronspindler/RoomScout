@@ -5,11 +5,11 @@ from django.shortcuts import render
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-def payment_charge(request):
+def payment_donation(request):
     if request.method == 'POST':
         charge = stripe.Charge.create(
             amount=500,
-            currency='usd',
+            currency='cad',
             description='A Django charge',
             source=request.POST['stripeToken']
         )

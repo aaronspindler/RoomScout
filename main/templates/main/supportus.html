@@ -52,13 +52,15 @@
             <div class="row">
                 <div class="col-md-4">
                     <h2>Buy for $5.00</h2>
-                    <form action="{% url 'payment_charge' %}" method="post">
+                    <form action="{% url 'payment_donation' %}" method="post">
                         {% csrf_token %}
                         <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                 data-key="{{ key }}"
-                                data-description="A Django Charge"
+                                data-description="Roomscout Donation - $5"
                                 data-amount="500"
-                                data-locale="auto"></script>
+                                data-locale="auto"
+                                data-currency="cad">
+                        </script>
                     </form>
                 </div>
                 <div class="col-md-4">

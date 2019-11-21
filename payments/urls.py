@@ -4,5 +4,5 @@ from . import views
 
 urlpatterns = [
     # Content Pages
-    path('charge', views.payment_charge, name='payment_charge'),
+    path('donation', views.payment_donation, name='payment_donation'),
 ]

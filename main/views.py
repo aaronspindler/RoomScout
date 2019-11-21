@@ -37,6 +37,10 @@ def billfeatures(request):
 	return render(request, 'main/billfeatures.html')
 
 
+def supportus(request):
+	return render(request, 'main/supportus.html')
+
+
 def verificationfeatures(request):
 	return render(request, 'main/verificationfeatures.html')
 

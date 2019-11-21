@@ -40,7 +40,7 @@ def room_list(request):
 
     else:
         search_term = ''
-        rooms = Room.objects.filter(is_available=True)
+        rooms = Room.objects.filter(is_available=True).order_by('-updated_at')
     saved_rooms = get_saved_rooms(request)
     return render(request, 'rooms/room_list.html', {'rooms': rooms, 'saved_rooms': saved_rooms,'filter_form': filter_form, 'search_term': search_term})
 

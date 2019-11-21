@@ -37,24 +37,28 @@ class PublicImage(models.Model):
 		super(PublicImage, self).save()
 
 	def save(self, **kwargs):
+		# This should only be checked if there is exif data
 		if self.image:
-			pilImage = Img.open(BytesIO(self.image.read()))
-			for orientation in ExifTags.TAGS.keys():
-				if ExifTags.TAGS[orientation] == 'Orientation':
-					break
-			exif = dict(pilImage._getexif().items())
+			try:
+				pilImage = Img.open(BytesIO(self.image.read()))
+				for orientation in ExifTags.TAGS.keys():
+					if ExifTags.TAGS[orientation] == 'Orientation':
+						break
+				exif = dict(pilImage._getexif().items())
 
-			if exif[orientation] == 3:
-				pilImage = pilImage.rotate(180, expand=True)
-			elif exif[orientation] == 6:
-				pilImage = pilImage.rotate(270, expand=True)
-			elif exif[orientation] == 8:
-				pilImage = pilImage.rotate(90, expand=True)
+				if exif[orientation] == 3:
+					pilImage = pilImage.rotate(180, expand=True)
+				elif exif[orientation] == 6:
+					pilImage = pilImage.rotate(270, expand=True)
+				elif exif[orientation] == 8:
+					pilImage = pilImage.rotate(90, expand=True)
 
-			output = BytesIO()
-			pilImage.save(output, format='JPEG', quality=100)
-			output.seek(0)
-			self.image = File(output, self.image.name)
+				output = BytesIO()
+				pilImage.save(output, format='JPEG', quality=100)
+				output.seek(0)
+				self.image = File(output, self.image.name)
+			except Exception:
+				pass
 
 		super(PublicImage, self).save()
 		self.verify_image()

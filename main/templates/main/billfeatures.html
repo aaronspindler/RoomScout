@@ -8,6 +8,28 @@
 {% block content %}
     <div class="container">
         <h2>Bill Features</h2>
+        <div class="row featurette">
+            <div class="col-md-7 order-md-2">
+                <h4 class="featurette-heading">Bill Learning<span class="text-muted"> Submit more data so more insights can be generated</span></h4>
+                <p class="lead">Bills are analyzed each month to provide useful insights such as bill predictions</p>
+            </div>
+            <div class="col-md-5 order-md-1">
+                <img class="img-fluid" width="500" src="{% static 'main/billgraph.png' %}">
+            </div>
+        </div>
 
+        <br>
+
+        <div class="row featurette">
+            <div class="col-md-7">
+                <h4 class="featurette-heading">Bill Organization <span class="text-muted">Keep your life organized</span></h4>
+                <p class="lead">Keep on top of your bills and make sure that they are paid. Roomscout will automatically notify house members when a new bill is added. Pick between notifying roommates when a bill is added or notifying at the end of the month.</p>
+            </div>
+            <div class="col-md-5">
+                <img class="img-fluid" width="500" src="{% static 'main/billorganization.png' %}">
+            </div>
+        </div>
+
+        <br>
     </div>
 {% endblock %}

@@ -1,4 +1,3 @@
-# Create your tests here.
 from django.test import TestCase
 from django.urls import reverse
 
@@ -27,6 +26,30 @@ class MainTests(TestCase):
 		self.assertContains(response, 'Contact')
 		self.assertNotContains(response, 'This should not be contained!')
 		self.assertTemplateUsed(response, 'main/contactus.html')
+
+	def test_billfeatures_view(self):
+		print("Testing main.views.billfeatures()")
+		response = self.client.get(reverse('billfeatures'))
+		self.assertEqual(response.status_code, 200)
+		self.assertContains(response, 'Bill Features')
+		self.assertNotContains(response, 'This should not be contained!')
+		self.assertTemplateUsed(response, 'main/billfeatures.html')
+
+	def test_supportus_view(self):
+		print("Testing main.views.supportus()")
+		response = self.client.get(reverse('supportus'))
+		self.assertEqual(response.status_code, 200)
+		self.assertContains(response, 'Support Us')
+		self.assertNotContains(response, 'This should not be contained!')
+		self.assertTemplateUsed(response, 'main/supportus.html')
+
+	def test_verificationfeatures_view(self):
+		print("Testing main.views.verificationfeatures()")
+		response = self.client.get(reverse('verificationfeatures'))
+		self.assertEqual(response.status_code, 200)
+		self.assertContains(response, 'Verification Feature')
+		self.assertNotContains(response, 'This should not be contained!')
+		self.assertTemplateUsed(response, 'main/verificationfeatures.html')
 
 	def test_licenses_view(self):
 		print("Testing main.views.licenses()")

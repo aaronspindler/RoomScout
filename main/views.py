@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect
+from django.conf import settings
 
 from utils.captcha import Captcha
 from emails.senders import send_contact_us_email
@@ -35,6 +36,11 @@ def contactus(request):
 
 def billfeatures(request):
 	return render(request, 'main/billfeatures.html')
+
+
+def supportus(request):
+	key = settings.STRIPE_KEY
+	return render(request, 'main/supportus.html', {'key': key})
 
 
 def verificationfeatures(request):

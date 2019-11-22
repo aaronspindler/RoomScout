@@ -1,16 +1,23 @@
 import stripe
 from django.conf import settings
 from django.shortcuts import render
+from .models import Donation
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-def payment_donation(request):
+def payment_donation(request, amount):
     if request.method == 'POST':
         charge = stripe.Charge.create(
-            amount=500,
+            amount=amount * 100,
             currency='cad',
-            description='A Django charge',
+            description='Donation - ${}'.format(amount),
             source=request.POST['stripeToken']
         )
+        
+        donation = Donation()
+        donation.email = request.POST['stripeEmail']
+        donation.amount = amount * 1.00
+        donation.save()
+        
         return render(request, 'main/home.html')

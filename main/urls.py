@@ -37,4 +37,6 @@ urlpatterns = [
 	path('m/', include('marketing.urls')),
 	# Payments
 	path('payment/', include('payments.urls')),
+	# Easter Eggs
+	path('ee/', include('eggs.urls')),
 ]

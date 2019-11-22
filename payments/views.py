@@ -1,6 +1,6 @@
 import stripe
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Donation
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -20,4 +20,4 @@ def payment_donation(request, amount):
         donation.amount = amount * 1.00
         donation.save()
         
-        return render(request, 'main/home.html')
+        return redirect('ee_dog')

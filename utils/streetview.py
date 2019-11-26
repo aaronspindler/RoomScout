@@ -11,7 +11,7 @@ def load_house_image(house):
 		image = HouseImage()
 		image.user = house.user
 		image.house = house
-		image.image.save('houseimage.png', File(open(data[0], 'rb')))
+		image.image.save()
 		image.save()
 	except Exception:
 		pass

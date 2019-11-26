@@ -54,7 +54,7 @@ class PublicImage(models.Model):
 					pilImage = pilImage.rotate(90, expand=True)
 
 				output = BytesIO()
-				pilImage.save(output, format='JPEG', quality=100)
+				pilImage.save()
 				output.seek(0)
 				self.image = File(output, self.image.name)
 			except Exception:

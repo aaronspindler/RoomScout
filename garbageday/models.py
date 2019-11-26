@@ -11,13 +11,12 @@ class GarbageDay(models.Model):
 
 	last_garbage_day = models.DateField()
 	next_garbage_day = models.DateField()
-	garbage_frequency = models.DurationField()
+	garbage_frequency = models.DurationField(null=True)
 
 	def calculate_garbage_frequency(self):
 		delta = datetime.strptime(self.next_garbage_day, '%Y-%m-%d') - datetime.strptime(self.last_garbage_day, '%Y-%m-%d')
 		self.garbage_frequency = delta
-		self.save()
 
-
-#house.last_garbage_day = "2019-11-11"
-#house.next_garbage_day = "2019-11-25"
+	def save(self, **kwargs):
+		self.calculate_garbage_frequency()
+		super(GarbageDay, self).save()

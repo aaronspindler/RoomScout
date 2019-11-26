@@ -9,8 +9,11 @@ class GarbageDay(models.Model):
 
 	house = models.ForeignKey(House, on_delete=models.CASCADE)
 
+	# User Inputted
 	last_garbage_day = models.DateField()
 	next_garbage_day = models.DateField()
+
+	# Generated
 	garbage_frequency = models.DurationField(null=True)
 
 	def calculate_garbage_frequency(self):

@@ -53,9 +53,7 @@ def house_create(request):
             load_house_image(house)
 
             return redirect('house_detail', pk=house.id)
-        return render(request, 'houses/house_create.html',
-                      {'error': 'There is an issue with the address inputted!', 'GOOGLE_API_KEY': GOOGLE_API_KEY,
-                       'captcha': captcha})
+        return render(request, 'houses/house_create.html', {'error': 'There is an issue with the address inputted!', 'GOOGLE_API_KEY': GOOGLE_API_KEY, 'captcha': captcha})
     else:
         return render(request, 'houses/house_create.html', {'GOOGLE_API_KEY': GOOGLE_API_KEY, 'captcha': captcha})
 

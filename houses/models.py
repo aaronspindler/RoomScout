@@ -1,5 +1,4 @@
 import uuid
-from datetime import timedelta, datetime
 from decimal import Decimal
 
 import requests
@@ -40,12 +39,6 @@ class House(models.Model):
 	transit_score_description = models.TextField(default='')
 	transit_score_summary = models.TextField(default='')
 
-	# House Information
-	garbage_day_set = models.BooleanField(default=False)
-	last_garbage_day = models.DateField(default='1997-11-04')
-	next_garbage_day = models.DateField(default='1997-11-04')
-	garbage_frequency = models.DurationField(default=timedelta(days=0, weeks=0))
-
 	# Filterable Options
 	# TODO: Implement these options into house
 	num_rooms = models.IntegerField(default=0, verbose_name='Number of Rooms')
@@ -59,11 +52,6 @@ class House(models.Model):
 	# Changes all full_address postings to use a non specific address
 	# Eg 2529 Stallion Dr, Oshawa, Ontario, Canada will become Stallion Dr, Oshawa, Ontario, Canada
 	hide_address = models.BooleanField(default=False, help_text="Hides the specific address on all publicly available pages")
-
-	def calculate_garbage_frequency(self):
-		delta = datetime.strptime(self.next_garbage_day, '%Y-%m-%d') - datetime.strptime(self.last_garbage_day, '%Y-%m-%d')
-		self.garbage_frequency = delta
-		self.save()
 
 	# Loads walk score information from walkscore.com
 	# This should only be ran when the house in created on our backend and very infrequently after

@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-from datetime import timedelta
 
 from .models import House, Invitation
 
@@ -27,8 +26,6 @@ class HouseTests(TestCase):
 		house.prov_state = 'ON'
 		house.postal_code = 'L1H 0M4'
 		house.country = 'Canada'
-		house.last_garbage_day = "2019-11-11"
-		house.next_garbage_day = "2019-11-25"
 
 		house.save()
 		self.house_attributes = house
@@ -61,20 +58,7 @@ class HouseTests(TestCase):
 		self.assertFalse(house.has_laundry)
 		self.assertFalse(house.has_air_conditioning)
 
-		self.assertFalse(house.garbage_day_set)
-		self.assertEqual(house.last_garbage_day, '1997-11-04')
-		self.assertEqual(house.next_garbage_day, '1997-11-04')
-
 		self.assertFalse(house.hide_address)
-
-	def test_house_calculate_garbage_frequency(self):
-		print('Testing house.calculate_garbage_frequency()')
-		house = self.house_attributes
-		self.assertEqual(house.garbage_frequency, timedelta(0))
-		house.calculate_garbage_frequency()
-		self.assertEqual(house.garbage_frequency, timedelta(weeks=2, days=0))
-
-
 
 	def test_house_load_walk_score(self):
 		print('Testing house.load_walk_score()')

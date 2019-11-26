@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import timedelta, datetime
+from datetime import datetime
 from houses.models import House
 
 
@@ -20,3 +20,4 @@ class GarbageDay(models.Model):
 	def save(self, **kwargs):
 		self.calculate_garbage_frequency()
 		super(GarbageDay, self).save()
+

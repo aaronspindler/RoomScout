@@ -47,7 +47,7 @@
                     </div>
                     <div class="card-body">
                         {% if house.walk_score != -1 %}
-                            <div>
+                            <div class="text-center">
                                 <!-- Walk Score -->
                                 <a href="https://www.redfin.com/how-walk-score-works"><img class="img-fluid" width=75
                                                                                            src="https://pp.walk.sc/badge/walk/score/{{ house.walk_score }}.svg"
@@ -77,6 +77,12 @@
                                     {% endif %}
 
                                 {% endif %}
+                            </div>
+                        {% endif %}
+                        {% if is_member %}
+                            <div class="text-center">
+                                <a href="#"><small>Manage Garbage Day</small></a>
+                                Next Garbage Day:
                             </div>
                         {% endif %}
                     </div>

@@ -1,13 +1,15 @@
 from django.db import models
 from datetime import datetime
+
+from accounts.models import User
 from houses.models import House
 
 
 class GarbageDay(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
-
-	house = models.ForeignKey(House, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	house = models.OneToOneField(House, on_delete=models.CASCADE)
 
 	# User Inputted
 	last_garbage_day = models.DateField()

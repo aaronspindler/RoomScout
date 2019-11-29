@@ -1,3 +1,20 @@
-from django.shortcuts import render
+from django.http import Http404
+from django.urls import reverse
 
-# Create your views here.
+from garbageday.models import GarbageDay
+
+
+def garbageday_manage(request):
+	pass
+
+
+def garbageday_create(request):
+	pass
+
+
+def garbageday_edit(request):
+	pass
+
+
+def garbadgeday_delete(request):
+	pass

@@ -46,6 +46,13 @@
                         <h4>Details</h4>
                     </div>
                     <div class="card-body">
+                        {% if is_member %}
+                            <div class="text-center">
+                                <strong>Next Garbage Day: Tuesday September 12th</strong>
+                                <br>
+                                <a href="{% url 'garbageday_manage' %}"><small>Manage Garbage Day</small></a>
+                            </div>
+                        {% endif %}
                         {% if house.walk_score != -1 %}
                             <div class="text-center">
                                 <!-- Walk Score -->
@@ -79,12 +86,6 @@
                                 {% endif %}
                             </div>
                         {% endif %}
-                        {% if is_member %}
-                            <div class="text-center">
-                                <a href="#"><small>Manage Garbage Day</small></a>
-                                Next Garbage Day:
-                            </div>
-                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -108,7 +109,7 @@
                     <div style="width:100%;">
                         <canvas id="myChart"></canvas>
                     </div>
-                <br>
+                    <br>
                     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
                     <script>
                         var ctx = document.getElementById('myChart').getContext('2d');

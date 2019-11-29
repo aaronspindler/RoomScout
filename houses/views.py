@@ -59,6 +59,7 @@ def house_create(request):
 			if request.POST['LastGarbageDay'] and request.POST['NextGarbageDay']:
 				garbageday = GarbageDay()
 				garbageday.house = house
+				garbageday.user = request.user
 				garbageday.last_garbage_day = request.POST['LastGarbageDay']
 				garbageday.next_garbage_day = request.POST['NextGarbageDay']
 				garbageday.save()

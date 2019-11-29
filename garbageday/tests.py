@@ -37,6 +37,7 @@ class GarbageDayTests(TestCase):
 		num_pre = GarbageDay.objects.count()
 		garbage_day = GarbageDay()
 		garbage_day.house = self.house
+		garbage_day.user = self.user
 		garbage_day.last_garbage_day = "2019-11-04"
 		garbage_day.next_garbage_day = "2019-11-04"
 		garbage_day.save()
@@ -50,6 +51,7 @@ class GarbageDayTests(TestCase):
 		num_pre = GarbageDay.objects.count()
 		garbage_day = GarbageDay()
 		garbage_day.house = self.house
+		garbage_day.user = self.user
 		garbage_day.last_garbage_day = "2019-11-12"
 		garbage_day.next_garbage_day = "2019-11-26"
 		garbage_day.save()
@@ -62,7 +64,8 @@ class GarbageDayTests(TestCase):
 		print('Testing GarbageDay House Relation')
 		garbage_day = GarbageDay()
 		garbage_day.house = self.house
+		garbage_day.user = self.user
 		garbage_day.last_garbage_day = "2019-11-12"
 		garbage_day.next_garbage_day = "2019-11-26"
 		garbage_day.save()
-		self.assertEqual(self.house.garbageday_set.count(), 1)
+		self.assertIsNotNone(self.house.garbageday)

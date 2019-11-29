@@ -33,5 +33,4 @@ class StreetViewTestCase(TestCase):
 		pre_count = HouseImage.objects.count()
 		load_house_image(self.house)
 		post_count = HouseImage.objects.count()
-
 		self.assertEqual(pre_count+1, post_count)

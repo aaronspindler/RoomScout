@@ -9,6 +9,7 @@ from django.urls import reverse_lazy, reverse
 from django.views import generic
 
 from bills.models import BillSet, Bill
+from garbageday.models import GarbageDay
 from rooms.models import Room
 from utils.captcha import Captcha
 from utils.datetime import now
@@ -26,8 +27,9 @@ def house_create(request):
     if request.method == 'POST':
         house = House()
         house.user = request.user
-        if request.POST['street_number'] and request.POST['street_number'] and request.POST['street_name'] and \
-                request.POST['city'] and request.POST['prov_state'] and request.POST['country']:
+        if request.POST['street_number'] and request.POST['street_number'] and request.POST['street_name'] and request.POST['city'] and request.POST['prov_state'] and request.POST['country']:
+            print(request.POST)
+            # Create House
             house.street_number = request.POST['street_number']
             house.street_name = request.POST['street_name']
             house.city = request.POST['city']
@@ -39,6 +41,7 @@ def house_create(request):
             house.lon = request.POST['lon']
             house.save()
 
+            # Create first and empty BillSet for house
             init_bill_set = BillSet()
 
             date = now()
@@ -47,10 +50,18 @@ def house_create(request):
             init_bill_set.house = house
             init_bill_set.save()
 
+            # Load walk score for house
             house.load_walk_score()
+            # Load house image
+            house_image = load_house_image(house)
 
-            #Todo : Put this in a celery task to be done in queue
-            load_house_image(house)
+            # Create GarbageDay for house if info present
+            if request.POST['LastGarbageDay'] and request.POST['NextGarbageDay']:
+                garbageday = GarbageDay()
+                garbageday.house = house
+                garbageday.last_garbage_day = request.POST['LastGarbageDay']
+                garbageday.next_garbage_day = request.POST['NextGarbageDay']
+                garbageday.save()
 
             return redirect('house_detail', pk=house.id)
         return render(request, 'houses/house_create.html', {'error': 'There is an issue with the address inputted!', 'GOOGLE_API_KEY': GOOGLE_API_KEY, 'captcha': captcha})

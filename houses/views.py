@@ -79,8 +79,7 @@ def house_bill_add(request, pk):
 		bill = Bill()
 		bill.user = request.user
 		if request.POST['type'] == '' or request.POST['date'] == '' or request.POST['amount'] == '':
-			return render(request, 'houses/house_bill_add.html',
-			              {'house': house, 'error': 'You have entered invalid data!'})
+			return render(request, 'houses/house_bill_add.html', {'house': house, 'error': 'You have entered invalid data!'})
 
 		bill.type = request.POST['type']
 		bill.date = request.POST['date']
@@ -89,15 +88,14 @@ def house_bill_add(request, pk):
 		date = request.POST['date']
 
 		if not check_format(date):
-			return render(request, 'houses/house_bill_add.html',
-			              {'house': house, 'error': 'You have enter the date in an incorrect format! Use yyyy-mm-dd'})
+			return render(request, 'houses/house_bill_add.html', {'house': house, 'error': 'You have enter the date in an incorrect format! Use yyyy-mm-dd'})
 
 		parsed_date = datetime.datetime.strptime(date, '%Y-%m-%d')
 		month = parsed_date.month
 		year = parsed_date.year
 
 		existing_billset = BillSet.objects.filter(house=house).filter(year=year).filter(month=month)
-		if (existing_billset.count() == 0):
+		if existing_billset.count() == 0:
 			new_billset = BillSet()
 			new_billset.house = house
 			new_billset.month = month
@@ -124,11 +122,11 @@ def house_bill_add(request, pk):
 @login_required(login_url="account_login")
 def house_invite(request, pk):
 	house = get_object_or_404(House, pk=pk)
-	if (request.user.id != house.user.id):
+	if request.user.id != house.user.id:
 		raise Http404
 	captcha = Captcha()
-	if (request.method == 'POST'):
-		if (request.POST['email'] != ''):
+	if request.method == 'POST':
+		if request.POST['email'] != '':
 			invitation = Invitation()
 			invitation.house = house
 			invitation.sender = request.user
@@ -143,7 +141,7 @@ def house_invite(request, pk):
 @login_required(login_url="account_login")
 def house_invite_remove(request, pk, id):
 	house = get_object_or_404(House, pk=pk)
-	if (request.user.id != house.user.id):
+	if request.user.id != house.user.id:
 		raise Http404
 	invite = get_object_or_404(Invitation, id=id)
 	invite.delete()
@@ -154,7 +152,7 @@ def house_invite_remove(request, pk, id):
 def house_invite_accept(request, pk, id):
 	house = get_object_or_404(House, pk=pk)
 	invite = get_object_or_404(Invitation, id=id)
-	if (request.user.email != invite.target):
+	if request.user.email != invite.target:
 		raise Http404
 
 	house.members.add(request.user)
@@ -165,7 +163,7 @@ def house_invite_accept(request, pk, id):
 @login_required(login_url="account_login")
 def house_invite_decline(request, pk, id):
 	invite = get_object_or_404(Invitation, id=id)
-	if (request.user.email != invite.target):
+	if request.user.email != invite.target:
 		raise Http404
 	invite.delete()
 	return redirect('main_dashboard')
@@ -174,7 +172,7 @@ def house_invite_decline(request, pk, id):
 @login_required(login_url="account_login")
 def house_member_remove(request, pk, id):
 	house = get_object_or_404(House, pk=pk)
-	if (request.user.id != house.user.id):
+	if request.user.id != house.user.id:
 		raise Http404
 	member = house.members.filter(id=id).first()
 	house.members.remove(member)
@@ -184,9 +182,9 @@ def house_member_remove(request, pk, id):
 @login_required(login_url="account_login")
 def house_add_room(request, pk):
 	house = House.objects.filter(pk=pk).get()
-	if (house.user != request.user):
+	if house.user != request.user:
 		raise Http404
-	if (request.method == 'POST'):
+	if request.method == 'POST':
 		room = Room()
 		room.user = request.user
 		room.name = request.POST['name']
@@ -224,15 +222,13 @@ def house_detail(request, pk):
 	except Exception:
 		pass
 
-	return render(request, 'houses/house_detail.html',
-	              {'house': house, 'is_member': is_member, 'GOOGLE_API_KEY': GOOGLE_API_KEY})
+	return render(request, 'houses/house_detail.html', {'house': house, 'is_member': is_member, 'GOOGLE_API_KEY': GOOGLE_API_KEY})
 
 
 class house_edit(LoginRequiredMixin, generic.UpdateView):
 	model = House
 	template_name = 'houses/house_edit.html'
-	fields = ['hide_address', 'num_rooms', 'num_bathrooms', 'num_parking_spaces', 'has_dishwasher', 'has_laundry',
-	          'has_air_conditioning']
+	fields = ['hide_address', 'num_rooms', 'num_bathrooms', 'num_parking_spaces', 'has_dishwasher', 'has_laundry', 'has_air_conditioning']
 
 	def get_success_url(self):
 		return reverse('house_detail', kwargs={'pk': self.object.pk})

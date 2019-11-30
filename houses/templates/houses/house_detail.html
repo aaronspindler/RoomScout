@@ -48,9 +48,9 @@
                     <div class="card-body">
                         {% if is_member %}
                             <div class="text-center">
-                                <strong>Next Garbage Day: Tuesday September 12th</strong>
+                                <strong>Next Garbage Day: {{house.garbageday_set.first.next_garbage_day | default:"Not Set"}}</strong>
                                 <br>
-                                <a href="{% url 'garbageday_manage' %}"><small>Manage Garbage Day</small></a>
+                                <a href="{% url 'garbageday_manage' house.pk %}"><small>Manage Garbage Day</small></a>
                             </div>
                         {% endif %}
                         {% if house.walk_score != -1 %}

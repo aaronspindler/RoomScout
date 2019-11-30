@@ -103,6 +103,7 @@ INSTALLED_APPS = [
 	'marketing',
 	'emails',
 	'payments',
+	'garbageday',
 	'eggs',
 ]
 

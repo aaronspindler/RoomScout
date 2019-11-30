@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
-from django.test import TestCase
+from django.test import TestCase, Client
+from django.urls import reverse
 
 from .models import House, Invitation
 
@@ -7,9 +8,9 @@ from .models import House, Invitation
 class HouseTests(TestCase):
 	def setUp(self):
 		print('House Testing Setup')
+		self.client = Client()
 		User = get_user_model()
-		user = User.objects.create_user(username='Fred_Flintstone', email='normal@user.com', password='foo')
-		self.user = user
+		self.user = User.objects.create_user(username='Fred_Flintstone', email='normal@user.com', password='foo')
 		self.assertEqual(self.user.email, 'normal@user.com')
 		self.assertEqual(self.user.username, 'Fred_Flintstone')
 		self.assertTrue(self.user.is_active)
@@ -60,20 +61,26 @@ class HouseTests(TestCase):
 
 		self.assertFalse(house.hide_address)
 
-	def test_house_load_walk_score(self):
-		print('Testing house.load_walk_score()')
-		house = self.house_attributes
-		self.assertEqual(house.postal_code, 'L1H 0M4')
-
 	# Commented out because of API usage
-	# house.load_walk_score()
-	# self.assertEqual(house.walk_score, 0)
-	# self.assertEqual(house.walk_score_description, 'Car-Dependent')
-	# self.assertEqual(house.bike_score, 23)
-	# self.assertEqual(house.bike_score_description, 'Somewhat Bikeable')
-	# self.assertEqual(house.transit_score, -1)
-	# self.assertEqual(house.transit_score_description, '')
-	# self.assertEqual(house.transit_score_summary, '')
+	#def test_house_load_walk_score(self):
+	#	print('Testing house.load_walk_score()')
+	#	house = self.house_attributes
+	#	self.assertEqual(house.postal_code, 'L1H 0M4')
+	#   house.load_walk_score()
+	#   self.assertEqual(house.walk_score, 0)
+	#   self.assertEqual(house.walk_score_description, 'Car-Dependent')
+	#   self.assertEqual(house.bike_score, 23)
+	#   self.assertEqual(house.bike_score_description, 'Somewhat Bikeable')
+	#   self.assertEqual(house.transit_score, -1)
+	#   self.assertEqual(house.transit_score_description, '')
+	#   self.assertEqual(house.transit_score_summary, '')
+
+	def test_house_create_page(self):
+		print('Testing house creation page')
+		self.client.login(username='Fred_Flintstone', password='foo')
+		response = self.client.get(reverse('house_create'))
+		self.assertEqual(response.status_code, 200)
+
 
 	def test_house_hide_address(self):
 		print('Testing house.hide_address')

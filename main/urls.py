@@ -33,6 +33,8 @@ urlpatterns = [
 	path('house/', include('houses.urls')),
 	# Rooms
 	path('room/', include('rooms.urls')),
+	# Garbage Day
+	path('garbageday/', include('garbageday.urls')),
 	# Marketing
 	path('m/', include('marketing.urls')),
 	# Payments

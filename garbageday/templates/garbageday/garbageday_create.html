@@ -1,0 +1,26 @@
+{% extends 'main/_base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    Setup Garbage Day
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Setup Garbage Day for {{ house }}</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="city">Last Garbage Day (yyyy-mm-dd)</label>
+                    <input class="form-control" type="date" name="LastGarbageDay" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="city">Next Garbage Day (yyyy-mm-dd)</label>
+                    <input class="form-control" type="date" name="NextGarbageDay" required>
+                </div>
+            </div>
+            <button id="submitbutton" type="submit" class="btn btn-primary">Setup</button>
+        </form>
+    </div>
+{% endblock %}

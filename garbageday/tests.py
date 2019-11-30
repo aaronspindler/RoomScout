@@ -68,4 +68,4 @@ class GarbageDayTests(TestCase):
 		garbage_day.last_garbage_day = "2019-11-12"
 		garbage_day.next_garbage_day = "2019-11-26"
 		garbage_day.save()
-		self.assertIsNotNone(self.house.garbageday)
+		self.assertIsNot(self.house.garbageday_set.count(), 0)

@@ -15,17 +15,17 @@ def settings(request):
 
 	if request.method == 'POST':
 		user = User.objects.get(id=request.user.id)
-		if request.POST['first_name']:
+		if request.POST['first_name'] != '':
 			user.first_name = str(request.POST['first_name'])
-		if request.POST['last_name']:
+		if request.POST['last_name'] != '':
 			user.last_name = str(request.POST['last_name'])
-		if request.POST['city']:
+		if request.POST['city'] != '':
 			user.city = str(request.POST['city'])
-		if request.POST['province']:
-			user.province = request.POST['province']
-		if request.POST['age']:
+		if request.POST['province'] != '':
+			user.prov_state = request.POST['province']
+		if request.POST['age'] != '':
 			user.age = request.POST['age']
-		if request.POST['gender']:
+		if request.POST['gender'] != '':
 			user.gender = request.POST['gender']
 
 		user.save()

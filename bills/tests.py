@@ -4,7 +4,6 @@ from django.test import TestCase
 
 class BillsTests(TestCase):
 	def setUp(self):
-		print('Bills Testing Setup')
 		User = get_user_model()
 		user = User.objects.create_user(username='Fred_Flintstone', email='normal@user.com', password='foo')
 		self.assertEqual(user.email, 'normal@user.com')

@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 
 
-class AccountsTests(TestCase):
+class AccountsModelTests(TestCase):
 	def test_create_user(self):
 		print('Testing accounts user creation')
 		User = get_user_model()

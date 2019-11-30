@@ -7,7 +7,6 @@ from .models import House, Invitation
 
 class HouseTests(TestCase):
 	def setUp(self):
-		print('House Testing Setup')
 		self.client = Client()
 		User = get_user_model()
 		self.user = User.objects.create_user(username='Fred_Flintstone', email='normal@user.com', password='foo')

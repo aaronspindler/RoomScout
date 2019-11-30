@@ -8,7 +8,6 @@ from .models import GarbageDay
 
 class GarbageDayTests(TestCase):
 	def setUp(self):
-		print('GarbageDay Testing Setup')
 		User = get_user_model()
 		user = User.objects.create_user(username='Fred_Flintstone', email='normal@user.com', password='foo')
 		self.user = user

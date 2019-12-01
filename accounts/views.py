@@ -61,7 +61,7 @@ def verification(request):
 				user.phone_number = new_phone_number
 				phonenumbers.validate_phonenumber(new_phone_number, user)
 				user.save()
-		return redirect('settings')
+	return redirect('settings')
 
 @login_required(login_url="account_login")
 def email_unsubscribe(request):

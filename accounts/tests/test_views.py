@@ -101,4 +101,55 @@ class AccountsViewsTests(TestCase):
 		self.assertTrue(self.user.general_contact)
 		self.assertTrue(self.user.promo_contact)
 
+	def test_verification_view_authenticated_get(self):
+		print('Testing accounts.views.verification() GET authenticated')
+		self.client.login(username='FredFlintstone', password='babadoo')
+		response = self.client.get(reverse('settings_verification'), follow=True)
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(len(response.redirect_chain), 1)
+		self.assertEqual(response.redirect_chain[0][1], 302)
+		self.assertContains(response, 'Settings')
+		self.assertNotContains(response, 'Login')
 
+	def test_verification_view_unauthenticated_get(self):
+		print('Testing accounts.views.verification() GET unauthenticated')
+		self.client.logout()
+		response = self.client.get(reverse('settings_verification'), follow=True)
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(len(response.redirect_chain), 1)
+		self.assertEqual(response.redirect_chain[0][1], 302)
+		self.assertNotContains(response, 'Settings')
+		self.assertContains(response, 'Login')
+		self.assertTemplateUsed(response, 'account/login.html')
+
+	def test_verification_view_authenticated_post(self):
+		print('Testing accounts.views.verification() POST authenticated')
+		self.client.login(username='FredFlintstone', password='babadoo')
+		self.assertEqual(self.user.phone_number, '')
+
+		req_data = {'phone_number': '6139297722'}
+		response = self.client.post(reverse('settings_verification'), req_data)
+		self.assertEqual(response.status_code, 302)
+		self.user = User.objects.get(username='FredFlintstone')
+		self.assertEqual(self.user.phone_number, '6139297722')
+
+	def test_email_unsubscribe_view_authenticated_get(self):
+		print('Testing accounts.views.unsubscribe() GET authenticated')
+		self.client.login(username='FredFlintstone', password='babadoo')
+		response = self.client.get(reverse('email_unsubscribe'), follow=True)
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(len(response.redirect_chain), 1)
+		self.assertEqual(response.redirect_chain[0][1], 302)
+		self.assertContains(response, 'Settings')
+		self.assertNotContains(response, 'Login')
+
+	def test_email_unsubscribe_view_unauthenticated_get(self):
+		print('Testing accounts.views.unsubscribe() GET unauthenticated')
+		self.client.logout()
+		response = self.client.get(reverse('email_unsubscribe'), follow=True)
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(len(response.redirect_chain), 1)
+		self.assertEqual(response.redirect_chain[0][1], 302)
+		self.assertNotContains(response, 'Settings')
+		self.assertContains(response, 'Login')
+		self.assertTemplateUsed(response, 'account/login.html')

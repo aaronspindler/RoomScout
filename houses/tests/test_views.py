@@ -122,9 +122,25 @@ class HousesViewsTests(TestCase):
 
     def test_house_invite_remove_get_not_logged_in(self):
         print('Testing houses.views.house_invite_remove() GET not logged in')
+        self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
+        self.client.logout()
+        response = self.client.get(reverse('house_invite_remove', kwargs={'pk': self.house.id, 'id': self.invite.id},), follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'account/login.html')
+        self.assertNotContains(response, 'Invite')
+        self.assertNotContains(response, '404')
+        self.assertContains(response, 'Login')
 
     def test_house_invite_remove_get_wrong_user(self):
         print('Testing houses.views.house_invite_remove() GET wrong user')
+        self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
+        self.client.force_login(self.user2)
+        response = self.client.get(reverse('house_invite_remove', kwargs={'pk': self.house.id, 'id': self.invite.id},), follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'main/404.html')
+        self.assertNotContains(response, 'Invite')
+        self.assertContains(response, '404')
+        self.assertNotContains(response, 'Login')
 
     def test_house_invite_remove_post(self):
         print('Testing houses.views.house_invite_remove() POST')
@@ -141,9 +157,35 @@ class HousesViewsTests(TestCase):
 
     def test_house_invite_remove_post_not_logged_in(self):
         print('Testing houses.views.house_invite_remove() POST not logged in')
+        # Create an invite
+        self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
+        self.client.logout()
+        pre_count = Invitation.objects.count()
+        self.assertGreater(pre_count, 0)
+        response = self.client.post(reverse('house_invite_remove', kwargs={'pk': self.house.id, 'id': self.invite.id}, ), follow=True)
+        post_count = Invitation.objects.count()
+        self.assertEqual(pre_count, post_count)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'account/login.html')
+        self.assertContains(response, 'Login')
+        self.assertNotContains(response, '404')
+        self.assertNotContains(response, self.house)
 
     def test_house_invite_remove_post_wrong_user(self):
         print('Testing houses.views.house_invite_remove() POST wrong user')
+        # Create an invite
+        self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
+        self.client.force_login(self.user2)
+        pre_count = Invitation.objects.count()
+        self.assertGreater(pre_count, 0)
+        response = self.client.post(reverse('house_invite_remove', kwargs={'pk': self.house.id, 'id': self.invite.id}, ), follow=True)
+        post_count = Invitation.objects.count()
+        self.assertEqual(pre_count, post_count)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'main/404.html')
+        self.assertNotContains(response, 'Login')
+        self.assertContains(response, '404')
+        self.assertNotContains(response, self.house)
 
     def test_house_add_room_view_get(self):
         print('Testing houses.views.house_add_room() GET')

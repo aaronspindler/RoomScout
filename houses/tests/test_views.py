@@ -25,6 +25,26 @@ class HousesViewsTests(TestCase):
 		house.save()
 		self.house = house
 
+	def test_house_add_room_view_get(self):
+		pass
+	def test_house_add_room_view_get_not_logged_in(self):
+		pass
+	def test_house_add_room_view_get_wrong_user(self):
+		pass
+	def test_house_add_room_view_post(self):
+		pass
+	def test_house_add_room_view_post_no_name(self):
+		pass
+	def test_house_add_room_view_post_no_price(self):
+		pass
+	def test_house_add_room_view_post_no_description(self):
+		pass
+	def test_house_add_room_view_post_not_logged_in(self):
+		pass
+	def test_house_add_room_view_post_wrong_user(self):
+		pass
+
+
 	def test_house_detail_view_get_valid(self):
 		print('Testing houses.views.house_details() GET VALID')
 		self.client.login(username='Fred_Flintstone', password='foo')

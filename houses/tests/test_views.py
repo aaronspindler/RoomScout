@@ -26,6 +26,27 @@ class HousesViewsTests(TestCase):
 		house.save()
 		self.house = house
 
+	def test_house_invite_view_get(self):
+		print('Testing houses.views.house_invite() GET')
+
+	def test_house_invite_view_get_not_logged_in(self):
+		print('Testing houses.views.house_invite() GET not logged in')
+
+	def test_house_invite_view_get_wrong_user(self):
+		print('Testing houses.views.house_invite() GET wrong user')
+
+	def test_house_invite_view_post(self):
+		print('Testing houses.views.house_invite() POST')
+
+	def test_house_invite_view_post_not_logged_in(self):
+		print('Testing houses.views.house_invite() POST not logged in')
+
+	def test_house_invite_view_post_wrong_user(self):
+		print('Testing houses.views.house_invite() POST wrong user')
+
+	def test_house_invite_view_post_no_email(self):
+		print('Testing houses.views.house_invite() POST not email')
+
 	def test_house_add_room_view_get(self):
 		print('Testing houses.views.house_add_room() GET')
 		self.client.force_login(self.user)

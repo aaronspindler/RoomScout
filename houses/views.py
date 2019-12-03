@@ -127,7 +127,9 @@ def house_invite(request, pk):
 		raise Http404
 	captcha = Captcha()
 	if request.method == 'POST':
-		if request.POST['email'] != '':
+		if 'email' not in request.POST:
+			return render(request, 'houses/house_invite.html', {'house': house, 'captcha': captcha, 'error': 'Please enter a valid email address'})
+		else:
 			invitation = Invitation()
 			invitation.house = house
 			invitation.sender = request.user

@@ -140,14 +140,15 @@ def house_invite(request, pk):
 		return redirect('house_detail', pk=pk)
 	return render(request, 'houses/house_invite.html', {'house': house, 'captcha': captcha})
 
-
+# PK is for house and ID is for invitation
 @login_required(login_url="account_login")
 def house_invite_remove(request, pk, id):
 	house = get_object_or_404(House, pk=pk)
 	if request.user.id != house.user.id:
 		raise Http404
-	invite = get_object_or_404(Invitation, id=id)
-	invite.delete()
+	if request.method == 'POST':
+		invite = get_object_or_404(Invitation, id=id)
+		invite.delete()
 	return redirect('house_detail', pk=pk)
 
 

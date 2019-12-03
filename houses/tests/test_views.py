@@ -3,6 +3,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 
 from houses.models import House
+from rooms.models import Room
 
 
 class HousesViewsTests(TestCase):
@@ -26,27 +27,130 @@ class HousesViewsTests(TestCase):
 		self.house = house
 
 	def test_house_add_room_view_get(self):
-		pass
-	def test_house_add_room_view_get_not_logged_in(self):
-		pass
-	def test_house_add_room_view_get_wrong_user(self):
-		pass
-	def test_house_add_room_view_post(self):
-		pass
-	def test_house_add_room_view_post_no_name(self):
-		pass
-	def test_house_add_room_view_post_no_price(self):
-		pass
-	def test_house_add_room_view_post_no_description(self):
-		pass
-	def test_house_add_room_view_post_not_logged_in(self):
-		pass
-	def test_house_add_room_view_post_wrong_user(self):
-		pass
+		print('Testing houses.views.house_add_room() GET')
+		self.client.force_login(self.user)
+		response = self.client.get(reverse('house_add_room', args=[self.house.id]))
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'houses/room_add.html')
+		self.assertContains(response, self.house)
+		self.assertContains(response, 'Add Room')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
 
+	def test_house_add_room_view_get_not_logged_in(self):
+		print('Testing houses.views.house_add_room() GET not logged in')
+		self.client.logout()
+		response = self.client.get(reverse('house_add_room', args=[self.house.id]), follow=True)
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'account/login.html')
+		self.assertNotContains(response, self.house)
+		self.assertNotContains(response, 'Add Room')
+		self.assertNotContains(response, '404')
+		self.assertContains(response, 'Login')
+
+	def test_house_add_room_view_get_wrong_user(self):
+		print('Testing houses.views.house_add_room() GET wrong user')
+		self.client.force_login(self.user2)
+		response = self.client.get(reverse('house_add_room', args=[self.house.id]), follow=True)
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'main/404.html')
+		self.assertNotContains(response, self.house)
+		self.assertNotContains(response, 'Add Room')
+		self.assertContains(response, '404')
+		self.assertNotContains(response, 'Login')
+
+	def test_house_add_room_view_post(self):
+		print('Testing houses.views.house_add_room() POST')
+		self.client.force_login(self.user)
+		count_pre = Room.objects.count()
+		req_data = {'name': 'Master Bedroom', 'price': '799.00', 'description': 'Looking for a lovely student roommate'}
+		response = self.client.post(reverse('house_add_room', args=[self.house.id]), req_data, follow=True)
+		count_post = Room.objects.count()
+		self.assertEqual(count_pre + 1, count_post)
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'rooms/room_detail.html')
+		self.assertContains(response, 'Master Bedroom')
+		self.assertContains(response, '$799.00')
+		self.assertNotContains(response, 'Add Room')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+
+	def test_house_add_room_view_post_no_name(self):
+		print('Testing houses.views.house_add_room() POST no name')
+		self.client.force_login(self.user)
+		count_pre = Room.objects.count()
+		req_data = {'price': '799.00', 'description': 'Looking for a lovely student roommate'}
+		response = self.client.post(reverse('house_add_room', args=[self.house.id]), req_data, follow=True)
+		count_post = Room.objects.count()
+		self.assertEqual(count_pre, count_post)
+		self.assertContains(response, 'Add Room')
+		self.assertContains(response, 'Please make sure to fill in all required details')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertTemplateUsed(response, 'houses/room_add.html')
+
+	def test_house_add_room_view_post_no_price(self):
+		print('Testing houses.views.house_add_room() POST no price')
+		self.client.force_login(self.user)
+		count_pre = Room.objects.count()
+		req_data = {'name': 'Master Bedroom', 'description': 'Looking for a lovely student roommate'}
+		response = self.client.post(reverse('house_add_room', args=[self.house.id]), req_data, follow=True)
+		count_post = Room.objects.count()
+		self.assertEqual(count_pre, count_post)
+		self.assertContains(response, 'Add Room')
+		self.assertContains(response, 'Please make sure to fill in all required details')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertTemplateUsed(response, 'houses/room_add.html')
+
+	def test_house_add_room_view_post_no_description(self):
+		print('Testing houses.views.house_add_room() POST no description')
+		self.client.force_login(self.user)
+		count_pre = Room.objects.count()
+		req_data = {'name': 'Master Bedroom', 'price': '799.99'}
+		response = self.client.post(reverse('house_add_room', args=[self.house.id]), req_data, follow=True)
+		count_post = Room.objects.count()
+		self.assertEqual(count_pre, count_post)
+		self.assertContains(response, 'Add Room')
+		self.assertContains(response, 'Please make sure to fill in all required details')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertTemplateUsed(response, 'houses/room_add.html')
+
+	def test_house_add_room_view_post_not_logged_in(self):
+		print('Testing houses.views.house_add_room() POST not logged in')
+		self.client.logout()
+		count_pre = Room.objects.count()
+		req_data = {'name': 'Master Bedroom', 'price': '799.00', 'description': 'Looking for a lovely student roommate'}
+		response = self.client.post(reverse('house_add_room', args=[self.house.id]), req_data, follow=True)
+		count_post = Room.objects.count()
+		self.assertEqual(count_pre, count_post)
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'account/login.html')
+		self.assertNotContains(response, 'Master Bedroom')
+		self.assertNotContains(response, '$799.00')
+		self.assertNotContains(response, 'Add Room')
+		self.assertNotContains(response, '404')
+		self.assertContains(response, 'Login')
+
+	def test_house_add_room_view_post_wrong_user(self):
+		print('Testing houses.views.house_add_room() POST wrong user')
+		self.client.force_login(self.user2)
+		count_pre = Room.objects.count()
+		req_data = {'name': 'Master Bedroom', 'price': '799.00', 'description': 'Looking for a lovely student roommate'}
+		response = self.client.post(reverse('house_add_room', args=[self.house.id]), req_data, follow=True)
+		count_post = Room.objects.count()
+		self.assertEqual(count_pre, count_post)
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'main/404.html')
+		self.assertNotContains(response, 'Master Bedroom')
+		self.assertNotContains(response, '$799.00')
+		self.assertNotContains(response, 'Add Room')
+		self.assertContains(response, '404')
+		self.assertNotContains(response, 'Login')
 
 	def test_house_detail_view_get_valid(self):
-		print('Testing houses.views.house_details() GET VALID')
+		print('Testing houses.views.house_details() GET')
 		self.client.login(username='Fred_Flintstone', password='foo')
 		response = self.client.get(reverse('house_detail', args=[self.house.id]))
 		self.assertEqual(response.status_code, 200)
@@ -54,7 +158,7 @@ class HousesViewsTests(TestCase):
 		self.assertContains(response, self.house)
 
 	def test_house_detail_view_get_valid1(self):
-		print('Testing houses.views.house_details() GET VALID1')
+		print('Testing houses.views.house_details() GET 1')
 		self.client.login(username='Fred_Flintstone', password='foo')
 		response = self.client.get(self.house.get_absolute_url())
 		self.assertEqual(response.status_code, 200)
@@ -187,7 +291,7 @@ class HousesViewsTests(TestCase):
 		self.assertEqual(response.status_code, 200)
 		self.assertTemplateUsed(response, 'dashboard/main_dashboard.html')
 		count_post = House.objects.count()
-		self.assertEqual(count_pre-1, count_post)
+		self.assertEqual(count_pre - 1, count_post)
 
 	def test_house_delete_view_post_wrong_user(self):
 		print('Testing houses.views.house_delete() POST wrong user')

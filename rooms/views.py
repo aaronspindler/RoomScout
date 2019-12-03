@@ -119,10 +119,21 @@ def room_create(request):
             room = Room()
             room.user = request.user
             house = House.objects.filter(pk=request.POST['house'])[:1].get()
-            room.name = request.POST['name']
             room.house = house
-            room.price = request.POST['price']
-            room.description = request.POST['description']
+            if 'name' not in request.POST:
+                return render(request, 'houses/room_add.html', {'house': house, 'error': 'Please make sure to fill in all required details'})
+            else:
+                room.name = request.POST['name']
+
+            if 'price' not in request.POST:
+                return render(request, 'houses/room_add.html', {'house': house, 'error': 'Please make sure to fill in all required details'})
+            else:
+                room.price = request.POST['price']
+
+            if 'description' not in request.POST:
+                return render(request, 'houses/room_add.html', {'house': house, 'error': 'Please make sure to fill in all required details'})
+            else:
+                room.description = request.POST['description']
             room.save()
             try:
                 for file in request.FILES.getlist('images'):

@@ -128,6 +128,16 @@ class HousesViewsTests(TestCase):
 
     def test_house_invite_remove_post(self):
         print('Testing houses.views.house_invite_remove() POST')
+        # Create an invite
+        self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
+        self.client.force_login(self.user)
+        pre_count = Invitation.objects.count()
+        self.assertGreater(pre_count, 0)
+        response = self.client.post(reverse('house_invite_remove', kwargs={'pk': self.house.id, 'id': self.invite.id}, ), follow=True)
+        post_count = Invitation.objects.count()
+        self.assertEqual(pre_count-1, post_count)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'houses/house_detail.html')
 
     def test_house_invite_remove_post_not_logged_in(self):
         print('Testing houses.views.house_invite_remove() POST not logged in')

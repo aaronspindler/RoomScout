@@ -157,3 +157,40 @@ class HousesViewsTests(TestCase):
 		self.assertEqual(response.status_code, 200)
 		self.assertContains(response, '404')
 		self.assertTemplateUsed(response, 'main/404.html')
+
+	def test_house_delete_view_post(self):
+		count_pre = House.objects.count()
+		req_data = {}
+		self.client.force_login(self.user)
+		response = self.client.post(reverse('house_delete', args=[self.house.id]), req_data, follow=True)
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'dashboard/main_dashboard.html')
+		count_post = House.objects.count()
+		self.assertEqual(count_pre-1, count_post)
+
+	def test_house_delete_view_post_wrong_user(self):
+		print('Testing houses.views.house_edit() POST wrong user')
+		# Test before values
+		self.assertFalse(self.house.hide_address)
+		self.assertEqual(self.house.num_rooms, 0)
+		self.assertEqual(self.house.num_bathrooms, 0)
+		self.assertEqual(self.house.num_parking_spaces, 0)
+		self.assertFalse(self.house.has_dishwasher)
+		self.assertFalse(self.house.has_laundry)
+		self.assertFalse(self.house.has_air_conditioning)
+
+		req_data = {'hide_address': True, 'num_rooms': 4, 'num_bathrooms': 4, 'num_parking_spaces': 4, 'has_dishwasher': True, 'has_laundry': True, 'has_air_conditioning': True}
+		self.client.force_login(self.user2)
+		response = self.client.post(reverse('house_edit', args=[self.house.id]), req_data, follow=True)
+		self.assertEqual(response.status_code, 200)
+		self.assertContains(response, '404')
+		self.assertTemplateUsed(response, 'main/404.html')
+
+		# Test after values
+		self.assertFalse(self.house.hide_address)
+		self.assertEqual(self.house.num_rooms, 0)
+		self.assertEqual(self.house.num_bathrooms, 0)
+		self.assertEqual(self.house.num_parking_spaces, 0)
+		self.assertFalse(self.house.has_dishwasher)
+		self.assertFalse(self.house.has_laundry)
+		self.assertFalse(self.house.has_air_conditioning)

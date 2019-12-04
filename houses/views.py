@@ -159,8 +159,9 @@ def house_invite_accept(request, pk, id):
 	if request.user.email != invite.target:
 		raise Http404
 
-	house.members.add(request.user)
-	invite.delete()
+	if request.method == 'POST':
+		house.members.add(request.user)
+		invite.delete()
 	return redirect('house_detail', pk=pk)
 
 
@@ -169,17 +170,19 @@ def house_invite_decline(request, pk, id):
 	invite = get_object_or_404(Invitation, id=id)
 	if request.user.email != invite.target:
 		raise Http404
-	invite.delete()
+	if request.method == 'POST':
+		invite.delete()
 	return redirect('main_dashboard')
 
-
+# pk is for the house, and ID is for the userid of the user you want to remove
 @login_required(login_url="account_login")
 def house_member_remove(request, pk, id):
 	house = get_object_or_404(House, pk=pk)
 	if request.user.id != house.user.id:
 		raise Http404
-	member = house.members.filter(id=id).first()
-	house.members.remove(member)
+	if request.method == 'POST':
+		member = house.members.filter(id=id).first()
+		house.members.remove(member)
 	return redirect('house_detail', pk=pk)
 
 

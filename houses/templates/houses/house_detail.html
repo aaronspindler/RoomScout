@@ -312,7 +312,12 @@
                                 <td>{{ member.first_name }} {{ member.last_name }}</td>
                                 <td>{{ member.email }}</td>
                                 {% if user.id == house.user.id %}
-                                    <td><a href="{% url 'house_member_remove' house.pk member.id %}">Remove</a></td>
+                                    <td>
+                                        <form action="{% url 'house_member_remove' house.pk member.id %}" method="post">
+                                            {% csrf_token %}
+                                            <button class="btn btn-sm btn-danger" type='submit'><span class="oi oi-ban"></span> Remove</button>
+                                        </form>
+                                    </td>
                                     <td><span class="badge badge-success">Member</span></td>
                                 {% endif %}
                             </tr>

@@ -26,6 +26,30 @@ class HousesViewsTests(TestCase):
 		house.save()
 		self.house = house
 	
+	def test_house_create_view_get(self):
+		print('Testing houses.views.house_create() GET')
+		self.client.force_login(self.user)
+	
+	def test_house_create_view_get_not_logged_in(self):
+		print('Testing houses.views.house_create() GET not logged in')
+		self.client.logout()
+	
+	def test_house_create_view_get_wrong_user(self):
+		print('Testing houses.views.house_create() GET wrong user')
+		self.client.force_login(self.user2)
+	
+	def test_house_create_view_post(self):
+		print('Testing houses.views.house_create() POST')
+		self.client.force_login(self.user)
+	
+	def test_house_create_view_post_not_logged_in(self):
+		print('Testing houses.views.house_create() POST not logged in')
+		self.client.logout()
+	
+	def test_house_create_view_post_wrong_user(self):
+		print('Testing houses.views.house_create() POST wrong user')
+		self.client.force_login(self.user2)
+	
 	def test_house_invite_view_get(self):
 		print('Testing houses.views.house_invite() GET')
 		self.client.force_login(self.user)
@@ -107,7 +131,7 @@ class HousesViewsTests(TestCase):
 		self.assertTemplateUsed(response, 'houses/house_invite.html')
 		self.assertContains(response, 'Please enter a valid email address')
 	
-	def test_house_invite_remove_get(self):
+	def test_house_invite_remove_view_get(self):
 		print('Testing houses.views.house_invite_remove() GET')
 		# Create an invite
 		self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
@@ -120,7 +144,7 @@ class HousesViewsTests(TestCase):
 		self.assertEqual(response.status_code, 200)
 		self.assertTemplateUsed(response, 'houses/house_detail.html')
 	
-	def test_house_invite_remove_get_not_logged_in(self):
+	def test_house_invite_remove_view_get_not_logged_in(self):
 		print('Testing houses.views.house_invite_remove() GET not logged in')
 		self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
 		self.client.logout()
@@ -131,7 +155,7 @@ class HousesViewsTests(TestCase):
 		self.assertNotContains(response, '404')
 		self.assertContains(response, 'Login')
 	
-	def test_house_invite_remove_get_wrong_user(self):
+	def test_house_invite_remove_view_get_wrong_user(self):
 		print('Testing houses.views.house_invite_remove() GET wrong user')
 		self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
 		self.client.force_login(self.user2)
@@ -142,7 +166,7 @@ class HousesViewsTests(TestCase):
 		self.assertContains(response, '404')
 		self.assertNotContains(response, 'Login')
 	
-	def test_house_invite_remove_post(self):
+	def test_house_invite_remove_view_post(self):
 		print('Testing houses.views.house_invite_remove() POST')
 		# Create an invite
 		self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
@@ -155,7 +179,7 @@ class HousesViewsTests(TestCase):
 		self.assertEqual(response.status_code, 200)
 		self.assertTemplateUsed(response, 'houses/house_detail.html')
 	
-	def test_house_invite_remove_post_not_logged_in(self):
+	def test_house_invite_remove_view_post_not_logged_in(self):
 		print('Testing houses.views.house_invite_remove() POST not logged in')
 		# Create an invite
 		self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
@@ -171,7 +195,7 @@ class HousesViewsTests(TestCase):
 		self.assertNotContains(response, '404')
 		self.assertNotContains(response, self.house)
 	
-	def test_house_invite_remove_post_wrong_user(self):
+	def test_house_invite_remove_view_post_wrong_user(self):
 		print('Testing houses.views.house_invite_remove() POST wrong user')
 		# Create an invite
 		self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
@@ -187,7 +211,7 @@ class HousesViewsTests(TestCase):
 		self.assertContains(response, '404')
 		self.assertNotContains(response, self.house)
 	
-	def test_house_invite_accept_get(self):
+	def test_house_invite_accept_view_get(self):
 		print('Testing houses.views.house_invite_accept() GET')
 		self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
 		self.client.force_login(self.user)
@@ -204,7 +228,7 @@ class HousesViewsTests(TestCase):
 		self.assertEqual(house_member_count_pre, house_member_count_post)
 		self.assertEqual(invite_count_pre, invite_count_post)
 	
-	def test_house_invite_accept_get_not_logged_in(self):
+	def test_house_invite_accept_view_get_not_logged_in(self):
 		print('Testing houses.views.house_invite_accept() GET not logged in')
 		self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
 		self.client.logout()
@@ -221,7 +245,7 @@ class HousesViewsTests(TestCase):
 		self.assertEqual(house_member_count_pre, house_member_count_post)
 		self.assertEqual(invite_count_pre, invite_count_post)
 	
-	def test_house_invite_accept_get_wrong_user(self):
+	def test_house_invite_accept_view_get_wrong_user(self):
 		print('Testing houses.views.house_invite_accept() GET wrong user')
 		self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
 		self.client.force_login(self.user2)
@@ -238,7 +262,7 @@ class HousesViewsTests(TestCase):
 		self.assertEqual(house_member_count_pre, house_member_count_post)
 		self.assertEqual(invite_count_pre, invite_count_post)
 	
-	def test_house_invite_accept_post(self):
+	def test_house_invite_accept_view_post(self):
 		print('Testing houses.views.house_invite_accept() POST')
 		self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
 		self.client.force_login(self.user)
@@ -252,10 +276,10 @@ class HousesViewsTests(TestCase):
 		self.assertNotContains(response, 'Login')
 		self.assertNotContains(response, '404')
 		self.assertContains(response, self.house)
-		self.assertEqual(house_member_count_pre+1, house_member_count_post)
-		self.assertEqual(invite_count_pre-1, invite_count_post)
+		self.assertEqual(house_member_count_pre + 1, house_member_count_post)
+		self.assertEqual(invite_count_pre - 1, invite_count_post)
 	
-	def test_house_invite_accept_post_not_logged_in(self):
+	def test_house_invite_accept_view_post_not_logged_in(self):
 		print('Testing houses.views.house_invite_accept() POST not logged in')
 		self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
 		self.client.logout()
@@ -272,7 +296,7 @@ class HousesViewsTests(TestCase):
 		self.assertEqual(house_member_count_pre, house_member_count_post)
 		self.assertEqual(invite_count_pre, invite_count_post)
 	
-	def test_house_invite_accept_post_wrong_user(self):
+	def test_house_invite_accept_view_post_wrong_user(self):
 		print('Testing houses.views.house_invite_accept() POST wrong user')
 		self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
 		self.client.force_login(self.user2)
@@ -289,7 +313,7 @@ class HousesViewsTests(TestCase):
 		self.assertEqual(house_member_count_pre, house_member_count_post)
 		self.assertEqual(invite_count_pre, invite_count_post)
 	
-	def test_house_invite_decline_get(self):
+	def test_house_invite_decline_view_get(self):
 		print('Testing houses.views.house_invite_decline() GET')
 		self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
 		self.client.force_login(self.user)
@@ -303,7 +327,7 @@ class HousesViewsTests(TestCase):
 		self.assertNotContains(response, '404')
 		self.assertEqual(invite_count_pre, invite_count_post)
 	
-	def test_house_invite_decline_get_not_logged_in(self):
+	def test_house_invite_decline_view_get_not_logged_in(self):
 		print('Testing houses.views.house_invite_decline() GET not logged in')
 		self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
 		self.client.logout()
@@ -317,7 +341,7 @@ class HousesViewsTests(TestCase):
 		self.assertNotContains(response, self.house)
 		self.assertEqual(invite_count_pre, invite_count_post)
 	
-	def test_house_invite_decline_get_wrong_user(self):
+	def test_house_invite_decline_view_get_wrong_user(self):
 		print('Testing houses.views.house_invite_decline() GET wrong user')
 		self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
 		self.client.force_login(self.user2)
@@ -331,7 +355,7 @@ class HousesViewsTests(TestCase):
 		self.assertNotContains(response, self.house)
 		self.assertEqual(invite_count_pre, invite_count_post)
 	
-	def test_house_invite_decline_post(self):
+	def test_house_invite_decline_view_post(self):
 		print('Testing houses.views.house_invite_decline() POST')
 		self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
 		self.client.force_login(self.user)
@@ -345,7 +369,7 @@ class HousesViewsTests(TestCase):
 		self.assertContains(response, self.house)
 		self.assertEqual(invite_count_pre - 1, invite_count_post)
 	
-	def test_house_invite_decline_post_not_logged_in(self):
+	def test_house_invite_decline_view_post_not_logged_in(self):
 		print('Testing houses.views.house_invite_decline() POST not logged in')
 		self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
 		self.client.logout()
@@ -362,7 +386,7 @@ class HousesViewsTests(TestCase):
 		self.assertEqual(house_member_count_pre, house_member_count_post)
 		self.assertEqual(invite_count_pre, invite_count_post)
 	
-	def test_house_invite_decline_post_wrong_user(self):
+	def test_house_invite_decline_view_post_wrong_user(self):
 		print('Testing houses.views.house_invite_decline() POST wrong user')
 		self.invite = Invitation.objects.create(house=self.house, sender=self.user, target='aaron@xnovax.net')
 		self.client.force_login(self.user2)
@@ -380,6 +404,7 @@ class HousesViewsTests(TestCase):
 		self.assertEqual(invite_count_pre, invite_count_post)
 	
 	def test_house_member_remove_view_get(self):
+		print('Testing houses.views.house_member_remove() GET')
 		self.client.force_login(self.user)
 		self.house.members.add(self.user2)
 		pre_count = self.house.members.count()
@@ -391,22 +416,76 @@ class HousesViewsTests(TestCase):
 		self.assertNotContains(response, 'Login')
 		self.assertNotContains(response, '404')
 		self.assertContains(response, self.house)
-
+	
 	def test_house_member_remove_view_get_not_logged_in(self):
+		print('Testing houses.views.house_member_remove() GET not logged in')
 		self.client.logout()
+		self.house.members.add(self.user2)
+		pre_count = self.house.members.count()
+		response = self.client.get(reverse('house_member_remove', kwargs={'pk': self.house.id, 'id': self.user2.id}, ), follow=True)
+		self.assertEqual(response.status_code, 200)
+		post_count = self.house.members.count()
+		self.assertEqual(pre_count, post_count)
+		self.assertTemplateUsed(response, 'account/login.html')
+		self.assertContains(response, 'Login')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, self.house)
 	
 	def test_house_member_remove_view_get_wrong_user(self):
+		print('Testing houses.views.house_member_remove() GET wrong user')
 		self.client.force_login(self.user2)
+		self.house.members.add(self.user2)
+		pre_count = self.house.members.count()
+		response = self.client.get(reverse('house_member_remove', kwargs={'pk': self.house.id, 'id': self.user2.id}, ), follow=True)
+		self.assertEqual(response.status_code, 200)
+		post_count = self.house.members.count()
+		self.assertEqual(pre_count, post_count)
+		self.assertTemplateUsed(response, 'main/404.html')
+		self.assertNotContains(response, 'Login')
+		self.assertContains(response, '404')
+		self.assertNotContains(response, self.house)
 	
 	def test_house_member_remove_view_post(self):
+		print('Testing houses.views.house_member_remove() POST')
 		self.client.force_login(self.user)
+		self.house.members.add(self.user2)
+		pre_count = self.house.members.count()
+		response = self.client.post(reverse('house_member_remove', kwargs={'pk': self.house.id, 'id': self.user2.id}, ), follow=True)
+		self.assertEqual(response.status_code, 200)
+		post_count = self.house.members.count()
+		self.assertEqual(pre_count - 1, post_count)
+		self.assertTemplateUsed(response, 'houses/house_detail.html')
+		self.assertNotContains(response, 'Login')
+		self.assertNotContains(response, '404')
+		self.assertContains(response, self.house)
 	
 	def test_house_member_remove_view_post_not_logged_in(self):
+		print('Testing houses.views.house_member_remove() POST not logged in')
 		self.client.logout()
+		self.house.members.add(self.user2)
+		pre_count = self.house.members.count()
+		response = self.client.post(reverse('house_member_remove', kwargs={'pk': self.house.id, 'id': self.user2.id}, ), follow=True)
+		self.assertEqual(response.status_code, 200)
+		post_count = self.house.members.count()
+		self.assertEqual(pre_count, post_count)
+		self.assertTemplateUsed(response, 'account/login.html')
+		self.assertContains(response, 'Login')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, self.house)
 	
 	def test_house_member_remove_view_post_wrong_user(self):
+		print('Testing houses.views.house_member_remove() POST wrong user')
 		self.client.force_login(self.user2)
-	
+		self.house.members.add(self.user2)
+		pre_count = self.house.members.count()
+		response = self.client.post(reverse('house_member_remove', kwargs={'pk': self.house.id, 'id': self.user2.id}, ), follow=True)
+		self.assertEqual(response.status_code, 200)
+		post_count = self.house.members.count()
+		self.assertEqual(pre_count, post_count)
+		self.assertTemplateUsed(response, 'main/404.html')
+		self.assertNotContains(response, 'Login')
+		self.assertContains(response, '404')
+		self.assertNotContains(response, self.house)
 	
 	def test_house_add_room_view_get(self):
 		print('Testing houses.views.house_add_room() GET')
@@ -622,6 +701,37 @@ class HousesViewsTests(TestCase):
 		self.assertTrue(self.house.has_laundry)
 		self.assertTrue(self.house.has_air_conditioning)
 	
+	def test_house_edit_view_post_not_logged_in(self):
+		print('Testing houses.views.house_edit() POST not logged in')
+		# Test before values
+		self.assertFalse(self.house.hide_address)
+		self.assertEqual(self.house.num_rooms, 0)
+		self.assertEqual(self.house.num_bathrooms, 0)
+		self.assertEqual(self.house.num_parking_spaces, 0)
+		self.assertFalse(self.house.has_dishwasher)
+		self.assertFalse(self.house.has_laundry)
+		self.assertFalse(self.house.has_air_conditioning)
+		
+		req_data = {'hide_address': True, 'num_rooms': 4, 'num_bathrooms': 4, 'num_parking_spaces': 4, 'has_dishwasher': True, 'has_laundry': True,
+		            'has_air_conditioning': True}
+		self.client.logout()
+		response = self.client.post(reverse('house_edit', args=[self.house.id]), req_data, follow=True)
+		self.assertEqual(response.status_code, 200)
+		self.assertNotContains(response, '404')
+		self.assertContains(response, 'Login')
+		self.assertNotContains(response, self.house)
+		self.assertTemplateUsed(response, 'account/login.html')
+		self.house = House.objects.get(pk=self.house.pk)
+		
+		# Test after values
+		self.assertFalse(self.house.hide_address)
+		self.assertEqual(self.house.num_rooms, 0)
+		self.assertEqual(self.house.num_bathrooms, 0)
+		self.assertEqual(self.house.num_parking_spaces, 0)
+		self.assertFalse(self.house.has_dishwasher)
+		self.assertFalse(self.house.has_laundry)
+		self.assertFalse(self.house.has_air_conditioning)
+	
 	def test_house_edit_view_post_wrong_user(self):
 		print('Testing houses.views.house_edit() POST wrong user')
 		# Test before values
@@ -640,6 +750,7 @@ class HousesViewsTests(TestCase):
 		self.assertEqual(response.status_code, 200)
 		self.assertContains(response, '404')
 		self.assertTemplateUsed(response, 'main/404.html')
+		self.house = House.objects.get(pk=self.house.pk)
 		
 		# Test after values
 		self.assertFalse(self.house.hide_address)

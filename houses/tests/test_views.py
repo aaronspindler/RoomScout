@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
 
-from bills.models import BillSet
+from bills.models import BillSet, Bill
 from garbageday.models import GarbageDay
 from houses.models import House, Invitation
 from rooms.models import Room
@@ -180,25 +180,152 @@ class HousesViewsTests(TestCase):
 		self.assertEqual(house_pre_count, house_post_count)
 	
 	def test_house_bill_add_view_get(self):
+		print('Testing houses.views.house_bill_add() GET')
 		self.client.force_login(self.user)
+		bill_count_pre = Bill.objects.count()
+		billset_count_pre = BillSet.objects.count()
+		response = self.client.get(reverse('house_bill_add', kwargs={'pk': self.house.pk}), follow=True)
+		bill_count_post = Bill.objects.count()
+		billset_count_post = BillSet.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'houses/house_bill_add.html')
+		self.assertContains(response, 'Add bill to')
+		self.assertNotContains(response, 'Garbage Day')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertEqual(bill_count_pre, bill_count_post)
+		self.assertEqual(billset_count_pre, billset_count_post)
 	
 	def test_house_bill_add_view_get_not_logged_in(self):
+		print('Testing houses.views.house_bill_add() GET not logged in')
 		self.client.logout()
+		bill_count_pre = Bill.objects.count()
+		billset_count_pre = BillSet.objects.count()
+		response = self.client.get(reverse('house_bill_add', kwargs={'pk': self.house.pk}), follow=True)
+		bill_count_post = Bill.objects.count()
+		billset_count_post = BillSet.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'account/login.html')
+		self.assertNotContains(response, 'Add bill to')
+		self.assertNotContains(response, 'Garbage Day')
+		self.assertNotContains(response, '404')
+		self.assertContains(response, 'Login')
+		self.assertEqual(bill_count_pre, bill_count_post)
+		self.assertEqual(billset_count_pre, billset_count_post)
 	
 	def test_house_bill_add_view_get_wrong_user(self):
+		print('Testing houses.views.house_bill_add() GET wrong user')
 		self.client.force_login(self.user2)
+		bill_count_pre = Bill.objects.count()
+		billset_count_pre = BillSet.objects.count()
+		response = self.client.get(reverse('house_bill_add', kwargs={'pk': self.house.pk}), follow=True)
+		bill_count_post = Bill.objects.count()
+		billset_count_post = BillSet.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'main/404.html')
+		self.assertNotContains(response, 'Add bill to')
+		self.assertNotContains(response, 'Garbage Day')
+		self.assertContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertEqual(bill_count_pre, bill_count_post)
+		self.assertEqual(billset_count_pre, billset_count_post)
 	
 	def test_house_bill_add_view_post(self):
+		print('Testing houses.views.house_bill_add() POST')
 		self.client.force_login(self.user)
-	
+		bill_count_pre = Bill.objects.count()
+		billset_count_pre = BillSet.objects.count()
+		req_data = {'type': 'GAS', 'date': '2019-12-11', 'amount':'298.99'}
+		response = self.client.post(reverse('house_bill_add', kwargs={'pk': self.house.pk}), req_data, follow=True)
+		bill_count_post = Bill.objects.count()
+		billset_count_post = BillSet.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'houses/house_detail.html')
+		self.assertContains(response, self.house)
+		self.assertNotContains(response, 'Add bill to')
+		self.assertContains(response, 'Garbage Day')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertGreater(bill_count_post,bill_count_pre)
+		self.assertGreater(billset_count_post, billset_count_pre)
+		
 	def test_house_bill_add_view_post_not_logged_in(self):
+		print('Testing houses.views.house_bill_add() POST not logged in')
 		self.client.logout()
+		bill_count_pre = Bill.objects.count()
+		billset_count_pre = BillSet.objects.count()
+		req_data = {'type': 'GAS', 'date': '2019-12-11', 'amount': '298.99'}
+		response = self.client.post(reverse('house_bill_add', kwargs={'pk': self.house.pk}), req_data, follow=True)
+		bill_count_post = Bill.objects.count()
+		billset_count_post = BillSet.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'account/login.html')
+		self.assertNotContains(response, self.house)
+		self.assertNotContains(response, 'Add bill to')
+		self.assertNotContains(response, 'Garbage Day')
+		self.assertNotContains(response, '404')
+		self.assertContains(response, 'Login')
+		self.assertEqual(bill_count_post, bill_count_pre)
+		self.assertEqual(billset_count_post, billset_count_pre)
 	
 	def test_house_bill_add_view_post_wrong_user(self):
+		print('Testing houses.views.house_bill_add() POST wrong user')
 		self.client.force_login(self.user2)
+		bill_count_pre = Bill.objects.count()
+		billset_count_pre = BillSet.objects.count()
+		req_data = {'type': 'GAS', 'date': '2019-12-11', 'amount': '298.99'}
+		response = self.client.post(reverse('house_bill_add', kwargs={'pk': self.house.pk}), req_data, follow=True)
+		bill_count_post = Bill.objects.count()
+		billset_count_post = BillSet.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'main/404.html')
+		self.assertNotContains(response, self.house)
+		self.assertNotContains(response, 'Add bill to')
+		self.assertNotContains(response, 'Garbage Day')
+		self.assertContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertEqual(bill_count_post, bill_count_pre)
+		self.assertEqual(billset_count_post, billset_count_pre)
 	
 	def test_house_bill_add_view_post_invalid(self):
+		print('Testing houses.views.house_bill_add() POST invalid')
 		self.client.force_login(self.user)
+		bill_count_pre = Bill.objects.count()
+		billset_count_pre = BillSet.objects.count()
+		req_data = {'date': '2019-12-11', 'amount': '298.99'}
+		response = self.client.post(reverse('house_bill_add', kwargs={'pk': self.house.pk}), req_data, follow=True)
+		bill_count_post = Bill.objects.count()
+		billset_count_post = BillSet.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'houses/house_bill_add.html')
+		self.assertContains(response, self.house)
+		self.assertContains(response, 'Add bill to')
+		self.assertNotContains(response, 'Garbage Day')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertEqual(bill_count_post, bill_count_pre)
+		self.assertEqual(billset_count_post, billset_count_pre)
+		
+	def test_house_bill_add_view_post_bad_date(self):
+		print('Testing houses.views.house_bill_add() POST bad date')
+		self.client.force_login(self.user)
+		bill_count_pre = Bill.objects.count()
+		billset_count_pre = BillSet.objects.count()
+		req_data = {'type': 'GAS', 'date': '12-11-2019', 'amount': '298.99'}
+		response = self.client.post(reverse('house_bill_add', kwargs={'pk': self.house.pk}), req_data, follow=True)
+		bill_count_post = Bill.objects.count()
+		billset_count_post = BillSet.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'houses/house_bill_add.html')
+		self.assertContains(response, self.house)
+		self.assertContains(response, 'Add bill to')
+		self.assertContains(response, 'You have enter the date in an incorrect format! Use yyyy-mm-dd')
+		self.assertNotContains(response, 'Garbage Day')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertEqual(bill_count_post, bill_count_pre)
+		self.assertEqual(billset_count_post, billset_count_pre)
+	
 	
 	def test_house_invite_view_get(self):
 		print('Testing houses.views.house_invite() GET')

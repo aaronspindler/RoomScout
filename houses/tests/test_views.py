@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
 
+from bills.models import BillSet
+from garbageday.models import GarbageDay
 from houses.models import House, Invitation
 from rooms.models import Room
 
@@ -29,26 +31,174 @@ class HousesViewsTests(TestCase):
 	def test_house_create_view_get(self):
 		print('Testing houses.views.house_create() GET')
 		self.client.force_login(self.user)
-	
+		response = self.client.get(reverse('house_create'))
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'houses/house_create.html')
+		self.assertContains(response, 'Create a House')
+		self.assertContains(response, 'Address')
+		self.assertContains(response, 'Garbage Day')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		
 	def test_house_create_view_get_not_logged_in(self):
 		print('Testing houses.views.house_create() GET not logged in')
 		self.client.logout()
-	
-	def test_house_create_view_get_wrong_user(self):
-		print('Testing houses.views.house_create() GET wrong user')
-		self.client.force_login(self.user2)
+		response = self.client.get(reverse('house_create'), follow=True)
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'account/login.html')
+		self.assertNotContains(response, 'Create a House')
+		self.assertNotContains(response, 'Address')
+		self.assertNotContains(response, 'Garbage Day')
+		self.assertNotContains(response, '404')
+		self.assertContains(response, 'Login')
 	
 	def test_house_create_view_post(self):
 		print('Testing houses.views.house_create() POST')
+		house_count_pre = House.objects.count()
+		billset_count_pre = BillSet.objects.count()
+		garbageday_count_pre = GarbageDay.objects.count()
 		self.client.force_login(self.user)
+		req_data = {'street_number': '2529', 'street_name': 'Stallion Drive', 'city': 'Oshawa', 'prov_state': 'ON', 'postal_code': 'L1L 0M4', 'country': 'Canada', 'place_id': 'ChIJ94z9ZcMb1YkRsQk9b683-go', 'lat': '43.95855359999999', 'lon': '-78.91573879999999', 'LastGarbageDay': '2019-12-11', 'NextGarbageDay': '2019-12-25'}
+		response = self.client.post(reverse('house_create'), req_data, follow=True)
+		house_count_post = House.objects.count()
+		billset_count_post = BillSet.objects.count()
+		garbageday_count_post = GarbageDay.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'houses/house_detail.html')
+		self.assertNotContains(response, 'Create a House')
+		self.assertContains(response, 'Garbage Day')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertGreater(house_count_post, house_count_pre)
+		self.assertGreater(billset_count_post, billset_count_pre)
+		self.assertGreater(garbageday_count_post, garbageday_count_pre)
+	
+	def test_house_create_view_post_no_garbage_day(self):
+		print('Testing houses.views.house_create() POST no garbage day')
+		house_count_pre = House.objects.count()
+		billset_count_pre = BillSet.objects.count()
+		garbageday_count_pre = GarbageDay.objects.count()
+		self.client.force_login(self.user)
+		req_data = {'street_number': '2529', 'street_name': 'Stallion Drive', 'city': 'Oshawa', 'prov_state': 'ON', 'postal_code': 'L1L 0M4', 'country': 'Canada', 'place_id': 'ChIJ94z9ZcMb1YkRsQk9b683-go', 'lat': '43.95855359999999', 'lon': '-78.91573879999999'}
+		response = self.client.post(reverse('house_create'), req_data, follow=True)
+		house_count_post = House.objects.count()
+		billset_count_post = BillSet.objects.count()
+		garbageday_count_post = GarbageDay.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'houses/house_detail.html')
+		self.assertNotContains(response, 'Create a House')
+		self.assertContains(response, 'Garbage Day')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertGreater(house_count_post, house_count_pre)
+		self.assertGreater(billset_count_post, billset_count_pre)
+		self.assertEqual(garbageday_count_post, garbageday_count_pre)
+		
+	def test_house_create_view_post_invalid(self):
+		print('Testing houses.views.house_create() POST invalid')
+		house_count_pre = House.objects.count()
+		billset_count_pre = BillSet.objects.count()
+		garbageday_count_pre = GarbageDay.objects.count()
+		self.client.force_login(self.user)
+		req_data = {}
+		response = self.client.post(reverse('house_create'), req_data, follow=True)
+		house_count_post = House.objects.count()
+		billset_count_post = BillSet.objects.count()
+		garbageday_count_post = GarbageDay.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'houses/house_create.html')
+		self.assertContains(response, 'Create a House')
+		self.assertContains(response, 'Garbage Day')
+		self.assertContains(response, 'There is an issue with the address inputted!')
+		self.assertNotContains(response, 'Bills')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertEqual(house_count_post, house_count_pre)
+		self.assertEqual(billset_count_post, billset_count_pre)
+		self.assertEqual(garbageday_count_post, garbageday_count_pre)
+	
+	def test_house_create_view_post_invalid_1(self):
+		print('Testing houses.views.house_create() POST invalid 1')
+		house_count_pre = House.objects.count()
+		billset_count_pre = BillSet.objects.count()
+		garbageday_count_pre = GarbageDay.objects.count()
+		self.client.force_login(self.user)
+		req_data = {'street_name': 'Stallion Drive', 'city': 'Oshawa', 'prov_state': 'ON', 'postal_code': 'L1L 0M4', 'country': 'Canada', 'place_id': 'ChIJ94z9ZcMb1YkRsQk9b683-go', 'lat': '43.95855359999999', 'lon': '-78.91573879999999'}
+		response = self.client.post(reverse('house_create'), req_data, follow=True)
+		house_count_post = House.objects.count()
+		billset_count_post = BillSet.objects.count()
+		garbageday_count_post = GarbageDay.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'houses/house_create.html')
+		self.assertContains(response, 'Create a House')
+		self.assertContains(response, 'Garbage Day')
+		self.assertContains(response, 'There is an issue with the address inputted!')
+		self.assertNotContains(response, 'Bills')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertEqual(house_count_post, house_count_pre)
+		self.assertEqual(billset_count_post, billset_count_pre)
+		self.assertEqual(garbageday_count_post, garbageday_count_pre)
+		
+	def test_house_create_view_post_invalid_2(self):
+		print('Testing houses.views.house_create() POST invalid 2')
+		house_count_pre = House.objects.count()
+		billset_count_pre = BillSet.objects.count()
+		garbageday_count_pre = GarbageDay.objects.count()
+		self.client.force_login(self.user)
+		req_data = {'city': 'Oshawa', 'prov_state': 'ON', 'postal_code': 'L1L 0M4', 'country': 'Canada', 'place_id': 'ChIJ94z9ZcMb1YkRsQk9b683-go', 'lat': '43.95855359999999', 'lon': '-78.91573879999999'}
+		response = self.client.post(reverse('house_create'), req_data, follow=True)
+		house_count_post = House.objects.count()
+		billset_count_post = BillSet.objects.count()
+		garbageday_count_post = GarbageDay.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'houses/house_create.html')
+		self.assertContains(response, 'Create a House')
+		self.assertContains(response, 'Garbage Day')
+		self.assertContains(response, 'There is an issue with the address inputted!')
+		self.assertNotContains(response, 'Bills')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertEqual(house_count_post, house_count_pre)
+		self.assertEqual(billset_count_post, billset_count_pre)
+		self.assertEqual(garbageday_count_post, garbageday_count_pre)
 	
 	def test_house_create_view_post_not_logged_in(self):
 		print('Testing houses.views.house_create() POST not logged in')
 		self.client.logout()
+		req_data = {}
+		house_pre_count = House.objects.count()
+		response = self.client.post(reverse('house_create'), req_data, follow=True)
+		house_post_count = House.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'account/login.html')
+		self.assertNotContains(response, 'Create a House')
+		self.assertNotContains(response, 'Address')
+		self.assertNotContains(response, 'Garbage Day')
+		self.assertNotContains(response, '404')
+		self.assertContains(response, 'Login')
+		self.assertEqual(house_pre_count, house_post_count)
 	
-	def test_house_create_view_post_wrong_user(self):
-		print('Testing houses.views.house_create() POST wrong user')
+	def test_house_bill_add_view_get(self):
+		self.client.force_login(self.user)
+	
+	def test_house_bill_add_view_get_not_logged_in(self):
+		self.client.logout()
+	
+	def test_house_bill_add_view_get_wrong_user(self):
 		self.client.force_login(self.user2)
+	
+	def test_house_bill_add_view_post(self):
+		self.client.force_login(self.user)
+	
+	def test_house_bill_add_view_post_not_logged_in(self):
+		self.client.logout()
+	
+	def test_house_bill_add_view_post_wrong_user(self):
+		self.client.force_login(self.user2)
+	
+	def test_house_bill_add_view_post_invalid(self):
+		self.client.force_login(self.user)
 	
 	def test_house_invite_view_get(self):
 		print('Testing houses.views.house_invite() GET')

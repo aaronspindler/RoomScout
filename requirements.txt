@@ -5,7 +5,7 @@ certifi==2019.9.11
 chardet==3.0.4
 defusedxml==0.6.0
 dj-config-url==0.1.1
-Django==2.2.7
+Django==2.2.8
 django-allauth==0.40.0
 django-countries==5.5
 django-crispy-forms==1.8.0

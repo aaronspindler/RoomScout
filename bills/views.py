@@ -15,12 +15,13 @@ def bill_delete(request, pk):
 	if request.user != bill.user:
 		raise Http404
 	
-	if Bill.objects.filter(set=bill.set).count() == 1:
-		delete_set = True
+	if request.method == 'POST':
+		if Bill.objects.filter(set=bill.set).count() == 1:
+			delete_set = True
 	
-	bill.delete()
+		bill.delete()
 	
-	if delete_set:
-		BillSet.objects.filter(pk=set_key).delete()
+		if delete_set:
+			BillSet.objects.filter(pk=set_key).delete()
 	
 	return redirect('house_detail', house.pk)

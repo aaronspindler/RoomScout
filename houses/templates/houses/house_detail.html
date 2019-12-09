@@ -209,9 +209,12 @@
                                                     <td>No Receipt</td>
                                                 {% endif %}
                                                 {% if user.id == house.user.id %}
-                                                    <td><a class="btn btn-sm btn-danger"
-                                                           href="{% url 'bill_delete' bill.pk %}"><span
-                                                            class="oi oi-trash"></span></a></td>
+                                                    <td>
+                                                        <form method="post" action="{% url 'bill_delete' bill.pk %}">
+                                                            {% csrf_token %}
+                                                            <button type="submit" class="btn btn-sm btn-danger">Remove <span class="oi oi-trash"></span></button>
+                                                        </form>
+                                                    </td>
                                                 {% endif %}
                                             </tr>
                                         {% endfor %}

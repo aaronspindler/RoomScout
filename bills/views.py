@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import redirect, get_object_or_404
 
@@ -5,6 +6,7 @@ from .models import Bill, BillSet
 
 
 # PK is the primary key for the bill
+@login_required(login_url="account_login")
 def bill_delete(request, pk):
 	delete_set = False
 	bill = get_object_or_404(Bill, pk=pk)
@@ -18,7 +20,7 @@ def bill_delete(request, pk):
 	
 	bill.delete()
 	
-	if delete_set == True:
+	if delete_set:
 		BillSet.objects.filter(pk=set_key).delete()
 	
 	return redirect('house_detail', house.pk)

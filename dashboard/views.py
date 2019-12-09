@@ -14,9 +14,7 @@ def main_dashboard(request):
 		member_of_houses = House.objects.filter(members=request.user)
 		invitations = Invitation.objects.filter(target=request.user.email)
 		inquiries_received = Inquiry.objects.filter(room__house__user=request.user).filter(status='O')
-		return render(request, 'dashboard/main_dashboard.html',
-		              {'houses': houses, 'member_of_houses': member_of_houses, 'invitations': invitations, 'inquiries_received': inquiries_received,
-		               'GOOGLE_API_KEY': GOOGLE_API_KEY})
+		return render(request, 'dashboard/main_dashboard.html', {'houses': houses, 'member_of_houses': member_of_houses, 'invitations': invitations, 'inquiries_received': inquiries_received, 'GOOGLE_API_KEY': GOOGLE_API_KEY})
 	except Exception:
 		pass
 	return render(request, 'dashboard/main_dashboard.html', {'GOOGLE_API_KEY': GOOGLE_API_KEY})

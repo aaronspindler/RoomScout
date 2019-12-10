@@ -142,9 +142,13 @@ WSGI_APPLICATION = 'Roomscout.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-	'default': dj_database_url.config()
-}
+if 'test' in sys.argv or os.environ:
+	DATABASES = {
+		'default': {
+			'ENGINE': 'django.db.backends.sqlite3',
+			'NAME': 'testingdb'
+		}
+	}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -201,9 +205,3 @@ SECURE_HSTS_PRELOAD = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-
-if 'test' in sys.argv or os.environ:
-	DATABASES['default'] = {
-		'ENGINE': 'django.db.backends.sqlite3',
-		'NAME': 'testingdb'
-	}

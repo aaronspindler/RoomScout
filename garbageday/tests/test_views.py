@@ -1,3 +1,5 @@
+import datetime
+
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -232,11 +234,74 @@ class GarbageDayViewTests(TestCase):
 	def test_garbageday_views_garbageday_edit_post(self):
 		print('Testing garbageday.views.garbageday_edit() POST')
 		self.client.force_login(self.user)
+		self.garbage_day = GarbageDay()
+		self.garbage_day.house = self.house
+		self.garbage_day.user = self.user
+		self.garbage_day.last_garbage_day = "2019-11-04"
+		self.garbage_day.next_garbage_day = "2019-11-04"
+		self.garbage_day.save()
+		
+		pre_count = GarbageDay.objects.count()
+		req_data = {'LastGarbageDay': '2019-11-12', 'NextGarbageDay': '2019-11-26'}
+		response = self.client.post(reverse('garbageday_edit', kwargs={'house': self.house.id}), req_data, follow=True)
+		post_count = GarbageDay.objects.count()
+		self.assertEqual(post_count, pre_count)
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'houses/house_detail.html')
+		self.assertNotContains(response, 'Edit Garbage Day for')
+		self.assertContains(response, self.house)
+		self.assertContains(response, 'Garbage Day')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertEqual(self.house.garbageday_set.first().last_garbage_day, datetime.date(2019, 11, 12))
+		self.assertEqual(self.house.garbageday_set.first().next_garbage_day, datetime.date(2019, 11, 26))
 	
 	def test_garbageday_views_garbageday_edit_post_not_logged_in(self):
 		print('Testing garbageday.views.garbageday_edit() POST not logged in')
 		self.client.logout()
+		self.garbage_day = GarbageDay()
+		self.garbage_day.house = self.house
+		self.garbage_day.user = self.user
+		self.garbage_day.last_garbage_day = "2019-11-04"
+		self.garbage_day.next_garbage_day = "2019-11-04"
+		self.garbage_day.save()
+		
+		pre_count = GarbageDay.objects.count()
+		req_data = {'LastGarbageDay': '2019-11-12', 'NextGarbageDay': '2019-11-26'}
+		response = self.client.post(reverse('garbageday_edit', kwargs={'house': self.house.id}), req_data, follow=True)
+		post_count = GarbageDay.objects.count()
+		self.assertEqual(post_count, pre_count)
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'account/login.html')
+		self.assertNotContains(response, 'Edit Garbage Day for')
+		self.assertNotContains(response, self.house)
+		self.assertNotContains(response, 'Garbage Day')
+		self.assertNotContains(response, '404')
+		self.assertContains(response, 'Login')
+		self.assertEqual(self.house.garbageday_set.first().last_garbage_day, datetime.date(2019, 11, 4))
+		self.assertEqual(self.house.garbageday_set.first().next_garbage_day, datetime.date(2019, 11, 4))
 	
 	def test_garbageday_views_garbageday_edit_post_wrong_user(self):
 		print('Testing garbageday.views.garbageday_edit() POST wrong user')
 		self.client.force_login(self.user2)
+		self.garbage_day = GarbageDay()
+		self.garbage_day.house = self.house
+		self.garbage_day.user = self.user
+		self.garbage_day.last_garbage_day = "2019-11-04"
+		self.garbage_day.next_garbage_day = "2019-11-04"
+		self.garbage_day.save()
+		
+		pre_count = GarbageDay.objects.count()
+		req_data = {'LastGarbageDay': '2019-11-12', 'NextGarbageDay': '2019-11-26'}
+		response = self.client.post(reverse('garbageday_edit', kwargs={'house': self.house.id}), req_data, follow=True)
+		post_count = GarbageDay.objects.count()
+		self.assertEqual(post_count, pre_count)
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'main/404.html')
+		self.assertNotContains(response, 'Edit Garbage Day for')
+		self.assertNotContains(response, self.house)
+		self.assertNotContains(response, 'Garbage Day')
+		self.assertContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertEqual(self.house.garbageday_set.first().last_garbage_day, datetime.date(2019, 11, 4))
+		self.assertEqual(self.house.garbageday_set.first().next_garbage_day, datetime.date(2019, 11, 4))

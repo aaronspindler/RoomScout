@@ -142,13 +142,13 @@ WSGI_APPLICATION = 'Roomscout.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-if 'test' in sys.argv or os.environ:
-	DATABASES = {
+
+DATABASES = {
 		'default': {
 			'ENGINE': 'django.db.backends.sqlite3',
 			'NAME': 'testingdb'
 		}
-	}
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

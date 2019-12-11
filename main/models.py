@@ -7,3 +7,6 @@ class ContactMessage(models.Model):
 	subject = models.TextField(default='')
 	message = models.TextField(default='')
 	ip = models.GenericIPAddressField()
+	
+	def __str__(self):
+		return "{} - {} - {}".format(self.created_at, self.sender, self.subject)

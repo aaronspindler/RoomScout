@@ -20,13 +20,16 @@ class MainViewsTests(TestCase):
 		self.assertNotContains(response, 'This should not be contained!')
 		self.assertTemplateUsed(response, 'main/about.html')
 	
-	def test_contactus_view(self):
-		print("Testing main.views.contactus()")
+	def test_contactus_view_get(self):
+		print("Testing main.views.contactus() GET")
 		response = self.client.get(reverse('contactus'))
 		self.assertEqual(response.status_code, 200)
 		self.assertContains(response, 'Contact')
 		self.assertNotContains(response, 'This should not be contained!')
 		self.assertTemplateUsed(response, 'main/contactus.html')
+	
+	def test_contactus_view_post(self):
+		print("Testing main.views.contactus() POST")
 	
 	def test_billfeatures_view(self):
 		print("Testing main.views.billfeatures()")

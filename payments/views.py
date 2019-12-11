@@ -1,6 +1,6 @@
 import stripe
 from django.conf import settings
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from .models import Donation
 
 stripe.api_key = settings.STRIPE_SECRET_KEY

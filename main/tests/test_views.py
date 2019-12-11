@@ -1,6 +1,7 @@
-from django.contrib.auth import get_user_model
-from django.test import TestCase, Client
+from django.test import TestCase
 from django.urls import reverse
+
+from main.models import ContactMessage
 
 
 class MainViewsTests(TestCase):
@@ -30,7 +31,16 @@ class MainViewsTests(TestCase):
 	
 	def test_contactus_view_post(self):
 		print("Testing main.views.contactus() POST")
-	
+		pre_count = ContactMessage.objects.count()
+		req_data = {'sender_email': 'aaron@xnovax.net', 'subject': 'Contact Us Test', 'message': 'This is a test message!'}
+		response = self.client.post(reverse('contactus'), req_data, follow=True)
+		post_count = ContactMessage.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'main/home.html')
+		self.assertContains(response, 'We have received your contact request and will get back to you as soon as possible!')
+		self.assertNotContains(response, '404')
+		self.assertGreater(post_count, pre_count)
+
 	def test_billfeatures_view(self):
 		print("Testing main.views.billfeatures()")
 		response = self.client.get(reverse('billfeatures'))
@@ -78,3 +88,10 @@ class MainViewsTests(TestCase):
 		self.assertContains(response, 'Terms of Use')
 		self.assertNotContains(response, 'This should not be contained!')
 		self.assertTemplateUsed(response, 'main/termsofuse.html')
+		
+	def test_sandbox_view(self):
+		print("Testing main.views.sandbox()")
+		response = self.client.get(reverse('sandbox'), follow=True)
+		self.assertEqual(response.status_code, 200)
+		self.assertNotContains(response, 'Sandbox')
+		self.assertTemplateUsed(response, 'account/login.html')

@@ -21,3 +21,5 @@ def payment_donation(request, amount):
         donation.save()
         
         return redirect('ee_dog')
+    else:
+        return redirect('supportus')

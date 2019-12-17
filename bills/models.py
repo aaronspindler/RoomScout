@@ -55,3 +55,6 @@ class Bill(models.Model):
     type = models.CharField(choices=TYPE_CHOICES, max_length=5)
     date = models.DateField()
     amount = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
+    
+    class Meta:
+        ordering = ['date']

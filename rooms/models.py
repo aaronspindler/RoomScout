@@ -8,6 +8,9 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 
 
 class Room(models.Model):
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	house = models.ForeignKey(House, on_delete=models.CASCADE, related_name='house')
 
@@ -15,8 +18,6 @@ class Room(models.Model):
 	name = models.CharField(max_length=200, default='')
 	description = models.TextField(default='')
 	is_available = models.BooleanField(verbose_name='Available', default=True , help_text='Room is available')
-	created_at = models.DateTimeField(auto_now_add=True)
-	updated_at = models.DateTimeField(auto_now=True)
 
 	is_accessible = models.BooleanField(default=False, verbose_name="Accessible", help_text="House is accessible with ramp or elevator")
 	open_to_students = models.BooleanField(default=True, help_text="Students are free to inquire about rooms at this house")

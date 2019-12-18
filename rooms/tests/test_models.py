@@ -1,7 +1,9 @@
 from django.contrib.auth import get_user_model
+from django.templatetags.static import static
 from django.test import TestCase, Client
 
 from houses.models import House
+from rooms.models import Room
 
 
 class RoomsModelTests(TestCase):
@@ -24,12 +26,52 @@ class RoomsModelTests(TestCase):
 		house.save()
 		self.house = house
 
-	def test_room_creation(self):
-		pass
+	def test_room_creation_blank(self):
+		print('Testing rooms.models.Room creation blank')
+		pre_count = Room.objects.count()
+		room = Room.objects.create(user=self.user, house=self.house)
+		post_count = Room.objects.count()
+		self.assertGreater(post_count, pre_count)
+		self.assertTrue(room.is_available)
+		self.assertEqual(room.__str__(), room.name)
+		self.assertEqual(room.get_first_image(), static('logos/logo.PNG'))
+
+	def test_room_creation_filled(self):
+		print('Testing rooms.models.Room creation filled')
+		pre_count = Room.objects.count()
+		room = Room.objects.create(user=self.user, house=self.house)
+		room.price = 799.99
+		room.name = "Master Bedroom"
+		room.description = "Looking for a student tenant"
+		room.is_accessible = False
+		room.open_to_students = True
+		room.pet_friendly = True
+		room.utilities_included = True
+		room.parking = True
+		room.furnished = False
+		room.female_only = False
+		
+		post_count = Room.objects.count()
+		self.assertGreater(post_count, pre_count)
+		self.assertEqual(room.price, 799.99)
+		self.assertEqual(room.name, 'Master Bedroom')
+		self.assertEqual(room.description, 'Looking for a student tenant')
+		self.assertFalse(room.is_accessible)
+		self.assertTrue(room.open_to_students)
+		self.assertTrue(room.pet_friendly)
+		self.assertTrue(room.utilities_included)
+		self.assertTrue(room.parking)
+		self.assertFalse(room.furnished)
+		self.assertFalse(room.female_only)
+		
+		self.assertEqual(room.__str__(), room.name)
+		self.assertEqual(room.get_first_image(), static('logos/logo.PNG'))
+		self.assertEqual(room.get_time_difference_display(), 'Less than 1 hour ago')
 
 
 class InquiryModelTests(TestCase):
-	pass
+	def setUp(self):
+		pass
 
 
 class RoomLikeModelTests(TestCase):

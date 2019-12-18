@@ -9,5 +9,5 @@ class InquiryModelTests(TestCase):
 	pass
 
 
-class RoomLikeModeltests(TestCase):
+class RoomLikeModelTests(TestCase):
 	pass

@@ -9,7 +9,9 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 
 class Room(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	house = models.ForeignKey(House, on_delete=models.CASCADE, related_name='house')
 
+	price = models.DecimalField(max_digits=19, decimal_places=2, default=0.00)
 	name = models.CharField(max_length=200, default='')
 	description = models.TextField(default='')
 	is_available = models.BooleanField(verbose_name='Available', default=True , help_text='Room is available')
@@ -23,10 +25,6 @@ class Room(models.Model):
 	parking = models.BooleanField(default=False, help_text="Parking spot is included or available")
 	furnished = models.BooleanField(default=False, help_text="Room is furnished with at least a bed, mattress, and dresser")
 	female_only = models.BooleanField(default=False, help_text="Only females are allowed to inquire")
-
-	house = models.ForeignKey(House, on_delete=models.CASCADE, related_name='house')
-
-	price = models.DecimalField(max_digits=19, decimal_places=2, default=0.00)
 
 	def __str__(self):
 		return self.name

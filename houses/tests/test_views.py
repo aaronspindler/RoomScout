@@ -72,6 +72,27 @@ class HousesViewsTests(TestCase):
 		self.assertGreater(house_count_post, house_count_pre)
 		self.assertGreater(billset_count_post, billset_count_pre)
 		self.assertGreater(garbageday_count_post, garbageday_count_pre)
+
+	def test_house_create_view_post_blank_garbageday(self):
+		print('Testing houses.views.house_create() POST blank garbageday')
+		house_count_pre = House.objects.count()
+		billset_count_pre = BillSet.objects.count()
+		garbageday_count_pre = GarbageDay.objects.count()
+		self.client.force_login(self.user)
+		req_data = {'street_number': '2529', 'street_name': 'Stallion Drive', 'city': 'Oshawa', 'prov_state': 'ON', 'postal_code': 'L1L 0M4', 'country': 'Canada', 'place_id': 'ChIJ94z9ZcMb1YkRsQk9b683-go', 'lat': '43.95855359999999', 'lon': '-78.91573879999999', 'LastGarbageDay': '', 'NextGarbageDay': ''}
+		response = self.client.post(reverse('house_create'), req_data, follow=True)
+		house_count_post = House.objects.count()
+		billset_count_post = BillSet.objects.count()
+		garbageday_count_post = GarbageDay.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'houses/house_detail.html')
+		self.assertNotContains(response, 'Create a House')
+		self.assertContains(response, 'Garbage Day')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertGreater(house_count_post, house_count_pre)
+		self.assertGreater(billset_count_post, billset_count_pre)
+		self.assertEqual(garbageday_count_post, garbageday_count_pre)
 	
 	def test_house_create_view_post_no_garbage_day(self):
 		print('Testing houses.views.house_create() POST no garbage day')

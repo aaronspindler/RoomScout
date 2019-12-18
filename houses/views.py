@@ -63,7 +63,7 @@ def house_create(request):
 			# Create GarbageDay for house if info present
 			if ('LastGarbageDay' or 'NextGarbageDay') not in request.POST:
 				pass
-			elif request.POST['LastGarbageDay'] or request.POST['NextGarbageDay'] is '':
+			elif (request.POST['LastGarbageDay'] or request.POST['NextGarbageDay']) is '':
 				pass
 			else:
 				garbageday = GarbageDay()

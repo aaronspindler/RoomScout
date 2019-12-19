@@ -3,7 +3,7 @@ from django.templatetags.static import static
 from django.test import TestCase, Client
 
 from houses.models import House
-from rooms.models import Room, Inquiry
+from rooms.models import Room, Inquiry, RoomLike
 
 
 class RoomsModelTests(TestCase):
@@ -122,4 +122,43 @@ class InquiryModelTests(TestCase):
 
 
 class RoomLikeModelTests(TestCase):
-	pass
+	def setUp(self):
+		self.client = Client()
+		User = get_user_model()
+		self.user = User.objects.create_user(username='FredFlintstone', email='aaron@xnovax.net', password='babadoo')
+		self.user2 = User.objects.create_user(username='JackyFlintstone', email='jacky@flintstone.com', password='lovefred')
+		house = House.objects.create(user=self.user)
+		house.place_id = 'EiwyNTI5IFN0YWxsaW9uIERyLCBPc2hhd2EsIE9OIEwxSCA3SzQsIENhbmFkYSIxEi8KFAoSCY_JD3vDG9WJEe3JFhlBvwOKEOETKhQKEgnrS9FlwxvViRHYx20MM9m-8g'
+		house.lat = '43.95858010000001'
+		house.lon = '-78.91587470000002'
+		house.street_number = 2529
+		house.street_name = 'Stallion Drive'
+		house.city = 'Oshawa'
+		house.prov_state = 'ON'
+		house.postal_code = 'L1H 0M4'
+		house.country = 'Canada'
+
+		house.save()
+		self.house = house
+
+		room = Room.objects.create(user=self.user, house=self.house)
+		room.price = 799.99
+		room.name = "Master Bedroom"
+		room.description = "Looking for a student tenant"
+		room.is_accessible = False
+		room.open_to_students = True
+		room.pet_friendly = True
+		room.utilities_included = True
+		room.parking = True
+		room.furnished = False
+		room.female_only = False
+		room.save()
+
+		self.room = room
+
+	def test_roomlike_creation(self):
+		print('Testing rooms.models.RoomLike creation')
+		pre_count = RoomLike.objects.count()
+		roomlike = RoomLike.objects.create(room=self.room, user=self.user)
+		post_count = RoomLike.objects.count()
+		self.assertGreater(post_count, pre_count)

@@ -42,13 +42,13 @@ def room_list(request):
         search_term = ''
         rooms = Room.objects.filter(is_available=True).order_by('-updated_at')
     saved_rooms = get_saved_rooms(request)
-    return render(request, 'rooms/room_list.html', {'rooms': rooms, 'saved_rooms': saved_rooms,'filter_form': filter_form, 'search_term': search_term})
+    return render(request, 'rooms/room_list.html', {'rooms': rooms, 'saved_rooms': saved_rooms, 'filter_form': filter_form, 'search_term': search_term})
 
 
 @login_required(login_url="account_login")
 def room_saved(request):
     saved_rooms = RoomLike.objects.filter(user=request.user)
-    return render(request, "rooms/room_saved.html", {'saved_rooms':saved_rooms})
+    return render(request, "rooms/room_saved.html", {'saved_rooms': saved_rooms})
 
 
 # PK is the primary key for the website

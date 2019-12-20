@@ -57,3 +57,27 @@ class RoomsViewTests(TestCase):
 		self.assertContains(response, 'Login')
 		self.assertNotContains(response, 'Saved Rooms')
 		self.assertNotContains(response, "Looks like you haven't saved any rooms yet!")
+
+	def test_rooms_views_room_like_get(self):
+		print('Testing rooms.views.room_like() GET')
+		self.client.force_login(self.user)
+
+	def test_rooms_views_room_like_get_not_logged_in(self):
+		print('Testing rooms.views.room_like() GET not logged in')
+		self.client.logout()
+
+	def test_rooms_views_room_like_get_wrong_user(self):
+		print('Testing rooms.views.room_like() GET wrong user')
+		self.client.force_login(self.user2)
+
+	def test_rooms_views_room_like_post(self):
+		print('Testing rooms.views.room_like() POST')
+		self.client.force_login(self.user)
+
+	def test_rooms_views_room_like_post_not_logged_in(self):
+		print('Testing rooms.views.room_like() POST not logged in')
+		self.client.logout()
+
+	def test_rooms_views_room_like_post_wrong_user(self):
+		print('Testing rooms.views.room_like() POST wrong user}')
+		self.client.force_login(self.user2)

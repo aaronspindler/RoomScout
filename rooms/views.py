@@ -51,7 +51,7 @@ def room_saved(request):
     return render(request, "rooms/room_saved.html", {'saved_rooms': saved_rooms})
 
 
-# PK is the primary key for the website
+# PK is the primary key for the room
 @login_required(login_url="account_login")
 def room_like(request, pk):
     user = request.user

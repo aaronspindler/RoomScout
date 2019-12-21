@@ -121,3 +121,5 @@ class RoomsViewTests(TestCase):
 		self.assertNotContains(response, 'Saved Rooms')
 		self.assertNotContains(response, "Looks like you haven't saved any rooms yet!")
 		self.assertEqual(pre_count, post_count)
+
+

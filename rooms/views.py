@@ -51,6 +51,7 @@ def room_saved(request):
     return render(request, "rooms/room_saved.html", {'saved_rooms': saved_rooms})
 
 
+# TODO Make this view only affect system state when they are POST requests
 # PK is the primary key for the room
 @login_required(login_url="account_login")
 def room_like(request, pk):
@@ -66,7 +67,7 @@ def room_like(request, pk):
 
     return JsonResponse({'status': 'success'})
 
-
+# TODO Make this view only affect system state when they are POST requests
 # PK is the primary key for the room
 @login_required(login_url="account_login")
 def room_unlike(request, pk):

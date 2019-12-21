@@ -73,8 +73,10 @@ def room_like(request, pk):
 def room_unlike(request, pk):
     user = request.user
     room = get_object_or_404(Room, pk=pk)
-    roomlike = RoomLike.objects.filter(user=user, room=room)
-    roomlike = roomlike.first()
+    roomlikes = RoomLike.objects.filter(user=user, room=room)
+    if roomlikes.count() == 0:
+        return JsonResponse({'status': 'failure'})
+    roomlike = roomlikes.first()
     roomlike.delete()
 
     return JsonResponse({'status': 'success'})

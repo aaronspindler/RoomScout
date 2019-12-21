@@ -217,3 +217,27 @@ class RoomsViewTests(TestCase):
 		self.assertNotContains(response, 'Saved Rooms')
 		self.assertNotContains(response, "Looks like you haven't saved any rooms yet!")
 		self.assertEqual(pre_count, post_count)
+
+	def test_rooms_views_room_create_get(self):
+		print('Testing rooms_views_room_create() GET')
+		self.client.force_login(self.user)
+
+	def test_rooms_views_room_create_get_not_logged_in(self):
+		print('Testing rooms_views_room_create() GET not logged in')
+		self.client.logout()
+
+	def test_rooms_views_room_create_post(self):
+		print('Testing rooms_views_room_create() POST')
+		self.client.force_login(self.user)
+
+	def test_rooms_views_room_create_post_invalid(self):
+		print('Testing rooms_views_room_create() POST invalid')
+		self.client.force_login(self.user)
+
+	def test_rooms_views_room_create_post_invalid1(self):
+		print('Testing rooms_views_room_create() POST invalid 1')
+		self.client.force_login(self.user)
+
+	def test_rooms_views_room_create_post_not_logged_in(self):
+		print('Testing rooms_views_room_create() POST not logged in')
+		self.client.logout()

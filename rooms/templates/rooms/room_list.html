@@ -117,7 +117,7 @@
         function like(pk) {
             const icon = document.getElementById("room_" + pk );
             icon.src = "{% static 'icons/loading.svg' %}";
-            $.get( `/room/${pk}/like` , data => {
+            $.get(`/room/${pk}/like` , data => {
                 $( ".result" ).html( data );
                 icon.onclick = unlike.bind(null, pk);
                 icon.src = "{% static 'icons/heart_filled.svg' %}";

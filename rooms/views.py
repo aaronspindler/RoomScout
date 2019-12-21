@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
@@ -64,10 +64,10 @@ def room_like(request, pk):
         new_room_like.room = room
         new_room_like.save()
 
-    # TODO Make this return a simple success instead of a redirect
-    return redirect('room_list')
+    return JsonResponse({'status': 'success'})
 
 
+# PK is the primary key for the room
 @login_required(login_url="account_login")
 def room_unlike(request, pk):
     user = request.user
@@ -76,8 +76,7 @@ def room_unlike(request, pk):
     roomlike = roomlike.first()
     roomlike.delete()
 
-    # TODO Make this return a simple success instead of a redirect
-    return redirect('room_list')
+    return JsonResponse({'status': 'success'})
 
 
 # TODO : Improve search functionality

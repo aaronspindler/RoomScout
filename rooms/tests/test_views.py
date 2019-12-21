@@ -3,6 +3,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 
 from houses.models import House
+from rooms.models import RoomLike, Room
 
 
 class RoomsViewTests(TestCase):
@@ -28,7 +29,9 @@ class RoomsViewTests(TestCase):
 	def test_rooms_views_room_saved_get(self):
 		print('Testing rooms.views.room_saved() GET')
 		self.client.force_login(self.user)
-		response = self.client.get(reverse('bill_delete', kwargs={'pk': self.bill.id}, ), follow=True)
+		room = Room.objects.create(user=self.user, house=self.house, name='Master Bedroom')
+		roomlike = RoomLike.objects.create(room=room, user=self.user)
+		response = self.client.get(reverse('room_saved'), follow=True)
 		self.assertEqual(response.status_code, 200)
 		self.assertTemplateUsed(response, 'rooms/room_saved.html')
 		self.assertNotContains(response, '404')
@@ -58,26 +61,63 @@ class RoomsViewTests(TestCase):
 		self.assertNotContains(response, 'Saved Rooms')
 		self.assertNotContains(response, "Looks like you haven't saved any rooms yet!")
 
-	def test_rooms_views_room_like_get(self):
-		print('Testing rooms.views.room_like() GET')
-		self.client.force_login(self.user)
+	# def test_rooms_views_room_like_get(self):
+	# 	print('Testing rooms.views.room_like() GET')
+	# 	self.client.force_login(self.user)
+	# 	room = Room.objects.create(user=self.user, house=self.house, name='Master Bedroom')
+	# 	pre_count = RoomLike.objects.count()
+	# 	response = self.client.get(reverse('room_like', kwargs={'pk': room.pk}), follow=True)
+	# 	post_count = RoomLike.objects.count()
+	# 	self.assertEqual(response.status_code, 200)
+	# 	self.assertNotContains(response, '404')
+	# 	self.assertNotContains(response, 'Login')
+	# 	self.assertNotContains(response, 'Saved Rooms')
+	# 	self.assertNotContains(response, "Looks like you haven't saved any rooms yet!")
+	# 	self.assertJSONEqual(str(response.content, encoding='utf8'), {'status': 'failure'})
+	# 	self.assertEqual(pre_count, post_count)
 
 	def test_rooms_views_room_like_get_not_logged_in(self):
 		print('Testing rooms.views.room_like() GET not logged in')
 		self.client.logout()
+		room = Room.objects.create(user=self.user, house=self.house, name='Master Bedroom')
+		pre_count = RoomLike.objects.count()
+		response = self.client.get(reverse('room_like', kwargs={'pk': room.pk}), follow=True)
+		post_count = RoomLike.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'account/login.html')
+		self.assertNotContains(response, '404')
+		self.assertContains(response, 'Login')
+		self.assertNotContains(response, 'Saved Rooms')
+		self.assertNotContains(response, "Looks like you haven't saved any rooms yet!")
+		self.assertEqual(pre_count, post_count)
 
-	def test_rooms_views_room_like_get_wrong_user(self):
-		print('Testing rooms.views.room_like() GET wrong user')
-		self.client.force_login(self.user2)
 
 	def test_rooms_views_room_like_post(self):
 		print('Testing rooms.views.room_like() POST')
 		self.client.force_login(self.user)
+		room = Room.objects.create(user=self.user, house=self.house, name='Master Bedroom')
+		pre_count = RoomLike.objects.count()
+		response = self.client.post(reverse('room_like', kwargs={'pk': room.pk}), follow=True)
+		post_count = RoomLike.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertNotContains(response, 'Saved Rooms')
+		self.assertNotContains(response, "Looks like you haven't saved any rooms yet!")
+		self.assertJSONEqual(str(response.content, encoding='utf8'), {'status': 'success'})
+		self.assertGreater(post_count, pre_count)
 
 	def test_rooms_views_room_like_post_not_logged_in(self):
 		print('Testing rooms.views.room_like() POST not logged in')
 		self.client.logout()
-
-	def test_rooms_views_room_like_post_wrong_user(self):
-		print('Testing rooms.views.room_like() POST wrong user}')
-		self.client.force_login(self.user2)
+		room = Room.objects.create(user=self.user, house=self.house, name='Master Bedroom')
+		pre_count = RoomLike.objects.count()
+		response = self.client.post(reverse('room_like', kwargs={'pk': room.pk}), follow=True)
+		post_count = RoomLike.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'account/login.html')
+		self.assertNotContains(response, '404')
+		self.assertContains(response, 'Login')
+		self.assertNotContains(response, 'Saved Rooms')
+		self.assertNotContains(response, "Looks like you haven't saved any rooms yet!")
+		self.assertEqual(pre_count, post_count)

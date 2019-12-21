@@ -221,10 +221,36 @@ class RoomsViewTests(TestCase):
 	def test_rooms_views_room_create_get(self):
 		print('Testing rooms_views_room_create() GET')
 		self.client.force_login(self.user)
+		response = self.client.get(reverse('room_create'), follow=True)
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'rooms/room_create.html')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertContains(response, 'Post a Room')
+		self.assertNotContains(response, "Looks like you haven't told us about any houses you have!")
 
+	def test_rooms_views_room_create_get_no_houses(self):
+		print('Testing rooms_views_room_create() GET no existing houses')
+		self.client.force_login(self.user)
+		self.house.delete()
+		response = self.client.get(reverse('room_create'), follow=True)
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'rooms/room_create.html')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertContains(response, 'Post a Room')
+		self.assertContains(response, "Looks like you haven't told us about any houses you have!")
+		
 	def test_rooms_views_room_create_get_not_logged_in(self):
 		print('Testing rooms_views_room_create() GET not logged in')
 		self.client.logout()
+		response = self.client.get(reverse('room_create'), follow=True)
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'account/login.html')
+		self.assertNotContains(response, '404')
+		self.assertContains(response, 'Login')
+		self.assertNotContains(response, 'Post a Room')
+		self.assertNotContains(response, "Looks like you haven't told us about any houses you have!")
 
 	def test_rooms_views_room_create_post(self):
 		print('Testing rooms_views_room_create() POST')

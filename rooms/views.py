@@ -149,12 +149,11 @@ def room_create(request):
 
         return redirect('room_detail', pk=room.id)
     else:
-        try:
-            houses = House.objects.filter(user=request.user.id)
+        houses = House.objects.filter(user=request.user.id)
+        if houses.count() > 0:
             return render(request, 'rooms/room_create.html', {'houses': houses})
-        except Exception:
-            pass
-        return render(request, 'rooms/room_create.html')
+        else:
+            return render(request, 'rooms/room_create.html')
 
 
 class room_detail(generic.DetailView):

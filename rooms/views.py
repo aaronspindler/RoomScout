@@ -51,35 +51,41 @@ def room_saved(request):
     return render(request, "rooms/room_saved.html", {'saved_rooms': saved_rooms})
 
 
-# TODO Make this view only affect system state when they are POST requests
 # PK is the primary key for the room
 @login_required(login_url="account_login")
 def room_like(request, pk):
-    user = request.user
-    room = get_object_or_404(Room, pk=pk)
-    roomlike = RoomLike.objects.filter(user=user, room=room)
+    if request.method == 'POST':
+        user = request.user
+        room = get_object_or_404(Room, pk=pk)
+        roomlike = RoomLike.objects.filter(user=user, room=room)
 
-    if roomlike.count() == 0:
-        new_room_like = RoomLike()
-        new_room_like.user = user
-        new_room_like.room = room
-        new_room_like.save()
+        if roomlike.count() == 0:
+            new_room_like = RoomLike()
+            new_room_like.user = user
+            new_room_like.room = room
+            new_room_like.save()
 
-    return JsonResponse({'status': 'success'})
+        return JsonResponse({'status': 'success'})
+    else:
+        return JsonResponse({'status': 'failure'})
 
-# TODO Make this view only affect system state when they are POST requests
+
 # PK is the primary key for the room
 @login_required(login_url="account_login")
 def room_unlike(request, pk):
-    user = request.user
-    room = get_object_or_404(Room, pk=pk)
-    roomlikes = RoomLike.objects.filter(user=user, room=room)
-    if roomlikes.count() == 0:
-        return JsonResponse({'status': 'failure'})
-    roomlike = roomlikes.first()
-    roomlike.delete()
+    if request.method == 'POST':
+        user = request.user
+        room = get_object_or_404(Room, pk=pk)
+        roomlikes = RoomLike.objects.filter(user=user, room=room)
+        if roomlikes.count() == 0:
+            return JsonResponse({'status': 'failure'})
+        roomlike = roomlikes.first()
+        roomlike.delete()
 
-    return JsonResponse({'status': 'success'})
+        return JsonResponse({'status': 'success'})
+    else:
+        return JsonResponse({'status': 'failure'})
+
 
 
 # TODO : Improve search functionality

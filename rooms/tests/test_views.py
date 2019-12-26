@@ -133,7 +133,7 @@ class RoomsViewTests(TestCase):
 		self.assertEqual(response.status_code, 200)
 		self.assertJSONEqual(str(response.content, encoding='utf8'), {'status': 'failure'})
 		self.assertNotContains(response, '404')
-		self.assertContains(response, 'Login')
+		self.assertNotContains(response, 'Login')
 		self.assertNotContains(response, 'Saved Rooms')
 		self.assertNotContains(response, "Looks like you haven't saved any rooms yet!")
 		self.assertEqual(pre_count, post_count)
@@ -255,6 +255,17 @@ class RoomsViewTests(TestCase):
 	def test_rooms_views_room_create_post(self):
 		print('Testing rooms_views_room_create() POST')
 		self.client.force_login(self.user)
+		req_data = {}
+		pre_count = Room.objects.count()
+		response = self.client.post(reverse('room_create'), data=req_data, follow=True)
+		post_count = Room.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'rooms/room_create.html')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertContains(response, 'Post a Room')
+		self.assertNotContains(response, "Looks like you haven't told us about any houses you have!")
+		self.assertGreater(post_count, pre_count)
 
 	def test_rooms_views_room_create_post_invalid(self):
 		print('Testing rooms_views_room_create() POST invalid')

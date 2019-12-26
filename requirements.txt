@@ -1,3 +1,4 @@
+asgiref==3.2.3
 Babel==2.7.0
 boto3==1.10.20
 botocore==1.13.20
@@ -5,7 +6,7 @@ certifi==2019.9.11
 chardet==3.0.4
 defusedxml==0.6.0
 dj-config-url==0.1.1
-Django==2.2.7
+Django==2.2.9
 django-allauth==0.40.0
 django-appconf==1.0.3
 django-avatar==4.1.0

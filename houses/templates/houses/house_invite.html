@@ -12,6 +12,11 @@
             <p>{{ message }}</p>
         </div>
     {% endif %}
+    {% if error %}
+        <div class="text-center bg-danger">
+            <p>{{ error }}</p>
+        </div>
+    {% endif %}
     <div class="container">
         <h2>Invite member to {{ house.full_address }}</h2>
         <form method="post">

@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
@@ -42,16 +42,17 @@ def room_list(request):
         search_term = ''
         rooms = Room.objects.filter(is_available=True).order_by('-updated_at')
     saved_rooms = get_saved_rooms(request)
-    return render(request, 'rooms/room_list.html', {'rooms': rooms, 'saved_rooms': saved_rooms,'filter_form': filter_form, 'search_term': search_term})
+    return render(request, 'rooms/room_list.html', {'rooms': rooms, 'saved_rooms': saved_rooms, 'filter_form': filter_form, 'search_term': search_term})
 
 
 @login_required(login_url="account_login")
 def room_saved(request):
     saved_rooms = RoomLike.objects.filter(user=request.user)
-    return render(request, "rooms/room_saved.html", {'saved_rooms':saved_rooms})
+    return render(request, "rooms/room_saved.html", {'saved_rooms': saved_rooms})
 
 
-# PK is the primary key for the website
+# TODO Make this view only affect system state when they are POST requests
+# PK is the primary key for the room
 @login_required(login_url="account_login")
 def room_like(request, pk):
     user = request.user
@@ -64,20 +65,21 @@ def room_like(request, pk):
         new_room_like.room = room
         new_room_like.save()
 
-    # TODO Make this return a simple success instead of a redirect
-    return redirect('room_list')
+    return JsonResponse({'status': 'success'})
 
-
+# TODO Make this view only affect system state when they are POST requests
+# PK is the primary key for the room
 @login_required(login_url="account_login")
 def room_unlike(request, pk):
     user = request.user
     room = get_object_or_404(Room, pk=pk)
-    roomlike = RoomLike.objects.filter(user=user, room=room)
-    roomlike = roomlike.first()
+    roomlikes = RoomLike.objects.filter(user=user, room=room)
+    if roomlikes.count() == 0:
+        return JsonResponse({'status': 'failure'})
+    roomlike = roomlikes.first()
     roomlike.delete()
 
-    # TODO Make this return a simple success instead of a redirect
-    return redirect('room_list')
+    return JsonResponse({'status': 'success'})
 
 
 # TODO : Improve search functionality
@@ -119,10 +121,21 @@ def room_create(request):
             room = Room()
             room.user = request.user
             house = House.objects.filter(pk=request.POST['house'])[:1].get()
-            room.name = request.POST['name']
             room.house = house
-            room.price = request.POST['price']
-            room.description = request.POST['description']
+            if 'name' not in request.POST:
+                return render(request, 'houses/room_add.html', {'house': house, 'error': 'Please make sure to fill in all required details'})
+            else:
+                room.name = request.POST['name']
+
+            if 'price' not in request.POST:
+                return render(request, 'houses/room_add.html', {'house': house, 'error': 'Please make sure to fill in all required details'})
+            else:
+                room.price = request.POST['price']
+
+            if 'description' not in request.POST:
+                return render(request, 'houses/room_add.html', {'house': house, 'error': 'Please make sure to fill in all required details'})
+            else:
+                room.description = request.POST['description']
             room.save()
             try:
                 for file in request.FILES.getlist('images'):
@@ -136,12 +149,11 @@ def room_create(request):
 
         return redirect('room_detail', pk=room.id)
     else:
-        try:
-            houses = House.objects.filter(user=request.user.id)
+        houses = House.objects.filter(user=request.user.id)
+        if houses.count() > 0:
             return render(request, 'rooms/room_create.html', {'houses': houses})
-        except Exception:
-            pass
-        return render(request, 'rooms/room_create.html')
+        else:
+            return render(request, 'rooms/room_create.html')
 
 
 class room_detail(generic.DetailView):

@@ -9,7 +9,6 @@ from utils.streetview import load_house_image
 class StreetViewTestCase(TestCase):
 
 	def setUp(self):
-		print('StreetView Testing Setup')
 		User = get_user_model()
 		user = User.objects.create_user(username='Fred_Flintstone', email='normal@user.com', password='foo')
 		self.user = user

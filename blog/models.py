@@ -6,7 +6,7 @@ class BlogPost(models.Model):
 	title = models.CharField(max_length=255)
 	pub_date = models.DateTimeField()
 	body = models.TextField()
-	image = models.ImageField()
+	image = models.ImageField(null=True, blank=True)
 
 	def get_absolute_url(self):
 		return reverse('blog_post', args=[str(self.id)])

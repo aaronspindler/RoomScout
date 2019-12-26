@@ -3,12 +3,11 @@ from django.test import TestCase
 from datetime import timedelta
 
 from houses.models import House
-from .models import GarbageDay
+from garbageday.models import GarbageDay
 
 
-class GarbageDayTests(TestCase):
+class GarbageDayModelTests(TestCase):
 	def setUp(self):
-		print('GarbageDay Testing Setup')
 		User = get_user_model()
 		user = User.objects.create_user(username='Fred_Flintstone', email='normal@user.com', password='foo')
 		self.user = user
@@ -17,7 +16,7 @@ class GarbageDayTests(TestCase):
 		self.assertTrue(self.user.is_active)
 		self.assertFalse(self.user.is_staff)
 		self.assertFalse(self.user.is_superuser)
-
+		
 		house = House.objects.create(user=self.user)
 		house.place_id = 'EiwyNTI5IFN0YWxsaW9uIERyLCBPc2hhd2EsIE9OIEwxSCA3SzQsIENhbmFkYSIxEi8KFAoSCY_JD3vDG9WJEe3JFhlBvwOKEOETKhQKEgnrS9FlwxvViRHYx20MM9m-8g'
 		house.lat = '43.95858010000001'
@@ -28,10 +27,10 @@ class GarbageDayTests(TestCase):
 		house.prov_state = 'ON'
 		house.postal_code = 'L1H 0M4'
 		house.country = 'Canada'
-
+		
 		house.save()
 		self.house = house
-
+	
 	def test_create_garbage_day1(self):
 		print('Testing GarbageDay Creation Blank')
 		num_pre = GarbageDay.objects.count()
@@ -45,7 +44,7 @@ class GarbageDayTests(TestCase):
 		num_post = GarbageDay.objects.count()
 		self.assertEqual(num_post, num_pre + 1)
 		self.assertEqual(garbage_day.garbage_frequency, timedelta(weeks=0, days=0))
-
+	
 	def test_create_garbage_day2(self):
 		print('Testing GarbageDay Creation Filled')
 		num_pre = GarbageDay.objects.count()
@@ -59,7 +58,7 @@ class GarbageDayTests(TestCase):
 		num_post = GarbageDay.objects.count()
 		self.assertEqual(num_post, num_pre + 1)
 		self.assertEqual(garbage_day.garbage_frequency, timedelta(weeks=2, days=0))
-
+	
 	def test_garbage_day_house_relation(self):
 		print('Testing GarbageDay House Relation')
 		garbage_day = GarbageDay()
@@ -68,4 +67,4 @@ class GarbageDayTests(TestCase):
 		garbage_day.last_garbage_day = "2019-11-12"
 		garbage_day.next_garbage_day = "2019-11-26"
 		garbage_day.save()
-		self.assertIsNotNone(self.house.garbageday)
+		self.assertIsNot(self.house.garbageday_set.count(), 0)

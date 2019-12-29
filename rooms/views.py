@@ -180,7 +180,7 @@ class room_edit(LoginRequiredMixin, generic.UpdateView):
     def get_success_url(self):
         return reverse('room_detail', kwargs={'pk': str(self.object.pk)})
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         room = super(room_edit, self).get_object()
         if not room.user == self.request.user:
             raise Http404

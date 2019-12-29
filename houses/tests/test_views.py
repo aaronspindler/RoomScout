@@ -876,7 +876,7 @@ class HousesViewsTests(TestCase):
 		self.assertEqual(response.status_code, 200)
 		self.assertTemplateUsed(response, 'rooms/room_detail.html')
 		self.assertContains(response, 'Master Bedroom')
-		self.assertContains(response, '$799.00')
+		self.assertContains(response, '$799.0')
 		self.assertNotContains(response, 'Add Room')
 		self.assertNotContains(response, '404')
 		self.assertNotContains(response, 'Login')

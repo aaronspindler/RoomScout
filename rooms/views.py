@@ -192,7 +192,7 @@ class room_delete(LoginRequiredMixin, generic.DeleteView):
     template_name = 'rooms/room_delete.html'
     success_url = reverse_lazy('main_dashboard')
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         room = super(room_delete, self).get_object()
         if not room.user == self.request.user:
             raise Http404

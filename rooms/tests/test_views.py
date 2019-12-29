@@ -473,20 +473,109 @@ class RoomsViewTests(TestCase):
 		self.assertTrue(post_room.utilities_included)
 		self.assertTrue(post_room.parking)
 
-
-
 	def test_rooms_views_room_edit_post_not_logged_in(self):
 		print('Testing rooms.views.room_edit() POST not logged in')
 		self.client.logout()
+		room = Room.objects.create(user=self.user, house=self.house, name='Master Bedroom')
+		req_data = {
+			'name': 'Master Suite',
+			'price': 799.99,
+			'description': 'Looking for a mature student!',
+			'is_available': False,
+			'furnished': False,
+			'is_accessible': True,
+			'open_to_students': True,
+			'female_only': True,
+			'pet_friendly': True,
+			'utilities_included': True,
+			'parking': True
+		}
+		self.assertEqual(room.name, 'Master Bedroom')
+		self.assertEqual(room.price, 0.00)
+		self.assertEqual(room.description, '')
+		self.assertTrue(room.is_available)
+		self.assertFalse(room.furnished)
+		self.assertFalse(room.is_accessible)
+		self.assertTrue(room.open_to_students)
+		self.assertFalse(room.female_only)
+		self.assertFalse(room.pet_friendly)
+		self.assertFalse(room.utilities_included)
+		self.assertFalse(room.parking)
+
+		response = self.client.post(reverse('room_edit', kwargs={'pk': room.pk}), data=req_data, follow=True)
+
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'account/login.html')
+		self.assertNotContains(response, '404')
+		self.assertContains(response, 'Login')
+		self.assertNotContains(response, 'Master Bedroom')
+		self.assertNotContains(response, 'Master Suite')
+
+		post_room = Room.objects.get(pk=room.pk)
+		self.assertEqual(room.id, post_room.id)
+		self.assertEqual(post_room.name, 'Master Bedroom')
+		self.assertEqual(post_room.price, 0.00)
+		self.assertEqual(post_room.description, '')
+		self.assertTrue(post_room.is_available)
+		self.assertFalse(post_room.furnished)
+		self.assertFalse(post_room.is_accessible)
+		self.assertTrue(post_room.open_to_students)
+		self.assertFalse(post_room.female_only)
+		self.assertFalse(post_room.pet_friendly)
+		self.assertFalse(post_room.utilities_included)
+		self.assertFalse(post_room.parking)
 
 	def test_rooms_views_room_edit_post_wrong_user(self):
-		print('Testing rooms.views.room_edit() POST wrong user}')
+		print('Testing rooms.views.room_edit() POST wrong user')
 		self.client.force_login(self.user2)
+		room = Room.objects.create(user=self.user, house=self.house, name='Master Bedroom')
+		req_data = {
+			'name': 'Master Suite',
+			'price': 799.99,
+			'description': 'Looking for a mature student!',
+			'is_available': False,
+			'furnished': False,
+			'is_accessible': True,
+			'open_to_students': True,
+			'female_only': True,
+			'pet_friendly': True,
+			'utilities_included': True,
+			'parking': True
+		}
+		self.assertEqual(room.name, 'Master Bedroom')
+		self.assertEqual(room.price, 0.00)
+		self.assertEqual(room.description, '')
+		self.assertTrue(room.is_available)
+		self.assertFalse(room.furnished)
+		self.assertFalse(room.is_accessible)
+		self.assertTrue(room.open_to_students)
+		self.assertFalse(room.female_only)
+		self.assertFalse(room.pet_friendly)
+		self.assertFalse(room.utilities_included)
+		self.assertFalse(room.parking)
 
+		response = self.client.post(reverse('room_edit', kwargs={'pk': room.pk}), data=req_data, follow=True)
 
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'main/404.html')
+		self.assertContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertNotContains(response, 'Master Bedroom')
+		self.assertNotContains(response, 'Master Suite')
 
-
-
+		post_room = Room.objects.get(pk=room.pk)
+		self.assertEqual(room.id, post_room.id)
+		self.assertEqual(post_room.name, 'Master Bedroom')
+		self.assertEqual(post_room.price, 0.00)
+		self.assertEqual(post_room.description, '')
+		self.assertTrue(post_room.is_available)
+		self.assertFalse(post_room.furnished)
+		self.assertFalse(post_room.is_accessible)
+		self.assertTrue(post_room.open_to_students)
+		self.assertFalse(post_room.female_only)
+		self.assertFalse(post_room.pet_friendly)
+		self.assertFalse(post_room.utilities_included)
+		self.assertFalse(post_room.parking)
 
 	def test_rooms_views_room_delete_get(self):
 		print('Testing rooms.views.room_delete() GET')

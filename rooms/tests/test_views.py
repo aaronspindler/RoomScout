@@ -255,7 +255,32 @@ class RoomsViewTests(TestCase):
 	def test_rooms_views_room_create_post(self):
 		print('Testing rooms_views_room_create() POST')
 		self.client.force_login(self.user)
-		req_data = {}
+		req_data = {
+			'house': self.house.id,
+			'name': 'Master Bedroom',
+			'price': 799.99,
+			'description': 'Looking for a student to occupy beginning in December 2019',
+		}
+		pre_count = Room.objects.count()
+		response = self.client.post(reverse('room_create'), data=req_data, follow=True)
+		post_count = Room.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'rooms/room_detail.html')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertNotContains(response, 'Post a Room')
+		self.assertNotContains(response, "Looks like you haven't told us about any houses you have!")
+		self.assertContains(response, 'Master Bedroom')
+		self.assertGreater(post_count, pre_count)
+
+	def test_rooms_views_room_create_post_invalid(self):
+		print('Testing rooms_views_room_create() POST invalid')
+		self.client.force_login(self.user)
+		req_data = {
+			'house': self.house.id,
+			'price': 799.99,
+			'description': 'Looking for a student to occupy beginning in December 2019',
+		}
 		pre_count = Room.objects.count()
 		response = self.client.post(reverse('room_create'), data=req_data, follow=True)
 		post_count = Room.objects.count()
@@ -264,17 +289,70 @@ class RoomsViewTests(TestCase):
 		self.assertNotContains(response, '404')
 		self.assertNotContains(response, 'Login')
 		self.assertContains(response, 'Post a Room')
+		self.assertContains(response, 'Please make sure to fill in all required details')
 		self.assertNotContains(response, "Looks like you haven't told us about any houses you have!")
-		self.assertGreater(post_count, pre_count)
-
-	def test_rooms_views_room_create_post_invalid(self):
-		print('Testing rooms_views_room_create() POST invalid')
-		self.client.force_login(self.user)
+		self.assertNotContains(response, 'Master Bedroom')
+		self.assertEqual(post_count, pre_count)
 
 	def test_rooms_views_room_create_post_invalid1(self):
 		print('Testing rooms_views_room_create() POST invalid 1')
 		self.client.force_login(self.user)
+		req_data = {
+			'house': self.house.id,
+			'name': 'Master Bedroom',
+			'description': 'Looking for a student to occupy beginning in December 2019',
+		}
+		pre_count = Room.objects.count()
+		response = self.client.post(reverse('room_create'), data=req_data, follow=True)
+		post_count = Room.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'rooms/room_create.html')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertContains(response, 'Post a Room')
+		self.assertContains(response, 'Please make sure to fill in all required details')
+		self.assertNotContains(response, "Looks like you haven't told us about any houses you have!")
+		self.assertNotContains(response, 'Master Bedroom')
+		self.assertEqual(post_count, pre_count)
+
+	def test_rooms_views_room_create_post_invalid2(self):
+		print('Testing rooms_views_room_create() POST invalid 2')
+		self.client.force_login(self.user)
+		req_data = {
+			'house': self.house.id,
+			'name': 'Master Bedroom',
+			'price': 799.99,
+		}
+		pre_count = Room.objects.count()
+		response = self.client.post(reverse('room_create'), data=req_data, follow=True)
+		post_count = Room.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'rooms/room_create.html')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertContains(response, 'Post a Room')
+		self.assertContains(response, 'Please make sure to fill in all required details')
+		self.assertNotContains(response, "Looks like you haven't told us about any houses you have!")
+		self.assertNotContains(response, 'Master Bedroom')
+		self.assertEqual(post_count, pre_count)
 
 	def test_rooms_views_room_create_post_not_logged_in(self):
 		print('Testing rooms_views_room_create() POST not logged in')
 		self.client.logout()
+		req_data = {
+			'house': self.house.id,
+			'name': 'Master Bedroom',
+			'price': 799.99,
+			'description': 'Looking for a student to occupy beginning in December 2019',
+		}
+		pre_count = Room.objects.count()
+		response = self.client.post(reverse('room_create'), data=req_data, follow=True)
+		post_count = Room.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'account/login.html')
+		self.assertNotContains(response, '404')
+		self.assertContains(response, 'Login')
+		self.assertNotContains(response, 'Post a Room')
+		self.assertNotContains(response, "Looks like you haven't told us about any houses you have!")
+		self.assertNotContains(response, 'Master Bedroom')
+		self.assertEqual(post_count, pre_count)

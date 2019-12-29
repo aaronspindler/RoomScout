@@ -87,7 +87,6 @@ def room_unlike(request, pk):
         return JsonResponse({'status': 'failure'})
 
 
-
 # TODO : Improve search functionality
 def room_search(search_term):
     rooms_query = Room.objects.all().filter(is_available=True).filter(
@@ -96,8 +95,7 @@ def room_search(search_term):
     return rooms_query
 
 
-def room_search_extended(search_term, max_price, pet_friendly, has_dishwasher, has_laundry, has_air_conditioning,
-                         open_to_students, is_accessible, utilities_included):
+def room_search_extended(search_term, max_price, pet_friendly, has_dishwasher, has_laundry, has_air_conditioning, open_to_students, is_accessible, utilities_included):
     rooms = Room.objects.all().filter(is_available=True).filter(
         Q(house__city__icontains=search_term) | Q(house__prov_state__icontains=search_term) | Q(
             house__street_name__icontains=search_term))
@@ -123,35 +121,42 @@ def room_search_extended(search_term, max_price, pet_friendly, has_dishwasher, h
 @login_required(login_url="account_login")
 def room_create(request):
     if request.method == 'POST':
-        if request.POST['house'] and request.POST['name'] and request.POST['price']:
-            room = Room()
-            room.user = request.user
-            house = House.objects.filter(pk=request.POST['house'])[:1].get()
-            room.house = house
-            if 'name' not in request.POST:
-                return render(request, 'houses/room_add.html', {'house': house, 'error': 'Please make sure to fill in all required details'})
+        room = Room()
+        room.user = request.user
+        house = House.objects.filter(pk=request.POST['house'])[:1].get()
+        room.house = house
+        if 'name' not in request.POST:
+            houses = House.objects.filter(user=request.user.id)
+            if houses.count() > 0:
+                return render(request, 'rooms/room_create.html', {'houses': houses, 'error': 'Please make sure to fill in all required details'})
             else:
-                room.name = request.POST['name']
-
-            if 'price' not in request.POST:
-                return render(request, 'houses/room_add.html', {'house': house, 'error': 'Please make sure to fill in all required details'})
+                return render(request, 'rooms/room_create.html', {'error': 'Please make sure to fill in all required details'})
+        elif 'price' not in request.POST:
+            houses = House.objects.filter(user=request.user.id)
+            if houses.count() > 0:
+                return render(request, 'rooms/room_create.html', {'houses': houses, 'error': 'Please make sure to fill in all required details'})
             else:
-                room.price = request.POST['price']
-
-            if 'description' not in request.POST:
-                return render(request, 'houses/room_add.html', {'house': house, 'error': 'Please make sure to fill in all required details'})
+                return render(request, 'rooms/room_create.html', {'error': 'Please make sure to fill in all required details'})
+        elif 'description' not in request.POST:
+            houses = House.objects.filter(user=request.user.id)
+            if houses.count() > 0:
+                return render(request, 'rooms/room_create.html', {'houses': houses, 'error': 'Please make sure to fill in all required details'})
             else:
-                room.description = request.POST['description']
+                return render(request, 'rooms/room_create.html', {'error': 'Please make sure to fill in all required details'})
+        else:
+            room.name = request.POST['name']
+            room.price = request.POST['price']
+            room.description = request.POST['description']
             room.save()
-            try:
-                for file in request.FILES.getlist('images'):
-                    image = RoomImage()
-                    image.room = room
-                    image.user = request.user
-                    image.image = file
-                    image.save()
-            except Exception:
-                pass
+        try:
+            for file in request.FILES.getlist('images'):
+                image = RoomImage()
+                image.room = room
+                image.user = request.user
+                image.image = file
+                image.save()
+        except Exception:
+            pass
 
         return redirect('room_detail', pk=room.id)
     else:

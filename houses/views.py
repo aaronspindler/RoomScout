@@ -87,9 +87,15 @@ def house_bill_add(request, pk):
 	if request.method == 'POST':
 		bill = Bill()
 		bill.user = request.user
-		if ('type' or 'date' or 'amount') not in request.POST:
+		if 'type' not in request.POST:
 			return render(request, 'houses/house_bill_add.html', {'house': house, 'error': 'You have entered invalid data!'})
-		
+
+		if 'date' not in request.POST:
+			return render(request, 'houses/house_bill_add.html', {'house': house, 'error': 'You have entered invalid data!'})
+
+		if 'amount' not in request.POST:
+			return render(request, 'houses/house_bill_add.html', {'house': house, 'error': 'You have entered invalid data!'})
+
 		bill.type = request.POST['type']
 		bill.date = request.POST['date']
 		bill.amount = request.POST['amount']

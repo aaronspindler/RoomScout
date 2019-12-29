@@ -313,7 +313,54 @@ class HousesViewsTests(TestCase):
 		self.client.force_login(self.user)
 		bill_count_pre = Bill.objects.count()
 		billset_count_pre = BillSet.objects.count()
-		req_data = {'date': '2019-12-11', 'amount': '298.99'}
+		req_data = {
+			'date': '2019-12-11',
+			'amount': '298.99'
+		}
+		response = self.client.post(reverse('house_bill_add', kwargs={'pk': self.house.pk}), req_data, follow=True)
+		bill_count_post = Bill.objects.count()
+		billset_count_post = BillSet.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'houses/house_bill_add.html')
+		self.assertContains(response, self.house)
+		self.assertContains(response, 'Add bill to')
+		self.assertNotContains(response, 'Garbage Day')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertEqual(bill_count_post, bill_count_pre)
+		self.assertEqual(billset_count_post, billset_count_pre)
+
+	def test_house_bill_add_view_post_invalid1(self):
+		print('Testing houses.views.house_bill_add() POST invalid 1')
+		self.client.force_login(self.user)
+		bill_count_pre = Bill.objects.count()
+		billset_count_pre = BillSet.objects.count()
+		req_data = {
+			'type': 'GAS',
+			'amount': '298.99'
+		}
+		response = self.client.post(reverse('house_bill_add', kwargs={'pk': self.house.pk}), req_data, follow=True)
+		bill_count_post = Bill.objects.count()
+		billset_count_post = BillSet.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'houses/house_bill_add.html')
+		self.assertContains(response, self.house)
+		self.assertContains(response, 'Add bill to')
+		self.assertNotContains(response, 'Garbage Day')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertEqual(bill_count_post, bill_count_pre)
+		self.assertEqual(billset_count_post, billset_count_pre)
+
+	def test_house_bill_add_view_post_invalid2(self):
+		print('Testing houses.views.house_bill_add() POST invalid 2')
+		self.client.force_login(self.user)
+		bill_count_pre = Bill.objects.count()
+		billset_count_pre = BillSet.objects.count()
+		req_data = {
+			'type': 'GAS',
+			'date': '2019-12-11',
+		}
 		response = self.client.post(reverse('house_bill_add', kwargs={'pk': self.house.pk}), req_data, follow=True)
 		bill_count_post = Bill.objects.count()
 		billset_count_post = BillSet.objects.count()

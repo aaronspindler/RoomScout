@@ -383,3 +383,60 @@ class RoomsViewTests(TestCase):
 		self.assertNotContains(response, 'Delete')
 		self.assertContains(response, 'Master Bedroom')
 
+	def test_rooms_views_room_edit_get(self):
+		print('Testing rooms.views.room_edit() GET')
+		self.client.force_login(self.user)
+
+	def test_rooms_views_room_edit_get_not_logged_in(self):
+		print('Testing rooms.views.room_edit() GET not logged in')
+		self.client.logout()
+
+	def test_rooms_views_room_edit_get_wrong_user(self):
+		print('Testing rooms.views.room_edit() GET wrong user')
+		self.client.force_login(self.user2)
+
+	def test_rooms_views_room_edit_post(self):
+		print('Testing rooms.views.room_edit() POST')
+		self.client.force_login(self.user)
+
+	def test_rooms_views_room_edit_post_not_logged_in(self):
+		print('Testing rooms.views.room_edit() POST not logged in')
+		self.client.logout()
+
+	def test_rooms_views_room_edit_post_wrong_user(self):
+		print('Testing rooms.views.room_edit() POST wrong user}')
+		self.client.force_login(self.user2)
+
+
+
+
+
+
+
+
+
+
+	def test_rooms_views_room_delete_get(self):
+		print('Testing rooms.views.room_delete() GET')
+		self.client.force_login(self.user)
+
+	def test_rooms_views_room_delete_get_not_logged_in(self):
+		print('Testing rooms.views.room_delete() GET not logged in')
+		self.client.logout()
+
+	def test_rooms_views_room_delete_get_wrong_user(self):
+		print('Testing rooms.views.room_delete() GET wrong user')
+		self.client.force_login(self.user2)
+
+	def test_rooms_views_room_delete_post(self):
+		print('Testing rooms.views.room_delete() POST')
+		self.client.force_login(self.user)
+
+	def test_rooms_views_room_delete_post_not_logged_in(self):
+		print('Testing rooms.views.room_delete() POST not logged in')
+		self.client.logout()
+
+	def test_rooms_views_room_delete_post_wrong_user(self):
+		print('Testing rooms.views.room_delete() POST wrong user}')
+		self.client.force_login(self.user2)
+

@@ -123,7 +123,7 @@ class RoomsViewTests(TestCase):
 		self.assertEqual(pre_count, post_count)
 
 	def test_rooms_views_room_unlike_get(self):
-		print('Testing rooms_views_room_unlike() GET')
+		print('Testing rooms.views.room_unlike() GET')
 		self.client.force_login(self.user)
 		room = Room.objects.create(user=self.user, house=self.house, name='Master Bedroom')
 		roomlike = RoomLike.objects.create(room=room, user=self.user)
@@ -139,7 +139,7 @@ class RoomsViewTests(TestCase):
 		self.assertEqual(pre_count, post_count)
 
 	def test_rooms_views_room_unlike_get_not_logged_in(self):
-		print('Testing rooms_views_room_unlike() GET not logged in')
+		print('Testing rooms.views.room_unlike() GET not logged in')
 		self.client.logout()
 		room = Room.objects.create(user=self.user, house=self.house, name='Master Bedroom')
 		roomlike = RoomLike.objects.create(room=room, user=self.user)
@@ -155,7 +155,7 @@ class RoomsViewTests(TestCase):
 		self.assertEqual(pre_count, post_count)
 
 	def test_rooms_views_room_unlike_get_wrong_user_or_empty(self):
-		print('Testing rooms_views_room_unlike() GET wrong user or empty')
+		print('Testing rooms.views.room_unlike() GET wrong user or empty')
 		self.client.force_login(self.user2)
 		room = Room.objects.create(user=self.user, house=self.house, name='Master Bedroom')
 		roomlike = RoomLike.objects.create(room=room, user=self.user)
@@ -171,7 +171,7 @@ class RoomsViewTests(TestCase):
 		self.assertEqual(pre_count, post_count)
 
 	def test_rooms_views_room_unlike_post(self):
-		print('Testing rooms_views_room_unlike() POST')
+		print('Testing rooms.views.room_unlike() POST')
 		self.client.force_login(self.user)
 		room = Room.objects.create(user=self.user, house=self.house, name='Master Bedroom')
 		roomlike = RoomLike.objects.create(room=room, user=self.user)
@@ -187,7 +187,7 @@ class RoomsViewTests(TestCase):
 		self.assertLess(post_count, pre_count)
 
 	def test_rooms_views_room_unlike_post_not_logged_in(self):
-		print('Testing rooms_views_room_unlike() POST not logged in')
+		print('Testing rooms.views.room_unlike() POST not logged in')
 		self.client.logout()
 		room = Room.objects.create(user=self.user, house=self.house, name='Master Bedroom')
 		roomlike = RoomLike.objects.create(room=room, user=self.user)
@@ -203,7 +203,7 @@ class RoomsViewTests(TestCase):
 		self.assertEqual(pre_count, post_count)
 
 	def test_rooms_views_room_unlike_post_wrong_user_or_empty(self):
-		print('Testing rooms_views_room_unlike() POST wrong user or empty')
+		print('Testing rooms.views.room_unlike() POST wrong user or empty')
 		self.client.force_login(self.user2)
 		room = Room.objects.create(user=self.user, house=self.house, name='Master Bedroom')
 		roomlike = RoomLike.objects.create(room=room, user=self.user)
@@ -219,7 +219,7 @@ class RoomsViewTests(TestCase):
 		self.assertEqual(pre_count, post_count)
 
 	def test_rooms_views_room_create_get(self):
-		print('Testing rooms_views_room_create() GET')
+		print('Testing rooms.views.room_create() GET')
 		self.client.force_login(self.user)
 		response = self.client.get(reverse('room_create'), follow=True)
 		self.assertEqual(response.status_code, 200)
@@ -230,7 +230,7 @@ class RoomsViewTests(TestCase):
 		self.assertNotContains(response, "Looks like you haven't told us about any houses you have!")
 
 	def test_rooms_views_room_create_get_no_houses(self):
-		print('Testing rooms_views_room_create() GET no existing houses')
+		print('Testing rooms.views.room_create() GET no existing houses')
 		self.client.force_login(self.user)
 		self.house.delete()
 		response = self.client.get(reverse('room_create'), follow=True)
@@ -242,7 +242,7 @@ class RoomsViewTests(TestCase):
 		self.assertContains(response, "Looks like you haven't told us about any houses you have!")
 		
 	def test_rooms_views_room_create_get_not_logged_in(self):
-		print('Testing rooms_views_room_create() GET not logged in')
+		print('Testing rooms.views.room_create() GET not logged in')
 		self.client.logout()
 		response = self.client.get(reverse('room_create'), follow=True)
 		self.assertEqual(response.status_code, 200)
@@ -253,7 +253,7 @@ class RoomsViewTests(TestCase):
 		self.assertNotContains(response, "Looks like you haven't told us about any houses you have!")
 
 	def test_rooms_views_room_create_post(self):
-		print('Testing rooms_views_room_create() POST')
+		print('Testing rooms.views.room_create() POST')
 		self.client.force_login(self.user)
 		req_data = {
 			'house': self.house.id,
@@ -274,7 +274,7 @@ class RoomsViewTests(TestCase):
 		self.assertGreater(post_count, pre_count)
 
 	def test_rooms_views_room_create_post_invalid(self):
-		print('Testing rooms_views_room_create() POST invalid')
+		print('Testing rooms.views.room_create() POST invalid')
 		self.client.force_login(self.user)
 		req_data = {
 			'house': self.house.id,
@@ -295,7 +295,7 @@ class RoomsViewTests(TestCase):
 		self.assertEqual(post_count, pre_count)
 
 	def test_rooms_views_room_create_post_invalid1(self):
-		print('Testing rooms_views_room_create() POST invalid 1')
+		print('Testing rooms.views.room_create() POST invalid 1')
 		self.client.force_login(self.user)
 		req_data = {
 			'house': self.house.id,
@@ -316,7 +316,7 @@ class RoomsViewTests(TestCase):
 		self.assertEqual(post_count, pre_count)
 
 	def test_rooms_views_room_create_post_invalid2(self):
-		print('Testing rooms_views_room_create() POST invalid 2')
+		print('Testing rooms.views.room_create() POST invalid 2')
 		self.client.force_login(self.user)
 		req_data = {
 			'house': self.house.id,
@@ -337,7 +337,7 @@ class RoomsViewTests(TestCase):
 		self.assertEqual(post_count, pre_count)
 
 	def test_rooms_views_room_create_post_not_logged_in(self):
-		print('Testing rooms_views_room_create() POST not logged in')
+		print('Testing rooms.views.room_create() POST not logged in')
 		self.client.logout()
 		req_data = {
 			'house': self.house.id,
@@ -356,3 +356,30 @@ class RoomsViewTests(TestCase):
 		self.assertNotContains(response, "Looks like you haven't told us about any houses you have!")
 		self.assertNotContains(response, 'Master Bedroom')
 		self.assertEqual(post_count, pre_count)
+
+	def test_rooms_views_room_detail_get(self):
+		print('Testing rooms.views.room_detail() GET')
+		self.client.force_login(self.user)
+		room = Room.objects.create(user=self.user, house=self.house, name='Master Bedroom')
+		response = self.client.get(reverse('room_detail', kwargs={'pk': room.pk}), follow=True)
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'rooms/room_detail.html')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertContains(response, 'Edit')
+		self.assertContains(response, 'Delete')
+		self.assertContains(response, 'Master Bedroom')
+
+	def test_rooms_views_room_detail_get_not_logged_in(self):
+		print('Testing rooms.views.room_detail() GET not logged in')
+		self.client.logout()
+		room = Room.objects.create(user=self.user, house=self.house, name='Master Bedroom')
+		response = self.client.get(reverse('room_detail', kwargs={'pk': room.pk}), follow=True)
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'rooms/room_detail.html')
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertNotContains(response, 'Edit')
+		self.assertNotContains(response, 'Delete')
+		self.assertContains(response, 'Master Bedroom')
+

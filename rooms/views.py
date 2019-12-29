@@ -175,8 +175,7 @@ class room_detail(generic.DetailView):
 class room_edit(LoginRequiredMixin, generic.UpdateView):
     model = Room
     template_name = 'rooms/room_edit.html'
-    fields = ['name', 'price', 'description', 'is_available', 'furnished', 'is_accessible', 'open_to_students',
-              'female_only', 'pet_friendly', 'utilities_included', 'parking']
+    fields = ['name', 'price', 'description', 'is_available', 'furnished', 'is_accessible', 'open_to_students', 'female_only', 'pet_friendly', 'utilities_included', 'parking']
 
     def get_success_url(self):
         return reverse('room_detail', kwargs={'pk': str(self.object.pk)})

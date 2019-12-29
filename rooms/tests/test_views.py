@@ -412,10 +412,6 @@ class RoomsViewTests(TestCase):
 
 
 
-
-
-
-
 	def test_rooms_views_room_delete_get(self):
 		print('Testing rooms.views.room_delete() GET')
 		self.client.force_login(self.user)

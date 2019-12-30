@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /accounts/
+Disallow: /sandbox
+Disallow: /settings/
+Disallow: /bill/
+Disallow: /m/
+Disallow: /payment/
+Disallow: /ee/

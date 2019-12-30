@@ -261,6 +261,7 @@ def room_inquire_dismiss(request, pk):
     return redirect('main_dashboard')
 
 
+# This is used internally by another view
 def get_saved_rooms(request):
     user = request.user
     if user.id is not None:

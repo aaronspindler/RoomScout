@@ -393,8 +393,7 @@ class HousesViewsTests(TestCase):
 		self.assertNotContains(response, 'Login')
 		self.assertEqual(bill_count_post, bill_count_pre)
 		self.assertEqual(billset_count_post, billset_count_pre)
-	
-	
+
 	def test_house_invite_view_get(self):
 		print('Testing houses.views.house_invite() GET')
 		self.client.force_login(self.user)

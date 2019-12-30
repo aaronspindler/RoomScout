@@ -665,4 +665,3 @@ class RoomsViewTests(TestCase):
 		self.assertNotContains(response, 'Edit')
 		self.assertNotContains(response, 'Master Bedroom')
 		self.assertEqual(post_count, pre_count)
-

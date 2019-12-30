@@ -29,7 +29,7 @@ def contactus(request):
 		message.ip = ip
 		message.save()
 
-		messages.success(request, 'We have received your contact request and will get back to you as soon as possible!.')
+		messages.success(request, 'We have received your contact request and will get back to you as soon as possible!')
 		return redirect('home')
 	return render(request, 'main/contactus.html', {'captcha': captcha})
 
@@ -71,6 +71,6 @@ def server_error(request):
 	return render(request, 'main/500.html')
 
 
-@staff_member_required
+@staff_member_required(login_url="account_login")
 def sandbox(request):
 	return render(request, 'emails/_base.html')

@@ -59,8 +59,7 @@ class House(models.Model):
 	# and we only have 5000 daily API calls
 	# Todo: Implement a monitor for counting number of calls per day
 	def load_walk_score(self):
-		url = 'http://api.walkscore.com/score?format=json&address={address}&lat={lat}&lon={lon}&transit=1&bike=1&wsapikey={api_key}'.format(
-			address=self.full_address(), lat=self.lat, lon=self.lon, api_key=settings.WALK_SCORE_API)
+		url = 'http://api.walkscore.com/score?format=json&address={address}&lat={lat}&lon={lon}&transit=1&bike=1&wsapikey={api_key}'.format(address=self.full_address(), lat=self.lat, lon=self.lon, api_key=settings.WALK_SCORE_API)
 		response = requests.get(url)
 		json = response.json()
 		if json['status'] == 1:

@@ -42,7 +42,6 @@ def garbageday_create(request, house):
 def garbageday_edit(request, house):
 	housemodel = get_object_or_404(House, pk=house)
 	garbageday = housemodel.garbageday_set.first()
-	print(garbageday)
 	if request.user != housemodel.user:
 		raise Http404
 	if request.method == 'POST':

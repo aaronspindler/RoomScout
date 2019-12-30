@@ -190,7 +190,9 @@ class room_edit(LoginRequiredMixin, generic.UpdateView):
 class room_delete(LoginRequiredMixin, generic.DeleteView):
     model = Room
     template_name = 'rooms/room_delete.html'
-    success_url = reverse_lazy('main_dashboard')
+
+    def get_success_url(self):
+        return reverse('house_detail', kwargs={'pk': str(self.object.house.pk)})
 
     def get_object(self, **kwargs):
         room = super(room_delete, self).get_object()

@@ -1,10 +1,10 @@
 from django.db import models
+from django.templatetags.static import static
 from django.urls import reverse
 
 from accounts.models import User
 from houses.models import House
 from utils.datetime import time_diff_display
-from django.contrib.staticfiles.templatetags.staticfiles import static
 
 
 class Room(models.Model):

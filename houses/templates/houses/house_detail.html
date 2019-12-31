@@ -1,5 +1,5 @@
 {% extends 'main/_base.html' %}
-{% load staticfiles %}
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% block title %}
@@ -46,13 +46,14 @@
                         <h4>Details</h4>
                     </div>
                     <div class="card-body">
-{#                        {% if is_member %}#}
-{#                            <div class="text-center">#}
+                        {% if is_member %}
+                            <div class="text-center">
+                                <strong>Garbage Day: </strong> Coming Soon
 {#                                <strong>Next Garbage Day: {{house.garbageday_set.first.next_garbage_day | default:"Not Set"}}</strong>#}
 {#                                <br>#}
 {#                                <a href="{% url 'garbageday_manage' house.pk %}"><small>Manage Garbage Day</small></a>#}
-{#                            </div>#}
-{#                        {% endif %}#}
+                            </div>
+                        {% endif %}
                         {% if house.walk_score != -1 %}
                             <div class="text-center">
                                 <!-- Walk Score -->

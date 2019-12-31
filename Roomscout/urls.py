@@ -28,3 +28,7 @@ urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 handler403 = 'main.views.permission_denied'
 handler404 = 'main.views.page_not_found'
 handler500 = 'main.views.server_error'
+
+admin.site.site_header = "Roomscout Admin"
+admin.site.site_title = "Roomscout Admin Portal"
+admin.site.index_title = "Welcome to Roomscout Admin Portal"

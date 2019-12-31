@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect
+from django.conf import settings
 
 from utils.captcha import Captcha
 from emails.senders import send_contact_us_email
@@ -28,13 +29,18 @@ def contactus(request):
 		message.ip = ip
 		message.save()
 
-		messages.success(request, 'We have received your contact request and will get back to you as soon as possible!.')
+		messages.success(request, 'We have received your contact request and will get back to you as soon as possible!')
 		return redirect('home')
 	return render(request, 'main/contactus.html', {'captcha': captcha})
 
 
 def billfeatures(request):
 	return render(request, 'main/billfeatures.html')
+
+
+def supportus(request):
+	key = settings.STRIPE_KEY
+	return render(request, 'main/supportus.html', {'key': key})
 
 
 def verificationfeatures(request):
@@ -65,6 +71,6 @@ def server_error(request):
 	return render(request, 'main/500.html')
 
 
-@staff_member_required
+@staff_member_required(login_url="account_login")
 def sandbox(request):
 	return render(request, 'emails/_base.html')

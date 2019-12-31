@@ -9,6 +9,7 @@ urlpatterns = [
 	path('about', views.about, name='about'),
 	path('features/bill', views.billfeatures, name='billfeatures'),
 	path('features/verification', views.verificationfeatures, name='verificationfeatures'),
+	path('supportus', views.supportus, name='supportus'),
 	path('contactus', views.contactus, name='contactus'),
 	path('licenses', views.licenses, name='licenses'),
 	path('privacypolicy', views.privacypolicy, name='privacypolicy'),
@@ -32,6 +33,12 @@ urlpatterns = [
 	path('house/', include('houses.urls')),
 	# Rooms
 	path('room/', include('rooms.urls')),
+	# Garbage Day
+	path('garbageday/', include('garbageday.urls')),
 	# Marketing
 	path('m/', include('marketing.urls')),
+	# Payments
+	path('payment/', include('payments.urls')),
+	# Easter Eggs
+	path('ee/', include('eggs.urls')),
 ]

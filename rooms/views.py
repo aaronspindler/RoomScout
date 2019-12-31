@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
@@ -42,42 +42,49 @@ def room_list(request):
         search_term = ''
         rooms = Room.objects.filter(is_available=True).order_by('-updated_at')
     saved_rooms = get_saved_rooms(request)
-    return render(request, 'rooms/room_list.html', {'rooms': rooms, 'saved_rooms': saved_rooms,'filter_form': filter_form, 'search_term': search_term})
+    return render(request, 'rooms/room_list.html', {'rooms': rooms, 'saved_rooms': saved_rooms, 'filter_form': filter_form, 'search_term': search_term})
 
 
 @login_required(login_url="account_login")
 def room_saved(request):
     saved_rooms = RoomLike.objects.filter(user=request.user)
-    return render(request, "rooms/room_saved.html", {'saved_rooms':saved_rooms})
+    return render(request, "rooms/room_saved.html", {'saved_rooms': saved_rooms})
 
 
-# PK is the primary key for the website
+# PK is the primary key for the room
 @login_required(login_url="account_login")
 def room_like(request, pk):
-    user = request.user
-    room = get_object_or_404(Room, pk=pk)
-    roomlike = RoomLike.objects.filter(user=user, room=room)
+    if request.method == 'POST':
+        user = request.user
+        room = get_object_or_404(Room, pk=pk)
+        roomlike = RoomLike.objects.filter(user=user, room=room)
 
-    if roomlike.count() == 0:
-        new_room_like = RoomLike()
-        new_room_like.user = user
-        new_room_like.room = room
-        new_room_like.save()
+        if roomlike.count() == 0:
+            new_room_like = RoomLike()
+            new_room_like.user = user
+            new_room_like.room = room
+            new_room_like.save()
 
-    # TODO Make this return a simple success instead of a redirect
-    return redirect('room_list')
+        return JsonResponse({'status': 'success'})
+    else:
+        return JsonResponse({'status': 'failure'})
 
 
+# PK is the primary key for the room
 @login_required(login_url="account_login")
 def room_unlike(request, pk):
-    user = request.user
-    room = get_object_or_404(Room, pk=pk)
-    roomlike = RoomLike.objects.filter(user=user, room=room)
-    roomlike = roomlike.first()
-    roomlike.delete()
+    if request.method == 'POST':
+        user = request.user
+        room = get_object_or_404(Room, pk=pk)
+        roomlikes = RoomLike.objects.filter(user=user, room=room)
+        if roomlikes.count() == 0:
+            return JsonResponse({'status': 'failure'})
+        roomlike = roomlikes.first()
+        roomlike.delete()
 
-    # TODO Make this return a simple success instead of a redirect
-    return redirect('room_list')
+        return JsonResponse({'status': 'success'})
+    else:
+        return JsonResponse({'status': 'failure'})
 
 
 # TODO : Improve search functionality
@@ -88,8 +95,7 @@ def room_search(search_term):
     return rooms_query
 
 
-def room_search_extended(search_term, max_price, pet_friendly, has_dishwasher, has_laundry, has_air_conditioning,
-                         open_to_students, is_accessible, utilities_included):
+def room_search_extended(search_term, max_price, pet_friendly, has_dishwasher, has_laundry, has_air_conditioning, open_to_students, is_accessible, utilities_included):
     rooms = Room.objects.all().filter(is_available=True).filter(
         Q(house__city__icontains=search_term) | Q(house__prov_state__icontains=search_term) | Q(
             house__street_name__icontains=search_term))
@@ -115,33 +121,50 @@ def room_search_extended(search_term, max_price, pet_friendly, has_dishwasher, h
 @login_required(login_url="account_login")
 def room_create(request):
     if request.method == 'POST':
-        if request.POST['house'] and request.POST['name'] and request.POST['price']:
-            room = Room()
-            room.user = request.user
-            house = House.objects.filter(pk=request.POST['house'])[:1].get()
+        room = Room()
+        room.user = request.user
+        house = House.objects.filter(pk=request.POST['house'])[:1].get()
+        room.house = house
+        if 'name' not in request.POST:
+            houses = House.objects.filter(user=request.user.id)
+            if houses.count() > 0:
+                return render(request, 'rooms/room_create.html', {'houses': houses, 'error': 'Please make sure to fill in all required details'})
+            else:
+                return render(request, 'rooms/room_create.html', {'error': 'Please make sure to fill in all required details'})
+        elif 'price' not in request.POST:
+            houses = House.objects.filter(user=request.user.id)
+            if houses.count() > 0:
+                return render(request, 'rooms/room_create.html', {'houses': houses, 'error': 'Please make sure to fill in all required details'})
+            else:
+                return render(request, 'rooms/room_create.html', {'error': 'Please make sure to fill in all required details'})
+        elif 'description' not in request.POST:
+            houses = House.objects.filter(user=request.user.id)
+            if houses.count() > 0:
+                return render(request, 'rooms/room_create.html', {'houses': houses, 'error': 'Please make sure to fill in all required details'})
+            else:
+                return render(request, 'rooms/room_create.html', {'error': 'Please make sure to fill in all required details'})
+        else:
             room.name = request.POST['name']
-            room.house = house
             room.price = request.POST['price']
             room.description = request.POST['description']
             room.save()
-            try:
-                for file in request.FILES.getlist('images'):
-                    image = RoomImage()
-                    image.room = room
-                    image.user = request.user
-                    image.image = file
-                    image.save()
-            except Exception:
-                pass
+        try:
+            for file in request.FILES.getlist('images'):
+                image = RoomImage()
+                image.room = room
+                image.user = request.user
+                image.image = file
+                image.save()
+        except Exception:
+            pass
 
         return redirect('room_detail', pk=room.id)
     else:
-        try:
-            houses = House.objects.filter(user=request.user.id)
+        houses = House.objects.filter(user=request.user.id)
+        if houses.count() > 0:
             return render(request, 'rooms/room_create.html', {'houses': houses})
-        except Exception:
-            pass
-        return render(request, 'rooms/room_create.html')
+        else:
+            return render(request, 'rooms/room_create.html')
 
 
 class room_detail(generic.DetailView):
@@ -152,13 +175,12 @@ class room_detail(generic.DetailView):
 class room_edit(LoginRequiredMixin, generic.UpdateView):
     model = Room
     template_name = 'rooms/room_edit.html'
-    fields = ['name', 'price', 'description', 'is_available', 'furnished', 'is_accessible', 'open_to_students',
-              'female_only', 'pet_friendly', 'utilities_included', 'parking']
+    fields = ['name', 'price', 'description', 'is_available', 'furnished', 'is_accessible', 'open_to_students', 'female_only', 'pet_friendly', 'utilities_included', 'parking']
 
     def get_success_url(self):
         return reverse('room_detail', kwargs={'pk': str(self.object.pk)})
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         room = super(room_edit, self).get_object()
         if not room.user == self.request.user:
             raise Http404
@@ -168,9 +190,11 @@ class room_edit(LoginRequiredMixin, generic.UpdateView):
 class room_delete(LoginRequiredMixin, generic.DeleteView):
     model = Room
     template_name = 'rooms/room_delete.html'
-    success_url = reverse_lazy('main_dashboard')
 
-    def get_object(self):
+    def get_success_url(self):
+        return reverse('house_detail', kwargs={'pk': str(self.object.house.pk)})
+
+    def get_object(self, **kwargs):
         room = super(room_delete, self).get_object()
         if not room.user == self.request.user:
             raise Http404
@@ -237,6 +261,7 @@ def room_inquire_dismiss(request, pk):
     return redirect('main_dashboard')
 
 
+# This is used internally by another view
 def get_saved_rooms(request):
     user = request.user
     if user.id is not None:

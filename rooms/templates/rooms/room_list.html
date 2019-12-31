@@ -117,19 +117,29 @@
         function like(pk) {
             const icon = document.getElementById("room_" + pk );
             icon.src = "{% static 'icons/loading.svg' %}";
-            $.get( `/room/${pk}/like` , data => {
+            $.ajax({
+                url: `/room/${pk}/like/`,
+                method: 'POST',
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+            })
+            .done(data => {
                 $( ".result" ).html( data );
                 icon.onclick = unlike.bind(null, pk);
                 icon.src = "{% static 'icons/heart_filled.svg' %}";
-            }).fail(() => {
+            })
+            .fail(() => {
                 icon.src = "{% static 'icons/heart_empty.svg' %}";
             });
         }
-
         function unlike(pk) {
             const icon = document.getElementById("room_" + pk );
             icon.src = "{% static 'icons/loading.svg' %}";
-            $.get(`/room/${pk}/unlike`, data => {
+            $.ajax({
+                url: `/room/${pk}/unlike/`,
+                method: 'POST',
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+            })
+            .done(data => {
                 $( ".result" ).html( data );
                 icon.onclick = like.bind(null, pk);
                 icon.src = "{% static 'icons/heart_empty.svg' %}";

@@ -17,10 +17,14 @@
                         <div class="card-body">
                             <a href="{% url 'house_detail' invite.house.pk %}"><h5 class="card-title">{{ invite.house.full_address }}</h5></a>
                             <small>Invited by: {{ invite.sender.first_name }} {{ invite.sender.last_name }}</small>
-                            <p class="card-text">
-                                <a href="{% url 'house_invite_accept' invite.house.pk invite.id %}" class="btn btn-sm btn-success"><span class="oi oi-check"></span></a>
-                                <a href="{% url 'house_invite_decline' invite.house.pk invite.id %}" class="btn btn-sm btn-danger"><span class="oi oi-ban"></span></a>
-                            </p>
+                                <form action="{% url 'house_invite_accept' invite.house.pk invite.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="btn btn-sm btn-success" type='submit'><span class="oi oi-check"></span> Accept</button>
+                                </form>
+                                <form action="{% url 'house_invite_decline' invite.house.pk invite.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="btn btn-sm btn-danger" type='submit'><span class="oi oi-ban"></span> Decline</button>
+                                </form>
                         </div>
                     </div>
                 </div>

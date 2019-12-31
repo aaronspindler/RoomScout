@@ -1,5 +1,3 @@
-import uuid
-
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -24,7 +22,7 @@ class User(AbstractUser):
 	promo_contact = models.BooleanField(default=False)
 
 	# Generated Fields
-	_score = models.DecimalField(decimal_places=2, max_digits=5, default=0.0)
+	_score = models.DecimalField(max_digits=19, decimal_places=2, default=0.00)
 	is_premium_member = models.BooleanField(default=True)
 
 	# Premium Features

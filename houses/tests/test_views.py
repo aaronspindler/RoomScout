@@ -37,7 +37,6 @@ class HousesViewsTests(TestCase):
 		self.assertContains(response, 'Create a House')
 		self.assertContains(response, 'Address')
 		self.assertContains(response, 'Garbage Day')
-		self.assertNotContains(response, '404')
 		self.assertNotContains(response, 'Login')
 		
 	def test_house_create_view_get_not_logged_in(self):
@@ -132,7 +131,6 @@ class HousesViewsTests(TestCase):
 		self.assertContains(response, 'Garbage Day')
 		self.assertContains(response, 'There is an issue with the address inputted!')
 		self.assertNotContains(response, 'Bills')
-		self.assertNotContains(response, '404')
 		self.assertNotContains(response, 'Login')
 		self.assertEqual(house_count_post, house_count_pre)
 		self.assertEqual(billset_count_post, billset_count_pre)
@@ -155,7 +153,6 @@ class HousesViewsTests(TestCase):
 		self.assertContains(response, 'Garbage Day')
 		self.assertContains(response, 'There is an issue with the address inputted!')
 		self.assertNotContains(response, 'Bills')
-		self.assertNotContains(response, '404')
 		self.assertNotContains(response, 'Login')
 		self.assertEqual(house_count_post, house_count_pre)
 		self.assertEqual(billset_count_post, billset_count_pre)
@@ -402,7 +399,6 @@ class HousesViewsTests(TestCase):
 		self.assertTemplateUsed(response, 'houses/house_invite.html')
 		self.assertContains(response, self.house)
 		self.assertContains(response, 'Invite')
-		self.assertNotContains(response, '404')
 		self.assertNotContains(response, 'Login')
 	
 	def test_house_invite_view_get_not_logged_in(self):

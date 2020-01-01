@@ -209,3 +209,4 @@ if 'test' in sys.argv:
 		'ENGINE': 'django.db.backends.sqlite3',
 		'NAME': 'testingdb'
 	}
+	SECURE_SSL_REDIRECT = False

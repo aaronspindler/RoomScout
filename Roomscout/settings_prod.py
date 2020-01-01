@@ -1,4 +1,5 @@
 import os
+import sys
 
 import dj_database_url
 
@@ -200,3 +201,6 @@ SECURE_HSTS_PRELOAD = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+
+if 'test' in sys.argv:
+	SECURE_SSL_REDIRECT = False

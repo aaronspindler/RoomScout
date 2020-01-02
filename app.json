@@ -1,4 +1,14 @@
 {
+  "name": "RoomScout.ca",
+  "description": "Roommate Solution",
+  "keywords": [
+    "Roommates",
+    "Find",
+    "Verify"
+  ],
+  "website": "https://roomscout.ca",
+  "logo": "https://www.roomscout.ca/static/logos/logo.PNG",
+  "success_url": "/",
    "environments": {
      "test": {
        "addons": ["heroku-postgresql:in-dyno", "heroku-redis:in-dyno"],

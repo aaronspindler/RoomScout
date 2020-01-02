@@ -3,6 +3,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect
 from django.conf import settings
 
+from bills.forms import CreateBillForm
 from utils.captcha import Captcha
 from emails.senders import send_contact_us_email
 from utils.ipaddress import get_IP
@@ -73,4 +74,5 @@ def server_error(request):
 
 @staff_member_required(login_url="account_login")
 def sandbox(request):
-	return render(request, 'emails/_base.html')
+	form = CreateBillForm()
+	return render(request, 'main/sandbox.html', {'form': form})

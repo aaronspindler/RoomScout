@@ -3,7 +3,8 @@
      "test": {
        "addons": ["heroku-postgresql:in-dyno", "heroku-redis:in-dyno"],
        "scripts": {
-         "test": "python manage.py test"
+         "test": "python manage.py test",
+         "test2": "python manage.py check --deploy"
        }
      }
    }

@@ -1,7 +1,8 @@
 {% extends 'main/_base.html' %}
+{% load crispy_forms_tags %}
 {% block title %}
     Sandbox
 {% endblock %}
 {% block content %}
-    {{ form.as_p }}
+    {{ form.as_table}}
 {% endblock %}

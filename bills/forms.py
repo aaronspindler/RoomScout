@@ -4,10 +4,9 @@ from django import forms
 from bills.models import Bill
 
 
-class CreateBillForm(forms.ModelForm):
-    class Meta:
-        model = Bill
-        fields = ['date', 'type', 'amount']
-        widgets = {
-            'date': forms.DateInput()
-        }
+class CreateBillForm(forms.Form):
+    date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))
+    type = forms.ChoiceField(choices=Bill.TYPE_CHOICES)
+    amount = forms.DecimalField()
+    file = forms.FileField()
+

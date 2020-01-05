@@ -35,7 +35,8 @@
                     <div class="col-md-3">
                         {{ form.file }}
                     </div>
-                    <button class="btn btn-success add-form-row">+</button>
+                    <br>
+                    <button class="btn btn-success add-form-row"><span class="oi oi-plus"></span></button>
                 </div>
             {% endfor %}
             {{ formset.management_form }}
@@ -77,7 +78,7 @@
                 conditionRow.find('.btn.add-form-row')
                     .removeClass('btn-success').addClass('btn-danger')
                     .removeClass('add-form-row').addClass('remove-form-row')
-                    .html('-');
+                    .html('<span class="oi oi-trash"></span>');
                 return false;
             }
 

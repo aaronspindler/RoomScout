@@ -1,11 +1,10 @@
 import os
 import sys
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Security
 SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = False
 ALLOWED_HOSTS = ['roomscout.ca', 'www.roomscout.ca', 'roomscout.herokuapp.com', 'roomscout-dev.herokuapp.com']
@@ -29,16 +28,16 @@ AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 AWS_DEFAULT_ACL = None
 
+# AWS S3
 AWS_PUBLIC_MEDIA_LOCATION = ''
 DEFAULT_FILE_STORAGE = 'Roomscout.storage_backends.PublicMediaStorage'
-
 AWS_PRIVATE_MEDIA_LOCATION = ''
 PRIVATE_FILE_STORAGE = 'Roomscout.storage_backends.PrivateMediaStorage'
-
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
 
+# Crispy Forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Authentication
@@ -49,15 +48,27 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_SUBJECT_PREFIX = 'RoomScout.ca | '
-
 AUTHENTICATION_BACKENDS = {
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend'
 }
-
 LOGIN_URL = 'account_login'
 LOGIN_REDIRECT_URL = 'main_dashboard'
 ACCOUNT_LOGOUT_REDIRECT = 'home'
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
 
 # Email
 DEFAULT_FROM_EMAIL = 'services@roomscout.ca'
@@ -68,8 +79,7 @@ EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-# Application definition
-
+# Apps
 INSTALLED_APPS = [
     # Django
     'django.contrib.admin',
@@ -115,8 +125,6 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-ROOT_URLCONF = 'Roomscout.urls'
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -134,40 +142,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Roomscout.wsgi.application'
-
-# Database
-# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+ROOT_URLCONF = 'Roomscout.urls'
+SITE_ID = 1
 
 DATABASES = {
     'default': dj_database_url.config()
 }
 
-# Password validation
-# https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
-
-SITE_ID = 1
-
-# Internationalization
-# https://docs.djangoproject.com/en/2.2/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'EST'
 
 USE_I18N = True
 
@@ -175,16 +159,14 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
-
+# Static
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-
 # Commented out because it makes Heroku deployment error when Debug=False
 # TODO: Figure out why this happens
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# Media
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 

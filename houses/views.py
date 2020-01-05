@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 
+from bills.forms import BillFormset
 from bills.models import BillSet, Bill
 from emails.senders import send_invite_email, send_bill_email
 from garbageday.models import GarbageDay
@@ -85,6 +86,15 @@ def house_bill_add(request, pk):
 		raise Http404
 
 	if request.method == 'POST':
+		formset = BillFormset(request.POST)
+		if formset.is_valid():
+			for form in formset:
+				print(form.cleaned_data)
+		else:
+			return render()
+
+
+
 		bill = Bill()
 		bill.user = request.user
 		if 'type' not in request.POST:
@@ -130,8 +140,9 @@ def house_bill_add(request, pk):
 
 		send_bill_email(house, bill)
 		return redirect('house_detail', house.pk)
-
-	return render(request, 'houses/house_bill_add.html', {'house': house})
+	else:
+		formset = BillFormset()
+		return render(request, 'houses/house_bill_add.html', {'house': house, 'formset': formset})
 
 
 @login_required(login_url="account_login")

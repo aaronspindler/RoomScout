@@ -1,13 +1,14 @@
 import os
 import sys
 
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import dj_database_url
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['SECRET_KEY']
+DEBUG = False
+ALLOWED_HOSTS = ['roomscout.ca', 'www.roomscout.ca', 'roomscout.herokuapp.com', 'roomscout-dev.herokuapp.com']
 
 # Stripe
 STRIPE_KEY = os.environ['STRIPE_KEY']
@@ -35,13 +36,8 @@ AWS_PRIVATE_MEDIA_LOCATION = ''
 PRIVATE_FILE_STORAGE = 'Roomscout.storage_backends.PrivateMediaStorage'
 
 AWS_S3_OBJECT_PARAMETERS = {
-	'CacheControl': 'max-age=86400',
+    'CacheControl': 'max-age=86400',
 }
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = ['roomscout.ca', 'www.roomscout.ca', 'roomscout.herokuapp.com', 'roomscout-dev.herokuapp.com']
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -55,8 +51,8 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_SUBJECT_PREFIX = 'RoomScout.ca | '
 
 AUTHENTICATION_BACKENDS = {
-	'django.contrib.auth.backends.ModelBackend',
-	'allauth.account.auth_backends.AuthenticationBackend'
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
 }
 
 LOGIN_URL = 'account_login'
@@ -75,66 +71,66 @@ EMAIL_USE_TLS = True
 # Application definition
 
 INSTALLED_APPS = [
-	# Django
-	'django.contrib.admin',
-	'django.contrib.auth',
-	'django.contrib.contenttypes',
-	'django.contrib.sessions',
-	'django.contrib.messages',
-	'django.contrib.staticfiles',
-	'django.contrib.sitemaps',
-	'django.contrib.sites',
-	# 3rd Party
-	'crispy_forms',
-	'django_countries',
-	'storages',
-	'allauth',
-	'allauth.account',
-	'allauth.socialaccount',
-	'captcha',
-	# Local Apps
-	'main',
-	'blog',
-	'accounts',
-	'houses',
-	'rooms',
-	'bills',
-	'utils',
-	'dashboard',
-	'marketing',
-	'emails',
-	'payments',
-	'garbageday',
-	'eggs',
+    # Django
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
+    'django.contrib.sites',
+    # 3rd Party
+    'crispy_forms',
+    'django_countries',
+    'storages',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'captcha',
+    # Local Apps
+    'main',
+    'blog',
+    'accounts',
+    'houses',
+    'rooms',
+    'bills',
+    'utils',
+    'dashboard',
+    'marketing',
+    'emails',
+    'payments',
+    'garbageday',
+    'eggs',
 ]
 
 MIDDLEWARE = [
-	'django.middleware.security.SecurityMiddleware',
-	'django.contrib.sessions.middleware.SessionMiddleware',
-	'django.middleware.common.CommonMiddleware',
-	'django.middleware.csrf.CsrfViewMiddleware',
-	'django.contrib.auth.middleware.AuthenticationMiddleware',
-	'django.contrib.messages.middleware.MessageMiddleware',
-	'django.middleware.clickjacking.XFrameOptionsMiddleware',
-	'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'Roomscout.urls'
 
 TEMPLATES = [
-	{
-		'BACKEND': 'django.template.backends.django.DjangoTemplates',
-		'DIRS': [os.path.join(BASE_DIR, 'accounts', 'templates')],
-		'APP_DIRS': True,
-		'OPTIONS': {
-			'context_processors': [
-				'django.template.context_processors.debug',
-				'django.template.context_processors.request',
-				'django.contrib.auth.context_processors.auth',
-				'django.contrib.messages.context_processors.messages',
-			],
-		},
-	},
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'accounts', 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
 ]
 
 WSGI_APPLICATION = 'Roomscout.wsgi.application'
@@ -143,25 +139,25 @@ WSGI_APPLICATION = 'Roomscout.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-	'default': dj_database_url.config()
+    'default': dj_database_url.config()
 }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-	{
-		'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-	},
-	{
-		'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-	},
-	{
-		'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-	},
-	{
-		'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-	},
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
 ]
 
 SITE_ID = 1
@@ -181,6 +177,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
@@ -202,5 +199,14 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
+try:
+    from .local_settings import *
+except ImportError:
+    pass
+
 if 'test' in sys.argv:
-	SECURE_SSL_REDIRECT = False
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'testingdb'
+    }
+    SECURE_SSL_REDIRECT = False

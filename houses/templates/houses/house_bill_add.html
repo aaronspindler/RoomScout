@@ -13,7 +13,6 @@
     {% endif %}
     <div class="container">
         <h2>Add bill to {{ house.full_address }}</h2>
-        {% if user.id == house.user.id %}
             <form action="{% url 'house_bill_add' house.pk %}" method="POST" enctype="multipart/form-data">
                 <div class="form-row">
                     <div class="col-md-3">
@@ -48,7 +47,6 @@
 
             </form>
             <br>
-        {% endif %}
     </div>
 
 {% endblock %}

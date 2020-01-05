@@ -5,6 +5,41 @@
 {% endblock %}
 {% block content %}
     <div class="container">
-        {{ form | crispy}}
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.management_form }}
+            <div class="form-row">
+                <div class="col-md-3">
+                    <label>Date (yyyy-mm-dd)</label>
+                </div>
+                <div class="col-md-2">
+                    <label>Type</label>
+                </div>
+                <div class="col-md-3">
+                    <label>Amount ($)</label>
+                </div>
+                <div class="col-md-3">
+                    <label>Receipt (Optional)</label>
+                </div>
+            </div>
+            {% for form in formset %}
+                <div class="form-row">
+                    <div class="col-md-2">
+                        {{ form.date }}
+                    </div>
+                    <div class="col-md-2">
+                        {{ form.type }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form.amount }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form.file }}
+                    </div>
+                </div>
+            {% endfor %}
+            <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
 {% endblock %}

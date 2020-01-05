@@ -76,5 +76,11 @@ def server_error(request):
 def sandbox(request):
 	if request.method == 'POST':
 		print(request.POST)
+		formset = BillFormset(request.POST)
+		if formset.is_valid():
+			for form in formset:
+				print(form.cleaned_data)
+		else:
+			print('invalid')
 	formset = BillFormset()
 	return render(request, 'main/sandbox.html', {'formset': formset})

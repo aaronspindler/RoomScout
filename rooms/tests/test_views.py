@@ -652,7 +652,7 @@ class RoomsViewTests(TestCase):
 		self.assertEqual(post_count, pre_count)
 
 	def test_rooms_views_room_delete_post_wrong_user(self):
-		print('Testing rooms.views.room_delete() POST wrong user}')
+		print('Testing rooms.views.room_delete() POST wrong user')
 		self.client.force_login(self.user2)
 		room = Room.objects.create(user=self.user, house=self.house, name='Master Bedroom')
 		pre_count = Room.objects.count()

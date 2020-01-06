@@ -90,7 +90,7 @@ def house_bill_add(request, pk):
 		if formset.is_valid():
 			for form in formset:
 				if not check_format(form.cleaned_data['date']):
-					return render(request, 'houses/house_bill_add.html', {'error': 'You have enter the date in an incorrect format! Use yyyy-mm-dd', 'house': house, 'formset': formset})
+					return render(request, 'houses/house_bill_add.html', {'error': 'You have entered the date in an incorrect format! Use yyyy-mm-dd', 'house': house, 'formset': formset})
 
 				bill = Bill()
 				bill.user = request.user

@@ -1,8 +1,10 @@
 import datetime
 
+from django.utils import timezone
+
 
 def now():
-	return datetime.datetime.now()
+	return timezone.now()
 
 
 def time_diff_display(updated):

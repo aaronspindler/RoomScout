@@ -3,6 +3,7 @@ import datetime
 from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
+from django.utils import timezone
 
 from blog.models import BlogPost
 
@@ -24,7 +25,7 @@ class BlogViewsTests(TestCase):
 	
 	def test_blog_views_BlogListView_filled(self):
 		print('Testing blog.views.BlogListView GET filled')
-		blog_post = BlogPost.objects.create(title='Fancy Blog Post', pub_date=datetime.datetime.now(), body='This is a fancy blog post!')
+		blog_post = BlogPost.objects.create(title='Fancy Blog Post', pub_date=timezone.now(), body='This is a fancy blog post!')
 		response = self.client.get(reverse('blog_home'), follow=True)
 		self.assertEqual(response.status_code, 200)
 		self.assertTemplateUsed(response, 'blog/blog.html')
@@ -35,7 +36,7 @@ class BlogViewsTests(TestCase):
 	
 	def test_blog_views_BlogDetailView(self):
 		print('Testing blog.views.BlogListView GET filled')
-		blog_post = BlogPost.objects.create(title='Fancy Blog Post', pub_date=datetime.datetime.now(), body='This is a fancy blog post!')
+		blog_post = BlogPost.objects.create(title='Fancy Blog Post', pub_date=timezone.now(), body='This is a fancy blog post!')
 		response = self.client.get(reverse('blog_post', kwargs={'pk': blog_post.id}), follow=True)
 		self.assertEqual(response.status_code, 200)
 		self.assertTemplateUsed(response, 'blog/blog_post.html')

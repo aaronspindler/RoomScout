@@ -253,18 +253,20 @@ class HousesViewsTests(TestCase):
 		self.client.force_login(self.user)
 		bill_count_pre = Bill.objects.count()
 		billset_count_pre = BillSet.objects.count()
-		req_data = {'type': 'GAS', 'date': '2019-12-11', 'amount':'298.99'}
+		req_data = {'type': 'GAS', 'date': '2019-12-11', 'amount': '298.99', 'form-TOTAL_FORMS': 1, 'form-INITIAL_FORMS': 0}
 		response = self.client.post(reverse('house_bill_add', kwargs={'pk': self.house.pk}), req_data, follow=True)
 		bill_count_post = Bill.objects.count()
 		billset_count_post = BillSet.objects.count()
 		self.assertEqual(response.status_code, 200)
 		self.assertTemplateUsed(response, 'houses/house_detail.html')
+		self.assertNotContains(response, 'You have entered invalid bill data')
+		self.assertNotContains(response, 'You have enter the date in an incorrect format! Use yyyy-mm-dd')
 		self.assertContains(response, self.house)
 		self.assertNotContains(response, 'Add bill to')
 		self.assertContains(response, 'Garbage Day')
 		self.assertNotContains(response, '404')
 		self.assertNotContains(response, 'Login')
-		self.assertGreater(bill_count_post,bill_count_pre)
+		self.assertGreater(bill_count_post, bill_count_pre)
 		self.assertGreater(billset_count_post, billset_count_pre)
 		
 	def test_house_bill_add_view_post_not_logged_in(self):

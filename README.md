@@ -1,4 +1,5 @@
 # RoomScout
+RoomScout is a one stop shop for finding and managing roommates
 
 
 ## Setup
@@ -28,6 +29,7 @@
 
 #### Views
 This is the basic format that tests for views should follow
+
 ```
 def test_FUNCTION_get(self):
 	print('Testing FUNCTION() GET')

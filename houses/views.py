@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 
+from bills.forms import BillFormset
 from bills.models import BillSet, Bill
 from emails.senders import send_invite_email, send_bill_email
 from garbageday.models import GarbageDay
@@ -85,53 +86,52 @@ def house_bill_add(request, pk):
 		raise Http404
 
 	if request.method == 'POST':
-		bill = Bill()
-		bill.user = request.user
-		if 'type' not in request.POST:
-			return render(request, 'houses/house_bill_add.html', {'house': house, 'error': 'You have entered invalid data!'})
+		formset = BillFormset(request.POST, request.FILES)
+		if formset.is_valid():
+			for form in formset:
+				if not check_format(form.cleaned_data['date']):
+					return render(request, 'houses/house_bill_add.html', {'error': 'You have entered the date in an incorrect format! Use yyyy-mm-dd', 'house': house, 'formset': formset})
 
-		if 'date' not in request.POST:
-			return render(request, 'houses/house_bill_add.html', {'house': house, 'error': 'You have entered invalid data!'})
+				bill = Bill()
+				bill.user = request.user
+				bill.type = form.cleaned_data['type']
+				bill.amount = form.cleaned_data['amount']
+				bill.date = form.cleaned_data['date']
 
-		if 'amount' not in request.POST:
-			return render(request, 'houses/house_bill_add.html', {'house': house, 'error': 'You have entered invalid data!'})
+				if isinstance(form.cleaned_data['date'], datetime.date):
+					parsed_date = form.cleaned_data['date']
+				else:
+					parsed_date = datetime.datetime.strptime(form.cleaned_data['date'], '%Y-%m-%d')
 
-		bill.type = request.POST['type']
-		bill.date = request.POST['date']
-		bill.amount = request.POST['amount']
+				month = parsed_date.month
+				year = parsed_date.year
 
-		date = request.POST['date']
+				existing_billset = BillSet.objects.filter(house=house).filter(year=year).filter(month=month)
+				if existing_billset.count() == 0:
+					new_billset = BillSet()
+					new_billset.house = house
+					new_billset.month = month
+					new_billset.year = year
+					new_billset.save()
+					bill.set = new_billset
+				else:
+					bill.set = existing_billset.first()
+				bill.save()
 
-		if not check_format(date):
-			return render(request, 'houses/house_bill_add.html', {'house': house, 'error': 'You have enter the date in an incorrect format! Use yyyy-mm-dd'})
+				if form.cleaned_data['file'] is not None:
+					billfile = BillFile()
+					billfile.user = request.user
+					billfile.file = form.cleaned_data['file']
+					billfile.bill = bill
+					billfile.save()
+				send_bill_email(house, bill)
 
-		parsed_date = datetime.datetime.strptime(date, '%Y-%m-%d')
-		month = parsed_date.month
-		year = parsed_date.year
-
-		existing_billset = BillSet.objects.filter(house=house).filter(year=year).filter(month=month)
-		if existing_billset.count() == 0:
-			new_billset = BillSet()
-			new_billset.house = house
-			new_billset.month = month
-			new_billset.year = year
-			new_billset.save()
-			bill.set = new_billset
+			return redirect('house_detail', house.pk)
 		else:
-			bill.set = existing_billset.first()
-		bill.save()
-
-		if len(request.FILES) > 0:
-			billfile = BillFile()
-			billfile.user = request.user
-			billfile.file = request.FILES['file']
-			billfile.bill = bill
-			billfile.save()
-
-		send_bill_email(house, bill)
-		return redirect('house_detail', house.pk)
-
-	return render(request, 'houses/house_bill_add.html', {'house': house})
+			return render(request, 'houses/house_bill_add.html', {'error': 'You have entered invalid bill data', 'house': house, 'formset': formset})
+	else:
+		formset = BillFormset()
+		return render(request, 'houses/house_bill_add.html', {'house': house, 'formset': formset})
 
 
 @login_required(login_url="account_login")

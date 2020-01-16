@@ -1,5 +1,5 @@
 {% extends 'main/_base.html' %}
-{% load staticfiles %}
+{% load static %}
 
 {% block title %}
     Bill Add
@@ -13,42 +13,105 @@
     {% endif %}
     <div class="container">
         <h2>Add bill to {{ house.full_address }}</h2>
-        {% if user.id == house.user.id %}
-            <form action="{% url 'house_bill_add' house.pk %}" method="POST" enctype="multipart/form-data">
-                <div class="form-row">
-                    <div class="col-md-3">
-                        <label>Date (yyyy-mm-dd)</label>
-                    </div>
-                    <div class="col-md-3">
-                        <label>Type</label>
-                    </div>
-                    <div class="col-md-3">
-                        <label>Amount ($)</label>
-                    </div>
-                    <div class="col-md-3">
-                        <label>Receipt (Optional)</label>
-                    </div>
+        <form action="{% url 'house_bill_add' house.pk %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="col-md-3">
+                    <label>Date (yyyy-mm-dd)</label>
                 </div>
-                <div class="form-row">
-                    {% csrf_token %}
-
-                    <div class="col-md-3"><input name="date" class="form-control" type="date"></div>
-                    <div class="col-md-3"><select name="type" class="form-control">
-                        <option value='ELEC'>Electricity</option>
-                        <option value='WATER'>Water</option>
-                        <option value='GAS'>Gas</option>
-                        <option value='INTER'>Internet</option>
-                        <option value='OTHER'>Other</option>
-                    </select></div>
-                    <div class="col-md-3"><input name="amount" class="form-control" step=0.01 min="0.0" type="number"></div>
-                    <div class="col-md-3"><input name="file" class="form-control" type="file"></div>
+                <div class="col-md-2">
+                    <label>Type</label>
                 </div>
-                <br>
-                <button class="btn btn-primary" type='submit'>Submit</button>
-
-            </form>
+                <div class="col-md-3">
+                    <label>Amount ($)</label>
+                </div>
+                <div class="col-md-3">
+                    <label>Receipt (Optional)</label>
+                </div>
+            </div>
+            {% for form in formset %}
+                <div class="form-row">
+                    <div class="col-md-2">
+                        {{ form.date }}
+                    </div>
+                    <div class="col-md-2">
+                        {{ form.type }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form.amount }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form.file }}
+                    </div>
+                    <br>
+                    <button class="btn btn-success add-form-row"><span class="oi oi-plus"></span></button>
+                </div>
+            {% endfor %}
+            {{ formset.management_form }}
             <br>
-        {% endif %}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    <script type="text/javascript">
+            function updateElementIndex(el, prefix, ndx) {
+                var id_regex = new RegExp('(' + prefix + '-\\d+)');
+                var replacement = prefix + '-' + ndx;
+                if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
+                if (el.id) el.id = el.id.replace(id_regex, replacement);
+                if (el.name) el.name = el.name.replace(id_regex, replacement);
+            }
+
+            function cloneMore(selector, prefix) {
+                var newElement = $(selector).clone(true);
+                var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+                newElement.find(':input:not([type=button]):not([type=submit]):not([type=reset])').each(function () {
+                    var name = $(this).attr('name')
+                    if (name) {
+                        name = name.replace('-' + (total - 1) + '-', '-' + total + '-');
+                        var id = 'id_' + name;
+                        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+                    }
+                });
+                newElement.find('label').each(function () {
+                    var forValue = $(this).attr('for');
+                    if (forValue) {
+                        forValue = forValue.replace('-' + (total - 1) + '-', '-' + total + '-');
+                        $(this).attr({'for': forValue});
+                    }
+                });
+                total++;
+                $('#id_' + prefix + '-TOTAL_FORMS').val(total);
+                $(selector).after(newElement);
+                var conditionRow = $('.form-row:not(:last)');
+                conditionRow.find('.btn.add-form-row')
+                    .removeClass('btn-success').addClass('btn-danger')
+                    .removeClass('add-form-row').addClass('remove-form-row')
+                    .html('<span class="oi oi-trash"></span>');
+                return false;
+            }
+
+            function deleteForm(prefix, btn) {
+                btn.closest('.form-row').remove();
+                var forms = $('.form-row');
+                $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+                for (var i = 0, formCount = forms.length; i < formCount; i++) {
+                    $(forms.get(i)).find(':input').each(function () {
+                        updateElementIndex(this, prefix, i);
+                    });
+                }
+                return false;
+            }
+
+            $(document).on('click', '.add-form-row', function (e) {
+                e.preventDefault();
+                cloneMore('.form-row:last', 'form');
+                return false;
+            });
+            $(document).on('click', '.remove-form-row', function (e) {
+                e.preventDefault();
+                deleteForm('form', $(this));
+                return false;
+            });
+        </script>
     </div>
 
 {% endblock %}

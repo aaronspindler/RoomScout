@@ -334,7 +334,7 @@
                                     <td>
                                         <form method='post' action="{% url 'house_invite_remove' house.pk invite.id %}">
                                             {% csrf_token %}
-                                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                                            <button type="submit" class="btn btn-sm btn-danger"><span class="oi oi-ban"></span> Remove</button>
                                         </form>
                                     </td>
                                     <td><span class="badge badge-warning">Pending</span></td>

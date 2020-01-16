@@ -9,8 +9,23 @@ RoomScout is a one stop shop for finding and managing roommates
 4. Start django local server using ``` python manage.py runserver```
 
 ## Environment Variables
-    Settings for the application are now loaded from environment variables even in development environment
+Settings for the application are now loaded from environment variables even in development environment
+```
+SECRET_KEY : Required
+GOOGLE_API_KEY : Optional for google maps
+RECAPTCHA_PUBLIC_KEY : Optional for captcha
+RECAPTCHA_PRIVATE_KEY : Optional for captcha
+AWS_ACCESS_KEY_ID : Optional for S3 Storage and Rekognition
+AWS_SECRET_ACCESS_KEY : Optional for S3 Storage and Rekognition
+WALK_SCORE_API : Optional for Walk Score
+EMAIL_HOST : Optional for email
+EMAIL_HOST_USER : Optional for email
+EMAIL_HOST_PASSWORD : Optional for email
+STRIPE_KEY : Optional for stripe transactions
+STRIPE_SECRET_KEY : Optional for stripe transactions
 
+```
+    
 ## Branches
 #### Master
     https://roomscout.ca
@@ -24,6 +39,7 @@ RoomScout is a one stop shop for finding and managing roommates
     All feature branches should make pull requests into dev and then once approved the dev branch will be merged to master
     
 ## Testing
+All code that is pushed should have tests included for it, if tests are not present it is something that can be done by anyone
 #### Forms
 
 

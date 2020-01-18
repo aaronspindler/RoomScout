@@ -207,7 +207,11 @@
                                                 {% if bill.billfile_set.count > 0 %}
                                                     <td><a href="{{ bill.billfile_set.first.file.url }}">File</a></td>
                                                 {% else %}
-                                                    <td>No Receipt</td>
+                                                    {% if user.id == house.user.id %}
+                                                        <td><a class="btn btn-sm btn-primary" href="#">Add Reciept</a></td>
+                                                    {% else %}
+                                                        <td>No Receipt</td>
+                                                    {% endif %}
                                                 {% endif %}
                                                 {% if user.id == house.user.id %}
                                                     <td>

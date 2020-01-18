@@ -25,3 +25,10 @@ def bill_delete(request, pk):
 			BillSet.objects.filter(pk=set_key).delete()
 	
 	return redirect('house_detail', house.pk)
+
+
+# PK is the primary key for the bill
+def bill_add_file(request, pk):
+	bill = get_object_or_404(Bill, pk=pk)
+	house = bill.set.house
+	return redirect('house_detail', house.pk)

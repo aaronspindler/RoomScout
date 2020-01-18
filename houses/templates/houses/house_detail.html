@@ -205,7 +205,7 @@
                                                 <td>{{ bill.get_type_display }}</td>
                                                 <td>${{ bill.amount }}</td>
                                                 {% if bill.billfile_set.count > 0 %}
-                                                    <td><a href="{{ bill.billfile_set.first.file.url }}">File</a></td>
+                                                    <td><a class="btn btn-sm btn-success" href="{{ bill.billfile_set.first.file.url }}">File</a></td>
                                                 {% else %}
                                                     {% if user.id == house.user.id %}
                                                         <td><a class="btn btn-sm btn-primary" href="#">Add Reciept</a></td>

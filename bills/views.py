@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
 
 from .models import Bill, BillSet
 
@@ -31,4 +31,8 @@ def bill_delete(request, pk):
 def bill_add_file(request, pk):
 	bill = get_object_or_404(Bill, pk=pk)
 	house = bill.set.house
-	return redirect('house_detail', house.pk)
+
+	if request.method == 'POST':
+		pass
+
+	return render(request, 'bills/bill_add_file.html', {'house': house})

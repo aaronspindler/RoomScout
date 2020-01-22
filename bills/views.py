@@ -34,7 +34,9 @@ def bill_add_file(request, pk):
 	house = bill.set.house
 	form = BillFileForm()
 
-	if request.method == 'POST':
-		pass
+	if request.user != bill.user:
+		raise Http404
 
+	if request.method == 'POST':
+		return redirect(house.get_absolute_url())
 	return render(request, 'bills/bill_add_file.html', {'house': house, 'form': form})

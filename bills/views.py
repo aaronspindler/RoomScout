@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import redirect, get_object_or_404, render
 
+from utils.models import BillFile
 from .forms import BillFileForm
 from .models import Bill, BillSet
 
@@ -38,5 +39,14 @@ def bill_add_file(request, pk):
 		raise Http404
 
 	if request.method == 'POST':
-		return redirect(house.get_absolute_url())
+		form = BillFileForm(request.POST, request.FILES)
+		if form.is_valid():
+			billfile = BillFile()
+			billfile.user = request.user
+			billfile.file = form.cleaned_data['file']
+			billfile.bill = bill
+			billfile.save()
+			return redirect(house.get_absolute_url())
+		else:
+			return render(request, 'bills/bill_add_file.html', {'house': house, 'form': form})
 	return render(request, 'bills/bill_add_file.html', {'house': house, 'form': form})

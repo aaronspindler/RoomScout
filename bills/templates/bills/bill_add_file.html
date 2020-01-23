@@ -8,7 +8,7 @@
 {% block content %}
     <div class="container">
         <h2>Add File to Bill in {{ house }}</h2>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form }}
             <br>

@@ -11,4 +11,8 @@ class BillForm(forms.Form):
     file = forms.FileField(required=False, widget=forms.FileInput(attrs={'class': 'form-control'}))
 
 
+class BillFileForm(forms.Form):
+    file = forms.FileField(required=True, widget=forms.FileInput(attrs={'class': 'form-control'}))
+
+
 BillFormset = formset_factory(BillForm, extra=1)

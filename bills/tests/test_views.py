@@ -4,6 +4,7 @@ from django.urls import reverse
 
 from bills.models import BillSet, Bill
 from houses.models import House
+from utils.models import BillFile
 
 
 class BillsViewsTests(TestCase):
@@ -139,23 +140,38 @@ class BillsViewsTests(TestCase):
 	def test_bill_add_file_get(self):
 		print('Testing bills.views.bill_add_file() GET')
 		self.client.force_login(self.user)
+		billfile_pre_count = BillFile.objects.count()
+		response = self.client.get(reverse('bill_add_file', kwargs={'pk': self.bill.id}, ), follow=True)
+		billfile_post_count = BillFile.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'bills/bill_add_file.html')
+		self.assertContains(response, self.bill.set.house)
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertEqual(billfile_post_count, billfile_pre_count)
 
 	def test_bill_add_file_get_not_logged_in(self):
 		print('Testing bills.views.bill_add_file() GET not logged in')
 		self.client.logout()
+		billfile_pre_count = BillFile.objects.count()
+		response = self.client.get(reverse('bill_add_file', kwargs={'pk': self.bill.id}, ), follow=True)
+		billfile_post_count = BillFile.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'account/login.html')
+		self.assertNotContains(response, self.bill.set.house)
+		self.assertNotContains(response, '404')
+		self.assertContains(response, 'Login')
+		self.assertEqual(billfile_post_count, billfile_pre_count)
 
 	def test_bill_add_file_get_wrong_user(self):
 		print('Testing bills.views.bill_add_file() GET wrong user')
 		self.client.force_login(self.user2)
-
-	def test_bill_add_file_post(self):
-		print('Testing bills.views.bill_add_file() POST')
-		self.client.force_login(self.user)
-
-	def test_bill_add_file_post_not_logged_in(self):
-		print('Testing bills.views.bill_add_file() POST not logged in')
-		self.client.logout()
-
-	def test_bill_add_file_post_wrong_user(self):
-		print('Testing bills.views.bill_add_file() POST wrong user}')
-		self.client.force_login(self.user2)
+		billfile_pre_count = BillFile.objects.count()
+		response = self.client.get(reverse('bill_add_file', kwargs={'pk': self.bill.id}, ), follow=True)
+		billfile_post_count = BillFile.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'main/404.html')
+		self.assertNotContains(response, self.bill.set.house)
+		self.assertContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertEqual(billfile_post_count, billfile_pre_count)

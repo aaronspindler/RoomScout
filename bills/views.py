@@ -7,9 +7,9 @@ from .forms import BillFileForm
 from .models import Bill, BillSet
 
 
-# PK is the primary key for the bill
 @login_required(login_url="account_login")
 def bill_delete(request, pk):
+	# PK is the primary key for the bill
 	delete_set = False
 	bill = get_object_or_404(Bill, pk=pk)
 	set_key = bill.set.pk
@@ -29,8 +29,10 @@ def bill_delete(request, pk):
 	return redirect('house_detail', house.pk)
 
 
-# PK is the primary key for the bill
+@login_required(login_url="account_login")
 def bill_add_file(request, pk):
+	# PK is the primary key for the bill
+
 	bill = get_object_or_404(Bill, pk=pk)
 	house = bill.set.house
 	form = BillFileForm()

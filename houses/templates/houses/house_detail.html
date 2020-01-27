@@ -205,9 +205,13 @@
                                                 <td>{{ bill.get_type_display }}</td>
                                                 <td>${{ bill.amount }}</td>
                                                 {% if bill.billfile_set.count > 0 %}
-                                                    <td><a href="{{ bill.billfile_set.first.file.url }}">File</a></td>
+                                                    <td><a class="btn btn-sm btn-success  " href="{{ bill.billfile_set.first.file.url }}">File</a></td>
                                                 {% else %}
-                                                    <td>No Receipt</td>
+                                                    {% if user.id == house.user.id %}
+                                                        <td><a class="btn btn-sm btn-primary" href="{% url "bill_add_file"  bill.pk %}">Add Receipt <span class="oi oi-plus"></span></a></td>
+                                                    {% else %}
+                                                        <td>No Receipt</td>
+                                                    {% endif %}
                                                 {% endif %}
                                                 {% if user.id == house.user.id %}
                                                     <td>
@@ -334,7 +338,7 @@
                                     <td>
                                         <form method='post' action="{% url 'house_invite_remove' house.pk invite.id %}">
                                             {% csrf_token %}
-                                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                                            <button type="submit" class="btn btn-sm btn-danger"><span class="oi oi-ban"></span> Remove</button>
                                         </form>
                                     </td>
                                     <td><span class="badge badge-warning">Pending</span></td>

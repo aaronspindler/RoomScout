@@ -4,6 +4,7 @@ from django.urls import reverse
 
 from bills.models import BillSet, Bill
 from houses.models import House
+from utils.models import BillFile
 
 
 class BillsViewsTests(TestCase):
@@ -31,7 +32,7 @@ class BillsViewsTests(TestCase):
 		self.bill = Bill.objects.create(set=self.billset, user=self.user, type='ELEC', date='2019-11-04', amount=299.99)
 	
 	def test_bill_delete_view_get(self):
-		print('Testing bills.views.bill_delete(pk) GET')
+		print('Testing bills.views.bill_delete() GET')
 		self.client.force_login(self.user)
 		bill_pre_count = Bill.objects.count()
 		billset_pre_count = BillSet.objects.count()
@@ -46,7 +47,7 @@ class BillsViewsTests(TestCase):
 		self.assertEqual(billset_post_count, billset_pre_count)
 	
 	def test_bill_delete_view_get_not_logged_in(self):
-		print('Testing bills.views.bill_delete(pk) GET not logged in')
+		print('Testing bills.views.bill_delete() GET not logged in')
 		self.client.logout()
 		bill_pre_count = Bill.objects.count()
 		billset_pre_count = BillSet.objects.count()
@@ -61,7 +62,7 @@ class BillsViewsTests(TestCase):
 		self.assertEqual(billset_post_count, billset_pre_count)
 	
 	def test_bill_delete_view_get_wrong_user(self):
-		print('Testing bills.views.bill_delete(pk) GET wrong user')
+		print('Testing bills.views.bill_delete() GET wrong user')
 		self.client.force_login(self.user2)
 		bill_pre_count = Bill.objects.count()
 		billset_pre_count = BillSet.objects.count()
@@ -76,7 +77,7 @@ class BillsViewsTests(TestCase):
 		self.assertEqual(billset_post_count, billset_pre_count)
 	
 	def test_bill_delete_view_post(self):
-		print('Testing bills.views.bill_delete(pk) POST')
+		print('Testing bills.views.bill_delete() POST')
 		self.client.force_login(self.user)
 		self.bill2 = Bill.objects.create(set=self.billset, user=self.user, type='WATER', date='2019-11-04', amount=500.99)
 		bill_pre_count = Bill.objects.count()
@@ -92,7 +93,7 @@ class BillsViewsTests(TestCase):
 		self.assertEqual(billset_post_count, billset_pre_count)
 	
 	def test_bill_delete_view_post_remove_empty_set(self):
-		print('Testing bills.views.bill_delete(pk) POST also remove empty billset')
+		print('Testing bills.views.bill_delete() POST also remove empty billset')
 		self.client.force_login(self.user)
 		bill_pre_count = Bill.objects.count()
 		billset_pre_count = BillSet.objects.count()
@@ -107,7 +108,7 @@ class BillsViewsTests(TestCase):
 		self.assertLess(billset_post_count, billset_pre_count)
 	
 	def test_bill_delete_view_post_not_logged_in(self):
-		print('Testing bills.views.bill_delete(pk) POST not logged in')
+		print('Testing bills.views.bill_delete() POST not logged in')
 		self.client.logout()
 		bill_pre_count = Bill.objects.count()
 		billset_pre_count = BillSet.objects.count()
@@ -122,7 +123,7 @@ class BillsViewsTests(TestCase):
 		self.assertEqual(billset_post_count, billset_pre_count)
 	
 	def test_bill_delete_view_post_wrong_user(self):
-		print('Testing bills.views.bill_delete(pk) POST wrong user')
+		print('Testing bills.views.bill_delete() POST wrong user')
 		self.client.force_login(self.user2)
 		bill_pre_count = Bill.objects.count()
 		billset_pre_count = BillSet.objects.count()
@@ -135,3 +136,42 @@ class BillsViewsTests(TestCase):
 		self.assertNotContains(response, 'Login')
 		self.assertEqual(bill_post_count, bill_pre_count)
 		self.assertEqual(billset_post_count, billset_pre_count)
+
+	def test_bill_add_file_get(self):
+		print('Testing bills.views.bill_add_file() GET')
+		self.client.force_login(self.user)
+		billfile_pre_count = BillFile.objects.count()
+		response = self.client.get(reverse('bill_add_file', kwargs={'pk': self.bill.id}, ), follow=True)
+		billfile_post_count = BillFile.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'bills/bill_add_file.html')
+		self.assertContains(response, self.bill.set.house)
+		self.assertNotContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertEqual(billfile_post_count, billfile_pre_count)
+
+	def test_bill_add_file_get_not_logged_in(self):
+		print('Testing bills.views.bill_add_file() GET not logged in')
+		self.client.logout()
+		billfile_pre_count = BillFile.objects.count()
+		response = self.client.get(reverse('bill_add_file', kwargs={'pk': self.bill.id}, ), follow=True)
+		billfile_post_count = BillFile.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'account/login.html')
+		self.assertNotContains(response, self.bill.set.house)
+		self.assertNotContains(response, '404')
+		self.assertContains(response, 'Login')
+		self.assertEqual(billfile_post_count, billfile_pre_count)
+
+	def test_bill_add_file_get_wrong_user(self):
+		print('Testing bills.views.bill_add_file() GET wrong user')
+		self.client.force_login(self.user2)
+		billfile_pre_count = BillFile.objects.count()
+		response = self.client.get(reverse('bill_add_file', kwargs={'pk': self.bill.id}, ), follow=True)
+		billfile_post_count = BillFile.objects.count()
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'main/404.html')
+		self.assertNotContains(response, self.bill.set.house)
+		self.assertContains(response, '404')
+		self.assertNotContains(response, 'Login')
+		self.assertEqual(billfile_post_count, billfile_pre_count)

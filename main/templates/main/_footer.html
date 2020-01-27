@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-12 col-md">
             <img class="img-fluid" src="{% static 'logos/logo.PNG' %}" width="45" height="45">
-            <small class="d-block mb-3 text-muted">&copy; 2019</small>
+            <small class="d-block mb-3 text-muted">&copy; {% now "Y" %}</small>
         </div>
         <div class="col-6 col-md">
             <h5>Features</h5>
@@ -27,6 +27,7 @@
                 <li><a class="text-muted" href="{% url 'contactus' %}">Contact Us</a></li>
                 <li><a class="text-muted" href="{% url 'privacypolicy' %}">Privacy Policy</a></li>
                 <li><a class="text-muted" href="{% url 'termsofuse' %}">Terms of Use</a></li>
+                <li><a class="text-muted" href="https://stats.uptimerobot.com/VJPG3SxpY2">Uptime</a></li>
             </ul>
         </div>
         <div class="col-6 col-md">

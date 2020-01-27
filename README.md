@@ -1,4 +1,6 @@
 # RoomScout
+![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m784203990-c834dc98966ff65040c545a5)
+
 RoomScout is a one stop shop for finding and managing roommates
 
 

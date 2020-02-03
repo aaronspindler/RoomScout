@@ -12,7 +12,8 @@
 4. Start django local server using ``` python manage.py runserver```
 
 ## Environment Variables
-Settings for the application are now loaded from environment variables even in development environment
+Settings for the application are now loaded from environment variables even in development environment, you can also use a local_settings.py file to load settings easier.
+An example of this file format is in __Resources__ folder
 ```
 SECRET_KEY : Required
 GOOGLE_API_KEY : Optional for google maps

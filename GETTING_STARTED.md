@@ -85,3 +85,9 @@ STRIPE_SECRET_KEY : Optional for stripe transactions
     All feature branches should make pull requests into dev and then once approved the dev branch will be merged to master. 
 **Don't make a pull request to the master branch, use dev branch**
 
+# Creating a Pull Request 
+- After you are done make your contributions on your local branch, then git commit and git push `that branch` to your github repository. 
+
+- After you have pushed from your local to github, open your web browser and go to the forked RoomScout repo on your account. 
+
+- At the top of the forked repo, you should see a notice asking you to create a pull request, click the `pull request` button and choose the `dev` branch to merge with your newly pushed feature branch. (Default branch will be master, so you need to change it to dev)

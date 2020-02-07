@@ -5,7 +5,7 @@ This guide is to help you setup RoomScout locally on your computer without hassl
 ## Prerequisites
 To work with RoomScout you need to have some few prerequisites.
 
-- Python3+
+- Python3
 
 - pip
 
@@ -85,6 +85,7 @@ STRIPE_SECRET_KEY : Optional for stripe transactions
     All feature branches should make pull requests into dev and then once approved the dev branch will be merged to master. 
 **Don't make a pull request to the master branch, use dev branch**
 
+
 # Creating a Pull Request 
 - After you are done make your contributions on your local branch, then git commit and git push `that branch` to your github repository. 
 
@@ -94,6 +95,7 @@ STRIPE_SECRET_KEY : Optional for stripe transactions
 
 # Getting Approved!
 After creating a pull request, the maintainers will be notified and they will review your codes and merge it with the dev branch. 
+
 
 ## Testing
 All code that is pushed should have tests included for it, if tests are not present it is something that can be done by anyone

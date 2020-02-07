@@ -1,32 +1,32 @@
 import os
 import sys
 import dj_database_url
+from decouple import config,Csv
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Security
-SECRET_KEY = os.environ['SECRET_KEY']
-DEBUG = False
-ALLOWED_HOSTS = ['roomscout.ca', 'www.roomscout.ca', 'roomscout.herokuapp.com', 'roomscout-dev.herokuapp.com']
+SECRET_KEY = '87(hlkw)=3(eb_$0+d%4)6-r9wpx%%ac9k()7sv4=$0_9pg&'
+DEBUG = True
+ALLOWED_HOSTS = '*'
 
-# Stripe
-STRIPE_KEY = os.environ['STRIPE_KEY']
-STRIPE_SECRET_KEY = os.environ['STRIPE_SECRET_KEY']
+# API Credentials
+GOOGLE_API_KEY = ''
 
-# Google
-GOOGLE_API_KEY = os.environ['GOOGLE_API_KEY']
-RECAPTCHA_PUBLIC_KEY = os.environ['RECAPTCHA_PUBLIC_KEY']
-RECAPTCHA_PRIVATE_KEY = os.environ['RECAPTCHA_PRIVATE_KEY']
-RECAPTCHA_USE_SSL = True
-ACCOUNT_SIGNUP_FORM_CLASS = 'accounts.forms.AllauthSignupForm'
+RECAPTCHA_PUBLIC_KEY = ''
+RECAPTCHA_PRIVATE_KEY = ''
 
-# Walk Score
-WALK_SCORE_API = os.environ['WALK_SCORE_API']
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
+WALK_SCORE_API = ''
 
-# AWS
-AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-AWS_DEFAULT_ACL = None
+STRIPE_KEY = ''
+STRIPE_SECRET_KEY = ''
+
+# Email
+EMAIL_HOST = ''
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 
 # AWS S3
 AWS_PUBLIC_MEDIA_LOCATION = ''
@@ -71,13 +71,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Email
-DEFAULT_FROM_EMAIL = 'services@roomscout.ca'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.environ['EMAIL_HOST']
-EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
-EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+
 
 # Apps
 INSTALLED_APPS = [
@@ -145,9 +139,25 @@ WSGI_APPLICATION = 'Roomscout.wsgi.application'
 ROOT_URLCONF = 'Roomscout.urls'
 SITE_ID = 1
 
-DATABASES = {
-    'default': dj_database_url.config()
-}
+if config('MODE')=="dev":
+   DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.postgresql_psycopg2',
+           'NAME': config('DB_NAME'),
+           'USER': config('DB_USER'),
+           'PASSWORD': config('DB_PASSWORD'),
+           'HOST': config('DB_HOST'),
+           'PORT': '',
+       }
+
+   }
+# production
+else:
+   DATABASES = {
+       'default': dj_database_url.config(
+           default=config('DATABASE_URL')
+       )
+   }
 
 LANGUAGE_CODE = 'en-us'
 
@@ -171,15 +181,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 # Security
-SECURE_BROWSER_XSS_FILTER = True
-X_FRAME_OPTIONS = 'DENY'
-SECURE_SSL_REDIRECT = True
-SECURE_HSTS_SECONDS = 314536000
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+# SECURE_BROWSER_XSS_FILTER = True
+# X_FRAME_OPTIONS = 'DENY'
+# SECURE_SSL_REDIRECT = False
+# SECURE_HSTS_SECONDS = 314536000
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
+# SECURE_CONTENT_TYPE_NOSNIFF = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 try:
     from .local_settings import *

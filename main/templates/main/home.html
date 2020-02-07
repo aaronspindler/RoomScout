@@ -10,83 +10,90 @@
 {% endblock %}
 
 {% block content %}
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-            <li data-target="#myCarousel" data-slide-to="3"></li>
-        </ol>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <svg class="bd-placeholder-img" width="100%" height="300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false"
-                     role="img">
-                    <rect width="100%" height="100%" fill="#7472DF"></rect>
-                </svg>
-                <div class="container">
-                    <div class="carousel-caption text-left">
-                        <h1>Find the perfect roommate!</h1>
-                        <p>Roomscout helps you find the perfect roommate</p>
-                        {% if user.is_authenticated %}
-                            <p><a class="btn btn-lg btn-primary" href="{% url 'room_create' %}" role="button">Post your
-                                room now!</a></p>
-                        {% else %}
-                            <p><a class="btn btn-lg btn-primary" href="{% url 'account_signup' %}" role="button">Sign up
-                                today!</a>
-                            </p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <svg class="bd-placeholder-img" width="100%" height="300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false"
-                     role="img">
-                    <rect width="100%" height="100%" fill="#5EDDAA"></rect>
-                </svg>
-                <div class="container">
-                    <div class="carousel-caption">
-                        <h1>Find The Perfect Room</h1>
-                        <p>Find the perfect place to live and the best roommates to live with!</p>
-                        <p><a class="btn btn-lg btn-primary" href="{% url 'room_list' %}" role="button">Search Now!</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <svg class="bd-placeholder-img" width="100%" height="300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false"
-                     role="img">
-                    <rect width="100%" height="100%" fill="#65A5DA"></rect>
-                </svg>
-                <div class="container">
-                    <div class="carousel-caption text-right">
-                        <h1>Manage Bills</h1>
-                        <p>Manage household utility bills, splitting of bills, and gain insight into your future bills</p>
-                        <p><a class="btn btn-lg btn-primary" href="{% url 'billfeatures' %}" role="button">See it in action!</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <svg class="bd-placeholder-img" width="100%" height="300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false"
-                     role="img">
-                    <rect width="100%" height="100%" fill="#7472DF"></rect>
-                </svg>
-                <div class="container">
-                    <div class="carousel-caption text-left">
-                        <h1>Verify and Vet Prospective Roommates</h1>
+     <!--Carousel Wrapper-->
+<div id="myCarousel" class="carousel slide carousel-fade" data-ride="carousel">
+    <!--Indicators-->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+      <li data-target="#myCarousel" data-slide-to="3"></li>
+    </ol>
+    <!--/.Indicators-->
+    <!--Slides-->
+    <div class="carousel-inner" role="listbox">
+      <div class="carousel-item active">
+        <div class="view">
+          <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(68).jpg"
+            alt="First slide">
+          <div class="mask rgba-black-light"></div>
+        </div>
+        <div class="carousel-caption flex-center">
+            <h1>Find the perfect roommate!</h1>
+            <p>Roomscout helps you find the perfect roommate</p>
+            {% if user.is_authenticated %}
+                <p><a class="btn btn-lg btn-primary" href="{% url 'room_create' %}" role="button">Post your
+                    room now!</a></p>
+            {% else %}
+                <p><a class="btn btn-lg btn-primary" href="{% url 'account_signup' %}" role="button">Sign up
+                    today!</a>
+                </p>
+            {% endif %}
+        </div>
+      </div>
+      <div class="carousel-item">
+        <!--Mask color-->
+        <div class="view">
+          <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(6).jpg"
+            alt="Second slide">
+          <div class="mask rgba-black-strong"></div>
+        </div>
+        <div class="carousel-caption">
+            <h1>Find The Perfect Room</h1>
+            <p>Find the perfect place to live and the best roommates to live with!</p>
+            <p><a class="btn btn-lg btn-primary" href="{% url 'room_list' %}" role="button">Search Now!</a></p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <!--Mask color-->
+        <div class="view">
+          <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(9).jpg"
+            alt="Third slide">
+          <div class="mask rgba-black-slight"></div>
+        </div>
+        <div class="carousel-caption">
+            <h1>Manage Bills</h1>
+            <p>Manage household utility bills, splitting of bills, and gain insight into your future bills</p>
+            <p><a class="btn btn-lg btn-primary" href="{% url 'billfeatures' %}" role="button">See it in action!</a></p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <!--Mask color-->
+        <div class="view">
+          <img class="d-block w-100" src="https://mdbootstrap.com/img/Photos/Slides/img%20(9).jpg"
+            alt="Third slide">
+          <div class="mask rgba-black-slight"></div>
+        </div>
+        <div class="carousel-caption">
+            <h1>Verify and Vet Prospective Roommates</h1>
                         <p>Using advanced technology RoomScout allows you to vet prospective roommates based on more than just their credit score</p>
                         <p><a class="btn btn-lg btn-primary" href="{% url 'verificationfeatures' %}" role="button">Learn More!</a></p>
-                    </div>
-                </div>
-            </div>
         </div>
-        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
+      </div>
     </div>
+    <!--/.Slides-->
+    <!--Controls-->
+    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+    <!--/.Controls-->
+  </div>
+  <!--/.Carousel Wrapper-->
     <br>
 
 

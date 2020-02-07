@@ -128,37 +128,41 @@
     <!-- Marketing messaging and featurettes
     ================================================== -->
     <!-- Wrap the rest of the page in another container to center all the content. -->
-    <div class="container marketing">
+    <div class="container-fluid marketing">
         <!-- START THE FEATURETTES -->
-        <div class="row featurette">
+        <div class="row featurette pl-4 ml-4 pb-4 mb-4 pt-4 mt-4 mr-4">
             <div class="col-md-7">
                 <h2 class="featurette-heading">Looking for someone to move in?<span class="text-muted"> Post your room now</span></h2>
                 <p class="lead">If you are looking for a roommate to live in your house or someone to split an apartment
                     with. Look no further, post your available room on RoomScout</p>
-                <a class="btn btn-primary" href="{% url 'room_create' %}">Post Now</a>
+                <a class="btn btn-lg btn-primary" href="{% url 'room_create' %}">Post Now</a>
             </div>
             <div class="col-md-5">
-                <img class="img-fluid" src="{% static 'stock_photos/tenant_2.jpg' %}" width=400/>
+                <img class="img-fluid pt-2" src="{% static 'stock_photos/tenant_2.jpg' %}" width=400/>
             </div>
         </div>
+    </div>
 
-        <hr class="featurette-divider">
+    <div class="container-fluid text-white bg-primary">
 
-        <div class="row featurette">
-            <div class="col-md-7 order-md-2">
-                <h2 class="featurette-heading">Looking for a place to live?<span class="text-muted"> Find the perfect room!</span>
+        <div class="row featurette pl-4 ml-4 pb-4 mb-4 pt-4 mt-4 mr-4">
+                <div class="col-md-5">
+                    <img class="img-fluid" src="{% static 'stock_photos/bedroom_2.jpg' %}" width=400/>
+                </div>
+
+            <div class="col-md-7">
+                <h2 class="featurette-heading">Looking for a place to live?<span class="text-warning"> Find the perfect room!</span>
                 </h2>
                 <p class="lead">Are you looking for the perfect place to live but are not ready to live alone? Find the
                     perfect place by search rooms on RoomScout</p>
-                <a class="btn btn-primary" href="{% url 'room_list' %}">Start your search</a>
+                <a class="btn btn-lg btn-elegant waves-effect" href="{% url 'room_list' %}">Start your search</a>
             </div>
-            <div class="col-md-5 order-md-1">
-                <img class="img-fluid" src="{% static 'stock_photos/bedroom_2.jpg' %}" width=400/></div>
+            
         </div>
+    </div>
+    <div class="container-fluid">
 
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
+        <div class="row featurette pl-4 ml-4 pb-4 mb-4 pt-4 mt-4 mr-4">
             <div class="col-md-7">
                 <h2 class="featurette-heading">And lastly, <span class="text-muted"> take the headache out of managing shared expenses</span>
                 </h2>

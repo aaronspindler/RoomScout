@@ -56,10 +56,18 @@
             alt="Second slide">
           <div class="mask rgba-black-strong"></div>
         </div>
-        <div class="carousel-caption">
-            <h1>Find The Perfect Room</h1>
-            <p>Find the perfect place to live and the best roommates to live with!</p>
-            <p><a class="btn btn-lg btn-primary" href="{% url 'room_list' %}" role="button">Search Now!</a></p>
+        <div class="carousel-caption flex-center">
+            <ul class="animated fadeInUp col-md-12 list-unstyled list-inline">
+                <li>
+                    <h1 class="font-weight-bold text-uppercase">Find The Perfect Room</h1>
+                </li>
+                <li>
+                    <p class="font-weight-bold text-uppercase py-4">Find the perfect place to live and the best roommates to live with!</p>
+                </li>
+                <li class="list-inline-item">
+                    <p><a class="btn btn-lg btn-primary" href="{% url 'room_list' %}" role="button">Search Now!</a>
+                </li>
+            </ul>
         </div>
       </div>
       <div class="carousel-item">

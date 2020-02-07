@@ -6,28 +6,27 @@ from decouple import config,Csv
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Security
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = '87(hlkw)=3(eb_$0+d%4)6-r9wpx%%ac9k()7sv4=$0_9pg&'
 DEBUG = True
 ALLOWED_HOSTS = '*'
 
-# Stripe
-STRIPE_KEY = os.environ['STRIPE_KEY']
-STRIPE_SECRET_KEY = os.environ['STRIPE_SECRET_KEY']
+# API Credentials
+GOOGLE_API_KEY = ''
 
-# Google
-GOOGLE_API_KEY = os.environ['GOOGLE_API_KEY']
-RECAPTCHA_PUBLIC_KEY = os.environ['RECAPTCHA_PUBLIC_KEY']
-RECAPTCHA_PRIVATE_KEY = os.environ['RECAPTCHA_PRIVATE_KEY']
-RECAPTCHA_USE_SSL = False
-ACCOUNT_SIGNUP_FORM_CLASS = 'accounts.forms.AllauthSignupForm'
+RECAPTCHA_PUBLIC_KEY = ''
+RECAPTCHA_PRIVATE_KEY = ''
 
-# Walk Score
-WALK_SCORE_API = os.environ['WALK_SCORE_API']
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
+WALK_SCORE_API = ''
 
-# AWS
-AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-AWS_DEFAULT_ACL = None
+STRIPE_KEY = ''
+STRIPE_SECRET_KEY = ''
+
+# Email
+EMAIL_HOST = ''
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 
 # AWS S3
 AWS_PUBLIC_MEDIA_LOCATION = ''
@@ -72,13 +71,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Email
-DEFAULT_FROM_EMAIL = 'services@roomscout.ca'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.environ['EMAIL_HOST']
-EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
-EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+
 
 # Apps
 INSTALLED_APPS = [

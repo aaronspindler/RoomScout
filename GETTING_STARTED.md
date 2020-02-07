@@ -65,3 +65,23 @@ EMAIL_HOST_PASSWORD : Optional for email
 STRIPE_KEY : Optional for stripe transactions
 STRIPE_SECRET_KEY : Optional for stripe transactions
 ```
+
+# Contributing
+- If you would like to contribute to Roomscout.ca, please take a look at the [current issues](https://github.com/xNovax/RoomScout/issues). If there is a bug or feature that you want but it isn't listed, make an issue and work on it.
+
+- For you to contribute, you need to create a branch on your computer from the `master` branch and checkout into this branch. This feature branch is where you will write your own codes and modify the application. 
+
+
+## Branches
+#### Master
+    https://roomscout.ca
+    Deploys directly to production upon commit
+#### Dev
+    https://roomscout-dev.herokuapp.com
+    Deploys directly to development server
+
+#### All Other
+    Any other branch should be a feature branch
+    All feature branches should make pull requests into dev and then once approved the dev branch will be merged to master. 
+**Don't make a pull request to the master branch, use dev branch**
+

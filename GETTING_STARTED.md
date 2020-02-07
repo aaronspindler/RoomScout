@@ -91,3 +91,6 @@ STRIPE_SECRET_KEY : Optional for stripe transactions
 - After you have pushed from your local to github, open your web browser and go to the forked RoomScout repo on your account. 
 
 - At the top of the forked repo, you should see a notice asking you to create a pull request, click the `pull request` button and choose the `dev` branch to merge with your newly pushed feature branch. (Default branch will be master, so you need to change it to dev)
+
+# Getting Approved!
+After creating a pull request, the maintainers will be notified and they will review your codes and merge it with the dev branch. 

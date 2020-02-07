@@ -29,16 +29,24 @@
           <div class="mask rgba-black-light"></div>
         </div>
         <div class="carousel-caption flex-center">
-            <h1>Find the perfect roommate!</h1>
-            <p>Roomscout helps you find the perfect roommate</p>
-            {% if user.is_authenticated %}
-                <p><a class="btn btn-lg btn-primary" href="{% url 'room_create' %}" role="button">Post your
-                    room now!</a></p>
-            {% else %}
-                <p><a class="btn btn-lg btn-primary" href="{% url 'account_signup' %}" role="button">Sign up
-                    today!</a>
-                </p>
-            {% endif %}
+            <ul class="animated fadeInUp col-md-12 list-unstyled list-inline">
+                <li>
+                  <h1 class="font-weight-bold text-uppercase">Find the perfect roommate!</h1>
+                </li>
+                <li>
+                  <p class="font-weight-bold text-uppercase py-4">Roomscout helps you find the perfect roommate</p>
+                </li>
+                <li class="list-inline-item">
+                    {% if user.is_authenticated %}
+                    <p><a class="btn btn-lg btn-primary" href="{% url 'room_create' %}" role="button">Post your
+                        room now!</a></p>
+                {% else %}
+                    <p><a class="btn btn-lg btn-primary" href="{% url 'account_signup' %}" role="button">Sign up
+                        today!</a>
+                    </p>
+                {% endif %}
+                </li>
+              </ul>
         </div>
       </div>
       <div class="carousel-item">

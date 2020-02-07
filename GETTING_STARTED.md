@@ -43,3 +43,25 @@ run:
 
 - At this point you should get some errors caused by environment variables not set. To fix this, you need to modify your settings.py file for local server development. 
 - Also, you need to setup a local Database (e.g, PostgreSql) that will work for the App locally.
+
+
+## Environment Variables and Settings
+- For the environment variables, you need to edit the settings file and remove the `os.environ` part and replace it with some values for the secret key and/or enter empty strings for the other optional variables. 
+
+- You can also use a local_settings.py file to load settings easier.
+An example of this file format is in __Resources__ folder. Check the resource folder for a sample settings file that you can copy and use. 
+
+```
+SECRET_KEY : Required
+GOOGLE_API_KEY : Optional for google maps
+RECAPTCHA_PUBLIC_KEY : Optional for captcha
+RECAPTCHA_PRIVATE_KEY : Optional for captcha
+AWS_ACCESS_KEY_ID : Optional for S3 Storage and Rekognition
+AWS_SECRET_ACCESS_KEY : Optional for S3 Storage and Rekognition
+WALK_SCORE_API : Optional for Walk Score
+EMAIL_HOST : Optional for email
+EMAIL_HOST_USER : Optional for email
+EMAIL_HOST_PASSWORD : Optional for email
+STRIPE_KEY : Optional for stripe transactions
+STRIPE_SECRET_KEY : Optional for stripe transactions
+```

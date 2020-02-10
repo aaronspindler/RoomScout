@@ -1,5 +1,5 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg navbar-dark indigo fixed-top text-white">
+<nav class="navbar navbar-expand-lg navbar-dark indigo fixed-top text-white font-weight-bold">
     
     <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'logos/logo.PNG' %}" height=35 width=35> RoomScout</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
@@ -27,9 +27,10 @@
             <a class="btn btn-outline-white mx-2" href="{% url 'account_login' %}">Log In <span class="oi oi-account-login"></span></a>
             <a class="btn btn-outline-white mx-2" href="{% url 'account_signup' %}">Sign up</a>
         {% else %}
-            <a class="p-2 text-dark nav-item nav-link" href="{% url 'main_dashboard' %}">Dashboard <span class="oi oi-home"></span></a>
-            <a class="p-2 text-dark nav-item nav-link" href="{% url 'settings' %}">Settings <span class="oi oi-cog"></span></a>
-            <small>Logged in as : {{ user }} {% if user.is_premium_member %}<a href="#" class="badge badge-warning">Premium</a>{% endif %} <a href="{% url 'account_logout' %}"> Logout</a></small>
+            <a class="p-2 text-white nav-item nav-link" href="{% url 'main_dashboard' %}">Dashboard <span class="oi oi-home"></span></a>
+            <a class="p-2  text-white nav-item nav-link" href="{% url 'settings' %}">Settings <span class="oi oi-cog"></span></a>
+            <small>Logged in as : {{ user }} {% if user.is_premium_member %}<a href="#" class="badge badge-warning">Premium</a>{% endif %} 
+                <a class="text-white" href="{% url 'account_logout' %}"> Logout</a></small>
         {% endif %}
     </div>
 </nav>

@@ -15,12 +15,6 @@ from houses.models import House
 from rooms.models import Room
 
 
-class IP(models.Model):
-	user = models.ForeignKey(User, on_delete=models.PROTECT)
-	created = models.DateTimeField(auto_now=True)
-	ip_address = models.GenericIPAddressField()
-
-
 class PublicImage(models.Model):
 	uploaded_at = models.DateTimeField(auto_now_add=True)
 	is_approved = models.BooleanField(default=False)

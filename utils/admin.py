@@ -1,10 +1,6 @@
 from django.contrib import admin
 
-from .models import IP, RoomImage, HouseImage, BillFile, PhoneNumberVerification
-
-
-class IPAdmin(admin.ModelAdmin):
-    list_display = ('user', 'ip_address', 'created')
+from .models import RoomImage, HouseImage, BillFile, PhoneNumberVerification
 
 
 class RoomImageAdmin(admin.ModelAdmin):
@@ -23,7 +19,6 @@ class PhoneNumberVerificationAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(IP, IPAdmin)
 admin.site.register(RoomImage, RoomImageAdmin)
 admin.site.register(HouseImage, HouseImageAdmin)
 admin.site.register(BillFile, BillFileAdmin)

@@ -10,11 +10,10 @@
     <meta name="keywords" content="">
     <meta name="author" content="Aaron Spindler">
     <link rel="shortcut icon" type="image/png" href="{% static 'logos/favicon.PNG' %}"/>
-    <link rel="stylesheet" href="{% static 'css/main.css' %}" media="screen" />
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" media="screen"/>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="{% static 'open-iconic/font/css/open-iconic-bootstrap.css' %}" rel="stylesheet">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -27,10 +26,8 @@
         }
 
         gtag('js', new Date());
-
         gtag('config', 'UA-100881995-5');
     </script>
-
 </head>
 
 <body>
@@ -58,6 +55,30 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/fingerprintjs2/dist/fingerprint2.min.js"></script>
+    <script>
+        if (window.requestIdleCallback) {
+            requestIdleCallback(function () {
+                Fingerprint2.get(function (components) {
+                    console.log(components) // an array of components: {key: ..., value: ...}
+                    var values = components.map(function (component) { return component.value })
+                    var murmur = Fingerprint2.x64hash128(values.join(''), 31)
+                    console.log(murmur)
+                })
+            })
+        } else {
+            setTimeout(function () {
+                Fingerprint2.get(function (components) {
+                    console.log(components) // an array of components: {key: ..., value: ...}
+                    var values = components.map(function (component) { return component.value })
+                    var murmur = Fingerprint2.x64hash128(values.join(''), 31)
+                    console.log(murmur)
+                })
+            }, 500)
+        }
+    </script>
+
     {% block content %}
 
     {% endblock %}

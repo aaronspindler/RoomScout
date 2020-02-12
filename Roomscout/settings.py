@@ -112,6 +112,7 @@ INSTALLED_APPS = [
     'payments',
     'garbageday',
     'eggs',
+    'security',
 ]
 
 MIDDLEWARE = [

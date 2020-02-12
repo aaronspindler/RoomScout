@@ -6,7 +6,7 @@ from django.conf import settings
 from bills.forms import BillFormset
 from utils.captcha import Captcha
 from emails.senders import send_contact_us_email
-from utils.ipaddress import get_IP
+from security.helpers import get_IP
 from .models import ContactMessage
 
 

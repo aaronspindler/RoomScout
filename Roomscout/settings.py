@@ -7,7 +7,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Security
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = False
-ALLOWED_HOSTS = ['roomscout.ca', 'www.roomscout.ca', 'roomscout.herokuapp.com', 'roomscout-dev.herokuapp.com']
+ALLOWED_HOSTS = ['.roomscout.ca', 'roomscout.herokuapp.com', 'roomscout-dev.herokuapp.com', '.herokuapp.com']
 
 # Stripe
 STRIPE_KEY = os.getenv('STRIPE_KEY')

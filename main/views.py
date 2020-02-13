@@ -34,8 +34,6 @@ def contactus(request):
 		message.message = request.POST['message']
 		message.ip = ip
 		message.save()
-
-
 		messages.success(request, 'We have received your contact request and will get back to you as soon as possible!')
 		return redirect('home')
 	return render(request, 'main/contactus.html', {'captcha': captcha})

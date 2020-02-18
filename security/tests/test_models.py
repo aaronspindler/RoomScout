@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 
-
+# TODO: Write tests for security models
 class SecurityModelTests(TestCase):
 	def setUp(self):
 		self.client = Client()

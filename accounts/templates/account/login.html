@@ -6,20 +6,30 @@
 {% endblock %}
 
 {% block content %}
-    {% if error %}
-        <div class="bg-danger text-center">
-            <p>{{ error }}</p>
+<div class="row container-fluid pt-4">
+    
+        <div class="col-lg-3"></div>
+    
+        <div class="col-lg-6">
+            {% if error %}
+            <div class="bg-danger text-center">
+                <p>{{ error }}</p>
+            </div>
+            {% endif %}
+            <div class="container">
+                <div class="row">
+                    <h2 class="h2">Login</h2>
+                </div>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <a href="{% url 'account_reset_password' %}"><small>Forgot your password?</small></a>
+                </form>
+            </div>
         </div>
-    {% endif %}
-    <div class="container">
-        <div class="row">
-            <h2>Login</h2>
-        </div>
-        <form method="post">
-            {% csrf_token %}
-            {{ form | crispy }}
-            <button type="submit" class="btn btn-primary">Login</button>
-            <a href="{% url 'account_reset_password' %}"><small>Forgot your password?</small></a>
-        </form>
+    
+        <div class="col-lg-3"></div>
     </div>
+
 {% endblock %}

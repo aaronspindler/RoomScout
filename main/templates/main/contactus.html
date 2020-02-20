@@ -6,18 +6,29 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h2>Contact Us</h2>
-        <form method="POST">
-            {% csrf_token %}
-            {{ captcha }}
-            <input class="form-control" type="email" name="sender_email" placeholder="Your email" required>
-            <br>
-            <input class="form-control" type="text" name="subject" placeholder="Subject" required>
-            <br>
-            <textarea class="form-control" rows="10" placeholder="Message: Maybe you want to talk to us about the weather or something you think we should add?" name="message" required></textarea>
-            <br>
-            <button class="btn btn-primary" type='submit'>Send</button>
-        </form>
-    </div>
+<div class="row container-fluid">
+    
+    <div class="col-lg-2"></div>
+    
+        <div class="col-lg-7">
+            <div class="container">
+                <h2 class="h2">Contact Us</h2>
+                <hr>
+                <form method="POST">
+                        {% csrf_token %}
+                        {{ captcha }}
+                        <input class="form-control" type="email" name="sender_email" placeholder="Your email" required>
+                        <br>
+                        <input class="form-control" type="text" name="subject" placeholder="Subject" required>
+                        <br>
+                        <textarea class="form-control" rows="10" placeholder="Message: Maybe you want to talk to us about the weather or something you think we should add?" name="message" required></textarea>
+                        <br>
+                        <button class="btn btn-primary" type='submit'>Send</button>
+                    </form>
+            </div>
+        </div>
+    
+    <div class="col-lg-3"></div>
+</div>
+    
 {% endblock %}

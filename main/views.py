@@ -6,8 +6,9 @@ from django.conf import settings
 from bills.forms import BillFormset
 from utils.captcha import Captcha
 from emails.senders import send_contact_us_email
-from utils.ipaddress import get_IP
+from security.helpers import get_IP
 from .models import ContactMessage
+from security.models import IP
 
 
 def home(request):
@@ -21,7 +22,11 @@ def about(request):
 def contactus(request):
 	captcha = Captcha()
 	if request.method == 'POST':
-		ip = get_IP(request)
+		ip_address = get_IP(request)
+		ip = IP()
+		ip.address = ip_address
+		ip.save()
+
 		send_contact_us_email(request.POST['sender_email'], request.POST['subject'], request.POST['message'], ip)
 		message = ContactMessage()
 		message.sender = request.POST['sender_email']
@@ -29,7 +34,6 @@ def contactus(request):
 		message.message = request.POST['message']
 		message.ip = ip
 		message.save()
-
 		messages.success(request, 'We have received your contact request and will get back to you as soon as possible!')
 		return redirect('home')
 	return render(request, 'main/contactus.html', {'captcha': captcha})

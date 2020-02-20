@@ -10,6 +10,8 @@
     <meta name="keywords" content="">
     <meta name="author" content="Aaron Spindler">
     <link rel="shortcut icon" type="image/png" href="{% static 'logos/favicon.PNG' %}"/>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" media="screen"/>
+
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -33,10 +35,8 @@
         }
 
         gtag('js', new Date());
-
         gtag('config', 'UA-100881995-5');
     </script>
-
 </head>
 
 <body>
@@ -61,7 +61,7 @@
         </div>
     {% else %}
     {% endif %}
-    
+
     <!-- JQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- Bootstrap tooltips -->
@@ -70,6 +70,50 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.10.0/js/mdb.min.js"></script>
+
+  
+    <script src="https://cdn.jsdelivr.net/npm/fingerprintjs2/dist/fingerprint2.min.js"></script>
+    <script>
+        if (window.requestIdleCallback) {
+            requestIdleCallback(function () {
+                Fingerprint2.get(function (components) {
+                    const values = components.map(function (component) {
+                        return component.value
+                    })
+                    const murmur = Fingerprint2.x64hash128(values.join(''), 31)
+                    $.ajax({
+                        type: "POST",
+                        url: "{% url 'security_fingerprint_save' %}",
+                        headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                        data: {
+                            'murmur': murmur
+                        },
+                        success: function () {
+                        }
+                    });
+                })
+            })
+        } else {
+            setTimeout(function () {
+                Fingerprint2.get(function (components) {
+                    const values = components.map(function (component) {
+                        return component.value
+                    })
+                    const murmur = Fingerprint2.x64hash128(values.join(''), 31)
+                    $.ajax({
+                        type: "POST",
+                        url: "{% url 'security_fingerprint_save' %}",
+                        headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                        data: {
+                            'murmur': murmur
+                        },
+                        success: function () {
+                        }
+                    });
+                })
+            }, 500)
+        }
+    </script>
 
     {% block content %}
 

@@ -8,14 +8,5 @@
   ],
   "website": "https://roomscout.ca",
   "logo": "https://www.roomscout.ca/static/logos/logo.PNG",
-  "success_url": "/",
-   "environments": {
-     "test": {
-       "addons": ["heroku-postgresql:in-dyno", "heroku-redis:in-dyno"],
-       "scripts": {
-         "test-setup": "python manage.py check --deploy",
-         "test": "python manage.py test --parallel"
-       }
-     }
-   }
+  "success_url": "/"
  }

@@ -5,18 +5,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-	dependencies = [
-		('bills', '0011_auto_20190902_1228'),
-		('utils', '0003_auto_20190902_1228'),
-	]
+    dependencies = [
+        ('bills', '0011_auto_20190902_1228'),
+        ('utils', '0003_auto_20190902_1228'),
+    ]
 
-	operations = [
-		migrations.CreateModel(
-			name='BillFile',
-			fields=[
-				('privatefile_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='utils.PrivateFile')),
-				('bill', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='bills.Bill')),
-			],
-			bases=('utils.privatefile',),
-		),
-	]
+    operations = [
+        migrations.CreateModel(
+            name='BillFile',
+            fields=[
+                ('privatefile_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='utils.PrivateFile')),
+                ('bill', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='bills.Bill')),
+            ],
+            bases=('utils.privatefile',),
+        ),
+    ]

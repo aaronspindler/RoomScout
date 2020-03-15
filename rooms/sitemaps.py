@@ -4,8 +4,8 @@ from .models import Room
 
 
 class RoomSitemap(Sitemap):
-	priority = 0.5
-	changefreq = 'daily'
+    priority = 0.5
+    changefreq = 'daily'
 
-	def items(self):
-		return Room.objects.all()
+    def items(self):
+        return Room.objects.all()

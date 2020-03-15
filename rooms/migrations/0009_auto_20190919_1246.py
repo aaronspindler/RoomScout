@@ -4,21 +4,21 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-	dependencies = [
-		('rooms', '0008_auto_20190919_0122'),
-	]
+    dependencies = [
+        ('rooms', '0008_auto_20190919_0122'),
+    ]
 
-	operations = [
-		migrations.RemoveField(
-			model_name='inquiry',
-			name='message',
-		),
-		migrations.RemoveField(
-			model_name='inquiry',
-			name='move_in_date',
-		),
-		migrations.RemoveField(
-			model_name='inquiry',
-			name='user',
-		),
-	]
+    operations = [
+        migrations.RemoveField(
+            model_name='inquiry',
+            name='message',
+        ),
+        migrations.RemoveField(
+            model_name='inquiry',
+            name='move_in_date',
+        ),
+        migrations.RemoveField(
+            model_name='inquiry',
+            name='user',
+        ),
+    ]

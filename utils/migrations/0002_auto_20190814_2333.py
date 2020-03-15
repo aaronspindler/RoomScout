@@ -6,29 +6,29 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-	dependencies = [
-		('utils', '0001_initial'),
-	]
+    dependencies = [
+        ('utils', '0001_initial'),
+    ]
 
-	operations = [
-		migrations.AlterField(
-			model_name='privatefile',
-			name='user',
-			field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
-		),
-		migrations.AlterField(
-			model_name='privateimage',
-			name='user',
-			field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
-		),
-		migrations.AlterField(
-			model_name='publicimage',
-			name='user',
-			field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
-		),
-		migrations.AlterField(
-			model_name='roomimage',
-			name='room',
-			field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='rooms.Room'),
-		),
-	]
+    operations = [
+        migrations.AlterField(
+            model_name='privatefile',
+            name='user',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+        ),
+        migrations.AlterField(
+            model_name='privateimage',
+            name='user',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+        ),
+        migrations.AlterField(
+            model_name='publicimage',
+            name='user',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+        ),
+        migrations.AlterField(
+            model_name='roomimage',
+            name='room',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='rooms.Room'),
+        ),
+    ]

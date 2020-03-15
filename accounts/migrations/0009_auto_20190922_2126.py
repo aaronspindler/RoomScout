@@ -4,14 +4,14 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-	dependencies = [
-		('accounts', '0008_delete_phonenumberverification'),
-	]
+    dependencies = [
+        ('accounts', '0008_delete_phonenumberverification'),
+    ]
 
-	operations = [
-		migrations.RenameField(
-			model_name='user',
-			old_name='bill_contact',
-			new_name='general_contact',
-		),
-	]
+    operations = [
+        migrations.RenameField(
+            model_name='user',
+            old_name='bill_contact',
+            new_name='general_contact',
+        ),
+    ]

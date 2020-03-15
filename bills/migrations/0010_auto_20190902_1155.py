@@ -4,14 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-	dependencies = [
-		('bills', '0009_auto_20190902_1154'),
-	]
+    dependencies = [
+        ('bills', '0009_auto_20190902_1154'),
+    ]
 
-	operations = [
-		migrations.AlterField(
-			model_name='bill',
-			name='file',
-			field=models.FileField(upload_to=''),
-		),
-	]
+    operations = [
+        migrations.AlterField(
+            model_name='bill',
+            name='file',
+            field=models.FileField(upload_to=''),
+        ),
+    ]

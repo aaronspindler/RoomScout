@@ -4,4 +4,4 @@ from django import forms
 
 
 class Captcha(forms.Form):
-	captcha = ReCaptchaField(widget=ReCaptchaV3, label='')
+    captcha = ReCaptchaField(widget=ReCaptchaV3, label='')

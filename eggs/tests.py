@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
+
 from .views import get_dog_image
 
 
@@ -18,4 +19,3 @@ class EggsTests(TestCase):
         self.assertIsNotNone(image1)
         image2 = get_dog_image()
         self.assertNotEqual(image1, image2)
-

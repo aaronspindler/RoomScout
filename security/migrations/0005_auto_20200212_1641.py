@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('security', '0004_remove_fingerprint_edited_at'),
     ]

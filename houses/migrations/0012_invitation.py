@@ -8,20 +8,20 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-	dependencies = [
-		migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-		('houses', '0011_delete_invitation'),
-	]
+    dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('houses', '0011_delete_invitation'),
+    ]
 
-	operations = [
-		migrations.CreateModel(
-			name='Invitation',
-			fields=[
-				('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-				('created', models.DateTimeField(auto_now_add=True)),
-				('target', models.EmailField(default='', max_length=254)),
-				('house', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='houses.House')),
-				('sender', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-			],
-		),
-	]
+    operations = [
+        migrations.CreateModel(
+            name='Invitation',
+            fields=[
+                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('target', models.EmailField(default='', max_length=254)),
+                ('house', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='houses.House')),
+                ('sender', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+    ]

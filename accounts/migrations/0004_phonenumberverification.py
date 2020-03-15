@@ -4,15 +4,15 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-	dependencies = [
-		('accounts', '0003_user_max_houses'),
-	]
+    dependencies = [
+        ('accounts', '0003_user_max_houses'),
+    ]
 
-	operations = [
-		migrations.CreateModel(
-			name='PhoneNumberVerification',
-			fields=[
-				('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-			],
-		),
-	]
+    operations = [
+        migrations.CreateModel(
+            name='PhoneNumberVerification',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+            ],
+        ),
+    ]

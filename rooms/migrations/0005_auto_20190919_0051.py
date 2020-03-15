@@ -6,14 +6,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-	dependencies = [
-		('rooms', '0004_inquiry'),
-	]
+    dependencies = [
+        ('rooms', '0004_inquiry'),
+    ]
 
-	operations = [
-		migrations.AlterField(
-			model_name='room',
-			name='user',
-			field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
-		),
-	]
+    operations = [
+        migrations.AlterField(
+            model_name='room',
+            name='user',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+        ),
+    ]

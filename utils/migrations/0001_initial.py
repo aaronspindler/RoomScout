@@ -8,69 +8,69 @@ import Roomscout.storage_backends
 
 
 class Migration(migrations.Migration):
-	initial = True
+    initial = True
 
-	dependencies = [
-		migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-		('rooms', '0001_initial'),
-	]
+    dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('rooms', '0001_initial'),
+    ]
 
-	operations = [
-		migrations.CreateModel(
-			name='Email',
-			fields=[
-				('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-				('sent_at', models.DateTimeField(auto_now_add=True)),
-				('sent_to', models.EmailField(max_length=254)),
-				('subject', models.TextField()),
-				('contents', models.TextField()),
-			],
-		),
-		migrations.CreateModel(
-			name='PublicImage',
-			fields=[
-				('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-				('uploaded_at', models.DateTimeField(auto_now_add=True)),
-				('is_approved', models.BooleanField(default=False)),
-				('image', models.ImageField(upload_to='')),
-				('user', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
-			],
-		),
-		migrations.CreateModel(
-			name='PrivateImage',
-			fields=[
-				('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-				('uploaded_at', models.DateTimeField(auto_now_add=True)),
-				('is_approved', models.BooleanField(default=False)),
-				('image', models.ImageField(storage=Roomscout.storage_backends.PrivateMediaStorage(), upload_to='')),
-				('user', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
-			],
-		),
-		migrations.CreateModel(
-			name='PrivateFile',
-			fields=[
-				('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-				('uploaded_at', models.DateTimeField(auto_now_add=True)),
-				('is_approved', models.BooleanField(default=False)),
-				('upload', models.FileField(storage=Roomscout.storage_backends.PrivateMediaStorage(), upload_to='')),
-				('user', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
-			],
-		),
-		migrations.CreateModel(
-			name='IP',
-			fields=[
-				('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-				('created', models.DateTimeField(auto_now=True)),
-				('ip_address', models.GenericIPAddressField()),
-				('user', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
-			],
-		),
-		migrations.CreateModel(
-			name='RoomImage',
-			fields=[
-				('publicimage_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='utils.PublicImage')),
-				('room', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='rooms.Room')),
-			],
-			bases=('utils.publicimage',),
-		),
-	]
+    operations = [
+        migrations.CreateModel(
+            name='Email',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('sent_at', models.DateTimeField(auto_now_add=True)),
+                ('sent_to', models.EmailField(max_length=254)),
+                ('subject', models.TextField()),
+                ('contents', models.TextField()),
+            ],
+        ),
+        migrations.CreateModel(
+            name='PublicImage',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('uploaded_at', models.DateTimeField(auto_now_add=True)),
+                ('is_approved', models.BooleanField(default=False)),
+                ('image', models.ImageField(upload_to='')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='PrivateImage',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('uploaded_at', models.DateTimeField(auto_now_add=True)),
+                ('is_approved', models.BooleanField(default=False)),
+                ('image', models.ImageField(storage=Roomscout.storage_backends.PrivateMediaStorage(), upload_to='')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='PrivateFile',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('uploaded_at', models.DateTimeField(auto_now_add=True)),
+                ('is_approved', models.BooleanField(default=False)),
+                ('upload', models.FileField(storage=Roomscout.storage_backends.PrivateMediaStorage(), upload_to='')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='IP',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('created', models.DateTimeField(auto_now=True)),
+                ('ip_address', models.GenericIPAddressField()),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='RoomImage',
+            fields=[
+                ('publicimage_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='utils.PublicImage')),
+                ('room', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='rooms.Room')),
+            ],
+            bases=('utils.publicimage',),
+        ),
+    ]

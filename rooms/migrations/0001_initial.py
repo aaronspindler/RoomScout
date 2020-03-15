@@ -6,25 +6,25 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-	initial = True
+    initial = True
 
-	dependencies = [
-		migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-		('houses', '0001_initial'),
-	]
+    dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('houses', '0001_initial'),
+    ]
 
-	operations = [
-		migrations.CreateModel(
-			name='Room',
-			fields=[
-				('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-				('name', models.CharField(default='', max_length=200)),
-				('is_available', models.BooleanField(default=True)),
-				('created_at', models.DateTimeField(auto_now_add=True)),
-				('updated_at', models.DateTimeField(auto_now=True)),
-				('price', models.FloatField(default=0.0)),
-				('house', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='house', to='houses.House')),
-				('user', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
-			],
-		),
-	]
+    operations = [
+        migrations.CreateModel(
+            name='Room',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('name', models.CharField(default='', max_length=200)),
+                ('is_available', models.BooleanField(default=True)),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+                ('updated_at', models.DateTimeField(auto_now=True)),
+                ('price', models.FloatField(default=0.0)),
+                ('house', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='house', to='houses.House')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+    ]

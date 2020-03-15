@@ -4,12 +4,12 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-	dependencies = [
-		('houses', '0010_auto_20190823_1050'),
-	]
+    dependencies = [
+        ('houses', '0010_auto_20190823_1050'),
+    ]
 
-	operations = [
-		migrations.DeleteModel(
-			name='Invitation',
-		),
-	]
+    operations = [
+        migrations.DeleteModel(
+            name='Invitation',
+        ),
+    ]

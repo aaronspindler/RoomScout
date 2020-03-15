@@ -1,7 +1,7 @@
-import boto3
-
 from io import BytesIO
 from random import randint
+
+import boto3
 from PIL import ExifTags
 from PIL import Image as Img
 from django.conf import settings
@@ -16,78 +16,78 @@ from rooms.models import Room
 
 
 class PublicImage(models.Model):
-	uploaded_at = models.DateTimeField(auto_now_add=True)
-	is_approved = models.BooleanField(default=False)
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
-	image = models.ImageField()
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    is_approved = models.BooleanField(default=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ImageField()
 
-	def verify_image(self):
-		client = boto3.client('rekognition', aws_access_key_id=settings.AWS_ACCESS_KEY_ID, aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY, region_name='us-east-1')
-		response = client.detect_moderation_labels(Image={'S3Object': {'Bucket': 'roomscout-public', 'Name': self.image.name}})
-		if len(response['ModerationLabels']) > 0:
-			self.is_approved = False
-		else:
-			self.is_approved = True
-		super(PublicImage, self).save()
+    def verify_image(self):
+        client = boto3.client('rekognition', aws_access_key_id=settings.AWS_ACCESS_KEY_ID, aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY, region_name='us-east-1')
+        response = client.detect_moderation_labels(Image={'S3Object': {'Bucket': 'roomscout-public', 'Name': self.image.name}})
+        if len(response['ModerationLabels']) > 0:
+            self.is_approved = False
+        else:
+            self.is_approved = True
+        super(PublicImage, self).save()
 
-	def save(self, **kwargs):
-		# This should only be checked if there is exif data
-		if self.image:
-			try:
-				pilImage = Img.open(BytesIO(self.image.read()))
-				for orientation in ExifTags.TAGS.keys():
-					if ExifTags.TAGS[orientation] == 'Orientation':
-						break
-				exif = dict(pilImage._getexif().items())
+    def save(self, **kwargs):
+        # This should only be checked if there is exif data
+        if self.image:
+            try:
+                pilImage = Img.open(BytesIO(self.image.read()))
+                for orientation in ExifTags.TAGS.keys():
+                    if ExifTags.TAGS[orientation] == 'Orientation':
+                        break
+                exif = dict(pilImage._getexif().items())
 
-				if exif[orientation] == 3:
-					pilImage = pilImage.rotate(180, expand=True)
-				elif exif[orientation] == 6:
-					pilImage = pilImage.rotate(270, expand=True)
-				elif exif[orientation] == 8:
-					pilImage = pilImage.rotate(90, expand=True)
+                if exif[orientation] == 3:
+                    pilImage = pilImage.rotate(180, expand=True)
+                elif exif[orientation] == 6:
+                    pilImage = pilImage.rotate(270, expand=True)
+                elif exif[orientation] == 8:
+                    pilImage = pilImage.rotate(90, expand=True)
 
-				output = BytesIO()
-				pilImage.save()
-				output.seek(0)
-				self.image = File(output, self.image.name)
-			except Exception:
-				pass
+                output = BytesIO()
+                pilImage.save()
+                output.seek(0)
+                self.image = File(output, self.image.name)
+            except Exception:
+                pass
 
-		super(PublicImage, self).save()
-		self.verify_image()
+        super(PublicImage, self).save()
+        self.verify_image()
 
 
 class PrivateImage(models.Model):
-	uploaded_at = models.DateTimeField(auto_now_add=True)
-	is_approved = models.BooleanField(default=False)
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
-	image = models.ImageField(storage=PrivateMediaStorage())
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    is_approved = models.BooleanField(default=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ImageField(storage=PrivateMediaStorage())
 
 
 class RoomImage(PublicImage):
-	room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
 
 
 class HouseImage(PublicImage):
-	house = models.ForeignKey(House, on_delete=models.CASCADE)
+    house = models.ForeignKey(House, on_delete=models.CASCADE)
 
 
 class PrivateFile(models.Model):
-	uploaded_at = models.DateTimeField(auto_now_add=True)
-	is_approved = models.BooleanField(default=False)
-	file = models.FileField(storage=PrivateMediaStorage())
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    is_approved = models.BooleanField(default=False)
+    file = models.FileField(storage=PrivateMediaStorage())
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class BillFile(PrivateFile):
-	bill = models.ForeignKey(Bill, on_delete=models.CASCADE)
+    bill = models.ForeignKey(Bill, on_delete=models.CASCADE)
 
 
 class PhoneNumberVerification(models.Model):
-	phone_number = models.IntegerField(default=-1)
-	code = models.IntegerField(default=-1)
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
+    phone_number = models.IntegerField(default=-1)
+    code = models.IntegerField(default=-1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-	def generate_code(self):
-		self.code = randint(10000, 99999)
+    def generate_code(self):
+        self.code = randint(10000, 99999)

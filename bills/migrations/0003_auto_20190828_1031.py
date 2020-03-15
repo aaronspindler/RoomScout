@@ -4,23 +4,23 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-	dependencies = [
-		('bills', '0002_billset'),
-	]
+    dependencies = [
+        ('bills', '0002_billset'),
+    ]
 
-	operations = [
-		migrations.RemoveField(
-			model_name='bill',
-			name='house',
-		),
-		migrations.RemoveField(
-			model_name='bill',
-			name='user',
-		),
-		migrations.DeleteModel(
-			name='BillSet',
-		),
-		migrations.DeleteModel(
-			name='Bill',
-		),
-	]
+    operations = [
+        migrations.RemoveField(
+            model_name='bill',
+            name='house',
+        ),
+        migrations.RemoveField(
+            model_name='bill',
+            name='user',
+        ),
+        migrations.DeleteModel(
+            name='BillSet',
+        ),
+        migrations.DeleteModel(
+            name='Bill',
+        ),
+    ]

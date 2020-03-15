@@ -4,14 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-	dependencies = [
-		('bills', '0005_auto_20190828_1712'),
-	]
+    dependencies = [
+        ('bills', '0005_auto_20190828_1712'),
+    ]
 
-	operations = [
-		migrations.AlterField(
-			model_name='billset',
-			name='month',
-			field=models.DateTimeField(),
-		),
-	]
+    operations = [
+        migrations.AlterField(
+            model_name='billset',
+            name='month',
+            field=models.DateTimeField(),
+        ),
+    ]

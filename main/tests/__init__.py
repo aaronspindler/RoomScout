@@ -2,4 +2,4 @@ import unittest
 
 
 def suite():
-	return unittest.TestLoader().discover("main.tests", pattern="*.py")
+    return unittest.TestLoader().discover("main.tests", pattern="*.py")

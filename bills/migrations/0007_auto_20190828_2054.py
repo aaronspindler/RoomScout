@@ -4,14 +4,14 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-	dependencies = [
-		('bills', '0006_auto_20190828_1713'),
-	]
+    dependencies = [
+        ('bills', '0006_auto_20190828_1713'),
+    ]
 
-	operations = [
-		migrations.RenameField(
-			model_name='billset',
-			old_name='month',
-			new_name='date',
-		),
-	]
+    operations = [
+        migrations.RenameField(
+            model_name='billset',
+            old_name='month',
+            new_name='date',
+        ),
+    ]

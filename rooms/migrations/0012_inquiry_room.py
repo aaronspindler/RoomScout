@@ -5,15 +5,15 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-	dependencies = [
-		('rooms', '0011_inquiry'),
-	]
+    dependencies = [
+        ('rooms', '0011_inquiry'),
+    ]
 
-	operations = [
-		migrations.AddField(
-			model_name='inquiry',
-			name='room',
-			field=models.ForeignKey(default='', on_delete=django.db.models.deletion.CASCADE, to='rooms.Room'),
-			preserve_default=False,
-		),
-	]
+    operations = [
+        migrations.AddField(
+            model_name='inquiry',
+            name='room',
+            field=models.ForeignKey(default='', on_delete=django.db.models.deletion.CASCADE, to='rooms.Room'),
+            preserve_default=False,
+        ),
+    ]

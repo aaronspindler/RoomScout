@@ -11,17 +11,17 @@ from main.sitemaps import StaticSitemap
 from rooms.sitemaps import RoomSitemap
 
 sitemaps = {
-	'static': StaticSitemap,
-	'blog': BlogSitemap,
-	'houses': HouseSitemap,
-	'rooms': RoomSitemap,
+    'static': StaticSitemap,
+    'blog': BlogSitemap,
+    'houses': HouseSitemap,
+    'rooms': RoomSitemap,
 }
 
 urlpatterns = [
-	path('admin/', admin.site.urls),
-	path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
-	path('robots.txt', TemplateView.as_view(template_name="robots/robots.txt", content_type='text/plain')),
-	path('', include('main.urls')),
+    path('admin/', admin.site.urls),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('robots.txt', TemplateView.as_view(template_name="robots/robots.txt", content_type='text/plain')),
+    path('', include('main.urls')),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

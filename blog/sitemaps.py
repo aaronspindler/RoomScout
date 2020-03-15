@@ -4,8 +4,8 @@ from .models import BlogPost
 
 
 class BlogSitemap(Sitemap):
-	priority = 0.7
-	changefreq = 'weekly'
+    priority = 0.7
+    changefreq = 'weekly'
 
-	def items(self):
-		return BlogPost.objects.all()
+    def items(self):
+        return BlogPost.objects.all()

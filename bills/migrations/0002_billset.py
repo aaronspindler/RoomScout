@@ -4,16 +4,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-	dependencies = [
-		('bills', '0001_initial'),
-	]
+    dependencies = [
+        ('bills', '0001_initial'),
+    ]
 
-	operations = [
-		migrations.CreateModel(
-			name='BillSet',
-			fields=[
-				('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-				('date', models.DateField(auto_now=True)),
-			],
-		),
-	]
+    operations = [
+        migrations.CreateModel(
+            name='BillSet',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('date', models.DateField(auto_now=True)),
+            ],
+        ),
+    ]

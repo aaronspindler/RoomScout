@@ -4,12 +4,12 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-	dependencies = [
-		('utils', '0004_billfile'),
-	]
+    dependencies = [
+        ('utils', '0004_billfile'),
+    ]
 
-	operations = [
-		migrations.DeleteModel(
-			name='Email',
-		),
-	]
+    operations = [
+        migrations.DeleteModel(
+            name='Email',
+        ),
+    ]

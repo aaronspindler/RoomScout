@@ -3,44 +3,44 @@ from django.db import models
 
 
 class User(AbstractUser):
-	GENDER_CHOICES = [('m', 'Male'), ('f', 'Female'), ('o', 'Other')]
+    GENDER_CHOICES = [('m', 'Male'), ('f', 'Female'), ('o', 'Other')]
 
-	# Contact
-	phone_number = models.CharField(max_length=20, default='')
-	phone_number_verified = models.BooleanField(default=False)
+    # Contact
+    phone_number = models.CharField(max_length=20, default='')
+    phone_number_verified = models.BooleanField(default=False)
 
-	# Address
-	city = models.CharField(default='', max_length=200)
-	prov_state = models.CharField(default='', max_length=2)
+    # Address
+    city = models.CharField(default='', max_length=200)
+    prov_state = models.CharField(default='', max_length=2)
 
-	# User Data
-	gender = models.CharField(choices=GENDER_CHOICES, default='', max_length=2)
-	age = models.IntegerField(default=0)
+    # User Data
+    gender = models.CharField(choices=GENDER_CHOICES, default='', max_length=2)
+    age = models.IntegerField(default=0)
 
-	# Contact Consent
-	general_contact = models.BooleanField(default=False)
-	promo_contact = models.BooleanField(default=False)
+    # Contact Consent
+    general_contact = models.BooleanField(default=False)
+    promo_contact = models.BooleanField(default=False)
 
-	# Generated Fields
-	_score = models.DecimalField(max_digits=19, decimal_places=2, default=0.00)
-	is_premium_member = models.BooleanField(default=True)
+    # Generated Fields
+    _score = models.DecimalField(max_digits=19, decimal_places=2, default=0.00)
+    is_premium_member = models.BooleanField(default=True)
 
-	# Premium Features
-	max_houses = models.IntegerField(default=1)
+    # Premium Features
+    max_houses = models.IntegerField(default=1)
 
-	# Returns true if the majority of profile is filled out
-	def profile_filled(self):
-		num_fields = 2
-		num_filled = 0
+    # Returns true if the majority of profile is filled out
+    def profile_filled(self):
+        num_fields = 2
+        num_filled = 0
 
-		if self.gender != '':
-			num_filled += 1
-		if self.age != 0:
-			num_filled += 1
+        if self.gender != '':
+            num_filled += 1
+        if self.age != 0:
+            num_filled += 1
 
-		if num_filled >= (num_fields / 3):
-			return True
-		return False
+        if num_filled >= (num_fields / 3):
+            return True
+        return False
 
-	def get_score(self):
-		return self._score
+    def get_score(self):
+        return self._score

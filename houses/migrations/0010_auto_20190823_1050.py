@@ -4,19 +4,19 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-	dependencies = [
-		('houses', '0009_invitation'),
-	]
+    dependencies = [
+        ('houses', '0009_invitation'),
+    ]
 
-	operations = [
-		migrations.RenameField(
-			model_name='invitation',
-			old_name='from_user',
-			new_name='sender',
-		),
-		migrations.RenameField(
-			model_name='invitation',
-			old_name='user',
-			new_name='target',
-		),
-	]
+    operations = [
+        migrations.RenameField(
+            model_name='invitation',
+            old_name='from_user',
+            new_name='sender',
+        ),
+        migrations.RenameField(
+            model_name='invitation',
+            old_name='user',
+            new_name='target',
+        ),
+    ]

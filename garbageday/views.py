@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
@@ -30,8 +32,8 @@ def garbageday_create(request, house):
         garbageday = GarbageDay()
         garbageday.user = request.user
         garbageday.house = housemodel
-        garbageday.last_garbage_day = request.POST['LastGarbageDay']
-        garbageday.next_garbage_day = request.POST['NextGarbageDay']
+        garbageday.last_garbage_day = datetime.datetime.strptime(request.POST['LastGarbageDay'], '%Y-%m-%d')
+        garbageday.next_garbage_day = datetime.datetime.strptime(request.POST['NextGarbageDay'], '%Y-%m-%d')
         garbageday.save()
         return redirect(housemodel.get_absolute_url())
     else:
@@ -45,8 +47,8 @@ def garbageday_edit(request, house):
     if request.user != housemodel.user:
         raise Http404
     if request.method == 'POST':
-        garbageday.last_garbage_day = request.POST['LastGarbageDay']
-        garbageday.next_garbage_day = request.POST['NextGarbageDay']
+        garbageday.last_garbage_day = datetime.datetime.strptime(request.POST['LastGarbageDay'], '%Y-%m-%d')
+        garbageday.next_garbage_day = datetime.datetime.strptime(request.POST['NextGarbageDay'], '%Y-%m-%d')
         garbageday.save()
         return redirect(housemodel.get_absolute_url())
     else:

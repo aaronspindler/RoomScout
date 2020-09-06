@@ -12,6 +12,8 @@ class GarbageDay(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     house = models.ForeignKey(House, on_delete=models.CASCADE)
 
+    last_updated = models.DateField(auto_now_add=True, null=True)
+
     # User Inputted
     last_garbage_day = models.DateField()
     next_garbage_day = models.DateField()
@@ -20,7 +22,10 @@ class GarbageDay(models.Model):
     garbage_frequency = models.DurationField(null=True, blank=True)
 
     def calculate_garbage_frequency(self):
-        delta = datetime.strptime(self.next_garbage_day, '%Y-%m-%d') - datetime.strptime(self.last_garbage_day, '%Y-%m-%d')
+        if type(self.next_garbage_day) == str and type(self.last_garbage_day) == str:
+            delta = datetime.strptime(self.next_garbage_day, '%Y-%m-%d') - datetime.strptime(self.last_garbage_day, '%Y-%m-%d')
+        else:
+            delta = self.next_garbage_day - self.last_garbage_day
         self.garbage_frequency = delta
 
     def save(self, **kwargs):

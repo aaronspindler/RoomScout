@@ -142,6 +142,7 @@ class GarbageDayViewTests(TestCase):
         self.assertContains(response, 'Garbage Day')
         self.assertNotContains(response, '404')
         self.assertNotContains(response, 'Login')
+        self.assertEqual(self.house.garbageday_set.first().garbage_frequency, datetime.timedelta(days=14))
 
     def test_garbageday_views_garbageday_create_post_existing(self):
         print('Testing garbageday.views.garbageday_create() POST existing')
@@ -240,6 +241,8 @@ class GarbageDayViewTests(TestCase):
         self.garbage_day.last_garbage_day = "2019-11-04"
         self.garbage_day.next_garbage_day = "2019-11-04"
         self.garbage_day.save()
+        self.assertEqual(self.house.garbageday_set.first().garbage_frequency, datetime.timedelta(days=0))
+
 
         pre_count = GarbageDay.objects.count()
         req_data = {'LastGarbageDay': '2019-11-12', 'NextGarbageDay': '2019-11-26'}
@@ -255,6 +258,8 @@ class GarbageDayViewTests(TestCase):
         self.assertNotContains(response, 'Login')
         self.assertEqual(self.house.garbageday_set.first().last_garbage_day, datetime.date(2019, 11, 12))
         self.assertEqual(self.house.garbageday_set.first().next_garbage_day, datetime.date(2019, 11, 26))
+        self.assertEqual(self.house.garbageday_set.first().garbage_frequency, datetime.timedelta(days=14))
+
 
     def test_garbageday_views_garbageday_edit_post_not_logged_in(self):
         print('Testing garbageday.views.garbageday_edit() POST not logged in')

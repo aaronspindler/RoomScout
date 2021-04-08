@@ -7,7 +7,7 @@ chardet==3.0.4
 decorator==4.4.2
 defusedxml==0.6.0
 dj-config-url==0.1.1
-Django==3.0.12
+Django==3.0.14
 django-allauth==0.42.0
 django-appconf==1.0.4
 django-avatar==5.0.0

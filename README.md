@@ -1,4 +1,6 @@
 # RoomScout
+## The site has been taken down as a result of covid-19 and facebooks new roommate features in marketplace.
+
 ![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m784203990-c834dc98966ff65040c545a5)
 [![DeepSource](https://static.deepsource.io/deepsource-badge-light-mini.svg)](https://deepsource.io/gh/xNovax/RoomScout/?ref=repository-badge)
 
